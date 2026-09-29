@@ -170,6 +170,7 @@ class PermissionTree
                     PermissionRuleType::Requires => 'gray',
                     PermissionRuleType::ImpliedBy => 'info',
                     PermissionRuleType::ConflictsWith => 'danger',
+                    default => 'gray',
                 },
                 reason: $rule->reason,
             );
@@ -259,6 +260,9 @@ class PermissionTree
     /**
      * A rule seen from one of its ends: the declaring side requires, is implied by or is blocked by;
      * the other side is required by, implies or blocks.
+     *
+     * An enum case this package does not yet know falls back to a generic "related to" label rather
+     * than throwing — a library minor may add rule types before this package names them.
      */
     private function dependencyKey(PermissionRuleType $type, bool $declares): string
     {
@@ -266,6 +270,7 @@ class PermissionTree
             PermissionRuleType::Requires => $declares ? 'requires' : 'required_by',
             PermissionRuleType::ImpliedBy => $declares ? 'implied_by' : 'implies',
             PermissionRuleType::ConflictsWith => $declares ? 'blocked_by' : 'blocks',
+            default => 'related',
         };
     }
 

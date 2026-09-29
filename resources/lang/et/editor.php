@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Selle eeldab: :permission',
         'implies' => 'Eeldab: :permission',
         'invalid_declaration' => 'Vigane deklaratsioon',
+        'related' => 'Related: :permission',
         'required_by' => 'Seda nõuab: :permission',
         'requires' => 'Nõuab: :permission',
     ],

@@ -66,6 +66,7 @@ return [
         'implied_by' => 'واتای ئەوەیە لەلایەن: :permission',
         'implies' => 'واتای ئەوەیە: :permission',
         'invalid_declaration' => 'ڕاگەیاندنێکی نادروست',
+        'related' => 'Related: :permission',
         'required_by' => 'پێویستە لەلایەن: :permission',
         'requires' => 'پێویستی بە: :permission هەیە',
     ],

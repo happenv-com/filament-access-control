@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Випливає з: :permission',
         'implies' => 'Передбачає: :permission',
         'invalid_declaration' => 'Некоректна декларація',
+        'related' => 'Related: :permission',
         'required_by' => 'Потрібно для: :permission',
         'requires' => 'Потребує: :permission',
     ],

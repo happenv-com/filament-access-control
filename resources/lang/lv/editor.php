@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Izriet no: :permission',
         'implies' => 'Paredz: :permission',
         'invalid_declaration' => 'Nederīga deklarācija',
+        'related' => 'Related: :permission',
         'required_by' => 'Pieprasītājs: :permission',
         'requires' => 'Pieprasa: :permission',
     ],

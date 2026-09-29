@@ -66,6 +66,7 @@ return [
         'implied_by' => '隐含来源: :permission',
         'implies' => '隐含: :permission',
         'invalid_declaration' => '无效声明',
+        'related' => 'Related: :permission',
         'required_by' => '被需要方: :permission',
         'requires' => '需要: :permission',
     ],

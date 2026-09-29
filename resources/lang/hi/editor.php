@@ -66,6 +66,7 @@ return [
         'implied_by' => 'इससे निहित: :permission',
         'implies' => 'यह निहित करता है: :permission',
         'invalid_declaration' => 'अमान्य घोषणा',
+        'related' => 'Related: :permission',
         'required_by' => 'इसके लिए आवश्यक: :permission',
         'requires' => 'आवश्यकता है: :permission',
     ],

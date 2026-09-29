@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Được ngụ ý bởi: :permission',
         'implies' => 'Ngụ ý: :permission',
         'invalid_declaration' => 'Khai báo không hợp lệ',
+        'related' => 'Related: :permission',
         'required_by' => 'Được yêu cầu bởi: :permission',
         'requires' => 'Yêu cầu: :permission',
     ],

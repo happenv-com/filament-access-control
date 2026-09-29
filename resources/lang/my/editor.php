@@ -66,6 +66,7 @@ return [
         'implied_by' => 'ဆိုလိုစေသူ: :permission',
         'implies' => 'ဆိုလိုသည်: :permission',
         'invalid_declaration' => 'မမှန်ကန်သော ကြေညာချက်',
+        'related' => 'Related: :permission',
         'required_by' => 'လိုအပ်စေသူ: :permission',
         'requires' => 'လိုအပ်သည်: :permission',
     ],

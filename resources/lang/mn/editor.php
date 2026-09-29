@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Үүнээс үүдэлтэй: :permission',
         'implies' => 'Дагуулна: :permission',
         'invalid_declaration' => 'Хүчингүй мэдэгдэл',
+        'related' => 'Related: :permission',
         'required_by' => 'Шаарддаг тал: :permission',
         'requires' => 'Шаарддаг: :permission',
     ],

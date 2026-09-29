@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Vyplývá z: :permission',
         'implies' => 'Zahrnuje: :permission',
         'invalid_declaration' => 'Neplatná deklarace',
+        'related' => 'Related: :permission',
         'required_by' => 'Vyžaduje ji: :permission',
         'requires' => 'Vyžaduje: :permission',
     ],

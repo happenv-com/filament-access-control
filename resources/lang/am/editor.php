@@ -66,6 +66,7 @@ return [
         'implied_by' => 'የተጠቆመው በ: :permission',
         'implies' => 'የሚጠቁመው: :permission',
         'invalid_declaration' => 'ልክ ያልሆነ መግለጫ',
+        'related' => 'Related: :permission',
         'required_by' => 'የሚያስፈልገው ለ: :permission',
         'requires' => 'የሚያስፈልገው: :permission',
     ],

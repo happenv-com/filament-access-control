@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Nënkuptuar nga: :permission',
         'implies' => 'Nënkupton: :permission',
         'invalid_declaration' => 'Deklaratë e pavlefshme',
+        'related' => 'Related: :permission',
         'required_by' => 'Kërkuar nga: :permission',
         'requires' => 'Kërkon: :permission',
     ],

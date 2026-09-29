@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Implied by: :permission',
         'implies' => 'Implies: :permission',
         'invalid_declaration' => 'Invalid declaration',
+        'related' => 'Related: :permission',
         'required_by' => 'Required by: :permission',
         'requires' => 'Requires: :permission',
     ],

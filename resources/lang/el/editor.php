@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Συνεπάγεται από: :permission',
         'implies' => 'Συνεπάγεται: :permission',
         'invalid_declaration' => 'Μη έγκυρη δήλωση',
+        'related' => 'Related: :permission',
         'required_by' => 'Απαιτείται από: :permission',
         'requires' => 'Απαιτεί: :permission',
     ],

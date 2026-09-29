@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Implicat per: :permission',
         'implies' => 'Implica: :permission',
         'invalid_declaration' => 'Declaració no vàlida',
+        'related' => 'Related: :permission',
         'required_by' => 'Requerit per: :permission',
         'requires' => 'Requereix: :permission',
     ],

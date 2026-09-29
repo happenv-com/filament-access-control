@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Nəzərdə tutan: :permission',
         'implies' => 'Nəzərdə tutur: :permission',
         'invalid_declaration' => 'Yanlış bəyannamə',
+        'related' => 'Related: :permission',
         'required_by' => 'Tələb edən: :permission',
         'requires' => 'Tələb edir: :permission',
     ],

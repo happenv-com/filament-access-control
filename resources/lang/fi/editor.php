@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Seuraa oikeudesta: :permission',
         'implies' => 'Sisältää oikeuden: :permission',
         'invalid_declaration' => 'Virheellinen määritys',
+        'related' => 'Related: :permission',
         'required_by' => 'Vaaditaan oikeudelle: :permission',
         'requires' => 'Vaatii: :permission',
     ],

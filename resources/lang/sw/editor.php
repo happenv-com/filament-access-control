@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Inamaanishwa na: :permission',
         'implies' => 'Inamaanisha: :permission',
         'invalid_declaration' => 'Tamko batili',
+        'related' => 'Related: :permission',
         'required_by' => 'Inahitajika na: :permission',
         'requires' => 'Inahitaji: :permission',
     ],

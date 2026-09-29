@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Disiratkan oleh: :permission',
         'implies' => 'Menyiratkan: :permission',
         'invalid_declaration' => 'Deklarasi tidak valid',
+        'related' => 'Related: :permission',
         'required_by' => 'Dibutuhkan oleh: :permission',
         'requires' => 'Membutuhkan: :permission',
     ],

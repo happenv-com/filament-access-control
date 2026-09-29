@@ -66,6 +66,7 @@ return [
         'implied_by' => 'Аз он бармеояд: :permission',
         'implies' => 'Дар бар мегирад: :permission',
         'invalid_declaration' => 'Эъломияи нодуруст',
+        'related' => 'Related: :permission',
         'required_by' => 'Талабкунанда: :permission',
         'requires' => 'Талаб мекунад: :permission',
     ],

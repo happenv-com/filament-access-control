@@ -66,6 +66,7 @@ return [
         'implied_by' => 'দ্বারা বোঝানো: :permission',
         'implies' => 'বোঝায়: :permission',
         'invalid_declaration' => 'অবৈধ ঘোষণা',
+        'related' => 'Related: :permission',
         'required_by' => 'দ্বারা প্রয়োজনীয়: :permission',
         'requires' => 'প্রয়োজন: :permission',
     ],

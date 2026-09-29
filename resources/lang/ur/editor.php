@@ -66,6 +66,7 @@ return [
         'implied_by' => 'اس سے مضمر: :permission',
         'implies' => 'مضمر ہے: :permission',
         'invalid_declaration' => 'غیر درست اعلان',
+        'related' => 'Related: :permission',
         'required_by' => 'درکار کرنے والا: :permission',
         'requires' => 'درکار ہے: :permission',
     ],

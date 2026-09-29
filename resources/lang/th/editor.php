@@ -66,6 +66,7 @@ return [
         'implied_by' => 'ถูกบ่งชี้โดย: :permission',
         'implies' => 'บ่งชี้ถึง: :permission',
         'invalid_declaration' => 'การประกาศไม่ถูกต้อง',
+        'related' => 'Related: :permission',
         'required_by' => 'จำเป็นสำหรับ: :permission',
         'requires' => 'ต้องการ: :permission',
     ],

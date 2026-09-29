@@ -66,6 +66,7 @@ return [
         'implied_by' => 'გამომდინარეობს: :permission',
         'implies' => 'გულისხმობს: :permission',
         'invalid_declaration' => 'არასწორი დეკლარაცია',
+        'related' => 'Related: :permission',
         'required_by' => 'მოთხოვნილია: :permission',
         'requires' => 'მოითხოვს: :permission',
     ],

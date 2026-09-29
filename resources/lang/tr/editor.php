@@ -66,6 +66,7 @@ return [
         'implied_by' => 'İma eden: :permission',
         'implies' => 'İma ediyor: :permission',
         'invalid_declaration' => 'Geçersiz bildirim',
+        'related' => 'Related: :permission',
         'required_by' => 'Gerektiren: :permission',
         'requires' => 'Gerektiriyor: :permission',
     ],

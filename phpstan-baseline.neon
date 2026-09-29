@@ -1,0 +1,10 @@
+parameters:
+    ignoreErrors:
+        -
+            # PermissionRuleType has exactly three cases today, so PHPStan correctly sees these
+            # `default` arms as unreachable. They stay so PermissionTree keeps working — a gray
+            # badge, a generic "related to" label — instead of throwing, the day the library adds a
+            # fourth rule type in an additive minor (final-fix-brief.md item 4).
+            identifier: match.alwaysTrue
+            count: 2
+            path: src/Support/PermissionTree.php

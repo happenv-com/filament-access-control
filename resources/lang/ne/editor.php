@@ -66,6 +66,7 @@ return [
         'implied_by' => 'बाट संकेत गरिएको: :permission',
         'implies' => 'संकेत गर्छ: :permission',
         'invalid_declaration' => 'अमान्य घोषणा',
+        'related' => 'Related: :permission',
         'required_by' => 'आवश्यक पार्ने: :permission',
         'requires' => 'आवश्यक पर्छ: :permission',
     ],
