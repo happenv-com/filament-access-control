@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'collapse_all' => 'Zbaliť všetko',
+    'counter' => ':granted z :total',
+    'expand_all' => 'Rozbaliť všetko',
+    'inherited_hint' => 'Už udelené rolou, ktorú má tento používateľ. Kým má túto rolu, priame udelenie nič nepridá.',
+    'no_roles' => 'Zatiaľ tu nie sú žiadne roly. Pridajte prvú, aby ste mohli začať udeľovať oprávnenia.',
+    'offering_empty' => 'Nie sú tu žiadne oprávnenia na udelenie.',
+    'read_only_hint' => 'Tieto oprávnenia môžete vidieť, ale nemôžete ich meniť.',
+    'restricted_hint' => 'Aplikácia toto oprávnenie práve obmedzuje: je odopreté všetkým bez ohľadu na to, čo je tu udelené.',
+    'search' => 'Hľadať oprávnenia…',
+    'search_empty' => 'Výrazu „:search“ nezodpovedá žiadne oprávnenie.',
+    'staged_marker' => 'Neuložené',
+    'super_admin_hint' => 'Táto rola má všetky oprávnenia a nedá sa obmedziť.',
+    'super_admin_inherited' => 'Roly udeľujúce všetky oprávnenia: :roles. Nič nižšie nemení to, čo tento používateľ smie robiť.',
+    'toggle_subject' => 'Prepnúť všetky oprávnenia tohto zdroja',
+    'unsaved_changes' => 'Máte neuložené zmeny oprávnení. Napriek tomu odísť?',
+    'held_outside_offering' => [
+        'heading' => 'Udelené, tu nevyužité',
+        'description' => 'Tieto oprávnenia boli udelené skôr, ale nič tu ich nekontroluje. Môžete ich odobrať, ale nemôžete ich znova udeliť.',
+    ],
+    'columns' => [
+        'granted' => 'Udelené',
+        'inherited' => 'Z rolí',
+        'permission' => 'Oprávnenie',
+    ],
+    'fields' => [
+        'role' => 'Rola',
+    ],
+    'actions' => [
+        'discard' => 'Zrušiť',
+        'save' => 'Uložiť oprávnenia',
+        'delete_role' => [
+            'heading' => 'Odstrániť rolu',
+            'label' => 'Odstrániť rolu',
+            'submit' => 'Odstrániť',
+        ],
+    ],
+    'notifications' => [
+        'no_holder' => 'Nenašlo sa – obnovte stránku a skúste to znova.',
+        'no_permission' => 'Takéto oprávnenie sa nenašlo – obnovte stránku a skúste to znova.',
+        'not_offered' => 'Toto oprávnenie tu nemožno udeliť.',
+        'role_deleted' => 'Rola bola odstránená.',
+        'read_only' => 'Tieto oprávnenia sú tu len na čítanie.',
+        'saved' => 'Oprávnenia boli uložené.',
+        'unauthorized' => 'Tieto oprávnenia nesmiete meniť.',
+    ],
+];
