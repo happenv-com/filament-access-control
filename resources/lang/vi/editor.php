@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Thu gọn tất cả',
     'counter' => ':granted trên :total',
     'expand_all' => 'Mở rộng tất cả',
-    'group_summary' => 'Đã cấp trong nhóm này',
     'inherited_hint' => 'Đã được cấp qua một vai trò mà người dùng này đang có. Cấp trực tiếp sẽ không thay đổi gì khi vai trò đó vẫn còn.',
     'no_roles' => 'Chưa có vai trò nào. Hãy thêm vai trò đầu tiên để bắt đầu cấp quyền.',
     'offering_empty' => 'Không có quyền nào để cấp ở đây.',

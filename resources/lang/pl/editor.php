@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Zwiń wszystko',
     'counter' => ':granted z :total',
     'expand_all' => 'Rozwiń wszystko',
-    'group_summary' => 'Nadane w tej grupie',
     'inherited_hint' => 'Nadane już przez rolę tego użytkownika. Dopóki ma tę rolę, bezpośrednie nadanie niczego nie zmienia.',
     'no_roles' => 'Nie ma jeszcze żadnej roli. Dodaj pierwszą, żeby przydzielać uprawnienia.',
     'offering_empty' => 'Nie ma tu żadnych uprawnień do nadania.',

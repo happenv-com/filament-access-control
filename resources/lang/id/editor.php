@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Sembunyikan semua',
     'counter' => ':granted dari :total',
     'expand_all' => 'Tampilkan semua',
-    'group_summary' => 'Diberikan dalam grup ini',
     'inherited_hint' => 'Sudah diberikan melalui peran yang dimiliki pengguna ini. Pemberian langsung tidak menambah apa pun selama peran tersebut masih ada.',
     'no_roles' => 'Belum ada peran. Tambahkan peran pertama untuk mulai memberikan izin.',
     'offering_empty' => 'Tidak ada izin yang dapat diberikan di sini.',

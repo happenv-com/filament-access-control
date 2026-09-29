@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Kunja zote',
     'counter' => ':granted kati ya :total',
     'expand_all' => 'Kunjua zote',
-    'group_summary' => 'Imetolewa katika kikundi hiki',
     'inherited_hint' => 'Tayari imetolewa kupitia jukumu alilo nalo mtumiaji huyu. Maadamu jukumu hilo lipo, kuitoa moja kwa moja hakuongezi chochote.',
     'no_roles' => 'Bado hakuna majukumu. Ongeza la kwanza ili uanze kutoa ruhusa.',
     'offering_empty' => 'Hakuna ruhusa za kutoa hapa.',

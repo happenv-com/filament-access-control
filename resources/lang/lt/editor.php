@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Suskleisti viską',
     'counter' => ':granted iš :total',
     'expand_all' => 'Išskleisti viską',
-    'group_summary' => 'Suteikta šioje grupėje',
     'inherited_hint' => 'Jau suteikta per šio naudotojo rolę. Kol naudotojas turi šią rolę, tiesioginis suteikimas nieko neprideda.',
     'no_roles' => 'Kol kas nėra jokių rolių. Pridėkite pirmąją, kad galėtumėte pradėti skirti leidimus.',
     'offering_empty' => 'Čia nėra leidimų, kuriuos būtų galima suteikti.',

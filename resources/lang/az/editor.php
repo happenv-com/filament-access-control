@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Hamısını kiçilt',
     'counter' => ':granted / :total',
     'expand_all' => 'Hamısını genişlət',
-    'group_summary' => 'Bu qrupda verilib',
     'inherited_hint' => 'Bu istifadəçinin malik olduğu rol vasitəsilə artıq verilib. İstifadəçi bu rola malik olduqca birbaşa vermək heç nə əlavə etmir.',
     'no_roles' => 'Hələ heç bir rol yoxdur. İcazə verməyə başlamaq üçün ilk rolu əlavə edin.',
     'offering_empty' => 'Burada veriləcək icazə yoxdur.',

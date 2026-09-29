@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Barchasini yig\'ish',
     'counter' => ':granted / :total',
     'expand_all' => 'Barchasini yoyish',
-    'group_summary' => 'Ushbu guruhda berilgan',
     'inherited_hint' => 'Bu foydalanuvchining roli orqali allaqachon berilgan. Rol saqlanib turar ekan, to\'g\'ridan-to\'g\'ri berish hech narsa qo\'shmaydi.',
     'no_roles' => 'Hozircha rollar yo\'q. Ruxsat berishni boshlash uchun birinchi rolni qo\'shing.',
     'offering_empty' => 'Bu yerda beriladigan ruxsatlar yo\'q.',

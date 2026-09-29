@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'I-collapse lahat',
     'counter' => ':granted sa :total',
     'expand_all' => 'I-expand lahat',
-    'group_summary' => 'Naibigay sa grupong ito',
     'inherited_hint' => 'Naibigay na ito ng isang tungkulin ng user na ito. Habang nasa kanya ang tungkuling iyon, walang naidadagdag ang direktang pagbibigay.',
     'no_roles' => 'Wala pang tungkulin. Magdagdag ng una para makapagsimulang magbigay ng mga pahintulot.',
     'offering_empty' => 'Walang pahintulot na maibibigay rito.',

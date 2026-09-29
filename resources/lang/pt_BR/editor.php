@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Recolher todos',
     'counter' => ':granted de :total',
     'expand_all' => 'Expandir todos',
-    'group_summary' => 'Concedida neste grupo',
     'inherited_hint' => 'Já concedida por uma função deste usuário. Enquanto ele mantiver a função, uma concessão direta não acrescenta nada.',
     'no_roles' => 'Ainda não há funções. Adicione a primeira para começar a atribuir permissões.',
     'offering_empty' => 'Não há permissões para atribuir aqui.',

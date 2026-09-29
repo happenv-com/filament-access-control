@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Avaia tihzimna',
     'counter' => ':total zinga :granted',
     'expand_all' => 'Avaia tihzauhna',
-    'group_summary' => 'He group-a pek sa',
     'inherited_hint' => 'He hmangtu neih role hmangin pek sa a ni tawh. Chu role a neih chhung chuan, a hranga pek belh hian engmah a tihdanglam lo.',
     'no_roles' => 'Role a la awm lo. Phalna pek ṭan turin a hmasa ber belh rawh.',
     'offering_empty' => 'Heta pek tur phalna a awm lo.',

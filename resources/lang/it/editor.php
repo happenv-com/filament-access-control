@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Comprimi tutti',
     'counter' => ':granted di :total',
     'expand_all' => 'Espandi tutti',
-    'group_summary' => 'Concesso in questo gruppo',
     'inherited_hint' => 'Già concesso da un ruolo di questo utente. Finché mantiene il ruolo, una concessione diretta non aggiunge nulla.',
     'no_roles' => 'Non ci sono ancora ruoli. Aggiungi il primo per iniziare ad assegnare permessi.',
     'offering_empty' => 'Qui non ci sono permessi da assegnare.',

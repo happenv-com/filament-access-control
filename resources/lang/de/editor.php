@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Alle zuklappen',
     'counter' => ':granted von :total',
     'expand_all' => 'Alle aufklappen',
-    'group_summary' => 'In dieser Gruppe vergeben',
     'inherited_hint' => 'Bereits über eine Rolle dieses Benutzers vergeben. Solange die Rolle bleibt, ändert eine direkte Vergabe nichts.',
     'no_roles' => 'Es gibt noch keine Rolle. Legen Sie die erste an, um Berechtigungen zu vergeben.',
     'offering_empty' => 'Hier gibt es keine Berechtigungen zu vergeben.',

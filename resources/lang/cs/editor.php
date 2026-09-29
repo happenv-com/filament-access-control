@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Skrýt vše',
     'counter' => ':granted z :total',
     'expand_all' => 'Zobrazit vše',
-    'group_summary' => 'Uděleno v této skupině',
     'inherited_hint' => 'Již uděleno rolí, kterou tento uživatel má. Dokud tuto roli má, přímé udělení nic nepřidá.',
     'no_roles' => 'Zatím tu nejsou žádné role. Přidejte první, abyste mohli začít udělovat oprávnění.',
     'offering_empty' => 'Nejsou tu žádná oprávnění k udělení.',

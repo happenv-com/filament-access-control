@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Comprimare toate',
     'counter' => ':granted din :total',
     'expand_all' => 'Expandare toate',
-    'group_summary' => 'Acordată în acest grup',
     'inherited_hint' => 'Acordată deja printr-un rol al acestui utilizator. Cât timp rolul rămâne, o acordare directă nu adaugă nimic.',
     'no_roles' => 'Nu există încă niciun rol. Adăugați primul rol pentru a începe să acordați permisiuni.',
     'offering_empty' => 'Aici nu există permisiuni de acordat.',

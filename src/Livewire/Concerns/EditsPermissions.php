@@ -421,7 +421,7 @@ trait EditsPermissions
                     ...$groupShared,
                     'type' => 'summary',
                     'subject' => '',
-                    'label' => __('filament-access-control::editor.group_summary'),
+                    'label' => '',
                     'description' => null,
                     'slug' => null,
                     'restricted' => false,
@@ -749,8 +749,8 @@ trait EditsPermissions
             ->label($label)
             ->alignCenter()
             // Matches IconColumn's own default (`IconSize::Large`) — a TextColumn's icon takes its
-            // size from the text size, and the text itself stays empty everywhere but a summary row.
-            ->size(TextSize::Large)
+            // size from the text size. A summary row has no icon, only its number, in the standard size.
+            ->size(fn (array $record): ?TextSize => $record['type'] === 'summary' ? null : TextSize::Large)
             ->state(fn (array $record): string => $this->cellState($holderKey, $record))
             ->formatStateUsing(fn (string $state, array $record): string => $record['type'] === 'summary' ? $state : '')
             ->icon(fn (string $state, array $record): ?Heroicon => $record['type'] === 'summary' ? null : (PermissionCellState::tryFrom($state)?->icon() ?? match ($state) {

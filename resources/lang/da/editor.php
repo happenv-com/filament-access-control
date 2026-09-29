@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Skjul alle',
     'counter' => ':granted af :total',
     'expand_all' => 'Udvid alle',
-    'group_summary' => 'Tildelt i denne gruppe',
     'inherited_hint' => 'Allerede tildelt via en rolle, som denne bruger har. En direkte tildeling tilføjer intet, så længe brugeren har rollen.',
     'no_roles' => 'Der er ingen roller endnu. Tilføj den første for at begynde at tildele tilladelser.',
     'offering_empty' => 'Der er ingen tilladelser at tildele her.',

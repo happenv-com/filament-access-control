@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'Collapse all',
     'counter' => ':granted of :total',
     'expand_all' => 'Expand all',
-    'group_summary' => 'Granted in this group',
     'inherited_hint' => 'Already granted by a role this user holds. A direct grant adds nothing while the role stays.',
     'no_roles' => 'There are no roles yet. Add the first one to start handing out permissions.',
     'offering_empty' => 'There are no permissions to hand out here.',

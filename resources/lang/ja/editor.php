@@ -6,7 +6,6 @@ return [
     'collapse_all' => 'すべて折り畳む',
     'counter' => ':granted / :total',
     'expand_all' => 'すべて展開',
-    'group_summary' => 'このグループで付与済み',
     'inherited_hint' => 'このユーザーが持つロールによってすでに付与されています。そのロールがある限り、直接付与しても何も変わりません。',
     'no_roles' => 'ロールはまだありません。最初のロールを追加して、権限の割り当てを始めましょう。',
     'offering_empty' => 'ここで付与できる権限はありません。',
