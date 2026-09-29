@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Fold sammen alle',
     'counter' => ':granted av :total',
     'expand_all' => 'Utvid alle',
+    'group_summary' => 'Tildelt i denne gruppen',
     'inherited_hint' => 'Allerede gitt gjennom en rolle denne brukeren har. En direkte tildeling tilfører ingenting så lenge brukeren har rollen.',
     'no_roles' => 'Det finnes ingen roller ennå. Legg til den første for å begynne å tildele tillatelser.',
     'offering_empty' => 'Det er ingen tillatelser å tildele her.',

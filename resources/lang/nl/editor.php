@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Alles inklappen',
     'counter' => ':granted van :total',
     'expand_all' => 'Alles uitklappen',
+    'group_summary' => 'In deze groep toegekend',
     'inherited_hint' => 'Al toegekend via een rol van deze gebruiker. Zolang die rol blijft, voegt een directe toekenning niets toe.',
     'no_roles' => 'Er zijn nog geen rollen. Voeg de eerste toe om rechten te kunnen toekennen.',
     'offering_empty' => 'Er zijn hier geen rechten om toe te kennen.',

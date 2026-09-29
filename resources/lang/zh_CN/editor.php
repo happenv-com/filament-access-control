@@ -6,6 +6,7 @@ return [
     'collapse_all' => '全部收起',
     'counter' => ':granted / :total',
     'expand_all' => '全部展开',
+    'group_summary' => '本组中已授予',
     'inherited_hint' => '该用户所属的角色已授予此权限。只要该角色仍在，直接授予不会带来任何变化。',
     'no_roles' => '尚无角色。添加第一个角色即可开始分配权限。',
     'offering_empty' => '此处没有可分配的权限。',

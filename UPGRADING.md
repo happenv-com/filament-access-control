@@ -17,6 +17,7 @@ Nothing in your code has to change. What looks different:
 - A restricted permission's marker next to its name is a grey lock; it was a red no-entry sign, which now means a lost conflict.
 - The user editor has an *In effect* column, and a callout when the account fails a condition.
 - A *Dependencies* column appears once any permission declares a rule or a condition; declaration problems are listed above the screens (`->declarationProblems(false)` hides them).
+- With `->counters()`, the numbers moved from badges in the group header to a first row per group, one number per role column.
 
 If a test of yours asserts a role cell's state, `granted` is now `effective` and `revoked` is `not-granted`; a user's direct column keeps `granted` / `revoked`.
 

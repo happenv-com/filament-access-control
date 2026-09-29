@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Sulge kõik',
     'counter' => ':granted / :total',
     'expand_all' => 'Ava kõik',
+    'group_summary' => 'Selles grupis antud',
     'inherited_hint' => 'Juba antud selle kasutaja rolli kaudu. Seni kuni kasutajal see roll on, ei lisa otsene andmine midagi.',
     'no_roles' => 'Rolle veel pole. Lisage esimene, et hakata õigusi jagama.',
     'offering_empty' => 'Siin pole õigusi, mida anda.',

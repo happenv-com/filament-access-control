@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Strni vse',
     'counter' => ':granted od :total',
     'expand_all' => 'Razširi vse',
+    'group_summary' => 'Dodeljeno v tej skupini',
     'inherited_hint' => 'Že dodeljeno prek vloge tega uporabnika. Dokler ima to vlogo, neposredna dodelitev ničesar ne doda.',
     'no_roles' => 'Vlog še ni. Dodajte prvo, da začnete dodeljevati dovoljenja.',
     'offering_empty' => 'Tukaj ni dovoljenj za dodelitev.',

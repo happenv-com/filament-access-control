@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Kontrairatu dena',
     'counter' => ':granted / :total',
     'expand_all' => 'Zabaldu dena',
+    'group_summary' => 'Talde honetan emanda',
     'inherited_hint' => 'Erabiltzaile honek duen rol batek ematen du dagoeneko. Rolak dirauen bitartean, zuzenean emateak ez du ezer gehitzen.',
     'no_roles' => 'Oraindik ez dago rolik. Gehitu lehenengoa baimenak banatzen hasteko.',
     'offering_empty' => 'Hemen ez dago banatzeko baimenik.',

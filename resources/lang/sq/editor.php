@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Mbyll të gjitha',
     'counter' => ':granted nga :total',
     'expand_all' => 'Hap të gjitha',
+    'group_summary' => 'E dhënë në këtë grup',
     'inherited_hint' => 'Jepet tashmë nga një rol që ka ky përdorues. Për sa kohë ai e mban rolin, dhënia e drejtpërdrejtë nuk shton asgjë.',
     'no_roles' => 'Nuk ka ende role. Shtoni të parin për të filluar dhënien e lejeve.',
     'offering_empty' => 'Këtu nuk ka leje për t\'u dhënë.',

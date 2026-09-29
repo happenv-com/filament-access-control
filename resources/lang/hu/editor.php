@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Összes becsukása',
     'counter' => ':granted / :total',
     'expand_all' => 'Összes kibontása',
+    'group_summary' => 'A csoportban megadva',
     'inherited_hint' => 'A felhasználó egyik szerepköre már megadja. Amíg a szerepkör megmarad, a közvetlen hozzárendelés semmit sem ad hozzá.',
     'no_roles' => 'Még nincs egyetlen szerepkör sem. Add hozzá az elsőt, hogy elkezdhesd kiosztani a jogosultságokat.',
     'offering_empty' => 'Itt nincs kiosztható jogosultság.',

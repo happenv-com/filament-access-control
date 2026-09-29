@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Zbaliť všetko',
     'counter' => ':granted z :total',
     'expand_all' => 'Rozbaliť všetko',
+    'group_summary' => 'Udelené v tejto skupine',
     'inherited_hint' => 'Už udelené rolou, ktorú má tento používateľ. Kým má túto rolu, priame udelenie nič nepridá.',
     'no_roles' => 'Zatiaľ tu nie sú žiadne roly. Pridajte prvú, aby ste mohli začať udeľovať oprávnenia.',
     'offering_empty' => 'Nie sú tu žiadne oprávnenia na udelenie.',

@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Sažmi sve',
     'counter' => ':granted od :total',
     'expand_all' => 'Proširi sve',
+    'group_summary' => 'Dodijeljeno u ovoj grupi',
     'inherited_hint' => 'Već dodijeljeno kroz ulogu ovog korisnika. Dok uloga ostaje, direktno dodjeljivanje ništa ne mijenja.',
     'no_roles' => 'Još nema uloga. Dodajte prvu da biste počeli dodjeljivati dozvole.',
     'offering_empty' => 'Ovdje nema dozvola za dodjeljivanje.',

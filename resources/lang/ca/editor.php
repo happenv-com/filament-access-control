@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Replegar tots',
     'counter' => ':granted de :total',
     'expand_all' => 'Ampliar tots',
+    'group_summary' => 'Concedit en aquest grup',
     'inherited_hint' => 'Ja concedit per un rol que té aquest usuari. Mentre mantingui aquest rol, concedir-lo directament no hi afegeix res.',
     'no_roles' => 'Encara no hi ha cap rol. Afegeix-ne el primer per començar a assignar permisos.',
     'offering_empty' => 'Aquí no hi ha permisos per assignar.',

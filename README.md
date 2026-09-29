@@ -27,7 +27,7 @@ PermissionEditor::make()->deferred();
 
 - **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role; a click on a subject's row grants or clears all of its verbs. See [The access control page](#the-access-control-page).
 - **An editor for one role or one user.** The same table for a single record, as a schema component you put in a form, a tab or an infolist. For a user it also lists the roles that already grant each permission. See [Editing one record](#editing-one-record).
-- **Counters on demand.** `->counters()` puts what each role holds of a group into the group's header, visible even while it is folded. See [Counters](#counters).
+- **Counters on demand.** `->counters()` adds a summary row at the top of each group — one "granted/total" number per role column — visible even while the group is folded. See [Counters](#counters).
 - **Live or deferred saving.** Every click written at once, or staged and saved together — with Discard, a count of what is pending, and a warning before leaving with unsaved changes. See [Live or deferred](#live-or-deferred).
 - **Safe concurrent edits.** Each save re-reads the record under a row lock and replays the operator's intent, so two administrators changing the same role do not overwrite each other.
 - **Your authorization, asked every time.** Laravel abilities, policies or access-control permission enums decide who may see, create, change and delete; a voter's refusal is shown in the operator's language. See [Authorization](#authorization).
@@ -195,7 +195,7 @@ Leaving a page with staged changes asks for confirmation first.
 
 ### Counters
 
-Each group's header can count what every role holds of it — `Editor: 3 of 7` — as Filament badges, so a folded group still tells whether it is worth opening; a subject's tooltip then counts its verbs too. Off by default:
+Each group can show what every role holds of it — a first row of the group, one "granted/total" number per role column (`3/7`), so a folded group still tells whether it is worth opening; a subject's tooltip then counts its verbs too. Off by default:
 
 ```php
 FilamentAccessControlPlugin::make()->counters();   // every screen of the plugin

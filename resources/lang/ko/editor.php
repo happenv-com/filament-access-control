@@ -6,6 +6,7 @@ return [
     'collapse_all' => '모두 접기',
     'counter' => ':total개 중 :granted개',
     'expand_all' => '모두 펼치기',
+    'group_summary' => '이 그룹에서 부여됨',
     'inherited_hint' => '이 사용자가 가진 역할로 이미 부여된 권한입니다. 해당 역할이 유지되는 동안에는 직접 부여해도 달라지는 것이 없습니다.',
     'no_roles' => '아직 역할이 없습니다. 첫 번째 역할을 추가하고 권한 부여를 시작하세요.',
     'offering_empty' => '여기에서 부여할 수 있는 권한이 없습니다.',

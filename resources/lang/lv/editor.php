@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Sakļaut visus',
     'counter' => ':granted no :total',
     'expand_all' => 'Izplest visus',
+    'group_summary' => 'Piešķirta šajā grupā',
     'inherited_hint' => 'Jau piešķirta ar kādu no šī lietotāja lomām. Kamēr lietotājam ir šī loma, tieša piešķiršana neko nepievieno.',
     'no_roles' => 'Vēl nav nevienas lomas. Pievienojiet pirmo, lai sāktu piešķirt atļaujas.',
     'offering_empty' => 'Šeit nav atļauju, ko piešķirt.',

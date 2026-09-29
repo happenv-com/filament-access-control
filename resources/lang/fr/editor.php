@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Tout plier',
     'counter' => ':granted sur :total',
     'expand_all' => 'Tout déplier',
+    'group_summary' => 'Accordée dans ce groupe',
     'inherited_hint' => 'Déjà accordée par un rôle de cet utilisateur. Tant qu\'il conserve ce rôle, l\'accorder directement n\'ajoute rien.',
     'no_roles' => 'Aucun rôle pour l\'instant. Ajoutez-en un premier pour commencer à attribuer des permissions.',
     'offering_empty' => 'Aucune permission à attribuer ici.',

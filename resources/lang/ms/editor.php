@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Tutup semua',
     'counter' => ':granted daripada :total',
     'expand_all' => 'Buka semua',
+    'group_summary' => 'Diberikan dalam kumpulan ini',
     'inherited_hint' => 'Sudah diberikan melalui peranan yang dimiliki oleh pengguna ini. Pemberian secara langsung tidak menambah apa-apa selagi peranan itu kekal.',
     'no_roles' => 'Belum ada peranan. Tambah peranan pertama untuk mula memberikan kebenaran.',
     'offering_empty' => 'Tiada kebenaran untuk diberikan di sini.',

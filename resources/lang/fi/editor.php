@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Sulje kaikki',
     'counter' => ':granted / :total',
     'expand_all' => 'Avaa kaikki',
+    'group_summary' => 'Tässä ryhmässä myönnetty',
     'inherited_hint' => 'Myönnetty jo käyttäjän roolin kautta. Suora myöntäminen ei lisää mitään niin kauan kuin käyttäjällä on tämä rooli.',
     'no_roles' => 'Rooleja ei ole vielä. Lisää ensimmäinen, niin voit alkaa myöntää käyttöoikeuksia.',
     'offering_empty' => 'Täällä ei ole myönnettäviä käyttöoikeuksia.',

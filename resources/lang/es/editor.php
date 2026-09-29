@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Contraer todo',
     'counter' => ':granted de :total',
     'expand_all' => 'Expandir todo',
+    'group_summary' => 'Concedido en este grupo',
     'inherited_hint' => 'Ya concedido por un rol de este usuario. Mientras conserve ese rol, concederlo directamente no añade nada.',
     'no_roles' => 'Todavía no hay roles. Añade el primero para empezar a asignar permisos.',
     'offering_empty' => 'Aquí no hay permisos que asignar.',

@@ -6,6 +6,7 @@ return [
     'collapse_all' => 'Komprimera alla',
     'counter' => ':granted av :total',
     'expand_all' => 'Expandera alla',
+    'group_summary' => 'Tilldelad i den här gruppen',
     'inherited_hint' => 'Redan tilldelad via en roll som användaren har. En direkt tilldelning tillför inget så länge rollen finns kvar.',
     'no_roles' => 'Det finns inga roller ännu. Lägg till den första för att börja dela ut behörigheter.',
     'offering_empty' => 'Det finns inga behörigheter att dela ut här.',
