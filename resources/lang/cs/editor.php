@@ -23,7 +23,9 @@ return [
         'description' => 'Tato oprávnění byla udělena dříve, ale nic zde je nekontroluje. Můžete je odebrat, ale nemůžete je znovu udělit.',
     ],
     'columns' => [
+        'dependencies' => 'Závislosti',
         'granted' => 'Uděleno',
+        'in_effect' => 'Platí',
         'inherited' => 'Z rolí',
         'permission' => 'Oprávnění',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Tato oprávnění jsou zde jen pro čtení.',
         'saved' => 'Oprávnění byla uložena.',
         'unauthorized' => 'Tato oprávnění nesmíte měnit.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Vyžaduje MFA',
+        'unmet' => ':condition: jedno oprávnění, které tento účet má, není platné, dokud nesplní tuto podmínku.|:condition: :count oprávnění, která tento účet má, nejsou platná, dokud nesplní tuto podmínku.|:condition: :count oprávnění, která tento účet má, není platných, dokud nesplní tuto podmínku.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokováno: :permission',
+        'blocks' => 'Blokuje: :permission',
+        'implied_by' => 'Vyplývá z: :permission',
+        'implies' => 'Zahrnuje: :permission',
+        'invalid_declaration' => 'Neplatná deklarace',
+        'related' => 'Related: :permission',
+        'required_by' => 'Vyžaduje ji: :permission',
+        'requires' => 'Vyžaduje: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokováno: :permissions',
+        'grant_explicitly' => 'Kliknutím je udělíte explicitně',
+        'implied_by' => 'Vyplývá z: :permissions',
+        'missing' => 'Chybí požadavek: :permissions',
+        'restricted' => 'Aplikace to nyní omezuje',
+        'unmet_condition' => ':condition — tento účet ji nesplňuje',
+    ],
+    'problems' => [
+        'heading' => 'Některá oprávnění jsou deklarována způsobem, který nikdy nemůže fungovat',
+        'implies_conflicting' => ':permission nikdy nemůže být povoleno: zahrnuje :other, se kterým je v konfliktu.',
+        'requires_conflicting' => ':permission nikdy nemůže být povoleno: vyžaduje :other, se kterým je v konfliktu.',
+        'unregistered_target' => ':permission deklaruje „:rule“ o :other, jehož enum není registrován.',
+        'rules' => [
+            'conflicts_with' => 'V konfliktu s',
+            'implied_by' => 'Vyplývá z',
+            'requires' => 'Vyžaduje',
+        ],
     ],
 ];

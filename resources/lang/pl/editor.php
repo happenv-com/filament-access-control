@@ -23,7 +23,9 @@ return [
         'description' => 'Te uprawnienia zostały nadane wcześniej, ale nic ich tutaj nie sprawdza. Możesz je odebrać; nadać ponownie już nie.',
     ],
     'columns' => [
+        'dependencies' => 'Zależności',
         'granted' => 'Nadane',
+        'in_effect' => 'Obowiązuje',
         'inherited' => 'Z ról',
         'permission' => 'Uprawnienie',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Te uprawnienia są tutaj tylko do odczytu.',
         'saved' => 'Uprawnienia zostały zapisane.',
         'unauthorized' => 'Nie możesz zmieniać tych uprawnień.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Wymaga MFA',
+        'unmet' => ':condition: jedno uprawnienie posiadane przez to konto nie obowiązuje, dopóki nie spełni ono tego warunku.|:condition: :count uprawnienia posiadane przez to konto nie obowiązują, dopóki nie spełni ono tego warunku.|:condition: :count uprawnień posiadanych przez to konto nie obowiązuje, dopóki nie spełni ono tego warunku.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokowane przez: :permission',
+        'blocks' => 'Blokuje: :permission',
+        'implied_by' => 'Wynika z: :permission',
+        'implies' => 'Implikuje: :permission',
+        'invalid_declaration' => 'Nieprawidłowa deklaracja',
+        'related' => 'Related: :permission',
+        'required_by' => 'Wymagane przez: :permission',
+        'requires' => 'Wymaga: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokowane przez: :permissions',
+        'grant_explicitly' => 'Kliknięcie nadaje je bezpośrednio',
+        'implied_by' => 'Wynika z: :permissions',
+        'missing' => 'Brakujący wymóg: :permissions',
+        'restricted' => 'Obecnie ograniczone przez aplikację',
+        'unmet_condition' => ':condition — to konto go nie spełnia',
+    ],
+    'problems' => [
+        'heading' => 'Niektóre uprawnienia są zadeklarowane w sposób, który nigdy nie zadziała',
+        'implies_conflicting' => ':permission nigdy nie będzie można zezwolić: implikuje :other, z którym jest w konflikcie.',
+        'requires_conflicting' => ':permission nigdy nie będzie można zezwolić: wymaga :other, z którym jest w konflikcie.',
+        'unregistered_target' => ':permission deklaruje „:rule” w odniesieniu do :other, którego enum nie jest zarejestrowany.',
+        'rules' => [
+            'conflicts_with' => 'W konflikcie z',
+            'implied_by' => 'Wynika z',
+            'requires' => 'Wymaga',
+        ],
     ],
 ];

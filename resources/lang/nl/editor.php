@@ -23,7 +23,9 @@ return [
         'description' => 'Deze rechten zijn eerder toegekend, maar niets hier raadpleegt ze. Je kunt ze intrekken, maar niet opnieuw toekennen.',
     ],
     'columns' => [
+        'dependencies' => 'Afhankelijkheden',
         'granted' => 'Toegekend',
+        'in_effect' => 'Van kracht',
         'inherited' => 'Via rollen',
         'permission' => 'Recht',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Deze rechten zijn hier alleen-lezen.',
         'saved' => 'De rechten zijn opgeslagen.',
         'unauthorized' => 'Je mag deze rechten niet wijzigen.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Vereist MFA',
+        'unmet' => ':condition: één recht dat dit account heeft, is niet van kracht totdat aan deze voorwaarde wordt voldaan.|:condition: :count rechten die dit account heeft, zijn niet van kracht totdat aan deze voorwaarde wordt voldaan.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Geblokkeerd door: :permission',
+        'blocks' => 'Blokkeert: :permission',
+        'implied_by' => 'Geïmpliceerd door: :permission',
+        'implies' => 'Impliceert: :permission',
+        'invalid_declaration' => 'Ongeldige declaratie',
+        'related' => 'Related: :permission',
+        'required_by' => 'Vereist door: :permission',
+        'requires' => 'Vereist: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Geblokkeerd door: :permissions',
+        'grant_explicitly' => 'Een klik kent het expliciet toe',
+        'implied_by' => 'Geïmpliceerd door: :permissions',
+        'missing' => 'Ontbrekende vereiste: :permissions',
+        'restricted' => 'Momenteel beperkt door de applicatie',
+        'unmet_condition' => ':condition — dit account voldoet er niet aan',
+    ],
+    'problems' => [
+        'heading' => 'Sommige rechten zijn zo gedeclareerd dat ze nooit kunnen werken',
+        'implies_conflicting' => ':permission kan nooit worden toegestaan: het impliceert :other, waarmee het in conflict is.',
+        'requires_conflicting' => ':permission kan nooit worden toegestaan: het vereist :other, waarmee het in conflict is.',
+        'unregistered_target' => ':permission declareert “:rule” over :other, waarvan de enum niet geregistreerd is.',
+        'rules' => [
+            'conflicts_with' => 'In conflict met',
+            'implied_by' => 'Geïmpliceerd door',
+            'requires' => 'Vereist',
+        ],
     ],
 ];

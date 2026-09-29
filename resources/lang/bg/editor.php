@@ -23,7 +23,9 @@ return [
         'description' => 'Тези разрешения са предоставени по-рано, но нищо тук не ги проверява. Можете да ги отнемете, но не и да ги предоставите отново.',
     ],
     'columns' => [
+        'dependencies' => 'Зависимости',
         'granted' => 'Предоставено',
+        'in_effect' => 'В сила',
         'inherited' => 'От роли',
         'permission' => 'Разрешение',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Тези разрешения тук са само за четене.',
         'saved' => 'Разрешенията са запазени.',
         'unauthorized' => 'Нямате право да променяте тези разрешения.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Изисква MFA',
+        'unmet' => ':condition: едно разрешение, което този акаунт притежава, не действа, докато не изпълни това условие.|:condition: :count разрешения, които този акаунт притежава, не действат, докато не изпълни това условие.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Блокирано от: :permission',
+        'blocks' => 'Блокира: :permission',
+        'implied_by' => 'Предполагано от: :permission',
+        'implies' => 'Предполага: :permission',
+        'invalid_declaration' => 'Невалидна декларация',
+        'related' => 'Related: :permission',
+        'required_by' => 'Изисквано от: :permission',
+        'requires' => 'Изисква: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Блокирано от: :permissions',
+        'grant_explicitly' => 'Кликване го предоставя изрично',
+        'implied_by' => 'Предполагано от: :permissions',
+        'missing' => 'Липсващо изискване: :permissions',
+        'restricted' => 'В момента ограничено от приложението',
+        'unmet_condition' => ':condition — този акаунт не го изпълнява',
+    ],
+    'problems' => [
+        'heading' => 'Някои разрешения са декларирани по начин, който никога няма да проработи',
+        'implies_conflicting' => ':permission никога не може да бъде разрешено: то предполага :other, с което е в конфликт.',
+        'requires_conflicting' => ':permission никога не може да бъде разрешено: то изисква :other, с което е в конфликт.',
+        'unregistered_target' => ':permission декларира „:rule“ относно :other, чийто enum не е регистриран.',
+        'rules' => [
+            'conflicts_with' => 'В конфликт с',
+            'implied_by' => 'Предполагано от',
+            'requires' => 'Изисква',
+        ],
     ],
 ];

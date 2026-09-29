@@ -23,7 +23,9 @@ return [
         'description' => 'Bu icazələr əvvəllər verilib, lakin burada heç nə onları yoxlamır. Onları geri ala bilərsiniz, lakin yenidən verə bilməzsiniz.',
     ],
     'columns' => [
+        'dependencies' => 'Asılılıqlar',
         'granted' => 'Verilib',
+        'in_effect' => 'Qüvvədə',
         'inherited' => 'Rollardan',
         'permission' => 'İcazə',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Bu icazələr burada yalnız oxumaq üçündür.',
         'saved' => 'İcazələr yadda saxlanıldı.',
         'unauthorized' => 'Bu icazələri dəyişdirmək hüququnuz yoxdur.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA tələb edir',
+        'unmet' => ':condition: bu hesabın malik olduğu :count icazə bu şərti ödəyənə qədər qüvvəyə minmir.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Bloklayan: :permission',
+        'blocks' => 'Bloklayır: :permission',
+        'implied_by' => 'Nəzərdə tutan: :permission',
+        'implies' => 'Nəzərdə tutur: :permission',
+        'invalid_declaration' => 'Yanlış bəyannamə',
+        'related' => 'Related: :permission',
+        'required_by' => 'Tələb edən: :permission',
+        'requires' => 'Tələb edir: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Bloklayan: :permissions',
+        'grant_explicitly' => 'Klik onu birbaşa verir',
+        'implied_by' => 'Nəzərdə tutan: :permissions',
+        'missing' => 'Çatışmayan şərt: :permissions',
+        'restricted' => 'Hazırda tətbiq tərəfindən məhdudlaşdırılıb',
+        'unmet_condition' => ':condition — bu hesab bunu ödəmir',
+    ],
+    'problems' => [
+        'heading' => 'Bəzi icazələr heç vaxt işləməyəcək şəkildə bəyan edilib',
+        'implies_conflicting' => ':permission heç vaxt icazə verilə bilməz: o, ziddiyyət təşkil etdiyi :other-i nəzərdə tutur.',
+        'requires_conflicting' => ':permission heç vaxt icazə verilə bilməz: o, ziddiyyət təşkil etdiyi :other-i tələb edir.',
+        'unregistered_target' => ':permission :other haqqında «:rule» bəyan edir, lakin onun enum-u qeydiyyatdan keçməyib.',
+        'rules' => [
+            'conflicts_with' => 'Ziddiyyət təşkil edir',
+            'implied_by' => 'Nəzərdə tutan',
+            'requires' => 'Tələb edir',
+        ],
     ],
 ];

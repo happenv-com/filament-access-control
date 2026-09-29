@@ -23,7 +23,9 @@ return [
         'description' => 'These permissions were granted earlier, but nothing here consults them. You can revoke them; you cannot grant them again.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Granted',
+        'in_effect' => 'In effect',
         'inherited' => 'From roles',
         'permission' => 'Permission',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'These permissions are read-only here.',
         'saved' => 'Permissions have been saved.',
         'unauthorized' => 'You are not allowed to change these permissions.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+        'unmet' => ':condition: one permission this account holds is not in effect until it meets this condition.|:condition: :count permissions this account holds are not in effect until it meets this condition.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'invalid_declaration' => 'Invalid declaration',
+        'related' => 'Related: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blocked by: :permissions',
+        'grant_explicitly' => 'A click grants it explicitly',
+        'implied_by' => 'Implied by: :permissions',
+        'missing' => 'Missing requirement: :permissions',
+        'restricted' => 'Restricted by the application right now',
+        'unmet_condition' => ':condition — this account does not meet it',
+    ],
+    'problems' => [
+        'heading' => 'Some permissions are declared in a way that can never work',
+        'implies_conflicting' => ':permission can never be allowed: it implies :other, which it conflicts with.',
+        'requires_conflicting' => ':permission can never be allowed: it requires :other, which it conflicts with.',
+        'unregistered_target' => ':permission declares “:rule” about :other, whose enum is not registered.',
+        'rules' => [
+            'conflicts_with' => 'Conflicts with',
+            'implied_by' => 'Implied by',
+            'requires' => 'Requires',
+        ],
     ],
 ];

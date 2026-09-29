@@ -23,7 +23,9 @@ return [
         'description' => 'Nämä käyttöoikeudet on myönnetty aiemmin, mutta mikään täällä ei tarkista niitä. Voit perua ne, mutta et voi myöntää niitä uudelleen.',
     ],
     'columns' => [
+        'dependencies' => 'Riippuvuudet',
         'granted' => 'Myönnetty',
+        'in_effect' => 'Voimassa',
         'inherited' => 'Rooleista',
         'permission' => 'Käyttöoikeus',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Nämä käyttöoikeudet ovat täällä vain luku -tilassa.',
         'saved' => 'Käyttöoikeudet on tallennettu.',
         'unauthorized' => 'Sinulla ei ole oikeutta muuttaa näitä käyttöoikeuksia.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA vaaditaan',
+        'unmet' => ':condition: yksi tämän tilin käyttöoikeus ei ole voimassa, ennen kuin tämä ehto täyttyy.|:condition: :count tämän tilin käyttöoikeutta ei ole voimassa, ennen kuin tämä ehto täyttyy.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Estäjä: :permission',
+        'blocks' => 'Estää: :permission',
+        'implied_by' => 'Seuraa oikeudesta: :permission',
+        'implies' => 'Sisältää oikeuden: :permission',
+        'invalid_declaration' => 'Virheellinen määritys',
+        'related' => 'Related: :permission',
+        'required_by' => 'Vaaditaan oikeudelle: :permission',
+        'requires' => 'Vaatii: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Estäjä: :permissions',
+        'grant_explicitly' => 'Napsautus myöntää sen suoraan',
+        'implied_by' => 'Seuraa oikeuksista: :permissions',
+        'missing' => 'Puuttuva edellytys: :permissions',
+        'restricted' => 'Sovellus rajoittaa tätä juuri nyt',
+        'unmet_condition' => ':condition — tämä tili ei täytä sitä',
+    ],
+    'problems' => [
+        'heading' => 'Jotkin käyttöoikeudet on määritelty tavalla, joka ei voi koskaan toimia',
+        'implies_conflicting' => ':permission ei voi koskaan olla sallittu: se sisältää oikeuden :other, jonka kanssa se on ristiriidassa.',
+        'requires_conflicting' => ':permission ei voi koskaan olla sallittu: se vaatii oikeuden :other, jonka kanssa se on ristiriidassa.',
+        'unregistered_target' => ':permission ilmoittaa ”:rule” koskien oikeutta :other, jonka enumia ei ole rekisteröity.',
+        'rules' => [
+            'conflicts_with' => 'Ristiriidassa',
+            'implied_by' => 'Seuraa oikeudesta',
+            'requires' => 'Vaatii',
+        ],
     ],
 ];

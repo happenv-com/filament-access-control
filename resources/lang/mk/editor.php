@@ -23,7 +23,9 @@ return [
         'description' => 'Овие дозволи се доделени претходно, но ништо тука не ги проверува. Можете да ги одземете, но не и повторно да ги доделите.',
     ],
     'columns' => [
+        'dependencies' => 'Зависности',
         'granted' => 'Доделено',
+        'in_effect' => 'Во сила',
         'inherited' => 'Од улоги',
         'permission' => 'Дозвола',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Овие дозволи тука се само за читање.',
         'saved' => 'Дозволите се зачувани.',
         'unauthorized' => 'Немате право да ги менувате овие дозволи.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Бара MFA',
+        'unmet' => ':condition: една дозвола што ја поседува оваа сметка не е во сила додека не го исполни овој услов.|:condition: :count дозволи што ги поседува оваа сметка не се во сила додека не го исполни овој услов.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Блокирано од: :permission',
+        'blocks' => 'Блокира: :permission',
+        'implied_by' => 'Подразбрано од: :permission',
+        'implies' => 'Подразбира: :permission',
+        'invalid_declaration' => 'Неважечка декларација',
+        'related' => 'Related: :permission',
+        'required_by' => 'Побарано од: :permission',
+        'requires' => 'Бара: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Блокирано од: :permissions',
+        'grant_explicitly' => 'Клик директно ја доделува',
+        'implied_by' => 'Подразбрано од: :permissions',
+        'missing' => 'Недостасува услов: :permissions',
+        'restricted' => 'Моментално ограничено од апликацијата',
+        'unmet_condition' => ':condition — оваа сметка не го исполнува',
+    ],
+    'problems' => [
+        'heading' => 'Некои дозволи се декларирани на начин што никогаш нема да работи',
+        'implies_conflicting' => ':permission никогаш нема да може да биде дозволено: подразбира :other, со која е во конфликт.',
+        'requires_conflicting' => ':permission никогаш нема да може да биде дозволено: бара :other, со која е во конфликт.',
+        'unregistered_target' => ':permission декларира „:rule“ за :other, чиј enum не е регистриран.',
+        'rules' => [
+            'conflicts_with' => 'Во конфликт со',
+            'implied_by' => 'Подразбрано од',
+            'requires' => 'Бара',
+        ],
     ],
 ];

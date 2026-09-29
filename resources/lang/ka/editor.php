@@ -23,7 +23,9 @@ return [
         'description' => 'ეს ნებართვები ადრე იყო მინიჭებული, მაგრამ აქ მათ არაფერი ამოწმებს. შეგიძლიათ მათი ჩამორთმევა, მაგრამ ხელახლა მინიჭება — არა.',
     ],
     'columns' => [
+        'dependencies' => 'დამოკიდებულებები',
         'granted' => 'მინიჭებული',
+        'in_effect' => 'ძალაშია',
         'inherited' => 'როლებიდან',
         'permission' => 'ნებართვა',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'ეს ნებართვები აქ მხოლოდ სანახავადაა.',
         'saved' => 'ნებართვები შენახულია.',
         'unauthorized' => 'ამ ნებართვების შეცვლის უფლება არ გაქვთ.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'მოითხოვს MFA-ს',
+        'unmet' => ':condition: ამ ანგარიშის :count ნებართვა ძალაში არ შევა, სანამ ეს პირობა არ შესრულდება.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'დაბლოკილია: :permission',
+        'blocks' => 'ბლოკავს: :permission',
+        'implied_by' => 'გამომდინარეობს: :permission',
+        'implies' => 'გულისხმობს: :permission',
+        'invalid_declaration' => 'არასწორი დეკლარაცია',
+        'related' => 'Related: :permission',
+        'required_by' => 'მოთხოვნილია: :permission',
+        'requires' => 'მოითხოვს: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'დაბლოკილია: :permissions',
+        'grant_explicitly' => 'დაწკაპუნება პირდაპირ ანიჭებს მას',
+        'implied_by' => 'გამომდინარეობს: :permissions',
+        'missing' => 'აკლია მოთხოვნა: :permissions',
+        'restricted' => 'ამჟამად შეზღუდულია აპლიკაციის მიერ',
+        'unmet_condition' => ':condition — ეს ანგარიში მას არ აკმაყოფილებს',
+    ],
+    'problems' => [
+        'heading' => 'ზოგიერთი ნებართვა დეკლარირებულია ისე, რომ ის ვერასდროს იმუშავებს',
+        'implies_conflicting' => ':permission ვერასდროს დაშვებული იქნება: ის გულისხმობს :other-ს, რომელთანაც კონფლიქტშია.',
+        'requires_conflicting' => ':permission ვერასდროს დაშვებული იქნება: ის მოითხოვს :other-ს, რომელთანაც კონფლიქტშია.',
+        'unregistered_target' => ':permission აცხადებს „:rule“-ს :other-ის შესახებ, რომლის enum-იც რეგისტრირებული არ არის.',
+        'rules' => [
+            'conflicts_with' => 'კონფლიქტშია',
+            'implied_by' => 'გამომდინარეობს',
+            'requires' => 'მოითხოვს',
+        ],
     ],
 ];

@@ -15,7 +15,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
@@ -93,8 +93,9 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
             ->records(fn (?string $search): array => $this->holders->isEmpty() ? [] : $this->permissionRecords($search))
             ->columns([
                 $this->permissionColumn(),
+                $this->dependenciesColumn(),
                 ...$this->holders
-                    ->map(fn (Model $role, int | string $roleKey): IconColumn => $this->holderColumn((string) $roleKey, $this->getHolderTitle($role))
+                    ->map(fn (Model $role, int | string $roleKey): TextColumn => $this->holderColumn((string) $roleKey, $this->getHolderTitle($role))
                         ->headerTooltip($this->isHolderLocked($role) ? __('filament-access-control::editor.super_admin_hint') : null))
                     ->values()
                     ->all(),

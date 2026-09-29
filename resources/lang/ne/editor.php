@@ -23,7 +23,9 @@ return [
         'description' => 'यी अनुमतिहरू पहिले दिइएका थिए, तर यहाँ कुनै कुराले यिनलाई जाँच गर्दैन। तपाईं यिनलाई फिर्ता लिन सक्नुहुन्छ, तर फेरि दिन सक्नुहुन्न।',
     ],
     'columns' => [
+        'dependencies' => 'निर्भरताहरू',
         'granted' => 'दिइएको',
+        'in_effect' => 'प्रभावमा',
         'inherited' => 'भूमिकाबाट',
         'permission' => 'अनुमति',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'यी अनुमतिहरू यहाँ हेर्न मात्र मिल्छन्।',
         'saved' => 'अनुमतिहरू सुरक्षित गरियो।',
         'unauthorized' => 'तपाईंलाई यी अनुमतिहरू परिवर्तन गर्ने अधिकार छैन।',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA आवश्यक छ',
+        'unmet' => ':condition: यो खातासँग भएको एउटा अनुमति यो सर्त पूरा नभएसम्म प्रभावमा हुँदैन।|:condition: यो खातासँग भएका :count अनुमतिहरू यो सर्त पूरा नभएसम्म प्रभावमा हुँदैनन्।',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'रोक्ने: :permission',
+        'blocks' => 'रोक्छ: :permission',
+        'implied_by' => 'बाट संकेत गरिएको: :permission',
+        'implies' => 'संकेत गर्छ: :permission',
+        'invalid_declaration' => 'अमान्य घोषणा',
+        'related' => 'Related: :permission',
+        'required_by' => 'आवश्यक पार्ने: :permission',
+        'requires' => 'आवश्यक पर्छ: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'रोक्ने: :permissions',
+        'grant_explicitly' => 'क्लिकले यसलाई सिधै प्रदान गर्छ',
+        'implied_by' => 'बाट संकेत गरिएको: :permissions',
+        'missing' => 'छुटेको आवश्यकता: :permissions',
+        'restricted' => 'अहिले एप्लिकेसनद्वारा प्रतिबन्धित',
+        'unmet_condition' => ':condition — यो खाताले यो पूरा गर्दैन',
+    ],
+    'problems' => [
+        'heading' => 'केही अनुमतिहरू कहिल्यै काम नगर्ने गरी घोषणा गरिएका छन्',
+        'implies_conflicting' => ':permission लाई कहिल्यै अनुमति दिन सकिँदैन: यसले द्वन्द्व भएको :other लाई संकेत गर्छ।',
+        'requires_conflicting' => ':permission लाई कहिल्यै अनुमति दिन सकिँदैन: यसलाई द्वन्द्व भएको :other आवश्यक पर्छ।',
+        'unregistered_target' => ':permission ले :other को बारेमा “:rule” घोषणा गर्छ, जसको enum दर्ता गरिएको छैन।',
+        'rules' => [
+            'conflicts_with' => 'यससँग द्वन्द्व',
+            'implied_by' => 'बाट संकेत गरिएको',
+            'requires' => 'आवश्यक पर्छ',
+        ],
     ],
 ];

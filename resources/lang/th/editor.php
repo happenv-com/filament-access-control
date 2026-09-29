@@ -23,7 +23,9 @@ return [
         'description' => 'สิทธิ์เหล่านี้เคยมอบไว้ก่อนหน้านี้ แต่ไม่มีส่วนใดในที่นี้ตรวจสอบสิทธิ์เหล่านี้ คุณเพิกถอนได้ แต่ไม่สามารถมอบซ้ำได้อีก',
     ],
     'columns' => [
+        'dependencies' => 'การพึ่งพา',
         'granted' => 'มอบแล้ว',
+        'in_effect' => 'มีผล',
         'inherited' => 'จากบทบาท',
         'permission' => 'สิทธิ์',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'สิทธิ์เหล่านี้เป็นแบบอ่านอย่างเดียวในส่วนนี้',
         'saved' => 'บันทึกสิทธิ์เรียบร้อย',
         'unauthorized' => 'คุณไม่ได้รับอนุญาตให้เปลี่ยนแปลงสิทธิ์เหล่านี้',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'ต้องการ MFA',
+        'unmet' => ':condition: สิทธิ์ :count รายการที่บัญชีนี้มีจะยังไม่มีผลจนกว่าจะตรงตามเงื่อนไขนี้',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'ถูกปิดกั้นโดย: :permission',
+        'blocks' => 'ปิดกั้น: :permission',
+        'implied_by' => 'ถูกบ่งชี้โดย: :permission',
+        'implies' => 'บ่งชี้ถึง: :permission',
+        'invalid_declaration' => 'การประกาศไม่ถูกต้อง',
+        'related' => 'Related: :permission',
+        'required_by' => 'จำเป็นสำหรับ: :permission',
+        'requires' => 'ต้องการ: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'ถูกปิดกั้นโดย: :permissions',
+        'grant_explicitly' => 'คลิกเพื่อมอบสิทธิ์นี้โดยตรง',
+        'implied_by' => 'ถูกบ่งชี้โดย: :permissions',
+        'missing' => 'ข้อกำหนดที่ขาดหายไป: :permissions',
+        'restricted' => 'ขณะนี้ถูกจำกัดโดยแอปพลิเคชัน',
+        'unmet_condition' => ':condition — บัญชีนี้ไม่ตรงตามเงื่อนไขนี้',
+    ],
+    'problems' => [
+        'heading' => 'สิทธิ์บางรายการถูกประกาศในลักษณะที่ไม่มีทางทำงานได้',
+        'implies_conflicting' => ':permission จะไม่สามารถได้รับอนุญาตได้เลย เนื่องจากบ่งชี้ถึง :other ซึ่งขัดแย้งกัน',
+        'requires_conflicting' => ':permission จะไม่สามารถได้รับอนุญาตได้เลย เนื่องจากต้องการ :other ซึ่งขัดแย้งกัน',
+        'unregistered_target' => ':permission ประกาศ “:rule” เกี่ยวกับ :other ซึ่ง enum ของมันยังไม่ได้ลงทะเบียน',
+        'rules' => [
+            'conflicts_with' => 'ขัดแย้งกับ',
+            'implied_by' => 'ถูกบ่งชี้โดย',
+            'requires' => 'ต้องการ',
+        ],
     ],
 ];

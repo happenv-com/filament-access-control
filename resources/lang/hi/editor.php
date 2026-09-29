@@ -23,7 +23,9 @@ return [
         'description' => 'ये अनुमतियाँ पहले दी गई थीं, लेकिन यहाँ इनकी कोई जाँच नहीं होती। आप इन्हें वापस ले सकते हैं, पर दोबारा नहीं दे सकते।',
     ],
     'columns' => [
+        'dependencies' => 'निर्भरताएँ',
         'granted' => 'दी गई',
+        'in_effect' => 'प्रभावी',
         'inherited' => 'भूमिकाओं से',
         'permission' => 'अनुमति',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'ये अनुमतियाँ यहाँ केवल देखने के लिए हैं।',
         'saved' => 'अनुमतियाँ सेव हो गई हैं।',
         'unauthorized' => 'आपको ये अनुमतियाँ बदलने का अधिकार नहीं है।',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA आवश्यक है',
+        'unmet' => ':condition: इस खाते के पास मौजूद एक अनुमति तब तक प्रभावी नहीं होगी जब तक यह शर्त पूरी न हो।|:condition: इस खाते के पास मौजूद :count अनुमतियाँ तब तक प्रभावी नहीं होंगी जब तक यह शर्त पूरी न हो।',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'अवरोधक: :permission',
+        'blocks' => 'अवरोध करता है: :permission',
+        'implied_by' => 'इससे निहित: :permission',
+        'implies' => 'यह निहित करता है: :permission',
+        'invalid_declaration' => 'अमान्य घोषणा',
+        'related' => 'Related: :permission',
+        'required_by' => 'इसके लिए आवश्यक: :permission',
+        'requires' => 'आवश्यकता है: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'अवरोधक: :permissions',
+        'grant_explicitly' => 'क्लिक करने पर यह सीधे दी जाती है',
+        'implied_by' => 'इससे निहित: :permissions',
+        'missing' => 'अनुपस्थित आवश्यकता: :permissions',
+        'restricted' => 'अभी एप्लिकेशन द्वारा प्रतिबंधित',
+        'unmet_condition' => ':condition — यह खाता इसे पूरा नहीं करता',
+    ],
+    'problems' => [
+        'heading' => 'कुछ अनुमतियाँ इस तरह घोषित की गई हैं कि वे कभी काम नहीं कर सकतीं',
+        'implies_conflicting' => ':permission को कभी अनुमति नहीं दी जा सकती: यह :other को निहित करती है, जिससे यह टकराती है।',
+        'requires_conflicting' => ':permission को कभी अनुमति नहीं दी जा सकती: इसे :other की आवश्यकता है, जिससे यह टकराती है।',
+        'unregistered_target' => ':permission, :other के बारे में “:rule” घोषित करती है, जिसका enum पंजीकृत नहीं है।',
+        'rules' => [
+            'conflicts_with' => 'इससे टकराव',
+            'implied_by' => 'इससे निहित',
+            'requires' => 'आवश्यकता है',
+        ],
     ],
 ];

@@ -23,7 +23,9 @@ return [
         'description' => 'এই অনুমতিগুলো আগে দেওয়া হয়েছিল, কিন্তু এখানে কোনো কিছুই এগুলো যাচাই করে না। আপনি এগুলো প্রত্যাহার করতে পারবেন, কিন্তু আবার দিতে পারবেন না।',
     ],
     'columns' => [
+        'dependencies' => 'নির্ভরতা',
         'granted' => 'দেওয়া হয়েছে',
+        'in_effect' => 'কার্যকর',
         'inherited' => 'ভূমিকা থেকে',
         'permission' => 'অনুমতি',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'এই অনুমতিগুলো এখানে শুধু দেখার জন্য।',
         'saved' => 'অনুমতি সংরক্ষিত হয়েছে।',
         'unauthorized' => 'এই অনুমতিগুলো পরিবর্তন করার অধিকার আপনার নেই।',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA প্রয়োজন',
+        'unmet' => ':condition: এই অ্যাকাউন্টের একটি অনুমতি এই শর্ত পূরণ না হওয়া পর্যন্ত কার্যকর নয়।|:condition: এই অ্যাকাউন্টের :count টি অনুমতি এই শর্ত পূরণ না হওয়া পর্যন্ত কার্যকর নয়।',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'দ্বারা অবরুদ্ধ: :permission',
+        'blocks' => 'অবরুদ্ধ করে: :permission',
+        'implied_by' => 'দ্বারা বোঝানো: :permission',
+        'implies' => 'বোঝায়: :permission',
+        'invalid_declaration' => 'অবৈধ ঘোষণা',
+        'related' => 'Related: :permission',
+        'required_by' => 'দ্বারা প্রয়োজনীয়: :permission',
+        'requires' => 'প্রয়োজন: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'দ্বারা অবরুদ্ধ: :permissions',
+        'grant_explicitly' => 'ক্লিক করলে এটি সরাসরি দেওয়া হয়',
+        'implied_by' => 'দ্বারা বোঝানো: :permissions',
+        'missing' => 'অনুপস্থিত প্রয়োজনীয়তা: :permissions',
+        'restricted' => 'অ্যাপ্লিকেশন বর্তমানে এটি সীমিত করেছে',
+        'unmet_condition' => ':condition — এই অ্যাকাউন্ট এটি পূরণ করে না',
+    ],
+    'problems' => [
+        'heading' => 'কিছু অনুমতি এমনভাবে ঘোষণা করা হয়েছে যা কখনো কাজ করতে পারবে না',
+        'implies_conflicting' => ':permission কখনো অনুমোদিত হতে পারবে না: এটি :other বোঝায়, যার সাথে এটি সাংঘর্ষিক।',
+        'requires_conflicting' => ':permission কখনো অনুমোদিত হতে পারবে না: এর জন্য :other প্রয়োজন, যার সাথে এটি সাংঘর্ষিক।',
+        'unregistered_target' => ':permission, :other সম্পর্কে “:rule” ঘোষণা করে, যার enum নিবন্ধিত নয়।',
+        'rules' => [
+            'conflicts_with' => 'সাংঘর্ষিক',
+            'implied_by' => 'দ্বারা বোঝানো',
+            'requires' => 'প্রয়োজন',
+        ],
     ],
 ];

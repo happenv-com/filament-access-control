@@ -23,7 +23,9 @@ return [
         'description' => 'Izin ini sudah diberikan sebelumnya, tetapi tidak ada yang memeriksanya di sini. Anda dapat mencabutnya, tetapi tidak dapat memberikannya lagi.',
     ],
     'columns' => [
+        'dependencies' => 'Ketergantungan',
         'granted' => 'Diberikan',
+        'in_effect' => 'Berlaku',
         'inherited' => 'Dari peran',
         'permission' => 'Izin',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Izin ini hanya dapat dibaca di sini.',
         'saved' => 'Izin telah disimpan.',
         'unauthorized' => 'Anda tidak diizinkan mengubah izin ini.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Membutuhkan MFA',
+        'unmet' => ':condition: :count izin yang dimiliki akun ini tidak berlaku sampai memenuhi kondisi ini.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Diblokir oleh: :permission',
+        'blocks' => 'Memblokir: :permission',
+        'implied_by' => 'Disiratkan oleh: :permission',
+        'implies' => 'Menyiratkan: :permission',
+        'invalid_declaration' => 'Deklarasi tidak valid',
+        'related' => 'Related: :permission',
+        'required_by' => 'Dibutuhkan oleh: :permission',
+        'requires' => 'Membutuhkan: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Diblokir oleh: :permissions',
+        'grant_explicitly' => 'Klik akan memberikannya secara eksplisit',
+        'implied_by' => 'Disiratkan oleh: :permissions',
+        'missing' => 'Persyaratan hilang: :permissions',
+        'restricted' => 'Sedang dibatasi oleh aplikasi saat ini',
+        'unmet_condition' => ':condition — akun ini tidak memenuhinya',
+    ],
+    'problems' => [
+        'heading' => 'Beberapa izin dideklarasikan dengan cara yang tidak akan pernah berfungsi',
+        'implies_conflicting' => ':permission tidak akan pernah bisa diizinkan: izin ini menyiratkan :other, yang bertentangan dengannya.',
+        'requires_conflicting' => ':permission tidak akan pernah bisa diizinkan: izin ini membutuhkan :other, yang bertentangan dengannya.',
+        'unregistered_target' => ':permission mendeklarasikan “:rule” tentang :other, yang enum-nya belum terdaftar.',
+        'rules' => [
+            'conflicts_with' => 'Bertentangan dengan',
+            'implied_by' => 'Disiratkan oleh',
+            'requires' => 'Membutuhkan',
+        ],
     ],
 ];

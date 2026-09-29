@@ -23,7 +23,9 @@ return [
         'description' => 'Ин иҷозатҳо қаблан дода шуда буданд, аммо дар ин ҷо ҳеҷ чиз онҳоро намесанҷад. Шумо метавонед онҳоро бозпас гиред, аммо дубора дода наметавонед.',
     ],
     'columns' => [
+        'dependencies' => 'Вобастагиҳо',
         'granted' => 'Дода шуда',
+        'in_effect' => 'Амалкунанда',
         'inherited' => 'Аз нақшҳо',
         'permission' => 'Иҷозат',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Ин иҷозатҳо дар ин ҷо танҳо барои хондан мебошанд.',
         'saved' => 'Иҷозатҳо нигоҳ дошта шуданд.',
         'unauthorized' => 'Шумо ҳуқуқи тағйир додани ин иҷозатҳоро надоред.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA талаб мекунад',
+        'unmet' => ':condition: :count иҷозате, ки ин ҳисоб дорад, то иҷрои ин шарт амал намекунад.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Манъкунанда: :permission',
+        'blocks' => 'Манъ мекунад: :permission',
+        'implied_by' => 'Аз он бармеояд: :permission',
+        'implies' => 'Дар бар мегирад: :permission',
+        'invalid_declaration' => 'Эъломияи нодуруст',
+        'related' => 'Related: :permission',
+        'required_by' => 'Талабкунанда: :permission',
+        'requires' => 'Талаб мекунад: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Манъкунанда: :permissions',
+        'grant_explicitly' => 'Клик онро мустақиман медиҳад',
+        'implied_by' => 'Аз он бармеояд: :permissions',
+        'missing' => 'Талаботи намерасида: :permissions',
+        'restricted' => 'Ҳоло аз ҷониби барнома маҳдуд шудааст',
+        'unmet_condition' => ':condition — ин ҳисоб онро иҷро намекунад',
+    ],
+    'problems' => [
+        'heading' => 'Баъзе иҷозатҳо тавре эълон шудаанд, ки ҳеҷ гоҳ кор нахоҳанд кард',
+        'implies_conflicting' => ':permission ҳеҷ гоҳ иҷозат дода намешавад: он :other-ро дар бар мегирад, ки бо он мухолиф аст.',
+        'requires_conflicting' => ':permission ҳеҷ гоҳ иҷозат дода намешавад: он :other-ро талаб мекунад, ки бо он мухолиф аст.',
+        'unregistered_target' => ':permission дар бораи :other «:rule»-ро эълон мекунад, ки enum-и он сабт нашудааст.',
+        'rules' => [
+            'conflicts_with' => 'Мухолиф аст бо',
+            'implied_by' => 'Аз он бармеояд',
+            'requires' => 'Талаб мекунад',
+        ],
     ],
 ];

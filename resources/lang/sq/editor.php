@@ -23,7 +23,9 @@ return [
         'description' => 'Këto leje janë dhënë më parë, por asgjë këtu nuk i kontrollon. Mund t\'i hiqni, por nuk mund t\'i jepni përsëri.',
     ],
     'columns' => [
+        'dependencies' => 'Varësitë',
         'granted' => 'E dhënë',
+        'in_effect' => 'Në fuqi',
         'inherited' => 'Nga rolet',
         'permission' => 'Leja',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Këtu këto leje janë vetëm për lexim.',
         'saved' => 'Lejet u ruajtën.',
         'unauthorized' => 'Nuk keni të drejtë t\'i ndryshoni këto leje.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Kërkon MFA',
+        'unmet' => ':condition: një leje që ka kjo llogari nuk është në fuqi derisa të përmbushë këtë kusht.|:condition: :count leje që ka kjo llogari nuk janë në fuqi derisa të përmbushë këtë kusht.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Bllokuar nga: :permission',
+        'blocks' => 'Bllokon: :permission',
+        'implied_by' => 'Nënkuptuar nga: :permission',
+        'implies' => 'Nënkupton: :permission',
+        'invalid_declaration' => 'Deklaratë e pavlefshme',
+        'related' => 'Related: :permission',
+        'required_by' => 'Kërkuar nga: :permission',
+        'requires' => 'Kërkon: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Bllokuar nga: :permissions',
+        'grant_explicitly' => 'Një klik e jep atë shprehimisht',
+        'implied_by' => 'Nënkuptuar nga: :permissions',
+        'missing' => 'Kërkesë mungon: :permissions',
+        'restricted' => 'Aktualisht e kufizuar nga aplikacioni',
+        'unmet_condition' => ':condition — ky llogari nuk e përmbush',
+    ],
+    'problems' => [
+        'heading' => 'Disa leje janë deklaruar në një mënyrë që nuk do të funksionojë kurrë',
+        'implies_conflicting' => ':permission nuk do të mund të lejohet kurrë: ajo nënkupton :other, me të cilën është në konflikt.',
+        'requires_conflicting' => ':permission nuk do të mund të lejohet kurrë: ajo kërkon :other, me të cilën është në konflikt.',
+        'unregistered_target' => ':permission deklaron «:rule» rreth :other, enumi i të cilit nuk është regjistruar.',
+        'rules' => [
+            'conflicts_with' => 'Në konflikt me',
+            'implied_by' => 'Nënkuptuar nga',
+            'requires' => 'Kërkon',
+        ],
     ],
 ];

@@ -23,7 +23,9 @@ return [
         'description' => 'እነዚህ ፈቃዶች ቀደም ብለው ተሰጥተዋል፣ ነገር ግን እዚህ ምንም ነገር አያረጋግጣቸውም። ሊሽሯቸው ይችላሉ፤ እንደገና ሊሰጧቸው ግን አይችሉም።',
     ],
     'columns' => [
+        'dependencies' => 'ጥገኝነቶች',
         'granted' => 'የተሰጠ',
+        'in_effect' => 'በሥራ ላይ',
         'inherited' => 'ከሚናዎች',
         'permission' => 'ፈቃድ',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'እነዚህ ፈቃዶች እዚህ ለእይታ ብቻ ናቸው።',
         'saved' => 'ፈቃዶቹ ተቀምጠዋል።',
         'unauthorized' => 'እነዚህን ፈቃዶች የመቀየር መብት የለዎትም።',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA ያስፈልጋል',
+        'unmet' => ':condition፦ ይህ አካውንት ከያዛቸው ፈቃዶች አንዱ ይህን ሁኔታ እስኪያሟላ ድረስ ተፈጻሚ አይሆንም።|:condition፦ ይህ አካውንት ከያዛቸው :count ፈቃዶች ይህን ሁኔታ እስኪያሟሉ ድረስ ተፈጻሚ አይሆኑም።',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'የታገደው በ: :permission',
+        'blocks' => 'የሚያግደው: :permission',
+        'implied_by' => 'የተጠቆመው በ: :permission',
+        'implies' => 'የሚጠቁመው: :permission',
+        'invalid_declaration' => 'ልክ ያልሆነ መግለጫ',
+        'related' => 'Related: :permission',
+        'required_by' => 'የሚያስፈልገው ለ: :permission',
+        'requires' => 'የሚያስፈልገው: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'የታገደው በ: :permissions',
+        'grant_explicitly' => 'ጠቅ ማድረግ በቀጥታ ይሰጠዋል',
+        'implied_by' => 'የተጠቆመው በ: :permissions',
+        'missing' => 'የጎደለ መስፈርት: :permissions',
+        'restricted' => 'በአሁኑ ጊዜ በመተግበሪያው የተገደበ',
+        'unmet_condition' => ':condition — ይህ አካውንት አያሟላውም',
+    ],
+    'problems' => [
+        'heading' => 'አንዳንድ ፈቃዶች ፈጽሞ ሊሠሩ በማይችሉ መንገድ ተገልጸዋል',
+        'implies_conflicting' => ':permission ፈጽሞ ሊፈቀድ አይችልም፦ የሚቃረነውን :other ስለሚያመለክት።',
+        'requires_conflicting' => ':permission ፈጽሞ ሊፈቀድ አይችልም፦ የሚቃረነውን :other ስለሚያስፈልገው።',
+        'unregistered_target' => ':permission ስለ :other «:rule» ይላል፣ ነገር ግን enum-ው አልተመዘገበም።',
+        'rules' => [
+            'conflicts_with' => 'የሚቃረነው',
+            'implied_by' => 'የተጠቆመው በ',
+            'requires' => 'የሚያስፈልገው',
+        ],
     ],
 ];

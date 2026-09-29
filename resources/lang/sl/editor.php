@@ -23,7 +23,9 @@ return [
         'description' => 'Ta dovoljenja so bila dodeljena prej, vendar jih tukaj nič ne preverja. Lahko jih odvzamete, ne morete pa jih znova dodeliti.',
     ],
     'columns' => [
+        'dependencies' => 'Odvisnosti',
         'granted' => 'Dodeljeno',
+        'in_effect' => 'Velja',
         'inherited' => 'Iz vlog',
         'permission' => 'Dovoljenje',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Ta dovoljenja so tukaj samo za branje.',
         'saved' => 'Dovoljenja so bila shranjena.',
         'unauthorized' => 'Teh dovoljenj ne smete spreminjati.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Zahteva MFA',
+        'unmet' => ':condition: eno dovoljenje, ki ga ima ta račun, ne velja, dokler ne izpolni tega pogoja.|:condition: :count dovoljenji, ki ju ima ta račun, ne veljata, dokler ne izpolni tega pogoja.|:condition: :count dovoljenja, ki jih ima ta račun, ne veljajo, dokler ne izpolni tega pogoja.|:condition: :count dovoljenj, ki jih ima ta račun, ne velja, dokler ne izpolni tega pogoja.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokirano od: :permission',
+        'blocks' => 'Blokira: :permission',
+        'implied_by' => 'Izhaja iz: :permission',
+        'implies' => 'Vključuje: :permission',
+        'invalid_declaration' => 'Neveljavna deklaracija',
+        'related' => 'Related: :permission',
+        'required_by' => 'Zahteva jo: :permission',
+        'requires' => 'Zahteva: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokirano od: :permissions',
+        'grant_explicitly' => 'Klik ga izrecno dodeli',
+        'implied_by' => 'Izhaja iz: :permissions',
+        'missing' => 'Manjkajoča zahteva: :permissions',
+        'restricted' => 'Trenutno omejeno s strani aplikacije',
+        'unmet_condition' => ':condition — ta račun ga ne izpolnjuje',
+    ],
+    'problems' => [
+        'heading' => 'Nekatera dovoljenja so deklarirana na način, ki nikoli ne bo deloval',
+        'implies_conflicting' => ':permission nikoli ne bo mogoče dovoliti: vključuje :other, s katerim je v nasprotju.',
+        'requires_conflicting' => ':permission nikoli ne bo mogoče dovoliti: zahteva :other, s katerim je v nasprotju.',
+        'unregistered_target' => ':permission deklarira „:rule“ o :other, katerega enum ni registriran.',
+        'rules' => [
+            'conflicts_with' => 'V nasprotju z',
+            'implied_by' => 'Izhaja iz',
+            'requires' => 'Zahteva',
+        ],
     ],
 ];

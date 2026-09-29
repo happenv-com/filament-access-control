@@ -23,7 +23,9 @@ return [
         'description' => 'Questi permessi sono stati concessi in precedenza, ma qui nulla li consulta. Puoi revocarli, ma non concederli di nuovo.',
     ],
     'columns' => [
+        'dependencies' => 'Dipendenze',
         'granted' => 'Concesso',
+        'in_effect' => 'In vigore',
         'inherited' => 'Dai ruoli',
         'permission' => 'Permesso',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Qui questi permessi sono di sola lettura.',
         'saved' => 'I permessi sono stati salvati.',
         'unauthorized' => 'Non sei autorizzato a modificare questi permessi.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Richiede MFA',
+        'unmet' => ':condition: un permesso posseduto da questo account non è in vigore finché non soddisfa questa condizione.|:condition: :count permessi posseduti da questo account non sono in vigore finché non soddisfa questa condizione.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Bloccato da: :permission',
+        'blocks' => 'Blocca: :permission',
+        'implied_by' => 'Implicito da: :permission',
+        'implies' => 'Implica: :permission',
+        'invalid_declaration' => 'Dichiarazione non valida',
+        'related' => 'Related: :permission',
+        'required_by' => 'Richiesto da: :permission',
+        'requires' => 'Richiede: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Bloccato da: :permissions',
+        'grant_explicitly' => 'Un clic lo concede esplicitamente',
+        'implied_by' => 'Implicito da: :permissions',
+        'missing' => 'Requisito mancante: :permissions',
+        'restricted' => 'Attualmente limitato dall\'applicazione',
+        'unmet_condition' => ':condition — questo account non la soddisfa',
+    ],
+    'problems' => [
+        'heading' => 'Alcuni permessi sono dichiarati in un modo che non potrà mai funzionare',
+        'implies_conflicting' => ':permission non potrà mai essere consentito: implica :other, con cui è in conflitto.',
+        'requires_conflicting' => ':permission non potrà mai essere consentito: richiede :other, con cui è in conflitto.',
+        'unregistered_target' => ':permission dichiara «:rule» riguardo a :other, il cui enum non è registrato.',
+        'rules' => [
+            'conflicts_with' => 'In conflitto con',
+            'implied_by' => 'Implicito da',
+            'requires' => 'Richiede',
+        ],
     ],
 ];

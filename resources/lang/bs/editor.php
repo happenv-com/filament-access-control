@@ -23,7 +23,9 @@ return [
         'description' => 'Ove dozvole su ranije dodijeljene, ali ih ovdje ništa ne provjerava. Možete ih oduzeti, ali ih ne možete ponovo dodijeliti.',
     ],
     'columns' => [
+        'dependencies' => 'Zavisnosti',
         'granted' => 'Dodijeljeno',
+        'in_effect' => 'Na snazi',
         'inherited' => 'Iz uloga',
         'permission' => 'Dozvola',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Ove dozvole su ovdje samo za čitanje.',
         'saved' => 'Dozvole su sačuvane.',
         'unauthorized' => 'Nemate pravo mijenjati ove dozvole.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Zahtijeva MFA',
+        'unmet' => ':condition: jedna dozvola koju ovaj nalog posjeduje nije na snazi dok ne ispuni ovaj uslov.|:condition: :count dozvole koje ovaj nalog posjeduje nisu na snazi dok ne ispuni ovaj uslov.|:condition: :count dozvola koje ovaj nalog posjeduje nisu na snazi dok ne ispuni ovaj uslov.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokirano od: :permission',
+        'blocks' => 'Blokira: :permission',
+        'implied_by' => 'Podrazumijeva ga: :permission',
+        'implies' => 'Podrazumijeva: :permission',
+        'invalid_declaration' => 'Nevažeća deklaracija',
+        'related' => 'Related: :permission',
+        'required_by' => 'Zahtijeva ga: :permission',
+        'requires' => 'Zahtijeva: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokirano od: :permissions',
+        'grant_explicitly' => 'Klik je eksplicitno dodjeljuje',
+        'implied_by' => 'Podrazumijeva ga: :permissions',
+        'missing' => 'Nedostaje preduslov: :permissions',
+        'restricted' => 'Trenutno ograničeno od strane aplikacije',
+        'unmet_condition' => ':condition — ovaj nalog to ne ispunjava',
+    ],
+    'problems' => [
+        'heading' => 'Neke dozvole su deklarisane na način koji nikada neće raditi',
+        'implies_conflicting' => ':permission nikada ne može biti dozvoljeno: podrazumijeva :other, sa kojim je u sukobu.',
+        'requires_conflicting' => ':permission nikada ne može biti dozvoljeno: zahtijeva :other, sa kojim je u sukobu.',
+        'unregistered_target' => ':permission deklariše „:rule“ o :other, čiji enum nije registrovan.',
+        'rules' => [
+            'conflicts_with' => 'U sukobu sa',
+            'implied_by' => 'Podrazumijeva ga',
+            'requires' => 'Zahtijeva',
+        ],
     ],
 ];

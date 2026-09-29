@@ -23,7 +23,9 @@ return [
         'description' => 'Ezeket a jogosultságokat korábban adták meg, de itt semmi sem ellenőrzi őket. Visszavonhatod őket, de újra nem adhatod meg.',
     ],
     'columns' => [
+        'dependencies' => 'Függőségek',
         'granted' => 'Megadva',
+        'in_effect' => 'Érvényben',
         'inherited' => 'Szerepkörökből',
         'permission' => 'Jogosultság',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Ezek a jogosultságok itt csak olvashatók.',
         'saved' => 'A jogosultságok mentve.',
         'unauthorized' => 'Nem módosíthatod ezeket a jogosultságokat.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA szükséges',
+        'unmet' => ':condition: egy jogosultság, amellyel ez a fiók rendelkezik, nem érvényes, amíg nem teljesíti ezt a feltételt.|:condition: :count jogosultság, amellyel ez a fiók rendelkezik, nem érvényes, amíg nem teljesíti ezt a feltételt.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokkolója: :permission',
+        'blocks' => 'Blokkolja: :permission',
+        'implied_by' => 'Ebből következik: :permission',
+        'implies' => 'Magában foglalja: :permission',
+        'invalid_declaration' => 'Érvénytelen deklaráció',
+        'related' => 'Related: :permission',
+        'required_by' => 'Ezt igényli: :permission',
+        'requires' => 'Megköveteli: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokkolója: :permissions',
+        'grant_explicitly' => 'Egy kattintás kifejezetten megadja',
+        'implied_by' => 'Ebből következik: :permissions',
+        'missing' => 'Hiányzó követelmény: :permissions',
+        'restricted' => 'Az alkalmazás jelenleg korlátozza',
+        'unmet_condition' => ':condition — ez a fiók nem felel meg neki',
+    ],
+    'problems' => [
+        'heading' => 'Néhány jogosultság olyan módon van deklarálva, hogy soha nem fog működni',
+        'implies_conflicting' => 'A(z) :permission soha nem engedélyezhető: magában foglalja a(z) :other jogosultságot, amellyel ütközik.',
+        'requires_conflicting' => 'A(z) :permission soha nem engedélyezhető: megköveteli a(z) :other jogosultságot, amellyel ütközik.',
+        'unregistered_target' => 'A(z) :permission „:rule” szabályt deklarál a(z) :other kapcsán, amelynek enumja nincs regisztrálva.',
+        'rules' => [
+            'conflicts_with' => 'Ütközik ezzel',
+            'implied_by' => 'Ebből következik',
+            'requires' => 'Megköveteli',
+        ],
     ],
 ];

@@ -7,6 +7,7 @@ namespace Happenv\FilamentAccessControl\Tests\Fixtures\Models;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\Tests\Fixtures\User;
 use Happenv\LaravelAccessControl\Contracts\AuthControllable;
+use Happenv\LaravelAccessControl\Contracts\HoldsGrants;
 use Happenv\LaravelAccessControl\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -18,7 +19,7 @@ use Illuminate\Support\Collection;
  * @property string $name
  * @property array<int, mixed>|null $permissions
  */
-class Role extends Model implements AuthControllable, HasEditablePermissions
+class Role extends Model implements AuthControllable, HasEditablePermissions, HoldsGrants
 {
     use HasPermissions;
 

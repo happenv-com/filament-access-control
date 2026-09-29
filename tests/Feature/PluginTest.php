@@ -113,3 +113,9 @@ it('lets the application configure the role actions', function (): void {
     expect($plugin->configureCreateRoleAction(CreateAction::make())->getLabel())->toBe('New role')
         ->and($plugin->configureDeleteRoleAction(Action::make('deleteRole'))->getLabel())->toBe('Remove');
 });
+
+it('shows declaration problems unless told not to', function (): void {
+    expect(plugin()->showsDeclarationProblems())->toBeTrue()
+        ->and(plugin()->declarationProblems(false)->showsDeclarationProblems())->toBeFalse()
+        ->and(plugin()->declarationProblems(fn (): bool => true)->showsDeclarationProblems())->toBeTrue();
+});

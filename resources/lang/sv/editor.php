@@ -23,7 +23,9 @@ return [
         'description' => 'Dessa behörigheter tilldelades tidigare, men inget här kontrollerar dem. Du kan återkalla dem men inte tilldela dem igen.',
     ],
     'columns' => [
+        'dependencies' => 'Beroenden',
         'granted' => 'Tilldelad',
+        'in_effect' => 'Gäller',
         'inherited' => 'Från roller',
         'permission' => 'Behörighet',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Dessa behörigheter är skrivskyddade här.',
         'saved' => 'Behörigheterna har sparats.',
         'unauthorized' => 'Du får inte ändra dessa behörigheter.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Kräver MFA',
+        'unmet' => ':condition: en behörighet som det här kontot har gäller inte förrän det uppfyller detta villkor.|:condition: :count behörigheter som det här kontot har gäller inte förrän det uppfyller detta villkor.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blockerad av: :permission',
+        'blocks' => 'Blockerar: :permission',
+        'implied_by' => 'Medförs av: :permission',
+        'implies' => 'Medför: :permission',
+        'invalid_declaration' => 'Ogiltig deklaration',
+        'related' => 'Related: :permission',
+        'required_by' => 'Krävs av: :permission',
+        'requires' => 'Kräver: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blockerad av: :permissions',
+        'grant_explicitly' => 'Ett klick tilldelar den explicit',
+        'implied_by' => 'Medförs av: :permissions',
+        'missing' => 'Saknat krav: :permissions',
+        'restricted' => 'Begränsad av applikationen just nu',
+        'unmet_condition' => ':condition — det här kontot uppfyller den inte',
+    ],
+    'problems' => [
+        'heading' => 'Vissa behörigheter är deklarerade på ett sätt som aldrig kan fungera',
+        'implies_conflicting' => ':permission kan aldrig tillåtas: den medför :other, som den är i konflikt med.',
+        'requires_conflicting' => ':permission kan aldrig tillåtas: den kräver :other, som den är i konflikt med.',
+        'unregistered_target' => ':permission deklarerar ”:rule” om :other, vars enum inte är registrerad.',
+        'rules' => [
+            'conflicts_with' => 'I konflikt med',
+            'implied_by' => 'Medförs av',
+            'requires' => 'Kräver',
+        ],
     ],
 ];

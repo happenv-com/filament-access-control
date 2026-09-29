@@ -23,7 +23,9 @@ return [
         'description' => 'این مجوزها قبلاً اعطا شده‌اند، اما هیچ چیز در اینجا آن‌ها را بررسی نمی‌کند. می‌توانید آن‌ها را پس بگیرید، اما نمی‌توانید دوباره اعطایشان کنید.',
     ],
     'columns' => [
+        'dependencies' => 'وابستگی‌ها',
         'granted' => 'اعطا شده',
+        'in_effect' => 'مؤثر',
         'inherited' => 'از نقش‌ها',
         'permission' => 'مجوز',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'این مجوزها اینجا فقط‌خواندنی هستند.',
         'saved' => 'مجوزها ذخیره شدند.',
         'unauthorized' => 'شما اجازه تغییر این مجوزها را ندارید.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'نیازمند MFA است',
+        'unmet' => ':condition: یک مجوز که این حساب دارد، تا زمانی‌که این شرط را برآورده نکند، اعمال نمی‌شود.|:condition: :count مجوز که این حساب دارد، تا زمانی‌که این شرط را برآورده نکند، اعمال نمی‌شوند.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'مسدودشده توسط: :permission',
+        'blocks' => 'مسدود می‌کند: :permission',
+        'implied_by' => 'ناشی از: :permission',
+        'implies' => 'در بر می‌گیرد: :permission',
+        'invalid_declaration' => 'اعلان نامعتبر',
+        'related' => 'Related: :permission',
+        'required_by' => 'لازم برای: :permission',
+        'requires' => 'نیاز دارد به: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'مسدودشده توسط: :permissions',
+        'grant_explicitly' => 'کلیک آن را صراحتاً اعطا می‌کند',
+        'implied_by' => 'ناشی از: :permissions',
+        'missing' => 'نیازمندی مفقود: :permissions',
+        'restricted' => 'در حال حاضر توسط برنامه محدود شده',
+        'unmet_condition' => ':condition — این حساب آن را برآورده نمی‌کند',
+    ],
+    'problems' => [
+        'heading' => 'برخی مجوزها به شکلی اعلان شده‌اند که هرگز کار نخواهد کرد',
+        'implies_conflicting' => ':permission هرگز قابل مجاز شدن نیست: این مجوز :other را در بر می‌گیرد که با آن در تعارض است.',
+        'requires_conflicting' => ':permission هرگز قابل مجاز شدن نیست: این مجوز به :other نیاز دارد که با آن در تعارض است.',
+        'unregistered_target' => ':permission دربارهٔ :other «:rule» اعلان می‌کند، در حالی‌که enum آن ثبت نشده است.',
+        'rules' => [
+            'conflicts_with' => 'در تعارض با',
+            'implied_by' => 'ناشی از',
+            'requires' => 'نیاز دارد به',
+        ],
     ],
 ];

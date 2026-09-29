@@ -23,7 +23,9 @@ return [
         'description' => 'Bu izinler daha önce verildi, ancak burada hiçbir şey bunları denetlemiyor. Bunları geri alabilirsiniz, ancak yeniden veremezsiniz.',
     ],
     'columns' => [
+        'dependencies' => 'Bağımlılıklar',
         'granted' => 'Verildi',
+        'in_effect' => 'Yürürlükte',
         'inherited' => 'Rollerden',
         'permission' => 'İzin',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Bu izinler burada salt okunurdur.',
         'saved' => 'İzinler kaydedildi.',
         'unauthorized' => 'Bu izinleri değiştirme yetkiniz yok.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA gerektiriyor',
+        'unmet' => ':condition: bu hesabın sahip olduğu :count izin, bu koşulu karşılayana kadar yürürlükte olmayacak.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Engelleyen: :permission',
+        'blocks' => 'Engelliyor: :permission',
+        'implied_by' => 'İma eden: :permission',
+        'implies' => 'İma ediyor: :permission',
+        'invalid_declaration' => 'Geçersiz bildirim',
+        'related' => 'Related: :permission',
+        'required_by' => 'Gerektiren: :permission',
+        'requires' => 'Gerektiriyor: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Engelleyen: :permissions',
+        'grant_explicitly' => 'Bir tıklama bunu doğrudan verir',
+        'implied_by' => 'İma eden: :permissions',
+        'missing' => 'Eksik gereksinim: :permissions',
+        'restricted' => 'Şu anda uygulama tarafından kısıtlanıyor',
+        'unmet_condition' => ':condition — bu hesap bunu karşılamıyor',
+    ],
+    'problems' => [
+        'heading' => 'Bazı izinler asla çalışamayacak şekilde tanımlanmış',
+        'implies_conflicting' => ':permission asla izin verilemez: çakıştığı :other iznini ima ediyor.',
+        'requires_conflicting' => ':permission asla izin verilemez: çakıştığı :other iznini gerektiriyor.',
+        'unregistered_target' => ':permission, :other hakkında “:rule” bildiriyor, ancak onun enum\'u kayıtlı değil.',
+        'rules' => [
+            'conflicts_with' => 'Şununla çakışıyor',
+            'implied_by' => 'İma eden',
+            'requires' => 'Gerektiriyor',
+        ],
     ],
 ];

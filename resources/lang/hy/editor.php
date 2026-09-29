@@ -23,7 +23,9 @@ return [
         'description' => 'Այս թույլտվությունները տրվել են ավելի վաղ, բայց այստեղ ոչինչ դրանք չի ստուգում։ Կարող եք հետ վերցնել դրանք, բայց չեք կարող կրկին տրամադրել։',
     ],
     'columns' => [
+        'dependencies' => 'Կախվածություններ',
         'granted' => 'Տրված',
+        'in_effect' => 'Ուժի մեջ',
         'inherited' => 'Դերերից',
         'permission' => 'Թույլտվություն',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Այս թույլտվություններն այստեղ միայն դիտելու համար են։',
         'saved' => 'Թույլտվությունները պահպանվել են։',
         'unauthorized' => 'Դուք իրավունք չունեք փոխելու այս թույլտվությունները։',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Պահանջում է MFA',
+        'unmet' => ':condition՝ այս հաշվին պատկանող մեկ թույլտվություն ուժի մեջ չէ, քանի դեռ այն չի բավարարում այս պայմանը։|:condition՝ այս հաշվին պատկանող :count թույլտվություններ ուժի մեջ չեն, քանի դեռ այն չի բավարարում այս պայմանը։',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Արգելափակող՝ :permission',
+        'blocks' => 'Արգելափակում է՝ :permission',
+        'implied_by' => 'Բխում է՝ :permission',
+        'implies' => 'Ենթադրում է՝ :permission',
+        'invalid_declaration' => 'Անվավեր հայտարարագիր',
+        'related' => 'Related: :permission',
+        'required_by' => 'Պահանջող՝ :permission',
+        'requires' => 'Պահանջում է՝ :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Արգելափակող՝ :permissions',
+        'grant_explicitly' => 'Սեղմումը ուղղակիորեն տալիս է այն',
+        'implied_by' => 'Բխում է՝ :permissions',
+        'missing' => 'Բացակայող պահանջ՝ :permissions',
+        'restricted' => 'Այժմ սահմանափակված է հավելվածի կողմից',
+        'unmet_condition' => ':condition — այս հաշիվը չի բավարարում այն',
+    ],
+    'problems' => [
+        'heading' => 'Որոշ թույլտվություններ հայտարարված են այնպես, որ երբեք չեն կարող աշխատել',
+        'implies_conflicting' => ':permission-ին երբեք չի կարող թույլատրվել. այն ենթադրում է :other, որի հետ հակասության մեջ է։',
+        'requires_conflicting' => ':permission-ին երբեք չի կարող թույլատրվել. այն պահանջում է :other, որի հետ հակասության մեջ է։',
+        'unregistered_target' => ':permission-ը հայտարարում է «:rule»՝ :other-ի մասին, որի enum-ը գրանցված չէ։',
+        'rules' => [
+            'conflicts_with' => 'Հակասում է',
+            'implied_by' => 'Բխում է',
+            'requires' => 'Պահանջում է',
+        ],
     ],
 ];

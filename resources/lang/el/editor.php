@@ -23,7 +23,9 @@ return [
         'description' => 'Αυτά τα δικαιώματα εκχωρήθηκαν νωρίτερα, αλλά τίποτα εδώ δεν τα ελέγχει. Μπορείτε να τα ανακαλέσετε, αλλά όχι να τα εκχωρήσετε ξανά.',
     ],
     'columns' => [
+        'dependencies' => 'Εξαρτήσεις',
         'granted' => 'Εκχωρημένο',
+        'in_effect' => 'Σε ισχύ',
         'inherited' => 'Από ρόλους',
         'permission' => 'Δικαίωμα',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Αυτά τα δικαιώματα είναι εδώ μόνο για ανάγνωση.',
         'saved' => 'Τα δικαιώματα αποθηκεύτηκαν.',
         'unauthorized' => 'Δεν επιτρέπεται να αλλάξετε αυτά τα δικαιώματα.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Απαιτεί MFA',
+        'unmet' => ':condition: ένα δικαίωμα που κατέχει αυτός ο λογαριασμός δεν ισχύει μέχρι να πληρούται αυτή η προϋπόθεση.|:condition: :count δικαιώματα που κατέχει αυτός ο λογαριασμός δεν ισχύουν μέχρι να πληρούται αυτή η προϋπόθεση.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Αποκλείεται από: :permission',
+        'blocks' => 'Αποκλείει: :permission',
+        'implied_by' => 'Συνεπάγεται από: :permission',
+        'implies' => 'Συνεπάγεται: :permission',
+        'invalid_declaration' => 'Μη έγκυρη δήλωση',
+        'related' => 'Related: :permission',
+        'required_by' => 'Απαιτείται από: :permission',
+        'requires' => 'Απαιτεί: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Αποκλείεται από: :permissions',
+        'grant_explicitly' => 'Ένα κλικ το εκχωρεί ρητά',
+        'implied_by' => 'Συνεπάγεται από: :permissions',
+        'missing' => 'Λείπει προϋπόθεση: :permissions',
+        'restricted' => 'Περιορίζεται αυτή τη στιγμή από την εφαρμογή',
+        'unmet_condition' => ':condition — αυτός ο λογαριασμός δεν την πληροί',
+    ],
+    'problems' => [
+        'heading' => 'Ορισμένα δικαιώματα έχουν δηλωθεί με τρόπο που δεν μπορεί ποτέ να λειτουργήσει',
+        'implies_conflicting' => 'Το :permission δεν μπορεί ποτέ να επιτραπεί: συνεπάγεται το :other, με το οποίο βρίσκεται σε σύγκρουση.',
+        'requires_conflicting' => 'Το :permission δεν μπορεί ποτέ να επιτραπεί: απαιτεί το :other, με το οποίο βρίσκεται σε σύγκρουση.',
+        'unregistered_target' => 'Το :permission δηλώνει «:rule» σχετικά με το :other, του οποίου το enum δεν είναι καταχωρισμένο.',
+        'rules' => [
+            'conflicts_with' => 'Σε σύγκρουση με',
+            'implied_by' => 'Συνεπάγεται από',
+            'requires' => 'Απαιτεί',
+        ],
     ],
 ];

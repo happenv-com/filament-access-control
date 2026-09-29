@@ -23,7 +23,9 @@ return [
         'description' => 'Heng phalna ho hi hmain pek tawh a ni a, mahse heta thil engmah hian a endik lo. I la let thei a, mahse i pe leh thei tawh lo.',
     ],
     'columns' => [
+        'dependencies' => 'Innghahna',
         'granted' => 'Pek sa',
+        'in_effect' => 'A thawk mek',
         'inherited' => 'Role atangin',
         'permission' => 'Phalna',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Heng phalna ho hi heta en chauh theih an ni.',
         'saved' => 'Phalna ho save a ni e.',
         'unauthorized' => 'Heng phalna ho thlâk phalna i nei lo.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA a mamawh',
+        'unmet' => ':condition: hei account hian phalna :count a nei chu hei dinhmun a tlin loh chhung chuan a thawk lo ang.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Khap tu: :permission',
+        'blocks' => 'A khap: :permission',
+        'implied_by' => 'A chhuah khan: :permission',
+        'implies' => 'A huam: :permission',
+        'invalid_declaration' => 'Sawi dik lo',
+        'related' => 'Related: :permission',
+        'required_by' => 'A mamawh tu: :permission',
+        'requires' => 'A mamawh: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Khap tu: :permissions',
+        'grant_explicitly' => 'Click chuan a pe ngei ngei',
+        'implied_by' => 'A chhuah khan: :permissions',
+        'missing' => 'Mamawh bo: :permissions',
+        'restricted' => 'Tunah hian application-in a khap',
+        'unmet_condition' => ':condition — hei account hian a tlin lo',
+    ],
+    'problems' => [
+        'heading' => 'Phalna ṭhenkhat chu a ni tawh lo dan hian sawi a ni',
+        'implies_conflicting' => ':permission chu phal a ni thei lo vek ang: a huam :other, chu chuan a inkalh.',
+        'requires_conflicting' => ':permission chu phal a ni thei lo vek ang: a mamawh :other, chu chuan a inkalh.',
+        'unregistered_target' => ':permission chuan :other chungchang «:rule» a sawi, chu enum chu register a ni lo.',
+        'rules' => [
+            'conflicts_with' => 'A inkalh',
+            'implied_by' => 'A chhuah khan',
+            'requires' => 'A mamawh',
+        ],
     ],
 ];

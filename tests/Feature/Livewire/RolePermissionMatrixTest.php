@@ -10,6 +10,7 @@ use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\CategoryPermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\ProductPermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\RolePermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\Surface;
+use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\UserPermission;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Js;
 use Livewire\Features\SupportLockedProperties\CannotUpdateLockedPropertyException;
@@ -114,33 +115,94 @@ describe('rendering', function (): void {
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'some', 'subject:' . ProductPermission::class)
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'all', 'subject:' . CategoryPermission::class)
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'none', 'subject:' . RolePermission::class)
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'granted', 'permission:' . ProductPermission::View->value)
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'revoked', 'permission:' . ProductPermission::Create->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'effective', 'permission:' . ProductPermission::View->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'not-granted', 'permission:' . ProductPermission::Create->value)
             ->assertTableColumnStateSet('holder_' . holderKey($this->admin), 'all', 'subject:' . RolePermission::class);
     });
 
-    it('counts, in each group\'s header, what every role holds of it — when asked to', function (): void {
-        $this->editor->update(['permissions' => [ProductPermission::View->value, CategoryPermission::View->value]]);
-
+    it('keeps the group description plain, whether or not counters are on', function (): void {
         $record = ['group' => 'catalogue', 'group_description' => 'What the shop sells'];
 
         $without = livewire(RolePermissionMatrix::class)->instance();
         $with = livewire(RolePermissionMatrix::class, ['counters' => true])->instance();
 
         expect($without->groupDescription($record))->toBe('What the shop sells')
-            ->and((string) $with->groupDescription($record))
-            ->toContain('What the shop sells')
-            ->toContain('Administrator:')
-            ->toContain('7 of 7')
-            ->toContain('Editor:')
-            ->toContain('2 of 7');
+            ->and($with->groupDescription($record))->toBe('What the shop sells');
+    });
+
+    it('puts a summary record first in each group, when counters are on', function (): void {
+        $keys = array_keys(livewire(RolePermissionMatrix::class, ['counters' => true])->instance()->permissionRecords());
+
+        expect($keys)->toEqual([
+            'summary:administration',
+            'subject:' . RolePermission::class,
+            'permission:' . RolePermission::View->value,
+            'permission:' . RolePermission::Create->value,
+            'permission:' . RolePermission::Update->value,
+            'permission:' . RolePermission::Delete->value,
+            'subject:' . UserPermission::class,
+            'permission:' . UserPermission::View->value,
+            'permission:' . UserPermission::Update->value,
+            'summary:catalogue',
+            'subject:' . CategoryPermission::class,
+            'permission:' . CategoryPermission::View->value,
+            'permission:' . CategoryPermission::Update->value,
+            'permission:' . CategoryPermission::MergeDuplicates->value,
+            'subject:' . ProductPermission::class,
+            'permission:' . ProductPermission::View->value,
+            'permission:' . ProductPermission::Create->value,
+            'permission:' . ProductPermission::Update->value,
+            'permission:' . ProductPermission::Delete->value,
+        ]);
+    });
+
+    it('has no summary record when counters are off', function (): void {
+        expect(livewire(RolePermissionMatrix::class)->instance()->permissionRecords())
+            ->not->toHaveKey('summary:catalogue');
+    });
+
+    it('shows granted/total in a summary row\'s holder column, when counters are on', function (): void {
+        $this->editor->update(['permissions' => [ProductPermission::View->value, CategoryPermission::View->value]]);
+
+        livewire(RolePermissionMatrix::class, ['counters' => true])
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), '2/7', 'summary:catalogue')
+            ->assertTableColumnStateSet('holder_' . holderKey($this->admin), '7/7', 'summary:catalogue');
+    });
+
+    it('updates the summary number for a staged change', function (): void {
+        livewire(RolePermissionMatrix::class, ['counters' => true, 'deferred' => true])
+            ->call('toggle', holderKey($this->editor), ProductPermission::View->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), '1/7', 'summary:catalogue');
+    });
+
+    it('ignores a click on a summary row', function (): void {
+        livewire(RolePermissionMatrix::class, ['counters' => true])
+            ->callTableColumnAction('holder_' . holderKey($this->editor), 'summary:catalogue');
+
+        expect($this->editor->fresh()->getPermissions())->toBeEmpty();
+    });
+
+    it('marks the summary row as not clickable and without a tooltip', function (): void {
+        $component = livewire(RolePermissionMatrix::class, ['counters' => true]);
+        $column = $component->instance()->getTable()->getColumn('holder_' . holderKey($this->editor));
+        $record = $component->instance()->getTableRecord('summary:catalogue');
+
+        $column->record($record);
+
+        expect($column->isClickDisabled())->toBeTrue()
+            ->and($column->getTooltip())->toBeNull();
     });
 
     it('counts a subject in its cell\'s tooltip when counters are on', function (): void {
         $this->editor->update(['permissions' => [ProductPermission::View->value]]);
 
-        livewire(RolePermissionMatrix::class, ['counters' => true])
-            ->assertSee('1 of 4 · ' . __('filament-access-control::editor.toggle_subject'));
+        // Read from the column, not the HTML: the tooltip is JSON-encoded into the page, and
+        // Laravel 12 escapes the middle dot (\u00b7) where Laravel 13 does not.
+        $component = livewire(RolePermissionMatrix::class, ['counters' => true]);
+        $column = $component->instance()->getTable()->getColumn('holder_' . holderKey($this->editor));
+        $column->record($component->instance()->getTableRecord('subject:' . ProductPermission::class));
+
+        expect($column->getTooltip())->toBe('1 of 4 · ' . __('filament-access-control::editor.toggle_subject'));
     });
 
     it('takes the counters from the plugin', function (): void {
@@ -161,6 +223,14 @@ describe('rendering', function (): void {
 
             expect($rootTag)->toContain('x-data')->not->toContain('<!--');
         }
+    });
+
+    it('needs no dependencies column while no permission declares a rule or a condition', function (): void {
+        livewire(RolePermissionMatrix::class)->assertTableColumnHidden('dependencies');
+    });
+
+    it('says nothing about declarations that are sound', function (): void {
+        livewire(RolePermissionMatrix::class)->assertDontSee(__('filament-access-control::editor.problems.heading'));
     });
 });
 
@@ -221,7 +291,7 @@ describe('deferred', function (): void {
             ->assertSet('changes', [holderKey($this->editor) => ['grant' => [ProductPermission::View->value], 'revoke' => []]])
             ->assertActionEnabled(TestAction::make('saveChanges')->table())
             ->assertActionExists(TestAction::make('saveChanges')->table(), fn ($action): bool => (int) $action->getBadge() === 1)
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'granted', 'permission:' . ProductPermission::View->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'effective', 'permission:' . ProductPermission::View->value)
             ->assertNotDispatched('filament-access-control::permissions-updated');
 
         expect($this->editor->fresh()->getPermissions())->toBeEmpty();

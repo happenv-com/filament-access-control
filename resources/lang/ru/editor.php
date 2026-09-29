@@ -23,7 +23,9 @@ return [
         'description' => 'Эти разрешения были выданы ранее, но здесь их ничто не проверяет. Их можно отозвать, но нельзя выдать снова.',
     ],
     'columns' => [
+        'dependencies' => 'Зависимости',
         'granted' => 'Выдано',
+        'in_effect' => 'Действует',
         'inherited' => 'Из ролей',
         'permission' => 'Разрешение',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Здесь эти разрешения доступны только для чтения.',
         'saved' => 'Разрешения сохранены.',
         'unauthorized' => 'У вас нет прав на изменение этих разрешений.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Требует MFA',
+        'unmet' => ':condition: одно разрешение, которым обладает эта учётная запись, не действует, пока не будет выполнено это условие.|:condition: :count разрешения, которыми обладает эта учётная запись, не действуют, пока не будет выполнено это условие.|:condition: :count разрешений, которыми обладает эта учётная запись, не действуют, пока не будет выполнено это условие.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Заблокировано: :permission',
+        'blocks' => 'Блокирует: :permission',
+        'implied_by' => 'Следует из: :permission',
+        'implies' => 'Подразумевает: :permission',
+        'invalid_declaration' => 'Некорректная декларация',
+        'related' => 'Related: :permission',
+        'required_by' => 'Требуется для: :permission',
+        'requires' => 'Требует: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Заблокировано: :permissions',
+        'grant_explicitly' => 'Клик выдаёт его напрямую',
+        'implied_by' => 'Следует из: :permissions',
+        'missing' => 'Отсутствует требование: :permissions',
+        'restricted' => 'Сейчас ограничено приложением',
+        'unmet_condition' => ':condition — эта учётная запись не соответствует ему',
+    ],
+    'problems' => [
+        'heading' => 'Некоторые разрешения объявлены так, что никогда не смогут работать',
+        'implies_conflicting' => ':permission никогда не может быть разрешено: оно подразумевает :other, с которым оно конфликтует.',
+        'requires_conflicting' => ':permission никогда не может быть разрешено: оно требует :other, с которым оно конфликтует.',
+        'unregistered_target' => ':permission объявляет «:rule» о :other, чей enum не зарегистрирован.',
+        'rules' => [
+            'conflicts_with' => 'Конфликтует с',
+            'implied_by' => 'Следует из',
+            'requires' => 'Требует',
+        ],
     ],
 ];

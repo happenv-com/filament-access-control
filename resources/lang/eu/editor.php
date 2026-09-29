@@ -23,7 +23,9 @@ return [
         'description' => 'Baimen hauek lehenago eman ziren, baina hemen ezerk ez ditu kontsultatzen. Kendu egin ditzakezu, baina ezin dituzu berriro eman.',
     ],
     'columns' => [
+        'dependencies' => 'Mendekotasunak',
         'granted' => 'Emanda',
+        'in_effect' => 'Indarrean',
         'inherited' => 'Roletatik',
         'permission' => 'Baimena',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Baimen hauek irakurtzeko soilik dira hemen.',
         'saved' => 'Baimenak gorde dira.',
         'unauthorized' => 'Ezin dituzu baimen hauek aldatu.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA behar du',
+        'unmet' => ':condition: kontu honek duen baimen bat ez da indarrean egongo baldintza hau bete arte.|:condition: kontu honek dituen :count baimen ez dira indarrean egongo baldintza hau bete arte.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokeatzailea: :permission',
+        'blocks' => 'Blokeatzen du: :permission',
+        'implied_by' => 'Honen eragilea: :permission',
+        'implies' => 'Honek dakar: :permission',
+        'invalid_declaration' => 'Adierazpen baliogabea',
+        'related' => 'Related: :permission',
+        'required_by' => 'Honen eskatzailea: :permission',
+        'requires' => 'Behar du: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokeatzailea: :permissions',
+        'grant_explicitly' => 'Klik batek esplizituki ematen du',
+        'implied_by' => 'Honen eragilea: :permissions',
+        'missing' => 'Falta den baldintza: :permissions',
+        'restricted' => 'Aplikazioak orain mugatuta',
+        'unmet_condition' => ':condition — kontu honek ez du betetzen',
+    ],
+    'problems' => [
+        'heading' => 'Baimen batzuk inoiz funtzionatuko ez duen moduan adierazita daude',
+        'implies_conflicting' => ':permission ezin da inoiz baimendu: honek dakar :other, eta horrekin gatazkan dago.',
+        'requires_conflicting' => ':permission ezin da inoiz baimendu: honek behar du :other, eta horrekin gatazkan dago.',
+        'unregistered_target' => ':permission-ek «:rule» adierazten du :other-i buruz, eta horren enum-a ez dago erregistratuta.',
+        'rules' => [
+            'conflicts_with' => 'Gatazkan honekin',
+            'implied_by' => 'Honen eragilea',
+            'requires' => 'Behar du',
+        ],
     ],
 ];

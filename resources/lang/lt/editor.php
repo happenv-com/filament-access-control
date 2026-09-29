@@ -23,7 +23,9 @@ return [
         'description' => 'Šie leidimai buvo suteikti anksčiau, bet čia niekas jų netikrina. Galite juos atšaukti, bet nebegalite suteikti iš naujo.',
     ],
     'columns' => [
+        'dependencies' => 'Priklausomybės',
         'granted' => 'Suteikta',
+        'in_effect' => 'Galioja',
         'inherited' => 'Iš rolių',
         'permission' => 'Leidimas',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Čia šiuos leidimus galima tik peržiūrėti.',
         'saved' => 'Leidimai išsaugoti.',
         'unauthorized' => 'Jums neleidžiama keisti šių leidimų.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Reikalauja MFA',
+        'unmet' => ':condition: vienas šios paskyros turimas leidimas nėra galiojantis, kol ji neatitiks šios sąlygos.|:condition: :count šios paskyros turimi leidimai nėra galiojantys, kol ji neatitiks šios sąlygos.|:condition: :count šios paskyros turimų leidimų nėra galiojančių, kol ji neatitiks šios sąlygos.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokuotojas: :permission',
+        'blocks' => 'Blokuoja: :permission',
+        'implied_by' => 'Numanoma iš: :permission',
+        'implies' => 'Numano: :permission',
+        'invalid_declaration' => 'Neteisinga deklaracija',
+        'related' => 'Related: :permission',
+        'required_by' => 'Reikalautojas: :permission',
+        'requires' => 'Reikalauja: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokuotojas: :permissions',
+        'grant_explicitly' => 'Paspaudimas jį suteikia tiesiogiai',
+        'implied_by' => 'Numanoma iš: :permissions',
+        'missing' => 'Trūkstamas reikalavimas: :permissions',
+        'restricted' => 'Šiuo metu apribota programos',
+        'unmet_condition' => ':condition — ši paskyra jos netenkina',
+    ],
+    'problems' => [
+        'heading' => 'Kai kurie leidimai deklaruoti taip, kad niekada negalės veikti',
+        'implies_conflicting' => ':permission niekada negalės būti leidžiamas: jis numano :other, su kuriuo konfliktuoja.',
+        'requires_conflicting' => ':permission niekada negalės būti leidžiamas: jis reikalauja :other, su kuriuo konfliktuoja.',
+        'unregistered_target' => ':permission deklaruoja „:rule“ apie :other, kurio enum nėra registruotas.',
+        'rules' => [
+            'conflicts_with' => 'Konfliktuoja su',
+            'implied_by' => 'Numanoma iš',
+            'requires' => 'Reikalauja',
+        ],
     ],
 ];

@@ -23,7 +23,9 @@ return [
         'description' => 'Šīs atļaujas tika piešķirtas agrāk, bet šeit tās nekas nepārbauda. Varat tās atsaukt, bet nevarat piešķirt no jauna.',
     ],
     'columns' => [
+        'dependencies' => 'Atkarības',
         'granted' => 'Piešķirta',
+        'in_effect' => 'Spēkā',
         'inherited' => 'No lomām',
         'permission' => 'Atļauja',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Šīs atļaujas šeit ir tikai lasāmas.',
         'saved' => 'Atļaujas ir saglabātas.',
         'unauthorized' => 'Jums nav atļauts mainīt šīs atļaujas.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Pieprasa MFA',
+        'unmet' => ':condition: šim kontam ir :count atļauju, kas nav spēkā, kamēr nav izpildīts šis nosacījums.|:condition: viena atļauja, kas ir šim kontam, nav spēkā, kamēr nav izpildīts šis nosacījums.|:condition: :count atļaujas, kas ir šim kontam, nav spēkā, kamēr nav izpildīts šis nosacījums.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Bloķētājs: :permission',
+        'blocks' => 'Bloķē: :permission',
+        'implied_by' => 'Izriet no: :permission',
+        'implies' => 'Paredz: :permission',
+        'invalid_declaration' => 'Nederīga deklarācija',
+        'related' => 'Related: :permission',
+        'required_by' => 'Pieprasītājs: :permission',
+        'requires' => 'Pieprasa: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Bloķētājs: :permissions',
+        'grant_explicitly' => 'Klikšķis to piešķir tieši',
+        'implied_by' => 'Izriet no: :permissions',
+        'missing' => 'Trūkstoša prasība: :permissions',
+        'restricted' => 'Šobrīd ierobežo lietotne',
+        'unmet_condition' => ':condition — šis konts to neizpilda',
+    ],
+    'problems' => [
+        'heading' => 'Dažas atļaujas ir deklarētas tā, ka tās nekad nevarēs darboties',
+        'implies_conflicting' => ':permission nekad nevarēs būt atļauta: tā paredz :other, ar kuru tā ir konfliktā.',
+        'requires_conflicting' => ':permission nekad nevarēs būt atļauta: tā pieprasa :other, ar kuru tā ir konfliktā.',
+        'unregistered_target' => ':permission deklarē „:rule“ par :other, kura enum nav reģistrēts.',
+        'rules' => [
+            'conflicts_with' => 'Konfliktā ar',
+            'implied_by' => 'Izriet no',
+            'requires' => 'Pieprasa',
+        ],
     ],
 ];

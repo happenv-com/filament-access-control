@@ -23,7 +23,9 @@ return [
         'description' => 'Disse tilladelser blev tildelt tidligere, men intet her tjekker dem. Du kan tilbagekalde dem, men ikke tildele dem igen.',
     ],
     'columns' => [
+        'dependencies' => 'Afhængigheder',
         'granted' => 'Tildelt',
+        'in_effect' => 'Gældende',
         'inherited' => 'Fra roller',
         'permission' => 'Tilladelse',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Disse tilladelser er skrivebeskyttede her.',
         'saved' => 'Tilladelserne er gemt.',
         'unauthorized' => 'Du har ikke lov til at ændre disse tilladelser.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Kræver MFA',
+        'unmet' => ':condition: én tilladelse, som denne konto har, er ikke gældende, før den opfylder denne betingelse.|:condition: :count tilladelser, som denne konto har, er ikke gældende, før den opfylder denne betingelse.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokeret af: :permission',
+        'blocks' => 'Blokerer: :permission',
+        'implied_by' => 'Medført af: :permission',
+        'implies' => 'Medfører: :permission',
+        'invalid_declaration' => 'Ugyldig erklæring',
+        'related' => 'Related: :permission',
+        'required_by' => 'Krævet af: :permission',
+        'requires' => 'Kræver: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokeret af: :permissions',
+        'grant_explicitly' => 'Et klik tildeler den eksplicit',
+        'implied_by' => 'Medført af: :permissions',
+        'missing' => 'Manglende krav: :permissions',
+        'restricted' => 'Begrænset af applikationen lige nu',
+        'unmet_condition' => ':condition — denne konto opfylder den ikke',
+    ],
+    'problems' => [
+        'heading' => 'Nogle tilladelser er erklæret på en måde, der aldrig kan fungere',
+        'implies_conflicting' => ':permission kan aldrig tillades: den medfører :other, som den er i konflikt med.',
+        'requires_conflicting' => ':permission kan aldrig tillades: den kræver :other, som den er i konflikt med.',
+        'unregistered_target' => ':permission erklærer »:rule« om :other, hvis enum ikke er registreret.',
+        'rules' => [
+            'conflicts_with' => 'I konflikt med',
+            'implied_by' => 'Medført af',
+            'requires' => 'Kræver',
+        ],
     ],
 ];

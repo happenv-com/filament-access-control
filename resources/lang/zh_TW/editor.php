@@ -23,7 +23,9 @@ return [
         'description' => '這些權限先前已授予，但此處並不會檢查它們。您可以撤銷，但無法再次授予。',
     ],
     'columns' => [
+        'dependencies' => '相依關係',
         'granted' => '已授予',
+        'in_effect' => '生效中',
         'inherited' => '來自角色',
         'permission' => '權限',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => '這些權限在此處為唯讀。',
         'saved' => '權限已儲存。',
         'unauthorized' => '您無權變更這些權限。',
+    ],
+    'conditions' => [
+        'requires_mfa' => '需要 MFA',
+        'unmet' => ':condition：此帳戶持有的 :count 項權限在符合此條件之前不會生效。',
+    ],
+    'dependencies' => [
+        'blocked_by' => '被封鎖方: :permission',
+        'blocks' => '封鎖: :permission',
+        'implied_by' => '隱含來源: :permission',
+        'implies' => '隱含: :permission',
+        'invalid_declaration' => '無效宣告',
+        'related' => 'Related: :permission',
+        'required_by' => '被需要方: :permission',
+        'requires' => '需要: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => '被封鎖方: :permissions',
+        'grant_explicitly' => '點擊將直接授予此權限',
+        'implied_by' => '隱含來源: :permissions',
+        'missing' => '缺少的前提條件: :permissions',
+        'restricted' => '目前被應用程式限制',
+        'unmet_condition' => ':condition — 此帳戶不符合此條件',
+    ],
+    'problems' => [
+        'heading' => '部分權限的宣告方式導致它們永遠無法生效',
+        'implies_conflicting' => ':permission 永遠無法被允許：它隱含了與其衝突的 :other。',
+        'requires_conflicting' => ':permission 永遠無法被允許：它需要與其衝突的 :other。',
+        'unregistered_target' => ':permission 宣告了關於 :other 的「:rule」，但其 enum 尚未註冊。',
+        'rules' => [
+            'conflicts_with' => '衝突對象',
+            'implied_by' => '隱含來源',
+            'requires' => '需要',
+        ],
     ],
 ];

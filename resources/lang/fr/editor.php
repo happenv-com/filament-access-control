@@ -23,7 +23,9 @@ return [
         'description' => 'Ces permissions ont été accordées auparavant, mais rien ici ne les consulte. Vous pouvez les révoquer, mais pas les accorder à nouveau.',
     ],
     'columns' => [
+        'dependencies' => 'Dépendances',
         'granted' => 'Accordée',
+        'in_effect' => 'En vigueur',
         'inherited' => 'Via les rôles',
         'permission' => 'Permission',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Ces permissions sont en lecture seule ici.',
         'saved' => 'Les permissions ont été sauvegardées.',
         'unauthorized' => 'Vous n\'êtes pas autorisé à modifier ces permissions.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Nécessite la MFA',
+        'unmet' => ':condition : une permission que détient ce compte n\'est pas en vigueur tant qu\'il ne remplit pas cette condition.|:condition : :count permissions que détient ce compte ne sont pas en vigueur tant qu\'il ne remplit pas cette condition.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Bloquée par : :permission',
+        'blocks' => 'Bloque : :permission',
+        'implied_by' => 'Impliquée par : :permission',
+        'implies' => 'Implique : :permission',
+        'invalid_declaration' => 'Déclaration invalide',
+        'related' => 'Related: :permission',
+        'required_by' => 'Requise par : :permission',
+        'requires' => 'Nécessite : :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Bloquée par : :permissions',
+        'grant_explicitly' => 'Un clic l\'accorde explicitement',
+        'implied_by' => 'Impliquée par : :permissions',
+        'missing' => 'Prérequis manquant : :permissions',
+        'restricted' => 'Restreinte par l\'application en ce moment',
+        'unmet_condition' => ':condition — ce compte ne la remplit pas',
+    ],
+    'problems' => [
+        'heading' => 'Certaines permissions sont déclarées d\'une manière qui ne pourra jamais fonctionner',
+        'implies_conflicting' => ':permission ne pourra jamais être autorisée : elle implique :other, avec laquelle elle est en conflit.',
+        'requires_conflicting' => ':permission ne pourra jamais être autorisée : elle nécessite :other, avec laquelle elle est en conflit.',
+        'unregistered_target' => ':permission déclare « :rule » à propos de :other, dont l\'enum n\'est pas enregistrée.',
+        'rules' => [
+            'conflicts_with' => 'En conflit avec',
+            'implied_by' => 'Impliquée par',
+            'requires' => 'Nécessite',
+        ],
     ],
 ];

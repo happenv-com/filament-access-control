@@ -26,6 +26,7 @@ return new class extends Migration
 
         Schema::table('users', function (Blueprint $table): void {
             $table->json('permissions')->nullable();
+            $table->text('app_authentication_secret')->nullable();
         });
     }
 };

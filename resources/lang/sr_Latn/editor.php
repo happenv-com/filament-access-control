@@ -23,7 +23,9 @@ return [
         'description' => 'Ove dozvole su ranije dodeljene, ali ih ovde ništa ne proverava. Možete ih oduzeti, ali ne i ponovo dodeliti.',
     ],
     'columns' => [
+        'dependencies' => 'Zavisnosti',
         'granted' => 'Dodeljeno',
+        'in_effect' => 'Na snazi',
         'inherited' => 'Iz uloga',
         'permission' => 'Dozvola',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Ove dozvole su ovde samo za čitanje.',
         'saved' => 'Dozvole su sačuvane.',
         'unauthorized' => 'Nemate pravo da menjate ove dozvole.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Zahteva MFA',
+        'unmet' => ':condition: :count dozvola ovog naloga neće važiti dok se ne ispuni ovaj uslov.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blokirano od: :permission',
+        'blocks' => 'Blokira: :permission',
+        'implied_by' => 'Podrazumeva ga: :permission',
+        'implies' => 'Podrazumeva: :permission',
+        'invalid_declaration' => 'Nevažeća deklaracija',
+        'related' => 'Related: :permission',
+        'required_by' => 'Zahteva ga: :permission',
+        'requires' => 'Zahteva: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blokirano od: :permissions',
+        'grant_explicitly' => 'Klik ga direktno dodeljuje',
+        'implied_by' => 'Podrazumeva ga: :permissions',
+        'missing' => 'Nedostaje uslov: :permissions',
+        'restricted' => 'Trenutno ograničeno od strane aplikacije',
+        'unmet_condition' => ':condition — ovaj nalog to ne ispunjava',
+    ],
+    'problems' => [
+        'heading' => 'Neke dozvole su deklarisane na način koji nikada neće raditi',
+        'implies_conflicting' => ':permission nikada ne može biti dozvoljeno: podrazumeva :other, sa kojim je u sukobu.',
+        'requires_conflicting' => ':permission nikada ne može biti dozvoljeno: zahteva :other, sa kojim je u sukobu.',
+        'unregistered_target' => ':permission deklariše „:rule” o :other, čiji enum nije registrovan.',
+        'rules' => [
+            'conflicts_with' => 'U sukobu sa',
+            'implied_by' => 'Podrazumeva ga',
+            'requires' => 'Zahteva',
+        ],
     ],
 ];

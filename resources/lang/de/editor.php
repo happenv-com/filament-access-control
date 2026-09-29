@@ -23,7 +23,9 @@ return [
         'description' => 'Diese Berechtigungen wurden früher vergeben, aber hier prüft sie nichts. Sie können sie entziehen, aber nicht erneut vergeben.',
     ],
     'columns' => [
+        'dependencies' => 'Abhängigkeiten',
         'granted' => 'Vergeben',
+        'in_effect' => 'Wirksam',
         'inherited' => 'Aus Rollen',
         'permission' => 'Berechtigung',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Diese Berechtigungen sind hier schreibgeschützt.',
         'saved' => 'Die Berechtigungen wurden gespeichert.',
         'unauthorized' => 'Sie dürfen diese Berechtigungen nicht ändern.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Erfordert MFA',
+        'unmet' => ':condition: Eine Berechtigung, die dieses Konto besitzt, ist erst wirksam, wenn diese Bedingung erfüllt ist.|:condition: :count Berechtigungen, die dieses Konto besitzt, sind erst wirksam, wenn diese Bedingung erfüllt ist.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blockiert von: :permission',
+        'blocks' => 'Blockiert: :permission',
+        'implied_by' => 'Impliziert von: :permission',
+        'implies' => 'Impliziert: :permission',
+        'invalid_declaration' => 'Ungültige Deklaration',
+        'related' => 'Related: :permission',
+        'required_by' => 'Benötigt von: :permission',
+        'requires' => 'Erfordert: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blockiert von: :permissions',
+        'grant_explicitly' => 'Ein Klick vergibt sie explizit',
+        'implied_by' => 'Impliziert von: :permissions',
+        'missing' => 'Fehlende Voraussetzung: :permissions',
+        'restricted' => 'Derzeit von der Anwendung eingeschränkt',
+        'unmet_condition' => ':condition — dieses Konto erfüllt sie nicht',
+    ],
+    'problems' => [
+        'heading' => 'Einige Berechtigungen sind so deklariert, dass sie nie funktionieren können',
+        'implies_conflicting' => ':permission kann nie erlaubt werden: Sie impliziert :other, mit der sie in Konflikt steht.',
+        'requires_conflicting' => ':permission kann nie erlaubt werden: Sie erfordert :other, mit der sie in Konflikt steht.',
+        'unregistered_target' => ':permission deklariert „:rule“ über :other, dessen Enum nicht registriert ist.',
+        'rules' => [
+            'conflicts_with' => 'Steht in Konflikt mit',
+            'implied_by' => 'Impliziert von',
+            'requires' => 'Erfordert',
+        ],
     ],
 ];

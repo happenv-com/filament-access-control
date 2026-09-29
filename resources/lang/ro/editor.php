@@ -23,7 +23,9 @@ return [
         'description' => 'Aceste permisiuni au fost acordate anterior, dar nimic de aici nu le verifică. Le puteți revoca, dar nu le mai puteți acorda din nou.',
     ],
     'columns' => [
+        'dependencies' => 'Dependențe',
         'granted' => 'Acordată',
+        'in_effect' => 'În vigoare',
         'inherited' => 'Din roluri',
         'permission' => 'Permisiune',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Aici, aceste permisiuni sunt doar pentru citire.',
         'saved' => 'Permisiunile au fost salvate.',
         'unauthorized' => 'Nu aveți dreptul să modificați aceste permisiuni.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Necesită MFA',
+        'unmet' => ':condition: o permisiune deținută de acest cont nu este în vigoare până când nu îndeplinește această condiție.|:condition: :count de permisiuni deținute de acest cont nu sunt în vigoare până când nu îndeplinește această condiție.|:condition: :count de permisiuni deținute de acest cont nu sunt în vigoare până când nu îndeplinește această condiție.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocată de: :permission',
+        'blocks' => 'Blochează: :permission',
+        'implied_by' => 'Implicată de: :permission',
+        'implies' => 'Implică: :permission',
+        'invalid_declaration' => 'Declarație nevalidă',
+        'related' => 'Related: :permission',
+        'required_by' => 'Necesitată de: :permission',
+        'requires' => 'Necesită: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Blocată de: :permissions',
+        'grant_explicitly' => 'Un clic o acordă explicit',
+        'implied_by' => 'Implicată de: :permissions',
+        'missing' => 'Cerință lipsă: :permissions',
+        'restricted' => 'Restricționată de aplicație chiar acum',
+        'unmet_condition' => ':condition — acest cont nu o îndeplinește',
+    ],
+    'problems' => [
+        'heading' => 'Unele permisiuni sunt declarate într-un mod care nu va putea funcționa niciodată',
+        'implies_conflicting' => ':permission nu va putea fi permisă niciodată: implică :other, cu care este în conflict.',
+        'requires_conflicting' => ':permission nu va putea fi permisă niciodată: necesită :other, cu care este în conflict.',
+        'unregistered_target' => ':permission declară „:rule” despre :other, al cărei enum nu este înregistrat.',
+        'rules' => [
+            'conflicts_with' => 'În conflict cu',
+            'implied_by' => 'Implicată de',
+            'requires' => 'Necesită',
+        ],
     ],
 ];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Happenv\FilamentAccessControl\Tests\Fixtures;
 
 use Filament\Actions\CreateAction;
+use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Forms\Components\TextInput;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -39,6 +40,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->multiFactorAuthentication([
+                AppAuthentication::make(),
+            ])
             ->pages([
                 Dashboard::class,
             ])

@@ -23,7 +23,9 @@ return [
         'description' => 'Ruhusa hizi zilitolewa awali, lakini hakuna kitu hapa kinachozikagua. Unaweza kuziondoa; huwezi kuzitoa tena.',
     ],
     'columns' => [
+        'dependencies' => 'Utegemezi',
         'granted' => 'Imetolewa',
+        'in_effect' => 'Inatumika',
         'inherited' => 'Kutoka kwa majukumu',
         'permission' => 'Ruhusa',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Ruhusa hizi ni za kusoma tu hapa.',
         'saved' => 'Ruhusa zimehifadhiwa.',
         'unauthorized' => 'Huruhusiwi kubadilisha ruhusa hizi.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Inahitaji MFA',
+        'unmet' => ':condition: ruhusa moja ambayo akaunti hii inayo haitumiki hadi itimize sharti hili.|:condition: ruhusa :count ambazo akaunti hii inazo hazitumiki hadi itimize sharti hili.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Imezuiwa na: :permission',
+        'blocks' => 'Inazuia: :permission',
+        'implied_by' => 'Inamaanishwa na: :permission',
+        'implies' => 'Inamaanisha: :permission',
+        'invalid_declaration' => 'Tamko batili',
+        'related' => 'Related: :permission',
+        'required_by' => 'Inahitajika na: :permission',
+        'requires' => 'Inahitaji: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Imezuiwa na: :permissions',
+        'grant_explicitly' => 'Kubofya kunaitoa moja kwa moja',
+        'implied_by' => 'Inamaanishwa na: :permissions',
+        'missing' => 'Sharti linalokosekana: :permissions',
+        'restricted' => 'Kwa sasa imezuiwa na programu',
+        'unmet_condition' => ':condition — akaunti hii haitimizi',
+    ],
+    'problems' => [
+        'heading' => 'Ruhusa fulani zimetangazwa kwa njia ambayo haitafanya kazi kamwe',
+        'implies_conflicting' => ':permission haiwezi kuruhusiwa kamwe: inamaanisha :other, ambayo inagongana nayo.',
+        'requires_conflicting' => ':permission haiwezi kuruhusiwa kamwe: inahitaji :other, ambayo inagongana nayo.',
+        'unregistered_target' => ':permission inatangaza “:rule” kuhusu :other, ambaye enum yake haijasajiliwa.',
+        'rules' => [
+            'conflicts_with' => 'Inagongana na',
+            'implied_by' => 'Inamaanishwa na',
+            'requires' => 'Inahitaji',
+        ],
     ],
 ];

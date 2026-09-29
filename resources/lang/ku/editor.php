@@ -23,7 +23,9 @@ return [
         'description' => 'ئەم مۆڵەتانە پێشتر دراون، بەڵام لێرە هیچ شتێک پشکنینیان بۆ ناکات. دەتوانیت بیانسەنیتەوە، بەڵام ناتوانیت دووبارە بیاندەیتەوە.',
     ],
     'columns' => [
+        'dependencies' => 'پێوەندییەکان',
         'granted' => 'دراوە',
+        'in_effect' => 'جێبەجێ',
         'inherited' => 'لە ڕۆڵەکانەوە',
         'permission' => 'مۆڵەت',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'ئەم مۆڵەتانە لێرە تەنها بۆ خوێندنەوەن.',
         'saved' => 'مۆڵەتەکان نوێکرانەوە.',
         'unauthorized' => 'ڕێگەت پێ نەدراوە ئەم مۆڵەتانە بگۆڕیت.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'پێویستی بە MFA هەیە',
+        'unmet' => ':condition: مۆڵەتێک کە ئەم هەژمارە هەیەتی، کاریگەر نابێت تا ئەم مەرجە پێک بێت.|:condition: :count مۆڵەت کە ئەم هەژمارە هەیەتی، کاریگەر نابن تا ئەم مەرجە پێک بێت.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'ڕێگری لێکراوە لەلایەن: :permission',
+        'blocks' => 'ڕێگری لێدەکات لە: :permission',
+        'implied_by' => 'واتای ئەوەیە لەلایەن: :permission',
+        'implies' => 'واتای ئەوەیە: :permission',
+        'invalid_declaration' => 'ڕاگەیاندنێکی نادروست',
+        'related' => 'Related: :permission',
+        'required_by' => 'پێویستە لەلایەن: :permission',
+        'requires' => 'پێویستی بە: :permission هەیە',
+    ],
+    'cells' => [
+        'blocked_by' => 'ڕێگری لێکراوە لەلایەن: :permissions',
+        'grant_explicitly' => 'کرتەیەک ڕاستەوخۆ دەیدات',
+        'implied_by' => 'واتای ئەوەیە لەلایەن: :permissions',
+        'missing' => 'پێداویستی نەماوە: :permissions',
+        'restricted' => 'لە ئێستادا لەلایەن ئەپڵیکەیشنەوە سنووردارکراوە',
+        'unmet_condition' => ':condition — ئەم هەژمارە ئەمە پێک نایەنێت',
+    ],
+    'problems' => [
+        'heading' => 'هەندێک مۆڵەت بەشێوەیەک ڕاگەیەنراون کە هەرگیز کار ناکەن',
+        'implies_conflicting' => ':permission هەرگیز ناتوانرێت ڕێگەی پێبدرێت: واتای :other دەدات کە پێکدادانی لەگەڵدایە.',
+        'requires_conflicting' => ':permission هەرگیز ناتوانرێت ڕێگەی پێبدرێت: پێویستی بە :other هەیە کە پێکدادانی لەگەڵدایە.',
+        'unregistered_target' => ':permission «:rule» دەربارەی :other ڕادەگەیەنێت، کە enum ـی تۆمار نەکراوە.',
+        'rules' => [
+            'conflicts_with' => 'پێکدادانی هەیە لەگەڵ',
+            'implied_by' => 'واتای ئەوەیە لەلایەن',
+            'requires' => 'پێویستی پێیەتی',
+        ],
     ],
 ];

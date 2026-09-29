@@ -23,7 +23,9 @@ return [
         'description' => '이 권한들은 이전에 부여되었지만 여기에서는 확인하는 곳이 없습니다. 회수할 수는 있지만 다시 부여할 수는 없습니다.',
     ],
     'columns' => [
+        'dependencies' => '종속성',
         'granted' => '부여됨',
+        'in_effect' => '적용 중',
         'inherited' => '역할에서 부여',
         'permission' => '권한',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => '이 권한은 여기에서 읽기 전용입니다.',
         'saved' => '권한이 저장되었습니다.',
         'unauthorized' => '이 권한을 변경할 권한이 없습니다.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA 필요',
+        'unmet' => ':condition: 이 계정이 보유한 권한 :count개는 이 조건을 충족할 때까지 적용되지 않습니다.',
+    ],
+    'dependencies' => [
+        'blocked_by' => '차단자: :permission',
+        'blocks' => '차단함: :permission',
+        'implied_by' => '암시 근원: :permission',
+        'implies' => '암시함: :permission',
+        'invalid_declaration' => '잘못된 선언',
+        'related' => 'Related: :permission',
+        'required_by' => '요구자: :permission',
+        'requires' => '필요함: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => '차단자: :permissions',
+        'grant_explicitly' => '클릭하면 명시적으로 부여됩니다',
+        'implied_by' => '암시 근원: :permissions',
+        'missing' => '누락된 요구사항: :permissions',
+        'restricted' => '현재 애플리케이션에 의해 제한됨',
+        'unmet_condition' => ':condition — 이 계정은 이를 충족하지 않습니다',
+    ],
+    'problems' => [
+        'heading' => '일부 권한은 절대 작동할 수 없는 방식으로 선언되어 있습니다',
+        'implies_conflicting' => ':permission은(는) 절대 허용될 수 없습니다: 충돌하는 :other을(를) 암시하기 때문입니다.',
+        'requires_conflicting' => ':permission은(는) 절대 허용될 수 없습니다: 충돌하는 :other을(를) 필요로 하기 때문입니다.',
+        'unregistered_target' => ':permission은(는) :other에 대해 “:rule”을(를) 선언하지만, 해당 enum은 등록되어 있지 않습니다.',
+        'rules' => [
+            'conflicts_with' => '충돌 대상',
+            'implied_by' => '암시 근원',
+            'requires' => '필요',
+        ],
     ],
 ];

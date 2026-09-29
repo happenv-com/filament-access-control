@@ -23,7 +23,9 @@ return [
         'description' => 'これらの権限は以前に付与されたものですが、ここではどこからも参照されていません。取り消すことはできますが、再び付与することはできません。',
     ],
     'columns' => [
+        'dependencies' => '依存関係',
         'granted' => '付与済み',
+        'in_effect' => '有効',
         'inherited' => 'ロールから',
         'permission' => '権限',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'これらの権限はここでは読み取り専用です。',
         'saved' => '権限を保存しました。',
         'unauthorized' => 'これらの権限を変更することは許可されていません。',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFAが必要',
+        'unmet' => ':condition：このアカウントが持つ :count 件の権限は、この条件を満たすまで有効になりません。',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'ブロック元: :permission',
+        'blocks' => 'ブロックする: :permission',
+        'implied_by' => '暗示元: :permission',
+        'implies' => '暗示する: :permission',
+        'invalid_declaration' => '無効な宣言',
+        'related' => 'Related: :permission',
+        'required_by' => '必要とする側: :permission',
+        'requires' => '必要とする: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'ブロック元: :permissions',
+        'grant_explicitly' => 'クリックすると明示的に付与されます',
+        'implied_by' => '暗示元: :permissions',
+        'missing' => '不足している要件: :permissions',
+        'restricted' => '現在アプリケーションにより制限されています',
+        'unmet_condition' => ':condition — このアカウントはこれを満たしていません',
+    ],
+    'problems' => [
+        'heading' => '一部の権限は、決して機能しない形で宣言されています',
+        'implies_conflicting' => ':permission は決して許可できません。競合する :other を暗示しているためです。',
+        'requires_conflicting' => ':permission は決して許可できません。競合する :other を必要としているためです。',
+        'unregistered_target' => ':permission は :other について「:rule」を宣言していますが、そのenumは登録されていません。',
+        'rules' => [
+            'conflicts_with' => '競合する',
+            'implied_by' => '暗示元',
+            'requires' => '必要とする',
+        ],
     ],
 ];

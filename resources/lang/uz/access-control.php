@@ -7,8 +7,8 @@ return [
     'title' => 'Kirishni boshqarish',
     'actions' => [
         'create_role' => [
-            'heading' => "Rol qo'shish",
-            'label' => "Rol qo'shish",
+            'heading' => 'Rol qo\'shish',
+            'label' => 'Rol qo\'shish',
         ],
     ],
     'fields' => [

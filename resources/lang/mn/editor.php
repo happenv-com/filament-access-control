@@ -23,7 +23,9 @@ return [
         'description' => 'Эдгээр эрхийг өмнө нь олгосон боловч энд тэдгээрийг юу ч шалгадаггүй. Та тэдгээрийг цуцалж болно, харин дахин олгох боломжгүй.',
     ],
     'columns' => [
+        'dependencies' => 'Хамаарлууд',
         'granted' => 'Олгосон',
+        'in_effect' => 'Хүчинтэй',
         'inherited' => 'Үүргээс',
         'permission' => 'Эрх',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Эдгээр эрхийг энд зөвхөн харах боломжтой.',
         'saved' => 'Эрхүүдийг хадгаллаа.',
         'unauthorized' => 'Та эдгээр эрхийг өөрчлөх эрхгүй.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'MFA шаарддаг',
+        'unmet' => ':condition: энэ бүртгэлийн эзэмшдэг нэг эрх энэ нөхцөлийг хангах хүртэл хүчин төгөлдөр биш байна.|:condition: энэ бүртгэлийн эзэмшдэг :count эрх энэ нөхцөлийг хангах хүртэл хүчин төгөлдөр биш байна.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Хориглогч: :permission',
+        'blocks' => 'Хориглоно: :permission',
+        'implied_by' => 'Үүнээс үүдэлтэй: :permission',
+        'implies' => 'Дагуулна: :permission',
+        'invalid_declaration' => 'Хүчингүй мэдэгдэл',
+        'related' => 'Related: :permission',
+        'required_by' => 'Шаарддаг тал: :permission',
+        'requires' => 'Шаарддаг: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Хориглогч: :permissions',
+        'grant_explicitly' => 'Товшихад шууд олгоно',
+        'implied_by' => 'Үүнээс үүдэлтэй: :permissions',
+        'missing' => 'Дутуу шаардлага: :permissions',
+        'restricted' => 'Одоогоор аппликейшнаар хязгаарлагдсан',
+        'unmet_condition' => ':condition — энэ бүртгэл үүнийг хангахгүй байна',
+    ],
+    'problems' => [
+        'heading' => 'Зарим эрхүүд хэзээ ч ажиллахгүй байдлаар мэдэгдсэн байна',
+        'implies_conflicting' => ':permission-ийг хэзээ ч зөвшөөрөх боломжгүй: энэ нь зөрчилдөж буй :other-ийг дагуулдаг.',
+        'requires_conflicting' => ':permission-ийг хэзээ ч зөвшөөрөх боломжгүй: энэ нь зөрчилдөж буй :other-ийг шаарддаг.',
+        'unregistered_target' => ':permission нь :other-ийн тухай «:rule» гэж мэдэгдсэн боловч түүний enum бүртгэгдээгүй байна.',
+        'rules' => [
+            'conflicts_with' => 'Үүнтэй зөрчилддөг',
+            'implied_by' => 'Үүнээс үүдэлтэй',
+            'requires' => 'Шаарддаг',
+        ],
     ],
 ];

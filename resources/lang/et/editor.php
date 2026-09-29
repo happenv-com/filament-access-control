@@ -23,7 +23,9 @@ return [
         'description' => 'Need õigused anti varem, kuid siin ei kontrolli neid miski. Saate need tagasi võtta, kuid uuesti anda neid ei saa.',
     ],
     'columns' => [
+        'dependencies' => 'Sõltuvused',
         'granted' => 'Antud',
+        'in_effect' => 'Kehtiv',
         'inherited' => 'Rollidest',
         'permission' => 'Õigus',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Need õigused on siin ainult lugemiseks.',
         'saved' => 'Õigused on salvestatud.',
         'unauthorized' => 'Teil pole lubatud neid õigusi muuta.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Nõuab MFA-d',
+        'unmet' => ':condition: üks selle konto õigus ei kehti enne, kui see tingimus on täidetud.|:condition: :count selle konto õigust ei kehti enne, kui see tingimus on täidetud.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Seda blokeerib: :permission',
+        'blocks' => 'Blokeerib: :permission',
+        'implied_by' => 'Selle eeldab: :permission',
+        'implies' => 'Eeldab: :permission',
+        'invalid_declaration' => 'Vigane deklaratsioon',
+        'related' => 'Related: :permission',
+        'required_by' => 'Seda nõuab: :permission',
+        'requires' => 'Nõuab: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Seda blokeerib: :permissions',
+        'grant_explicitly' => 'Klõps annab selle otse',
+        'implied_by' => 'Selle eeldab: :permissions',
+        'missing' => 'Puuduv eeldus: :permissions',
+        'restricted' => 'Rakendus piirab seda praegu',
+        'unmet_condition' => ':condition — see konto ei vasta sellele',
+    ],
+    'problems' => [
+        'heading' => 'Mõned õigused on deklareeritud viisil, mis ei saa kunagi toimida',
+        'implies_conflicting' => ':permission ei saa kunagi lubatud olla: see eeldab õigust :other, millega see on vastuolus.',
+        'requires_conflicting' => ':permission ei saa kunagi lubatud olla: see nõuab õigust :other, millega see on vastuolus.',
+        'unregistered_target' => ':permission deklareerib „:rule“ õiguse :other kohta, mille enum ei ole registreeritud.',
+        'rules' => [
+            'conflicts_with' => 'Vastuolus',
+            'implied_by' => 'Eeldab seda',
+            'requires' => 'Nõuab',
+        ],
     ],
 ];

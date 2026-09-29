@@ -23,7 +23,9 @@ return [
         'description' => 'Ове дозволе су раније додељене, али их овде ништа не проверава. Можете их одузети, али не и поново доделити.',
     ],
     'columns' => [
+        'dependencies' => 'Зависности',
         'granted' => 'Додељено',
+        'in_effect' => 'На снази',
         'inherited' => 'Из улога',
         'permission' => 'Дозвола',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Ове дозволе су овде само за читање.',
         'saved' => 'Дозволе су сачуване.',
         'unauthorized' => 'Немате право да мењате ове дозволе.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Захтева MFA',
+        'unmet' => ':condition: :count дозвола овог налога неће важити док се не испуни овај услов.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Блокирано од: :permission',
+        'blocks' => 'Блокира: :permission',
+        'implied_by' => 'Подразумева га: :permission',
+        'implies' => 'Подразумева: :permission',
+        'invalid_declaration' => 'Неважећа декларација',
+        'related' => 'Related: :permission',
+        'required_by' => 'Захтева га: :permission',
+        'requires' => 'Захтева: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Блокирано од: :permissions',
+        'grant_explicitly' => 'Клик је директно додељује',
+        'implied_by' => 'Подразумева га: :permissions',
+        'missing' => 'Недостаје услов: :permissions',
+        'restricted' => 'Тренутно ограничено од стране апликације',
+        'unmet_condition' => ':condition — овај налог то не испуњава',
+    ],
+    'problems' => [
+        'heading' => 'Неке дозволе су декларисане на начин који никада неће радити',
+        'implies_conflicting' => ':permission никада не може бити дозвољено: подразумева :other, са којим је у сукобу.',
+        'requires_conflicting' => ':permission никада не може бити дозвољено: захтева :other, са којим је у сукобу.',
+        'unregistered_target' => ':permission декларише „:rule” о :other, чији enum није регистрован.',
+        'rules' => [
+            'conflicts_with' => 'У сукобу са',
+            'implied_by' => 'Подразумева га',
+            'requires' => 'Захтева',
+        ],
     ],
 ];

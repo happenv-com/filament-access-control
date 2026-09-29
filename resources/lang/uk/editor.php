@@ -23,7 +23,9 @@ return [
         'description' => 'Ці дозволи було надано раніше, але тут їх ніщо не перевіряє. Їх можна відкликати, але не можна надати знову.',
     ],
     'columns' => [
+        'dependencies' => 'Залежності',
         'granted' => 'Надано',
+        'in_effect' => 'Діє',
         'inherited' => 'З ролей',
         'permission' => 'Дозвіл',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Тут ці дозволи доступні лише для читання.',
         'saved' => 'Дозволи збережено.',
         'unauthorized' => 'Ви не маєте права змінювати ці дозволи.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Потребує MFA',
+        'unmet' => ':condition: один дозвіл, яким володіє цей обліковий запис, не діє, доки не буде виконано цю умову.|:condition: :count дозволи, якими володіє цей обліковий запис, не діють, доки не буде виконано цю умову.|:condition: :count дозволів, якими володіє цей обліковий запис, не діють, доки не буде виконано цю умову.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Заблоковано: :permission',
+        'blocks' => 'Блокує: :permission',
+        'implied_by' => 'Випливає з: :permission',
+        'implies' => 'Передбачає: :permission',
+        'invalid_declaration' => 'Некоректна декларація',
+        'related' => 'Related: :permission',
+        'required_by' => 'Потрібно для: :permission',
+        'requires' => 'Потребує: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Заблоковано: :permissions',
+        'grant_explicitly' => 'Клік надає його напряму',
+        'implied_by' => 'Випливає з: :permissions',
+        'missing' => 'Відсутня вимога: :permissions',
+        'restricted' => 'Наразі обмежено застосунком',
+        'unmet_condition' => ':condition — цей обліковий запис не відповідає їй',
+    ],
+    'problems' => [
+        'heading' => 'Деякі дозволи оголошені так, що ніколи не зможуть працювати',
+        'implies_conflicting' => ':permission ніколи не зможе бути дозволено: він передбачає :other, з яким конфліктує.',
+        'requires_conflicting' => ':permission ніколи не зможе бути дозволено: він потребує :other, з яким конфліктує.',
+        'unregistered_target' => ':permission оголошує «:rule» щодо :other, чий enum не зареєстровано.',
+        'rules' => [
+            'conflicts_with' => 'Конфліктує з',
+            'implied_by' => 'Випливає з',
+            'requires' => 'Потребує',
+        ],
     ],
 ];

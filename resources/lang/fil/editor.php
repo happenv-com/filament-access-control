@@ -23,7 +23,9 @@ return [
         'description' => 'Naibigay na ang mga pahintulot na ito dati, pero walang anuman dito ang sumusuri sa mga ito. Puwede mong bawiin ang mga ito, pero hindi mo na maibibigay ulit.',
     ],
     'columns' => [
+        'dependencies' => 'Mga Dependency',
         'granted' => 'Naibigay',
+        'in_effect' => 'May Bisa',
         'inherited' => 'Mula sa mga tungkulin',
         'permission' => 'Pahintulot',
     ],
@@ -47,5 +49,38 @@ return [
         'read_only' => 'Hindi mababago rito ang mga pahintulot na ito.',
         'saved' => 'Na-save na ang mga pahintulot.',
         'unauthorized' => 'Hindi ka pinapayagang baguhin ang mga pahintulot na ito.',
+    ],
+    'conditions' => [
+        'requires_mfa' => 'Nangangailangan ng MFA',
+        'unmet' => ':condition: isang pahintulot na taglay ng account na ito ay hindi magkakabisa hangga\'t hindi natutugunan ang kondisyong ito.|:condition: :count na pahintulot na taglay ng account na ito ay hindi magkakabisa hangga\'t hindi natutugunan ang kondisyong ito.',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Hinaharang ng: :permission',
+        'blocks' => 'Humaharang sa: :permission',
+        'implied_by' => 'Ipinahihiwatig ng: :permission',
+        'implies' => 'Nagpapahiwatig ng: :permission',
+        'invalid_declaration' => 'Hindi wastong deklarasyon',
+        'related' => 'Related: :permission',
+        'required_by' => 'Kailangan ng: :permission',
+        'requires' => 'Nangangailangan ng: :permission',
+    ],
+    'cells' => [
+        'blocked_by' => 'Hinaharang ng: :permissions',
+        'grant_explicitly' => 'Direktang ibinibigay ito ng isang click',
+        'implied_by' => 'Ipinahihiwatig ng: :permissions',
+        'missing' => 'Kulang na kailangan: :permissions',
+        'restricted' => 'Nililimitahan ngayon ng application',
+        'unmet_condition' => ':condition — hindi ito natutugunan ng account na ito',
+    ],
+    'problems' => [
+        'heading' => 'May mga pahintulot na idineklara sa paraang hindi kailanman gagana',
+        'implies_conflicting' => ':permission ay hindi kailanman mapapahintulutan: nagpapahiwatig ito ng :other, na kinasasalungatan nito.',
+        'requires_conflicting' => ':permission ay hindi kailanman mapapahintulutan: nangangailangan ito ng :other, na kinasasalungatan nito.',
+        'unregistered_target' => 'Idineklara ng :permission ang “:rule” tungkol sa :other, na hindi rehistrado ang enum.',
+        'rules' => [
+            'conflicts_with' => 'Sumasalungat sa',
+            'implied_by' => 'Ipinahihiwatig ng',
+            'requires' => 'Nangangailangan ng',
+        ],
     ],
 ];
