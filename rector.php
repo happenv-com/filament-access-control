@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use RectorLaravel\Set\LaravelLevelSetList;
 
 /*
@@ -30,4 +31,10 @@ return RectorConfig::configure()
         typeDeclarations: true,
         earlyReturn: true,
     )
-    ->withPhpSets();
+    ->withPhpSets()
+    ->withSkip([
+        // Trusts the Filament facade's `@method` docblock, which shows `setCurrentPanel(Panel|string|null
+        // $panel = null)` — but FilamentManager::setCurrentPanel() has no default; removing the explicit
+        // `null` argument here throws ArgumentCountError at runtime.
+        RemoveNullArgOnNullDefaultParamRector::class => [__DIR__ . '/tests/Feature/Attributes/RequiresMFATest.php'],
+    ]);
