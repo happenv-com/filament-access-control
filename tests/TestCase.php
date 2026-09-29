@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace VendorName\Skeleton\Tests;
+namespace Happenv\FilamentAccessControl\Tests;
 
-// @filament-start
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
-// @filament-end
 use ErrorException;
-// @filament-start
 use Filament\Actions\ActionsServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
@@ -19,20 +16,15 @@ use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-// @filament-end
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-// @filament-start
 use Livewire\LivewireServiceProvider;
-// @filament-end
 use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\TestCase as Orchestra;
-// @filament-start
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use VendorName\Skeleton\Tests\Fixtures\AdminPanelProvider;
-// @filament-end
-use VendorName\Skeleton\SkeletonServiceProvider;
-use VendorName\Skeleton\Tests\Fixtures\User;
+use Happenv\FilamentAccessControl\Tests\Fixtures\AdminPanelProvider;
+use Happenv\FilamentAccessControl\FilamentAccessControlServiceProvider;
+use Happenv\FilamentAccessControl\Tests\Fixtures\User;
 
 abstract class TestCase extends Orchestra
 {
@@ -46,7 +38,7 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName): string => 'VendorName\\Skeleton\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName): string => 'Happenv\\FilamentAccessControl\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
 
         // Laravel only logs deprecations. Fail the test when the package's OWN
@@ -79,7 +71,6 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
-            // @filament-start
             ActionsServiceProvider::class,
             BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
@@ -97,11 +88,8 @@ abstract class TestCase extends Orchestra
             // before 4.13.3 / 5.8.3 re-binds Livewire's DataStore as non-shared
             // when it registers AFTER Livewire (filamentphp/filament#20515).
             LivewireServiceProvider::class,
-            // @filament-end
-            SkeletonServiceProvider::class,
-            // @filament-start
+            FilamentAccessControlServiceProvider::class,
             AdminPanelProvider::class,
-            // @filament-end
         ];
     }
 

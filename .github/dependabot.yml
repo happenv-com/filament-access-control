@@ -15,7 +15,6 @@
 # so Dependabot titles its PRs `chore(deps): ...`.
 version: 2
 
-# @private-start
 registries:
   # Private packages (happenv-com/*) come from Packeton. The password is a
   # DEPENDABOT secret, not an Actions one — Dependabot cannot see Actions
@@ -27,7 +26,6 @@ registries:
     username: token
     password: ${{secrets.COMPOSER_PACKETON_TOKEN}}
 
-# @private-end
 updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
@@ -48,10 +46,8 @@ updates:
 
   - package-ecosystem: 'composer'
     directory: '/'
-    # @private-start
     registries:
       - packeton
-    # @private-end
     schedule:
       interval: 'weekly'
     cooldown:
@@ -67,21 +63,3 @@ updates:
           - 'minor'
           - 'patch'
 
-  # @npm-start
-  - package-ecosystem: 'npm'
-    directory: '/'
-    schedule:
-      interval: 'weekly'
-    cooldown:
-      default-days: 7
-    commit-message:
-      prefix: 'chore'
-      include: 'scope'
-    labels:
-      - 'dependencies'
-    groups:
-      npm:
-        update-types:
-          - 'minor'
-          - 'patch'
-  # @npm-end

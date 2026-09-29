@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace VendorName\Skeleton;
+namespace Happenv\FilamentAccessControl;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-class SkeletonPlugin implements Plugin
+class FilamentAccessControlPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'skeleton';
+        return 'filament-access-control';
     }
 
     public function register(Panel $panel): void

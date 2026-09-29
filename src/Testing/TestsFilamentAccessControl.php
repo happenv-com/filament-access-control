@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VendorName\Skeleton\Testing;
+namespace Happenv\FilamentAccessControl\Testing;
 
 use Livewire\Component;
 use Livewire\Features\SupportTesting\Testable;
@@ -10,7 +10,7 @@ use Livewire\Features\SupportTesting\Testable;
 /**
  * @mixin Testable<Component>
  */
-class TestsSkeleton
+class TestsFilamentAccessControl
 {
     //
 }

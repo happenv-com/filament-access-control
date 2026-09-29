@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace VendorName\Skeleton\Commands;
+namespace Happenv\FilamentAccessControl\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentAccessControlCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-access-control';
 
     public $description = 'My command';
 

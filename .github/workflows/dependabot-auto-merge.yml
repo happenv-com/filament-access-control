@@ -29,7 +29,7 @@ concurrency:
 jobs:
   dependabot:
     name: dependabot
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     timeout-minutes: 60
     if: ${{ github.actor == 'dependabot[bot]' }}
     permissions:

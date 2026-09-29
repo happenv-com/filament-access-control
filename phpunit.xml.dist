@@ -19,11 +19,6 @@
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
         </testsuite>
-        <!-- @browser-start -->
-        <testsuite name="Browser">
-            <directory>tests/Browser</directory>
-        </testsuite>
-        <!-- @browser-end -->
     </testsuites>
     <!-- Deprecations raised by dependencies are theirs to fix; only the package's own count. -->
     <source ignoreIndirectDeprecations="true">

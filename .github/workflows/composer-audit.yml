@@ -41,7 +41,7 @@ concurrency:
 jobs:
   audit:
     name: audit
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.event.pull_request.draft == false
     timeout-minutes: 10
 
@@ -60,10 +60,8 @@ jobs:
       # `--no-audit`: the audit is the next step, reported in full there rather
       # than as a warning at the end of the install.
       - name: Resolve dependencies
-        # @private-start
         env:
           COMPOSER_AUTH: '{"http-basic": {"packeton.happenv.com": {"username": "token", "password": "${{ secrets.COMPOSER_PACKETON_TOKEN }}"}}}'
-        # @private-end
         run: composer update --prefer-dist --no-interaction --no-progress --no-scripts --no-audit
 
       - name: Run composer audit

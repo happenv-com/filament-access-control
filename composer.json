@@ -1,14 +1,14 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
-    "license": "MIT",
+    "name": "happenv-com/filament-access-control",
+    "description": "Filament UI for happenv-com/laravel-access-control: a roles × permissions matrix and a permission editor for one role or user, saving live or on demand.",
+    "license": "proprietary",
     "keywords": [
-        ":organization",
+        "happenv",
         "laravel",
         "filamentphp",
         "filament",
         "filament-plugin",
-        ":package_slug"
+        "filament-access-control"
     ],
     "authors": [
         {
@@ -24,17 +24,14 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/:github_org/:package_slug",
+    "homepage": "https://github.com/happenv-com/filament-access-control",
     "support": {
-        "issues": "https://github.com/:github_org/:package_slug/issues",
-        "source": "https://github.com/:github_org/:package_slug",
-        "security": "https://github.com/:github_org/:package_slug/security/policy"
+        "issues": "https://github.com/happenv-com/filament-access-control/issues",
+        "source": "https://github.com/happenv-com/filament-access-control"
     },
     "require": {
         "php": "^8.3",
         "filament/filament": "^5.8.3",
-        "filament/forms": "^5.8.3",
-        "filament/tables": "^5.8.3",
         "spatie/laravel-package-tools": "^1.93"
     },
     "require-dev": {
@@ -55,13 +52,13 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Happenv\\FilamentAccessControl\\": "src/",
+            "Happenv\\FilamentAccessControl\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "Happenv\\FilamentAccessControl\\Tests\\": "tests/"
         }
     },
     "config": {
@@ -78,10 +75,10 @@
         },
         "laravel": {
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FilamentAccessControl": "Happenv\\FilamentAccessControl\\Facades\\FilamentAccessControl"
             },
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Happenv\\FilamentAccessControl\\FilamentAccessControlServiceProvider"
             ]
         }
     },
@@ -109,7 +106,6 @@
         "rector": "rector process",
         "rector-test": "rector process --dry-run",
         "test": "pest --testsuite=Unit,Feature",
-        "test-browser": "pest --testsuite=Browser",
         "test-coverage": "pest --testsuite=Unit,Feature --coverage"
     },
     "scripts-descriptions": {
@@ -124,7 +120,12 @@
         "rector": "Applies Rector refactorings.",
         "rector-test": "Shows pending Rector refactorings.",
         "test": "Runs the unit and feature tests.",
-        "test-browser": "Runs the browser tests (needs `npx playwright install chromium` once).",
         "test-coverage": "Runs the unit and feature tests with code coverage (needs pcov or Xdebug)."
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packeton.happenv.com"
+        }
+    ]
 }

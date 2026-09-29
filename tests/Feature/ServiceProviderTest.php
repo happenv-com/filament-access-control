@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use VendorName\Skeleton\SkeletonServiceProvider;
+use Happenv\FilamentAccessControl\FilamentAccessControlServiceProvider;
 
 it('registers the service provider', function (): void {
-    expect(app()->getProviders(SkeletonServiceProvider::class))->not->toBeEmpty();
+    expect(app()->getProviders(FilamentAccessControlServiceProvider::class))->not->toBeEmpty();
 });
 
 it('merges the package config', function (): void {
-    expect(config(':package_short_name'))->toBeArray();
+    expect(config('filament-access-control'))->toBeArray();
 });

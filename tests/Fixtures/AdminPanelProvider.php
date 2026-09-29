@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VendorName\Skeleton\Tests\Fixtures;
+namespace Happenv\FilamentAccessControl\Tests\Fixtures;
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -17,9 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-// @plugin-start
-use VendorName\Skeleton\SkeletonPlugin;
-// @plugin-end
+use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 
 /**
  * A real panel with login, so resources, pages and widgets of the package can
@@ -37,9 +35,7 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
-            // @plugin-start
-            ->plugin(SkeletonPlugin::make())
-            // @plugin-end
+            ->plugin(FilamentAccessControlPlugin::make())
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

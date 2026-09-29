@@ -49,7 +49,7 @@ concurrency:
 jobs:
   tests:
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - F${{ matrix.filament }} - ${{ matrix.stability }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: github.event.pull_request.draft == false
     timeout-minutes: 15
 
@@ -58,19 +58,15 @@ jobs:
       matrix:
         php: ['8.3', '8.4', '8.5']
         laravel: ['12.*', '13.*']
-        # @filament-start
         filament: ['5']
-        # @filament-end
         stability: [prefer-lowest, prefer-stable]
         include:
           - laravel: '12.*'
             testbench: '10.*'
           - laravel: '13.*'
             testbench: '11.*'
-          # @filament-start
           - filament: '5'
             filament-constraint: '^5.8.3'
-          # @filament-end
         exclude:
           # The lowest dependency set predates PHP 8.5 and only reports its
           # deprecations there.
@@ -99,18 +95,12 @@ jobs:
         env:
           LARAVEL: ${{ matrix.laravel }}
           TESTBENCH: ${{ matrix.testbench }}
-          # @filament-start
           FILAMENT: ${{ matrix.filament-constraint }}
-          # @filament-end
           STABILITY: ${{ matrix.stability }}
-          # @private-start
           COMPOSER_AUTH: '{"http-basic": {"packeton.happenv.com": {"username": "token", "password": "${{ secrets.COMPOSER_PACKETON_TOKEN }}"}}}'
-          # @private-end
         run: |
           composer require "laravel/framework:${LARAVEL}" "orchestra/testbench:${TESTBENCH}" --no-interaction --no-update
-          # @filament-start
           composer require "filament/filament:${FILAMENT}" --no-interaction --no-update
-          # @filament-end
           composer update "--${STABILITY}" --prefer-dist --no-interaction --no-progress --with-all-dependencies
 
       - name: List installed dependencies
