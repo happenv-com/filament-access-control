@@ -72,3 +72,25 @@ it('translates every key and nothing else', function (?string $english, ?string 
     expect(array_keys($actual))->toEqualCanonicalizing(array_keys($expected))
         ->and($actual)->each->toBeString()->not->toBeEmpty();
 })->with('translation files');
+
+it('keeps every placeholder of the English line', function (?string $english, ?string $translation): void {
+    if ($english === null) {
+        expect(true)->toBeTrue();
+
+        return;
+    }
+
+    $placeholders = static function (string $line): array {
+        preg_match_all('/:([a-z_]+)/', $line, $matches);
+        $names = array_values(array_unique($matches[1]));
+        sort($names);
+
+        return $names;
+    };
+
+    $actual = translationKeys($translation);
+
+    foreach (translationKeys($english) as $key => $line) {
+        expect($placeholders((string) ($actual[$key] ?? '')))->toBe($placeholders((string) $line), $key);
+    }
+})->with('translation files');
