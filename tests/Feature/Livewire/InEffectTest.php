@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Happenv\FilamentAccessControl\Livewire\RecordPermissions;
+use Happenv\FilamentAccessControl\Tests\Fixtures\Models\PlainAccount;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\GalleryPermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\ProductPermission;
@@ -80,6 +81,23 @@ it('counts a super-admin role as holding everything, conditions still applying',
 
     livewire(RecordPermissions::class, ['record' => $this->user->fresh()])
         ->assertTableColumnStateSet('in_effect', 'effective', 'permission:' . ProductPermission::Delete->value)
+        ->assertTableColumnStateSet('in_effect', 'unmet-condition', 'permission:' . GalleryPermission::Publish->value);
+});
+
+it('reads what an account\'s roles store even without the library\'s HasRoles trait', function (): void {
+    $role = createRole('gallery-manager', permissions: [ProductPermission::Update->value], name: 'Gallery manager');
+
+    $account = PlainAccount::query()->create([
+        'name' => 'Plain',
+        'email' => 'plain@example.com',
+        'password' => 'password',
+        'permissions' => [GalleryPermission::Publish->value],
+    ]);
+    $account->roles()->attach($role);
+
+    livewire(RecordPermissions::class, ['record' => $account->fresh()])
+        ->assertTableColumnStateSet('in_effect', 'effective', 'permission:' . ProductPermission::Update->value)
+        ->assertTableColumnStateSet('in_effect', 'implied', 'permission:' . GalleryPermission::Manage->value)
         ->assertTableColumnStateSet('in_effect', 'unmet-condition', 'permission:' . GalleryPermission::Publish->value);
 });
 
