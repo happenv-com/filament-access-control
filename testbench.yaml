@@ -1,0 +1,5 @@
+# The package as an application sees it — read by Larastan when it boots the app to analyse
+# against (views, translations and gates registered by the providers below).
+providers:
+  - Happenv\LaravelAccessControl\AccessControlServiceProvider
+  - Happenv\FilamentAccessControl\FilamentAccessControlServiceProvider

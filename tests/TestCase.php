@@ -16,15 +16,16 @@ use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Happenv\FilamentAccessControl\FilamentAccessControlServiceProvider;
+use Happenv\FilamentAccessControl\Tests\Fixtures\AccessControlFixturesServiceProvider;
+use Happenv\FilamentAccessControl\Tests\Fixtures\AdminPanelProvider;
+use Happenv\FilamentAccessControl\Tests\Fixtures\User;
+use Happenv\LaravelAccessControl\AccessControlServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Happenv\FilamentAccessControl\Tests\Fixtures\AdminPanelProvider;
-use Happenv\FilamentAccessControl\FilamentAccessControlServiceProvider;
-use Happenv\FilamentAccessControl\Tests\Fixtures\User;
 
 abstract class TestCase extends Orchestra
 {
@@ -36,10 +37,6 @@ abstract class TestCase extends Orchestra
     protected function setUp(): void
     {
         parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName): string => 'Happenv\\FilamentAccessControl\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
-        );
 
         // Laravel only logs deprecations. Fail the test when the package's OWN
         // code triggers one, so it is fixed before the next PHP / Laravel /
@@ -88,6 +85,9 @@ abstract class TestCase extends Orchestra
             // before 4.13.3 / 5.8.3 re-binds Livewire's DataStore as non-shared
             // when it registers AFTER Livewire (filamentphp/filament#20515).
             LivewireServiceProvider::class,
+            AccessControlServiceProvider::class,
+            // Right after the library registers its registries, and before it boots its gates.
+            AccessControlFixturesServiceProvider::class,
             FilamentAccessControlServiceProvider::class,
             AdminPanelProvider::class,
         ];

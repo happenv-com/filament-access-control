@@ -11,6 +11,5 @@ coverage
 node_modules
 phpstan.neon
 phpunit.xml
-testbench.yaml
 vendor
 tests/Browser/Screenshots
