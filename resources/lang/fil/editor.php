@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'collapse_all' => 'I-collapse lahat',
+    'counter' => ':granted sa :total',
+    'expand_all' => 'I-expand lahat',
+    'inherited_hint' => 'Naibigay na ito ng isang tungkulin ng user na ito. Habang nasa kanya ang tungkuling iyon, walang naidadagdag ang direktang pagbibigay.',
+    'no_roles' => 'Wala pang tungkulin. Magdagdag ng una para makapagsimulang magbigay ng mga pahintulot.',
+    'offering_empty' => 'Walang pahintulot na maibibigay rito.',
+    'read_only_hint' => 'Nakikita mo ang mga pahintulot na ito pero hindi mo mababago.',
+    'restricted_hint' => 'Nililimitahan ng application ang pahintulot na ito sa ngayon: tinatanggihan ito para sa lahat, anuman ang ibinigay rito.',
+    'search' => 'Maghanap ng pahintulot…',
+    'search_empty' => 'Walang pahintulot na tugma sa “:search”.',
+    'staged_marker' => 'Hindi pa nai-save',
+    'super_admin_hint' => 'Nasa tungkuling ito ang lahat ng pahintulot at hindi ito malilimitahan.',
+    'super_admin_inherited' => 'Mga tungkuling nagbibigay ng lahat ng pahintulot: :roles. Walang anuman sa ibaba ang magbabago sa puwedeng gawin ng user na ito.',
+    'toggle_subject' => 'I-toggle ang lahat ng pahintulot ng resource na ito',
+    'unsaved_changes' => 'May mga pagbabago ka sa pahintulot na hindi pa nai-save. Aalis ka pa rin ba?',
+    'held_outside_offering' => [
+        'heading' => 'Naibigay, hindi ginagamit dito',
+        'description' => 'Naibigay na ang mga pahintulot na ito dati, pero walang anuman dito ang sumusuri sa mga ito. Puwede mong bawiin ang mga ito, pero hindi mo na maibibigay ulit.',
+    ],
+    'columns' => [
+        'granted' => 'Naibigay',
+        'inherited' => 'Mula sa mga tungkulin',
+        'permission' => 'Pahintulot',
+    ],
+    'fields' => [
+        'role' => 'Tungkulin',
+    ],
+    'actions' => [
+        'discard' => 'I-discard',
+        'save' => 'I-save ang mga pahintulot',
+        'delete_role' => [
+            'heading' => 'I-delete ang tungkulin',
+            'label' => 'I-delete ang tungkulin',
+            'submit' => 'I-delete',
+        ],
+    ],
+    'notifications' => [
+        'no_holder' => 'Hindi ito nahanap — i-reload ang page at subukan ulit.',
+        'no_permission' => 'Walang nahanap na ganitong pahintulot — i-reload ang page at subukan ulit.',
+        'not_offered' => 'Hindi maibibigay rito ang pahintulot na ito.',
+        'role_deleted' => 'Na-delete na ang tungkulin.',
+        'read_only' => 'Hindi mababago rito ang mga pahintulot na ito.',
+        'saved' => 'Na-save na ang mga pahintulot.',
+        'unauthorized' => 'Hindi ka pinapayagang baguhin ang mga pahintulot na ito.',
+    ],
+];

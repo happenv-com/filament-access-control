@@ -256,9 +256,11 @@ Every write dispatches `Happenv\FilamentAccessControl\Events\PermissionsUpdated`
 
 ## Translations
 
-| Language            | Language            | Language            |
-|---------------------|---------------------|---------------------|
-| English (`en`)      | Polish (`pl`)       | German (`de`)       |
+The package ships in every locale Filament ships:
+
+`am` `ar` `az` `bg` `bn` `bs` `ca` `ckb` `cs` `da` `de` `el` `en` `es` `et` `eu` `fa` `fi` `fil` `fr` `he` `hi` `hr` `hu` `hy` `id` `it` `ja` `ka` `km` `ko` `ku` `lt` `lus` `lv` `mk` `mn` `ms` `my` `nb` `ne` `nl` `pl` `pt` `pt_BR` `ro` `ru` `sk` `sl` `sq` `sr_Cyrl` `sr_Latn` `sv` `sw` `tg` `th` `tr` `uk` `ur` `uz` `vi` `zh_CN` `zh_HK` `zh_TW`
+
+The test suite keeps it that way: a locale Filament adds and this package lacks fails it, and so does a key missing from any locale.
 
 Publish them to change the wording:
 
