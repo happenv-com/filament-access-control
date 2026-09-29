@@ -38,7 +38,7 @@ describe('a role', function (): void {
             ->assertSee('Change names, prices and stock')
             ->assertTableColumnExists('holder_' . holderKey($this->editor))
             ->assertTableColumnHidden('inherited')
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'granted', 'permission:' . ProductPermission::View->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'effective', 'permission:' . ProductPermission::View->value)
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'some', 'subject:' . ProductPermission::class);
 
         expect(livewire(RecordPermissions::class, ['record' => $this->editor])->instance()->getTable()->areGroupsCollapsedByDefault())->toBeTrue();

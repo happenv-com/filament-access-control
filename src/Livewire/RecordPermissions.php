@@ -136,6 +136,15 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
     }
 
     /**
+     * A role's cells show what the rules make of its grants; an account's "Granted" column is what it
+     * holds directly, and its "In effect" column the rest.
+     */
+    public function resolvesHolderCells(): bool
+    {
+        return $this->isRole();
+    }
+
+    /**
      * What the record's ROLES grant, slug => the titles of the roles granting it.
      *
      * @return array<string, list<string>>

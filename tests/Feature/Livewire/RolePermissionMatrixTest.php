@@ -114,8 +114,8 @@ describe('rendering', function (): void {
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'some', 'subject:' . ProductPermission::class)
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'all', 'subject:' . CategoryPermission::class)
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'none', 'subject:' . RolePermission::class)
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'granted', 'permission:' . ProductPermission::View->value)
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'revoked', 'permission:' . ProductPermission::Create->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'effective', 'permission:' . ProductPermission::View->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'not-granted', 'permission:' . ProductPermission::Create->value)
             ->assertTableColumnStateSet('holder_' . holderKey($this->admin), 'all', 'subject:' . RolePermission::class);
     });
 
@@ -221,7 +221,7 @@ describe('deferred', function (): void {
             ->assertSet('changes', [holderKey($this->editor) => ['grant' => [ProductPermission::View->value], 'revoke' => []]])
             ->assertActionEnabled(TestAction::make('saveChanges')->table())
             ->assertActionExists(TestAction::make('saveChanges')->table(), fn ($action): bool => (int) $action->getBadge() === 1)
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'granted', 'permission:' . ProductPermission::View->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'effective', 'permission:' . ProductPermission::View->value)
             ->assertNotDispatched('filament-access-control::permissions-updated');
 
         expect($this->editor->fresh()->getPermissions())->toBeEmpty();

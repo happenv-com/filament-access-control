@@ -17,13 +17,18 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\Support\Authorization;
+use Happenv\FilamentAccessControl\Support\PermissionCell;
+use Happenv\FilamentAccessControl\Support\PermissionCellState;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
 use Happenv\FilamentAccessControl\Support\PermissionWriter;
 use Happenv\FilamentAccessControl\Support\RefusalLead;
+use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
 use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
+use Happenv\LaravelAccessControl\Dto\PermissionResolutionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionSubjectDto;
+use Happenv\LaravelAccessControl\PermissionResolver;
 use Happenv\LaravelAccessControl\PermissionRestrictions;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
@@ -91,6 +96,23 @@ trait EditsPermissions
      * @var array<array-key, bool>
      */
     protected array $editableHolders = [];
+
+    /**
+     * One resolution per holder for the life of one request: the library resolves the rules over a
+     * stored state once and answers every permission from it. Forgotten whenever what the screen
+     * treats as stored changes — a click staged, a write, a discard.
+     *
+     * @var array<array-key, Closure(PermissionDefinition): PermissionResolutionDto>
+     */
+    protected array $permissionExplainers = [];
+
+    /**
+     * The cells built from those resolutions — a cell's state, colour and tooltip are asked for
+     * separately.
+     *
+     * @var array<array-key, array<string, PermissionCell>>
+     */
+    protected array $permissionCells = [];
 
     /**
      * The records this screen edits, keyed by {@see self::holderKey()}.
@@ -252,6 +274,62 @@ trait EditsPermissions
         return resolve(PermissionRestrictions::class)->isRestricted($permission->enum);
     }
 
+    /**
+     * Whether a holder's cells show what the rules make of its grants, or only whether it holds each
+     * one. A role's do; an account's direct grants do not — its "In effect" column does that.
+     */
+    public function resolvesHolderCells(): bool
+    {
+        return true;
+    }
+
+    /**
+     * What the library resolves a holder's grants to — staged changes included, and without an
+     * account, so without conditions: a role holds grants, it does not sign in.
+     */
+    public function holderResolution(string $holderKey, PermissionDefinition $permission): PermissionResolutionDto
+    {
+        $explain = $this->permissionExplainers[$holderKey] ??= resolve(PermissionResolver::class)->explainer(
+            fn (PermissionDefinition $candidate): bool => $this->isGranted($holderKey, (string) $candidate->value),
+        );
+
+        return $explain($permission);
+    }
+
+    /**
+     * A holder's cell for one permission: its resolution as an icon, a colour and the reasons.
+     */
+    public function holderCell(string $holderKey, string $slug): PermissionCell
+    {
+        return $this->permissionCells[$holderKey][$slug] ??= $this->makeHolderCell($holderKey, $slug);
+    }
+
+    protected function makeHolderCell(string $holderKey, string $slug): PermissionCell
+    {
+        $permission = $this->tree()->find($slug);
+
+        // A super-admin role holds everything, whatever the rules would say about a list it does not have.
+        if ($this->isLockedKey($holderKey) || ! $permission instanceof PermissionDto) {
+            return new PermissionCell($this->isGranted($holderKey, $slug) ? PermissionCellState::Effective : PermissionCellState::NotGranted);
+        }
+
+        $cell = PermissionCell::of(
+            $this->holderResolution($holderKey, $permission->enum),
+            $this->tree(),
+            staged: $this->isStaged($holderKey, $slug),
+        );
+
+        return $cell->state === PermissionCellState::Implied && $this->canEditHolder($holderKey)
+            ? $cell->withReason(__('filament-access-control::editor.cells.grant_explicitly'))
+            : $cell;
+    }
+
+    protected function forgetResolutions(): void
+    {
+        $this->permissionExplainers = [];
+        $this->permissionCells = [];
+    }
+
     public function isLockedKey(string $holderKey): bool
     {
         $holder = $this->holders->get($holderKey);
@@ -349,15 +427,22 @@ trait EditsPermissions
     }
 
     /**
-     * What one holder's cell shows for a row: `granted` or `revoked` for a permission, `all`,
-     * `some` or `none` for a subject.
+     * What one holder's cell shows for a row: a {@see PermissionCellState} value for a permission —
+     * or `granted` / `revoked` where the screen shows only what is held — and `all`, `some` or
+     * `none` for a subject.
      *
      * @param  array<string, mixed>  $record
      */
     public function cellState(string $holderKey, array $record): string
     {
         if ($record['type'] !== 'subject') {
-            return $this->isGranted($holderKey, (string) $record['slug']) ? 'granted' : 'revoked';
+            $slug = (string) $record['slug'];
+
+            if (! $this->resolvesHolderCells()) {
+                return $this->isGranted($holderKey, $slug) ? 'granted' : 'revoked';
+            }
+
+            return $this->holderCell($holderKey, $slug)->state->value;
         }
 
         $permissions = $this->subject((string) $record['group'], (string) $record['subject'])->children ?? new Collection;
@@ -508,8 +593,8 @@ trait EditsPermissions
             // Indented under its subject — inline, so that it holds without the app's theme having to
             // compile a utility class out of a PHP file.
             ->extraAttributes(fn (array $record): array => $record['type'] === 'subject' ? [] : ['style' => 'padding-inline-start: 2rem'])
-            ->icon(fn (array $record): ?Heroicon => $record['restricted'] ? Heroicon::NoSymbol : null)
-            ->iconColor('danger')
+            ->icon(fn (array $record): ?Heroicon => $record['restricted'] ? Heroicon::LockClosed : null)
+            ->iconColor('gray')
             ->iconPosition(IconPosition::After)
             ->tooltip(fn (array $record): ?string => $record['restricted'] ? __('filament-access-control::editor.restricted_hint') : null)
             ->wrap()
@@ -526,23 +611,28 @@ trait EditsPermissions
             ->label($label)
             ->alignCenter()
             ->state(fn (array $record): string => $this->cellState($holderKey, $record))
-            ->icon(fn (string $state): Heroicon => match ($state) {
+            ->icon(fn (string $state): Heroicon => PermissionCellState::tryFrom($state)?->icon() ?? match ($state) {
                 'granted', 'all' => Heroicon::CheckCircle,
                 'some' => Heroicon::MinusCircle,
                 default => Heroicon::XCircle,
             })
-            // A staged cell keeps the shape of what it will become and takes the warning colour until
-            // it is saved — Filament's own palette, no styles of our own.
+            // A staged cell keeps the shape of what it will become and takes the primary colour until
+            // it is saved — Filament's own palette, no styles of our own. `warning` means a missing
+            // requirement.
             ->color(fn (string $state, array $record): string => match (true) {
-                $this->isStagedRecord($holderKey, $record) => 'warning',
+                $this->isStagedRecord($holderKey, $record) => 'primary',
+                PermissionCellState::tryFrom($state) instanceof PermissionCellState => PermissionCellState::from($state)->color(),
                 in_array($state, ['granted', 'all'], true) => 'success',
                 $state === 'some' => 'warning',
                 $state === 'revoked' => 'danger',
                 default => 'gray',
             })
             ->tooltip(fn (array $record): ?string => match (true) {
+                $record['type'] === 'subject' => $this->isStagedRecord($holderKey, $record)
+                    ? __('filament-access-control::editor.staged_marker')
+                    : $this->subjectTooltip($holderKey, $record),
+                $this->resolvesHolderCells() => $this->holderCell($holderKey, (string) $record['slug'])->tooltip(),
                 $this->isStagedRecord($holderKey, $record) => __('filament-access-control::editor.staged_marker'),
-                $record['type'] === 'subject' => $this->subjectTooltip($holderKey, $record),
                 default => null,
             })
             ->disabledClick(fn (): bool => ! $this->canEditHolder($holderKey))
@@ -681,6 +771,8 @@ trait EditsPermissions
 
     public function discard(): void
     {
+        $this->forgetResolutions();
+
         $this->changes = [];
     }
 
@@ -706,6 +798,8 @@ trait EditsPermissions
      */
     protected function stage(string $holderKey, array $grant, array $revoke): void
     {
+        $this->forgetResolutions();
+
         $staged = $this->changes[$holderKey] ?? ['grant' => [], 'revoke' => []];
 
         foreach ($grant as $slug) {
@@ -758,6 +852,8 @@ trait EditsPermissions
 
     protected function refreshHolders(): void
     {
+        $this->forgetResolutions();
+
         unset($this->holders, $this->grants);
 
         $this->flushCachedTableRecords();
