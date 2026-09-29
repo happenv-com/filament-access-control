@@ -21,3 +21,5 @@ Nothing in your code has to change. What looks different:
 - A *Permission graph* action (`->diagrams(false)` removes it).
 
 If a test of yours asserts a role cell's state, `granted` is now `effective` and `revoked` is `not-granted`; a user's direct column keeps `granted` / `revoked`.
+
+Roles using `HasPermissions` should also implement laravel-access-control's `HoldsGrants`, so the *In effect* column can tell a permission a role implies from one it stores directly.

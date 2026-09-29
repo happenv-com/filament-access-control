@@ -249,12 +249,15 @@ laravel-access-control 3 lets permissions depend on each other (`#[Requires]`, `
 
 The tooltip names the permissions involved. In deferred mode a changed cell takes the primary colour, and every other cell already shows the consequence of the change.
 
+The user editor counts a super-admin role as holding every permission with its conditions still applied — an unmet `#[RequiresMFA]` still shows. But an application that implements its super-admin through `Gate::before()` skips conditions at the gate along with everything else, so there the column overstates what is actually enforced.
+
 **Dependencies.** A column next to the permission's name lists every rule from that permission's side — *Requires* / *Required by*, *Implied by* / *Implies*, *Blocked by* / *Blocks* — and every condition. The rule's `reason` is its tooltip. Searching also finds the permissions a rule ties to what you typed.
 
 **Conditions — `#[RequiresMFA]`.** Put it on a permission enum or case to withhold the permission from any account without multi-factor authentication enabled on the panel:
 
 ```php
 use Happenv\FilamentAccessControl\Attributes\RequiresMFA;
+use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
 
 enum OrderPermission: string implements PermissionDefinition
 {
