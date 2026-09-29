@@ -60,7 +60,7 @@ return [
         'implied_by' => 'يستلزمها: :permission',
         'implies' => 'تستلزم: :permission',
         'invalid_declaration' => 'إعلان غير صالح',
-        'related' => 'Related: :permission',
+        'related' => 'مرتبط: :permission',
         'required_by' => 'مطلوبة من قِبل: :permission',
         'requires' => 'تتطلب: :permission',
     ],

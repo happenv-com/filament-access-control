@@ -60,7 +60,7 @@ return [
         'implied_by' => 'ពាក់ព័ន្ធដោយ៖ :permission',
         'implies' => 'មានន័យថា៖ :permission',
         'invalid_declaration' => 'សេចក្តីប្រកាសមិនត្រឹមត្រូវ',
-        'related' => 'Related: :permission',
+        'related' => 'ពាក់ព័ន្ធ៖ :permission',
         'required_by' => 'ត្រូវការដោយ៖ :permission',
         'requires' => 'ត្រូវការ៖ :permission',
     ],

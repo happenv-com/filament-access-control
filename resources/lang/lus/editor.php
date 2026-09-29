@@ -60,7 +60,7 @@ return [
         'implied_by' => 'A chhuah khan: :permission',
         'implies' => 'A huam: :permission',
         'invalid_declaration' => 'Sawi dik lo',
-        'related' => 'Related: :permission',
+        'related' => 'Inzawmna: :permission',
         'required_by' => 'A mamawh tu: :permission',
         'requires' => 'A mamawh: :permission',
     ],

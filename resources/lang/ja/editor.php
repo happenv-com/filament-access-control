@@ -60,7 +60,7 @@ return [
         'implied_by' => '暗示元: :permission',
         'implies' => '暗示する: :permission',
         'invalid_declaration' => '無効な宣言',
-        'related' => 'Related: :permission',
+        'related' => '関連: :permission',
         'required_by' => '必要とする側: :permission',
         'requires' => '必要とする: :permission',
     ],

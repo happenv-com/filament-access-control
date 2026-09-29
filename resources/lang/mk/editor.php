@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Подразбрано од: :permission',
         'implies' => 'Подразбира: :permission',
         'invalid_declaration' => 'Неважечка декларација',
-        'related' => 'Related: :permission',
+        'related' => 'Поврзано: :permission',
         'required_by' => 'Побарано од: :permission',
         'requires' => 'Бара: :permission',
     ],

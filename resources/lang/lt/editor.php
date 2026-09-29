@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Numanoma iš: :permission',
         'implies' => 'Numano: :permission',
         'invalid_declaration' => 'Neteisinga deklaracija',
-        'related' => 'Related: :permission',
+        'related' => 'Susiję: :permission',
         'required_by' => 'Reikalautojas: :permission',
         'requires' => 'Reikalauja: :permission',
     ],

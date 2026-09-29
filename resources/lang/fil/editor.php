@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Ipinahihiwatig ng: :permission',
         'implies' => 'Nagpapahiwatig ng: :permission',
         'invalid_declaration' => 'Hindi wastong deklarasyon',
-        'related' => 'Related: :permission',
+        'related' => 'Kaugnay: :permission',
         'required_by' => 'Kailangan ng: :permission',
         'requires' => 'Nangangailangan ng: :permission',
     ],

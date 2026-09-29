@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Podrazumijeva ga: :permission',
         'implies' => 'Podrazumijeva: :permission',
         'invalid_declaration' => 'Nevaljana deklaracija',
-        'related' => 'Related: :permission',
+        'related' => 'Povezano: :permission',
         'required_by' => 'Zahtijeva ga: :permission',
         'requires' => 'Zahtijeva: :permission',
     ],

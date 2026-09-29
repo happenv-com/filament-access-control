@@ -184,3 +184,19 @@ describe('live changes', function (): void {
             ->assertTableColumnStateSet($this->column, 'effective', 'permission:' . GalleryPermission::View->value);
     });
 });
+
+describe('assistive technology', function (): void {
+    it('names every cell next to its icon, as IconColumn does — the tooltip, or the state', function (): void {
+        $this->editor->update(['permissions' => [GalleryPermission::View->value]]);
+
+        $component = livewire(RolePermissionMatrix::class);
+        $column = $component->instance()->getTable()->getColumn($this->column);
+
+        $column->record($component->instance()->getTableRecord('permission:' . GalleryPermission::View->value));
+        expect((string) $column->formatState('missing-requirement'))
+            ->toBe('<span class="fi-sr-only">Missing requirement: View products</span>');
+
+        $column->record($component->instance()->getTableRecord('permission:' . ProductPermission::Create->value));
+        expect((string) $column->formatState('not-granted'))->toBe('<span class="fi-sr-only">not-granted</span>');
+    });
+});

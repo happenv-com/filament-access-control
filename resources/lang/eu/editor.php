@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Honen eragilea: :permission',
         'implies' => 'Honek dakar: :permission',
         'invalid_declaration' => 'Adierazpen baliogabea',
-        'related' => 'Related: :permission',
+        'related' => 'Lotuta: :permission',
         'required_by' => 'Honen eskatzailea: :permission',
         'requires' => 'Behar du: :permission',
     ],

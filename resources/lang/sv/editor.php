@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Medförs av: :permission',
         'implies' => 'Medför: :permission',
         'invalid_declaration' => 'Ogiltig deklaration',
-        'related' => 'Related: :permission',
+        'related' => 'Relaterad: :permission',
         'required_by' => 'Krävs av: :permission',
         'requires' => 'Kräver: :permission',
     ],
