@@ -23,6 +23,7 @@ return [
         'description' => 'Այս թույլտվությունները տրվել են ավելի վաղ, բայց այստեղ ոչինչ դրանք չի ստուգում։ Կարող եք հետ վերցնել դրանք, բայց չեք կարող կրկին տրամադրել։',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Տրված',
         'inherited' => 'Դերերից',
         'permission' => 'Թույլտվություն',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

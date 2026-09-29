@@ -23,6 +23,7 @@ return [
         'description' => 'Deze rechten zijn eerder toegekend, maar niets hier raadpleegt ze. Je kunt ze intrekken, maar niet opnieuw toekennen.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Toegekend',
         'inherited' => 'Via rollen',
         'permission' => 'Recht',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

@@ -23,6 +23,7 @@ return [
         'description' => 'Estos permisos se concedieron anteriormente, pero aquí nada los consulta. Puedes revocarlos, pero no volver a concederlos.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Concedido',
         'inherited' => 'De roles',
         'permission' => 'Permiso',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

@@ -23,6 +23,7 @@ return [
         'description' => 'Ta dovoljenja so bila dodeljena prej, vendar jih tukaj nič ne preverja. Lahko jih odvzamete, ne morete pa jih znova dodeliti.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Dodeljeno',
         'inherited' => 'Iz vlog',
         'permission' => 'Dovoljenje',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

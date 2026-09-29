@@ -23,6 +23,7 @@ return [
         'description' => 'ये अनुमतियाँ पहले दी गई थीं, लेकिन यहाँ इनकी कोई जाँच नहीं होती। आप इन्हें वापस ले सकते हैं, पर दोबारा नहीं दे सकते।',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'दी गई',
         'inherited' => 'भूमिकाओं से',
         'permission' => 'अनुमति',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

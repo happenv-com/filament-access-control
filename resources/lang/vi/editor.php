@@ -23,6 +23,7 @@ return [
         'description' => 'Các quyền này đã được cấp trước đó, nhưng không có gì ở đây kiểm tra chúng. Bạn có thể thu hồi chúng, nhưng không thể cấp lại.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Đã cấp',
         'inherited' => 'Từ vai trò',
         'permission' => 'Quyền',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

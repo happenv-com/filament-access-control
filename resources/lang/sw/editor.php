@@ -23,6 +23,7 @@ return [
         'description' => 'Ruhusa hizi zilitolewa awali, lakini hakuna kitu hapa kinachozikagua. Unaweza kuziondoa; huwezi kuzitoa tena.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Imetolewa',
         'inherited' => 'Kutoka kwa majukumu',
         'permission' => 'Ruhusa',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

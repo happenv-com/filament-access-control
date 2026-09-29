@@ -23,6 +23,7 @@ return [
         'description' => 'Aceste permisiuni au fost acordate anterior, dar nimic de aici nu le verifică. Le puteți revoca, dar nu le mai puteți acorda din nou.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Acordată',
         'inherited' => 'Din roluri',
         'permission' => 'Permisiune',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

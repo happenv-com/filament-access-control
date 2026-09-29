@@ -23,6 +23,7 @@ return [
         'description' => '이 권한들은 이전에 부여되었지만 여기에서는 확인하는 곳이 없습니다. 회수할 수는 있지만 다시 부여할 수는 없습니다.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => '부여됨',
         'inherited' => '역할에서 부여',
         'permission' => '권한',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

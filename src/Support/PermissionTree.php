@@ -14,6 +14,7 @@ use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
 use Happenv\LaravelAccessControl\Dto\PermissionSubjectDto;
 use Happenv\LaravelAccessControl\PermissionCollection;
+use Happenv\LaravelAccessControl\PermissionRuleType;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
@@ -45,6 +46,8 @@ class PermissionTree
     /** @var Collection<string,PermissionDto>|null keyed by slug */
     private ?Collection $flat = null;
 
+    private ?bool $hasDependencies = null;
+
     /** @var array<string,Collection<int,string>> keyed by surface class and value */
     private array $offerings = [];
 
@@ -66,9 +69,10 @@ class PermissionTree
     /**
      * The catalogue, optionally narrowed to a surface and to a search term.
      *
-     * A term is matched against the group, the subject and every permission under it, but
-     * selection happens at SUBJECT granularity: matching one verb yields the whole subject, so the
-     * surviving row still offers the full set of verbs rather than the single one that matched.
+     * A term is matched against the group, the subject, every permission under it and the
+     * permissions its rules tie them to, but selection happens at SUBJECT granularity: matching one
+     * verb yields the whole subject, so the surviving row still offers the full set of verbs rather
+     * than the single one that matched.
      *
      * The surface narrows what the catalogue CONTAINS, the term narrows what is shown of it — so
      * the surface is applied first and the term searches only what may actually be handed out.
@@ -146,6 +150,50 @@ class PermissionTree
     }
 
     /**
+     * What the screens say next to a permission's name: every rule it declares or is the target of,
+     * from its own side, and every condition it carries.
+     *
+     * @return list<DependencyBadge>
+     */
+    public function dependencies(PermissionDto $permission): array
+    {
+        $badges = [];
+
+        foreach ($permission->rules as $rule) {
+            $declares = $rule->permission === $permission->enum;
+
+            $badges[] = new DependencyBadge(
+                label: __('filament-access-control::editor.dependencies.' . $this->dependencyKey($rule->type, $declares), [
+                    'permission' => $this->nameOf($declares ? $rule->other : $rule->permission),
+                ]),
+                color: match ($rule->type) {
+                    PermissionRuleType::Requires => 'gray',
+                    PermissionRuleType::ImpliedBy => 'info',
+                    PermissionRuleType::ConflictsWith => 'danger',
+                },
+                reason: $rule->reason,
+            );
+        }
+
+        foreach ($permission->conditions as $condition) {
+            $badges[] = new DependencyBadge($this->describeCondition($condition), 'warning');
+        }
+
+        return $badges;
+    }
+
+    /**
+     * Whether any permission declares a rule or carries a condition — without one, the screens need
+     * no column for them.
+     */
+    public function hasDependencies(): bool
+    {
+        return $this->hasDependencies ??= $this->flatten()->contains(
+            fn (PermissionDto $permission): bool => $permission->rules !== [] || $permission->conditions !== [],
+        );
+    }
+
+    /**
      * Every permission's full name, keyed by slug.
      *
      * The full NAME, not the verb {@see self::actionLabel()} renders: that one answers "what does
@@ -206,6 +254,19 @@ class PermissionTree
     public function normalise(string $value): string
     {
         return Str::lower(Str::ascii($value));
+    }
+
+    /**
+     * A rule seen from one of its ends: the declaring side requires, is implied by or is blocked by;
+     * the other side is required by, implies or blocks.
+     */
+    private function dependencyKey(PermissionRuleType $type, bool $declares): string
+    {
+        return match ($type) {
+            PermissionRuleType::Requires => $declares ? 'requires' : 'required_by',
+            PermissionRuleType::ImpliedBy => $declares ? 'implied_by' : 'implies',
+            PermissionRuleType::ConflictsWith => $declares ? 'blocked_by' : 'blocks',
+        };
     }
 
     protected function offersEverything(PermissionSurfaceDefinition $surface): bool
@@ -276,7 +337,25 @@ class PermissionTree
 
         return $subject->children->contains(fn (PermissionDto $permission): bool => str_contains($this->normalise($permission->name), $needle)
             || str_contains($this->normalise($this->actionLabel($permission)), $needle)
-            || str_contains($this->normalise($permission->slug), $needle));
+            || str_contains($this->normalise($permission->slug), $needle)
+            || $this->relatedMatches($permission, $needle));
+    }
+
+    /**
+     * Whether a permission a rule ties this one to matches — so searching for the gallery finds the
+     * products it requires.
+     */
+    private function relatedMatches(PermissionDto $permission, string $needle): bool
+    {
+        foreach ($permission->rules as $rule) {
+            $related = $rule->permission === $permission->enum ? $rule->other : $rule->permission;
+
+            if (str_contains($this->normalise($this->nameOf($related)), $needle)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

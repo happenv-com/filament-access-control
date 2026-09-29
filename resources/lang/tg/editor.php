@@ -23,6 +23,7 @@ return [
         'description' => 'Ин иҷозатҳо қаблан дода шуда буданд, аммо дар ин ҷо ҳеҷ чиз онҳоро намесанҷад. Шумо метавонед онҳоро бозпас гиред, аммо дубора дода наметавонед.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Дода шуда',
         'inherited' => 'Аз нақшҳо',
         'permission' => 'Иҷозат',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

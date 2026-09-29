@@ -23,6 +23,7 @@ return [
         'description' => 'These permissions were granted earlier, but nothing here consults them. You can revoke them; you cannot grant them again.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Granted',
         'inherited' => 'From roles',
         'permission' => 'Permission',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

@@ -23,6 +23,7 @@ return [
         'description' => 'Tato oprávnění byla udělena dříve, ale nic zde je nekontroluje. Můžete je odebrat, ale nemůžete je znovu udělit.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Uděleno',
         'inherited' => 'Z rolí',
         'permission' => 'Oprávnění',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

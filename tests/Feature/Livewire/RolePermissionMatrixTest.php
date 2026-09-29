@@ -162,6 +162,10 @@ describe('rendering', function (): void {
             expect($rootTag)->toContain('x-data')->not->toContain('<!--');
         }
     });
+
+    it('needs no dependencies column while no permission declares a rule or a condition', function (): void {
+        livewire(RolePermissionMatrix::class)->assertTableColumnHidden('dependencies');
+    });
 });
 
 describe('live', function (): void {

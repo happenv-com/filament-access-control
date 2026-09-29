@@ -23,6 +23,7 @@ return [
         'description' => 'እነዚህ ፈቃዶች ቀደም ብለው ተሰጥተዋል፣ ነገር ግን እዚህ ምንም ነገር አያረጋግጣቸውም። ሊሽሯቸው ይችላሉ፤ እንደገና ሊሰጧቸው ግን አይችሉም።',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'የተሰጠ',
         'inherited' => 'ከሚናዎች',
         'permission' => 'ፈቃድ',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

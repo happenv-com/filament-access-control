@@ -23,6 +23,7 @@ return [
         'description' => 'Bu ruxsatlar avval berilgan, lekin bu yerda ularni hech narsa tekshirmaydi. Ularni qaytarib olishingiz mumkin, lekin qayta bera olmaysiz.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Berilgan',
         'inherited' => 'Rollardan',
         'permission' => 'Ruxsat',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

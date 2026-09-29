@@ -221,6 +221,7 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
             ])
             ->columns([
                 $this->permissionColumn(),
+                $this->dependenciesColumn(),
                 $this->holderColumn($this->recordKey(), __('filament-access-control::editor.columns.granted')),
                 TextColumn::make('inherited')
                     ->label(__('filament-access-control::editor.columns.inherited'))

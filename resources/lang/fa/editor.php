@@ -23,6 +23,7 @@ return [
         'description' => 'این مجوزها قبلاً اعطا شده‌اند، اما هیچ چیز در اینجا آن‌ها را بررسی نمی‌کند. می‌توانید آن‌ها را پس بگیرید، اما نمی‌توانید دوباره اعطایشان کنید.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'اعطا شده',
         'inherited' => 'از نقش‌ها',
         'permission' => 'مجوز',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

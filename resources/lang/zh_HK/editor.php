@@ -23,6 +23,7 @@ return [
         'description' => '這些權限早前已授予，但此處並不會檢查它們。您可以撤銷，但不能再次授予。',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => '已授予',
         'inherited' => '來自角色',
         'permission' => '權限',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

@@ -23,6 +23,7 @@ return [
         'description' => 'Naibigay na ang mga pahintulot na ito dati, pero walang anuman dito ang sumusuri sa mga ito. Puwede mong bawiin ang mga ito, pero hindi mo na maibibigay ulit.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Naibigay',
         'inherited' => 'Mula sa mga tungkulin',
         'permission' => 'Pahintulot',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

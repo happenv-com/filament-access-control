@@ -23,6 +23,7 @@ return [
         'description' => 'Heng phalna ho hi hmain pek tawh a ni a, mahse heta thil engmah hian a endik lo. I la let thei a, mahse i pe leh thei tawh lo.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Pek sa',
         'inherited' => 'Role atangin',
         'permission' => 'Phalna',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

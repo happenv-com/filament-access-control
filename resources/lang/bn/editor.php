@@ -23,6 +23,7 @@ return [
         'description' => 'এই অনুমতিগুলো আগে দেওয়া হয়েছিল, কিন্তু এখানে কোনো কিছুই এগুলো যাচাই করে না। আপনি এগুলো প্রত্যাহার করতে পারবেন, কিন্তু আবার দিতে পারবেন না।',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'দেওয়া হয়েছে',
         'inherited' => 'ভূমিকা থেকে',
         'permission' => 'অনুমতি',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

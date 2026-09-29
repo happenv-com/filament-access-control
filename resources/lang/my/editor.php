@@ -23,6 +23,7 @@ return [
         'description' => 'ဤခွင့်ပြုချက်များကို ယခင်က ပေးထားခဲ့သော်လည်း ဤနေရာတွင် မည်သည့်အရာကမျှ ၎င်းတို့ကို မစစ်ဆေးပါ။ ၎င်းတို့ကို ရုပ်သိမ်းနိုင်သော်လည်း ထပ်မံ ပေး၍ မရပါ။',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'ပေးထားသည်',
         'inherited' => 'အခန်းကဏ္ဍများမှ',
         'permission' => 'ခွင့်ပြုချက်',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

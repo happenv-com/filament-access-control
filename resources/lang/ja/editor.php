@@ -23,6 +23,7 @@ return [
         'description' => 'これらの権限は以前に付与されたものですが、ここではどこからも参照されていません。取り消すことはできますが、再び付与することはできません。',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => '付与済み',
         'inherited' => 'ロールから',
         'permission' => '権限',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

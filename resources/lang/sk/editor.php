@@ -23,6 +23,7 @@ return [
         'description' => 'Tieto oprávnenia boli udelené skôr, ale nič tu ich nekontroluje. Môžete ich odobrať, ale nemôžete ich znova udeliť.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Udelené',
         'inherited' => 'Z rolí',
         'permission' => 'Oprávnenie',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

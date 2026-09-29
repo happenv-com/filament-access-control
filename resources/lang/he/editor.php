@@ -23,6 +23,7 @@ return [
         'description' => 'הרשאות אלה הוענקו בעבר, אך דבר כאן אינו בודק אותן. ניתן לשלול אותן, אך לא ניתן להעניק אותן שוב.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'הוענקה',
         'inherited' => 'מתפקידים',
         'permission' => 'הרשאה',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

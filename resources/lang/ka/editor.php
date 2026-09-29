@@ -23,6 +23,7 @@ return [
         'description' => 'ეს ნებართვები ადრე იყო მინიჭებული, მაგრამ აქ მათ არაფერი ამოწმებს. შეგიძლიათ მათი ჩამორთმევა, მაგრამ ხელახლა მინიჭება — არა.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'მინიჭებული',
         'inherited' => 'როლებიდან',
         'permission' => 'ნებართვა',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

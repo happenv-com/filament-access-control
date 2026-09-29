@@ -23,6 +23,7 @@ return [
         'description' => 'Овие дозволи се доделени претходно, но ништо тука не ги проверува. Можете да ги одземете, но не и повторно да ги доделите.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Доделено',
         'inherited' => 'Од улоги',
         'permission' => 'Дозвола',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

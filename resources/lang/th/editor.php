@@ -23,6 +23,7 @@ return [
         'description' => 'สิทธิ์เหล่านี้เคยมอบไว้ก่อนหน้านี้ แต่ไม่มีส่วนใดในที่นี้ตรวจสอบสิทธิ์เหล่านี้ คุณเพิกถอนได้ แต่ไม่สามารถมอบซ้ำได้อีก',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'มอบแล้ว',
         'inherited' => 'จากบทบาท',
         'permission' => 'สิทธิ์',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

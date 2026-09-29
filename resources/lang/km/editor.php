@@ -23,6 +23,7 @@ return [
         'description' => 'សិទ្ធិទាំងនេះត្រូវបានផ្តល់ពីមុន ប៉ុន្តែគ្មានអ្វីនៅទីនេះពិនិត្យវាទេ។ អ្នកអាចដកវាវិញបាន ប៉ុន្តែមិនអាចផ្តល់វាម្តងទៀតបានទេ។',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'បានផ្តល់',
         'inherited' => 'ពីតួនាទី',
         'permission' => 'សិទ្ធិ',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

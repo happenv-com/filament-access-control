@@ -23,6 +23,7 @@ return [
         'description' => 'Эти разрешения были выданы ранее, но здесь их ничто не проверяет. Их можно отозвать, но нельзя выдать снова.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Выдано',
         'inherited' => 'Из ролей',
         'permission' => 'Разрешение',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

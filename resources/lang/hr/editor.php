@@ -23,6 +23,7 @@ return [
         'description' => 'Ova su dopuštenja dodijeljena ranije, ali ih ovdje ništa ne provjerava. Možete ih oduzeti, ali ih ne možete ponovno dodijeliti.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Dodijeljeno',
         'inherited' => 'Iz uloga',
         'permission' => 'Dopuštenje',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

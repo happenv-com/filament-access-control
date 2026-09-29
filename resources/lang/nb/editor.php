@@ -23,6 +23,7 @@ return [
         'description' => 'Disse tillatelsene ble tildelt tidligere, men ingenting her sjekker dem. Du kan trekke dem tilbake, men ikke tildele dem på nytt.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Tildelt',
         'inherited' => 'Fra roller',
         'permission' => 'Tillatelse',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

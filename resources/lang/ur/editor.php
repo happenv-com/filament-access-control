@@ -23,6 +23,7 @@ return [
         'description' => 'یہ اجازتیں پہلے دی گئی تھیں، لیکن یہاں کوئی چیز انہیں جانچتی نہیں۔ آپ انہیں واپس لے سکتے ہیں، لیکن دوبارہ نہیں دے سکتے۔',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'دی گئی',
         'inherited' => 'کرداروں سے',
         'permission' => 'اجازت',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

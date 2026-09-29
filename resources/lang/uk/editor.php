@@ -23,6 +23,7 @@ return [
         'description' => 'Ці дозволи було надано раніше, але тут їх ніщо не перевіряє. Їх можна відкликати, але не можна надати знову.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Надано',
         'inherited' => 'З ролей',
         'permission' => 'Дозвіл',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

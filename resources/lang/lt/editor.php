@@ -23,6 +23,7 @@ return [
         'description' => 'Šie leidimai buvo suteikti anksčiau, bet čia niekas jų netikrina. Galite juos atšaukti, bet nebegalite suteikti iš naujo.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Suteikta',
         'inherited' => 'Iš rolių',
         'permission' => 'Leidimas',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

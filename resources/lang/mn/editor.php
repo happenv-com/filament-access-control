@@ -23,6 +23,7 @@ return [
         'description' => 'Эдгээр эрхийг өмнө нь олгосон боловч энд тэдгээрийг юу ч шалгадаггүй. Та тэдгээрийг цуцалж болно, харин дахин олгох боломжгүй.',
     ],
     'columns' => [
+        'dependencies' => 'Dependencies',
         'granted' => 'Олгосон',
         'inherited' => 'Үүргээс',
         'permission' => 'Эрх',
@@ -50,6 +51,14 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+    ],
+    'dependencies' => [
+        'blocked_by' => 'Blocked by: :permission',
+        'blocks' => 'Blocks: :permission',
+        'implied_by' => 'Implied by: :permission',
+        'implies' => 'Implies: :permission',
+        'required_by' => 'Required by: :permission',
+        'requires' => 'Requires: :permission',
     ],
     'cells' => [
         'blocked_by' => 'Blocked by: :permissions',

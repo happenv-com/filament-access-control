@@ -17,6 +17,7 @@ use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\Support\Authorization;
+use Happenv\FilamentAccessControl\Support\DependencyBadge;
 use Happenv\FilamentAccessControl\Support\PermissionCell;
 use Happenv\FilamentAccessControl\Support\PermissionCellState;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
@@ -599,6 +600,50 @@ trait EditsPermissions
             ->tooltip(fn (array $record): ?string => $record['restricted'] ? __('filament-access-control::editor.restricted_hint') : null)
             ->wrap()
             ->searchable();
+    }
+
+    /**
+     * The rules and conditions next to a permission's name — both ends of every rule — so an operator
+     * sees why a cell shows what it shows. Hidden while no permission declares any.
+     */
+    protected function dependenciesColumn(): TextColumn
+    {
+        return TextColumn::make('dependencies')
+            ->label(__('filament-access-control::editor.columns.dependencies'))
+            ->state(fn (array $record): array => $this->dependencyBadges($record))
+            ->badge()
+            ->tooltip(fn (array $record): ?string => $this->dependencyTooltip($record))
+            ->wrap()
+            ->visible(fn (): bool => $this->tree()->hasDependencies());
+    }
+
+    /**
+     * @param  array<string, mixed>  $record
+     * @return list<DependencyBadge>
+     */
+    public function dependencyBadges(array $record): array
+    {
+        $permission = $record['type'] === 'permission' ? $this->tree()->find((string) $record['slug']) : null;
+
+        return $permission instanceof PermissionDto ? $this->tree()->dependencies($permission) : [];
+    }
+
+    /**
+     * Why each rule exists, where its declaration says.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    public function dependencyTooltip(array $record): ?string
+    {
+        $reasons = [];
+
+        foreach ($this->dependencyBadges($record) as $badge) {
+            if (filled($badge->reason)) {
+                $reasons[] = $badge->label . ' — ' . $badge->reason;
+            }
+        }
+
+        return $reasons === [] ? null : implode(' · ', $reasons);
     }
 
     /**
