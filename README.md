@@ -1,5 +1,11 @@
 # Filament Access Control
 
+<div class="filament-hidden">
+
+![Filament Access Control](art/banner.png)
+
+</div>
+
 [![Latest Version](https://img.shields.io/github/v/release/happenv-com/filament-access-control?style=flat-square&label=version)](https://github.com/happenv-com/filament-access-control/releases)
 [![Tests](https://img.shields.io/github/actions/workflow/status/happenv-com/filament-access-control/tests.yml?label=tests&style=flat-square)](https://github.com/happenv-com/filament-access-control/actions/workflows/tests.yml)
 [![PHPStan](https://img.shields.io/github/actions/workflow/status/happenv-com/filament-access-control/phpstan.yml?label=phpstan&style=flat-square)](https://github.com/happenv-com/filament-access-control/actions/workflows/phpstan.yml)
@@ -25,16 +31,13 @@ PermissionEditor::make()->deferred();
 
 ## Key features
 
-- **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role; a click on a subject's row grants or clears all of its verbs. See [The access control page](#the-access-control-page).
-- **An editor for one role or one user.** The same table for a single record, as a schema component you put in a form, a tab or an infolist. For a user it also lists the roles that already grant each permission. See [Editing one record](#editing-one-record).
-- **Counters on demand.** `->counters()` adds a summary row at the top of each group — one "granted/total" number per role column — visible even while the group is folded. See [Counters](#counters).
-- **Live or deferred saving.** Every click written at once, or staged and saved together — with Discard, a count of what is pending, and a warning before leaving with unsaved changes. See [Live or deferred](#live-or-deferred).
-- **Safe concurrent edits.** Each save re-reads the record under a row lock and replays the operator's intent, so two administrators changing the same role do not overwrite each other.
-- **Your authorization, asked every time.** Laravel abilities, policies or access-control permission enums decide who may see, create, change and delete; a voter's refusal is shown in the operator's language. See [Authorization](#authorization).
-- **Surfaces.** Narrow a screen to what a surface offers (an API key's screen, say); grants held outside it stay listed and revocable. See [Surfaces](#surfaces).
+- **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role — with an optional "granted/total" summary per group. See [The access control page](#the-access-control-page) and [Counters](#counters).
+- **An editor for one role or one user.** The same table for a single record, as a schema component in a form, a tab or an infolist; for a user it also lists the roles that already grant each permission. `PermissionSelector` covers create forms as a plain form field. See [Editing one record](#editing-one-record) and [The form field](#the-form-field).
+- **Live or deferred saving.** Every click written at once, or staged and saved together with Discard and a warning before leaving; each save replays the operator's intent under a row lock, so two administrators do not overwrite each other. See [Live or deferred](#live-or-deferred).
 - **Why, not just whether.** Every cell shows what laravel-access-control resolves: in effect, implied, missing a requirement, blocked by a conflict, restricted, or withheld by a condition — the tooltip names the permissions involved. See [Rules and conditions](#rules-and-conditions).
-- **`#[RequiresMFA]`.** A permission that needs multi-factor authentication on the account.
-- **A form field too.** `PermissionSelector` picks permissions as a flat list saved with the rest of a form — for create forms and anything that must save in one go.
+- **`#[RequiresMFA]`.** Withhold a permission from any account without multi-factor authentication; the user editor says what it withholds. See [Rules and conditions](#rules-and-conditions).
+- **Your authorization, asked every time.** Laravel abilities, policies or access-control permission enums decide who may see, create and change roles; a voter's refusal is shown in the operator's language. See [Authorization](#authorization).
+- **Surfaces.** Narrow a screen to what a surface offers (an API key's screen, say); grants held outside it stay listed and revocable. See [Surfaces](#surfaces).
 - **Tested.** Covered by a Pest suite on every supported version combination.
 
 ## Requirements
@@ -113,6 +116,17 @@ public function panel(Panel $panel): Panel
                 ),
         );
 }
+```
+
+## Configuration
+
+The package has no config file: everything is set on the plugin — see [Registering the plugin](#registering-the-plugin) and [The access control page](#the-access-control-page) — or per component.
+
+Optionally, publish the views and translations:
+
+```bash
+php artisan vendor:publish --tag="filament-access-control-views"
+php artisan vendor:publish --tag="filament-access-control-translations"
 ```
 
 ## Usage
@@ -194,7 +208,7 @@ Leaving a page with staged changes asks for confirmation first.
 
 ### Counters
 
-Each group can show what every role holds of it — a first row of the group, one "granted/total" number per role column (`3/7`), so a folded group still tells whether it is worth opening; a subject's tooltip then counts its verbs too. Off by default:
+Each group can show what every role holds of it — a first row of the group, one "granted/total" number per role column (`3/7`); a subject's tooltip then counts its verbs too. Off by default:
 
 ```php
 FilamentAccessControlPlugin::make()->counters();   // every screen of the plugin
