@@ -6,6 +6,15 @@ namespace Happenv\FilamentAccessControl\Livewire;
 
 use BackedEnum;
 use Closure;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Livewire\Concerns\EditsPermissions;
@@ -36,9 +45,12 @@ use Livewire\Component;
  * @property-read list<string> $superAdminRoles
  * @property-read Collection<string, PermissionDto> $heldOutsideOffering
  */
-class RecordPermissions extends Component
+class RecordPermissions extends Component implements HasActions, HasSchemas, HasTable
 {
     use EditsPermissions;
+    use InteractsWithActions;
+    use InteractsWithSchemas;
+    use InteractsWithTable;
 
     /** @var Model&HasEditablePermissions */
     #[Locked]
@@ -187,6 +199,51 @@ class RecordPermissions extends Component
                 && ! $this->isOffered($permission->slug));
     }
 
+    public function table(Table $table): Table
+    {
+        return $this->configurePermissionTable($table)
+            ->records(fn (?string $search): array => [
+                ...$this->permissionRecords($search),
+                ...$this->heldOutsideOfferingRecords(),
+            ])
+            ->columns([
+                $this->permissionColumn(),
+                $this->holderColumn($this->recordKey(), __('filament-access-control::editor.columns.granted')),
+                TextColumn::make('inherited')
+                    ->label(__('filament-access-control::editor.columns.inherited'))
+                    ->state(fn (array $record): array => $record['type'] === 'permission' ? $this->inheritedFrom((string) $record['slug']) : [])
+                    ->badge()
+                    ->color('info')
+                    ->icon(Heroicon::UserGroup)
+                    ->tooltip(__('filament-access-control::editor.inherited_hint'))
+                    ->visible(fn (): bool => $this->roles() !== []),
+            ]);
+    }
+
+    /**
+     * The grants {@see self::heldOutsideOffering()} lists, as a group of their own at the end of the
+     * table — outside the search's reach on purpose: a row a search can hide is a row an operator
+     * can fail to find, and for exactly these rows that would make the grant unrevocable.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function heldOutsideOfferingRecords(): array
+    {
+        return $this->heldOutsideOffering
+            ->mapWithKeys(fn (PermissionDto $permission): array => ['held:' . $permission->slug => [
+                'type' => 'permission',
+                'group' => 'held-outside-offering',
+                'group_name' => __('filament-access-control::editor.held_outside_offering.heading'),
+                'group_description' => __('filament-access-control::editor.held_outside_offering.description'),
+                'subject' => $permission->enum::class,
+                'label' => $permission->name,
+                'description' => $permission->slug,
+                'slug' => $permission->slug,
+                'restricted' => $this->isRestricted($permission),
+            ]])
+            ->all();
+    }
+
     public function render(): View
     {
         return view('filament-access-control::livewire.record-permissions');
@@ -219,7 +276,7 @@ class RecordPermissions extends Component
     /**
      * @return list<Model>
      */
-    protected function roles(): array
+    public function roles(): array
     {
         if (! $this->showInherited || $this->isRole() || ! method_exists($this->record, 'getRoles')) {
             return [];

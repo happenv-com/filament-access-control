@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
 use Filament\Facades\Filament;
 use Filament\Panel;
 use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
@@ -102,8 +102,8 @@ it('keeps the abilities it was not given', function (): void {
 it('lets the application configure the role actions', function (): void {
     $plugin = FilamentAccessControlPlugin::make()
         ->modifyCreateRoleActionUsing(fn (CreateAction $action): CreateAction => $action->label('New role'))
-        ->modifyDeleteRoleActionUsing(fn (DeleteAction $action): DeleteAction => $action->label('Remove'));
+        ->modifyDeleteRoleActionUsing(fn (Action $action): Action => $action->label('Remove'));
 
     expect($plugin->configureCreateRoleAction(CreateAction::make())->getLabel())->toBe('New role')
-        ->and($plugin->configureDeleteRoleAction(DeleteAction::make())->getLabel())->toBe('Remove');
+        ->and($plugin->configureDeleteRoleAction(Action::make('deleteRole'))->getLabel())->toBe('Remove');
 });

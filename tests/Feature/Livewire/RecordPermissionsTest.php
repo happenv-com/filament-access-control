@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Filament\Actions\Testing\TestAction;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\Livewire\RecordPermissions;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
@@ -28,17 +29,19 @@ beforeEach(function (): void {
 });
 
 describe('a role', function (): void {
-    it('lists the catalogue with the role\'s grants, folded', function (): void {
+    it('lists the catalogue with the role\'s grants in one column', function (): void {
         $this->editor->update(['permissions' => [ProductPermission::View->value]]);
 
         livewire(RecordPermissions::class, ['record' => $this->editor])
             ->assertOk()
             ->assertSee('Catalogue')
-            ->assertSee(__('filament-access-control::editor.counter', ['granted' => 1, 'total' => 7]))
-            ->assertDontSee('Change names, prices and stock')
-            ->call('toggleGroup', 'catalogue')
             ->assertSee('Change names, prices and stock')
-            ->assertSeeHtml('aria-checked="true"');
+            ->assertTableColumnExists('holder_' . holderKey($this->editor))
+            ->assertTableColumnHidden('inherited')
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'granted', 'permission:' . ProductPermission::View->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'some', 'subject:' . ProductPermission::class);
+
+        expect(livewire(RecordPermissions::class, ['record' => $this->editor])->instance()->getTable()->areGroupsCollapsedByDefault())->toBeTrue();
     });
 
     it('writes each click at once', function (): void {
@@ -66,13 +69,12 @@ describe('a role', function (): void {
 
     it('collects clicks until saved when deferred', function (): void {
         $component = livewire(RecordPermissions::class, ['record' => $this->editor, 'deferred' => true])
-            ->call('toggle', holderKey($this->editor), ProductPermission::View->value)
-            ->assertSee(__('filament-access-control::editor.actions.save'))
-            ->assertSee(trans_choice('filament-access-control::editor.staged', 1, ['count' => 1]));
+            ->callTableColumnAction('holder_' . holderKey($this->editor), 'permission:' . ProductPermission::View->value)
+            ->assertActionEnabled(TestAction::make('saveChanges')->table());
 
         expect($this->editor->fresh()->getPermissions())->toBeEmpty();
 
-        $component->call('save')->assertSet('changes', []);
+        $component->callAction(TestAction::make('saveChanges')->table())->assertSet('changes', []);
 
         expect($this->editor->fresh()->getPermissions()->all())->toBe([ProductPermission::View->value]);
     });
@@ -80,12 +82,12 @@ describe('a role', function (): void {
     it('keeps the root element\'s attributes free of Livewire\'s block markers', function (): void {
         $html = livewire(RecordPermissions::class, ['record' => $this->editor, 'deferred' => true])->html();
 
-        expect(str($html)->after('<div')->before('>')->toString())->toContain('fi-ac-record')->not->toContain('<!--');
+        expect(str($html)->after('<div')->before('>')->toString())->toContain('x-data')->not->toContain('<!--');
     });
 
     it('draws no save button when live', function (): void {
         livewire(RecordPermissions::class, ['record' => $this->editor])
-            ->assertDontSee(__('filament-access-control::editor.actions.save'));
+            ->assertActionHidden(TestAction::make('saveChanges')->table());
     });
 
     it('is asked the plugin\'s role ability', function (): void {
@@ -142,8 +144,9 @@ describe('a user', function (): void {
         $this->user->roles()->attach($this->editor);
 
         $component = livewire(RecordPermissions::class, ['record' => $this->user, 'ability' => UserPermission::Update])
-            ->call('toggleGroup', 'catalogue')
-            ->assertSee(__('filament-access-control::editor.inherited', ['roles' => 'Editor']));
+            ->assertTableColumnVisible('inherited')
+            ->assertTableColumnStateSet('inherited', ['Editor'], 'permission:' . ProductPermission::View->value)
+            ->assertTableColumnStateNotSet('inherited', ['Editor'], 'permission:' . ProductPermission::Update->value);
 
         expect($component->instance()->inheritedFrom(ProductPermission::View->value))->toBe(['Editor'])
             ->and($component->instance()->isGranted(holderKey($this->user), ProductPermission::View->value))->toBeFalse();
@@ -154,8 +157,7 @@ describe('a user', function (): void {
         $this->user->roles()->attach($this->editor);
 
         livewire(RecordPermissions::class, ['record' => $this->user, 'showInherited' => false])
-            ->call('toggleGroup', 'catalogue')
-            ->assertDontSee(__('filament-access-control::editor.inherited', ['roles' => 'Editor']));
+            ->assertTableColumnHidden('inherited');
     });
 
     it('says a super-admin role makes the list moot', function (): void {
@@ -171,7 +173,6 @@ describe('a user', function (): void {
 describe('a surface', function (): void {
     it('offers only what the surface offers', function (): void {
         livewire(RecordPermissions::class, ['record' => $this->user, 'surface' => Surface::Api, 'ability' => null])
-            ->call('expandAll')
             ->assertSee('Products')
             ->assertDontSee('Categories')
             ->call('toggle', holderKey($this->user), ProductPermission::Delete->value)
@@ -224,8 +225,7 @@ it('marks a permission the application restricts', function (): void {
     resolve(PermissionRestrictions::class)->restrictUsing(fn ($permission): bool => $permission === ProductPermission::Delete);
 
     $component = livewire(RecordPermissions::class, ['record' => $this->editor])
-        ->call('toggleGroup', 'catalogue')
-        ->assertSee(__('filament-access-control::editor.restricted'));
+        ->assertSee(__('filament-access-control::editor.restricted_hint'));
 
     expect($component->instance()->isRestricted(resolve(PermissionTree::class)->find(ProductPermission::Delete->value)))->toBeTrue();
 });

@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Filament\Actions\Testing\TestAction;
-use Filament\Support\Icons\Heroicon;
 use Happenv\FilamentAccessControl\Events\PermissionsUpdated;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
@@ -12,6 +11,7 @@ use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\ProductPermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\RolePermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\Surface;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Js;
 use Livewire\Features\SupportLockedProperties\CannotUpdateLockedPropertyException;
 
 use function Pest\Livewire\livewire;
@@ -26,61 +26,73 @@ beforeEach(function (): void {
 });
 
 describe('rendering', function (): void {
-    it('draws every role as a column, the super-admin first', function (): void {
+    it('draws a Filament table with a column per role, the super-admin first', function (): void {
         livewire(RolePermissionMatrix::class)
             ->assertOk()
+            ->assertTableColumnExists('label')
+            ->assertTableColumnExists('holder_' . holderKey($this->admin))
+            ->assertTableColumnExists('holder_' . holderKey($this->editor))
             ->assertSeeInOrder(['Administrator', 'Editor'])
-            ->assertSee(__('filament-access-control::editor.super_admin'));
+            ->assertSee(__('filament-access-control::editor.super_admin_hint'));
     });
 
-    it('starts with every group folded', function (): void {
-        livewire(RolePermissionMatrix::class)
-            ->assertSee('Catalogue')
-            ->assertDontSee('Products');
+    it('lists each subject followed by its permissions, grouped by module', function (): void {
+        $records = livewire(RolePermissionMatrix::class)->instance()->permissionRecords();
+
+        expect(array_slice(array_keys($records), 0, 3))->toBe([
+            'subject:' . RolePermission::class,
+            'permission:' . RolePermission::View->value,
+            'permission:' . RolePermission::Create->value,
+        ])
+            ->and($records['subject:' . ProductPermission::class])->toMatchArray([
+                'type' => 'subject',
+                'group' => 'catalogue',
+                'group_name' => 'Catalogue',
+                'label' => 'Products',
+            ])
+            ->and($records['permission:' . ProductPermission::Update->value])->toMatchArray([
+                'type' => 'permission',
+                'label' => 'Update',
+                'description' => 'Change names, prices and stock',
+                'slug' => ProductPermission::Update->value,
+            ]);
     });
 
-    it('opens and closes a group', function (): void {
-        livewire(RolePermissionMatrix::class)
-            ->call('toggleGroup', 'catalogue')
-            ->assertSee('Products')
-            ->assertSee('Change names, prices and stock')
-            ->call('toggleGroup', 'catalogue')
-            ->assertDontSee('Products');
+    it('folds the module groups by default, in Filament\'s own collapsible groups', function (): void {
+        $table = livewire(RolePermissionMatrix::class)->instance()->getTable();
+
+        expect($table->areGroupsCollapsedByDefault())->toBeTrue()
+            ->and($table->getGrouping()?->isCollapsible())->toBeTrue()
+            ->and($table->getGrouping()?->getTitle(['group_name' => 'Catalogue']))->toBe('Catalogue');
     });
 
-    it('opens and closes every group at once', function (): void {
-        livewire(RolePermissionMatrix::class)
-            ->call('expandAll')
-            ->assertSet('expandedGroups', ['administration', 'catalogue'])
-            ->assertSee('Products')
-            ->assertSee('Roles')
-            ->call('collapseAll')
-            ->assertSet('expandedGroups', []);
+    it('opens and folds every group at once', function (): void {
+        $component = livewire(RolePermissionMatrix::class)
+            ->callAction(TestAction::make('expandAll')->table());
+
+        expect(collect($component->effects['xjs'] ?? [])->pluck('expression')->implode(' '))
+            ->toContain('groupVisibility = ' . Js::from(['Administration', 'Catalogue']));
+
+        $component->callAction(TestAction::make('collapseAll')->table());
+
+        expect(collect($component->effects['xjs'] ?? [])->pluck('expression')->implode(' '))
+            ->toContain('groupVisibility = ' . Js::from([]));
     });
 
-    it('opens every group that survives a search', function (): void {
-        livewire(RolePermissionMatrix::class)
-            ->set('search', 'categor')
+    it('narrows the table to a search and opens what survives', function (): void {
+        $component = livewire(RolePermissionMatrix::class)
+            ->searchTable('categor')
             ->assertSee('Categories')
-            ->assertDontSee('Products')
-            ->assertDontSee('Administration');
+            ->assertDontSee('Products');
+
+        expect(collect($component->effects['xjs'] ?? [])->pluck('expression')->implode(' '))
+            ->toContain('groupVisibility = ' . Js::from(['Catalogue']));
     });
 
     it('says so when nothing matches the search', function (): void {
         livewire(RolePermissionMatrix::class)
-            ->set('search', 'nothing like it')
+            ->searchTable('nothing like it')
             ->assertSee(__('filament-access-control::editor.search_empty', ['search' => 'nothing like it']));
-    });
-
-    it('keeps the root element\'s attributes free of Livewire\'s block markers', function (): void {
-        // A control structure in the partial included INSIDE the root tag once closed it early and
-        // printed a stray `>` above the toolbar.
-        foreach ([false, true] as $deferred) {
-            $html = livewire(RolePermissionMatrix::class, ['deferred' => $deferred])->html();
-            $rootTag = str($html)->after('<div')->before('>')->toString();
-
-            expect($rootTag)->toContain('fi-ac-matrix')->not->toContain('<!--');
-        }
     });
 
     it('says so when there are no roles', function (): void {
@@ -91,17 +103,30 @@ describe('rendering', function (): void {
 
     it('draws only what a surface offers', function (): void {
         livewire(RolePermissionMatrix::class, ['surface' => Surface::Api])
-            ->call('expandAll')
             ->assertSee('Products')
             ->assertDontSee('Categories');
     });
 
-    it('counts what each role holds in a group', function (): void {
-        $this->editor->update(['permissions' => [ProductPermission::View->value, CategoryPermission::View->value]]);
+    it('shows a subject held in full, in part or not at all', function (): void {
+        $this->editor->update(['permissions' => [ProductPermission::View->value, ...array_column(CategoryPermission::cases(), 'value')]]);
 
         livewire(RolePermissionMatrix::class)
-            ->assertSee(__('filament-access-control::editor.counter', ['granted' => 2, 'total' => 7]))
-            ->assertSee(__('filament-access-control::editor.counter', ['granted' => 7, 'total' => 7]));
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'some', 'subject:' . ProductPermission::class)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'all', 'subject:' . CategoryPermission::class)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'none', 'subject:' . RolePermission::class)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'granted', 'permission:' . ProductPermission::View->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'revoked', 'permission:' . ProductPermission::Create->value)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->admin), 'all', 'subject:' . RolePermission::class);
+    });
+
+    it('keeps the root element\'s attributes free of Livewire\'s block markers', function (): void {
+        // A control structure in the partial included INSIDE the root tag once closed it early and
+        // printed a stray `>` above the table.
+        foreach ([false, true] as $deferred) {
+            $rootTag = str(livewire(RolePermissionMatrix::class, ['deferred' => $deferred])->html())->after('<div')->before('>')->toString();
+
+            expect($rootTag)->toContain('x-data')->not->toContain('<!--');
+        }
     });
 });
 
@@ -135,6 +160,17 @@ describe('live', function (): void {
         expect($this->editor->fresh()->getPermissions())->toBeEmpty();
     });
 
+    it('toggles through the cell Filament draws', function (): void {
+        livewire(RolePermissionMatrix::class)
+            ->callTableColumnAction('holder_' . holderKey($this->editor), 'permission:' . ProductPermission::View->value)
+            ->callTableColumnAction('holder_' . holderKey($this->editor), 'subject:' . CategoryPermission::class);
+
+        expect($this->editor->fresh()->getPermissions()->all())->toEqualCanonicalizing([
+            ProductPermission::View->value,
+            ...array_column(CategoryPermission::cases(), 'value'),
+        ]);
+    });
+
     it('dispatches what changed', function (): void {
         Event::fake([PermissionsUpdated::class]);
 
@@ -149,7 +185,9 @@ describe('deferred', function (): void {
         livewire(RolePermissionMatrix::class, ['deferred' => true])
             ->call('toggle', holderKey($this->editor), ProductPermission::View->value)
             ->assertSet('changes', [holderKey($this->editor) => ['grant' => [ProductPermission::View->value], 'revoke' => []]])
-            ->assertSee(trans_choice('filament-access-control::editor.staged', 1, ['count' => 1]))
+            ->assertActionEnabled(TestAction::make('saveChanges')->table())
+            ->assertActionExists(TestAction::make('saveChanges')->table(), fn ($action): bool => (int) $action->getBadge() === 1)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'granted', 'permission:' . ProductPermission::View->value)
             ->assertNotDispatched('filament-access-control::permissions-updated');
 
         expect($this->editor->fresh()->getPermissions())->toBeEmpty();
@@ -178,7 +216,7 @@ describe('deferred', function (): void {
             ->call('toggle', holderKey($this->editor), ProductPermission::View->value)
             ->call('toggleSubject', holderKey($this->editor), 'catalogue', CategoryPermission::class)
             ->call('toggle', holderKey($manager), ProductPermission::Delete->value)
-            ->call('save')
+            ->callAction(TestAction::make('saveChanges')->table())
             ->assertSet('changes', [])
             ->assertNotified(__('filament-access-control::editor.notifications.saved'));
 
@@ -202,12 +240,23 @@ describe('deferred', function (): void {
     it('throws the changes away on discard', function (): void {
         livewire(RolePermissionMatrix::class, ['deferred' => true])
             ->call('toggle', holderKey($this->editor), ProductPermission::View->value)
-            ->call('discard')
+            ->callAction(TestAction::make('discardChanges')->table())
             ->assertSet('changes', [])
             ->call('save')
             ->assertNotNotified();
 
         expect($this->editor->fresh()->getPermissions())->toBeEmpty();
+    });
+
+    it('offers save and discard only when deferred, and only once something is staged', function (): void {
+        livewire(RolePermissionMatrix::class)
+            ->assertActionHidden(TestAction::make('saveChanges')->table())
+            ->assertActionHidden(TestAction::make('discardChanges')->table());
+
+        livewire(RolePermissionMatrix::class, ['deferred' => true])
+            ->assertActionVisible(TestAction::make('saveChanges')->table())
+            ->assertActionDisabled(TestAction::make('saveChanges')->table())
+            ->assertActionDisabled(TestAction::make('discardChanges')->table());
     });
 
     it('takes the default from the plugin', function (): void {
@@ -301,8 +350,11 @@ describe('refusals', function (): void {
 describe('deleting a role', function (): void {
     it('deletes a role nobody holds', function (): void {
         livewire(RolePermissionMatrix::class)
-            ->callAction(TestAction::make('deleteRole')->arguments(['role' => holderKey($this->editor)]))
-            ->assertDispatched(RolePermissionMatrix::ROLES_CHANGED);
+            ->callAction(TestAction::make('deleteRole')->table(), data: ['role' => holderKey($this->editor)])
+            ->assertHasNoFormErrors()
+            ->assertNotified(__('filament-access-control::editor.notifications.role_deleted'))
+            ->assertDispatched(RolePermissionMatrix::ROLES_CHANGED)
+            ->assertTableColumnDoesNotExist('holder_' . holderKey($this->editor));
 
         expect(Role::query()->find($this->editor->id))->toBeNull();
     });
@@ -311,23 +363,33 @@ describe('deleting a role', function (): void {
         $this->editor->users()->attach(createUser('member@example.com'));
 
         livewire(RolePermissionMatrix::class)
-            ->assertActionDisabled(TestAction::make('deleteRole')->arguments(['role' => holderKey($this->editor)]))
-            ->assertActionExists(
-                TestAction::make('deleteRole')->arguments(['role' => holderKey($this->editor)]),
-                fn ($action): bool => $action->getAuthorizationResponseWithMessage()->message() === 'This role is assigned to users and cannot be deleted.',
-            );
+            ->callAction(TestAction::make('deleteRole')->table(), data: ['role' => holderKey($this->editor)])
+            ->assertHasFormErrors(['role' => 'This role is assigned to users and cannot be deleted.']);
 
         expect(Role::query()->find($this->editor->id))->not->toBeNull();
     });
 
-    it('draws the delete button as an icon', function (): void {
-        livewire(RolePermissionMatrix::class)
-            ->assertActionHasIcon(TestAction::make('deleteRole')->arguments(['role' => holderKey($this->editor)]), Heroicon::OutlinedTrash);
+    it('never offers the super-admin', function (): void {
+        $component = livewire(RolePermissionMatrix::class)
+            ->callAction(TestAction::make('deleteRole')->table(), data: ['role' => holderKey($this->admin)])
+            ->assertHasFormErrors(['role']);
+
+        expect(Role::query()->find($this->admin->id))->not->toBeNull();
     });
 
-    it('offers no delete button under the super-admin', function (): void {
+    it('asks the plugin\'s delete ability', function (): void {
+        signInOperator([RolePermission::View->value, RolePermission::Update->value]);
+
         livewire(RolePermissionMatrix::class)
-            ->assertSeeHtml('fac.delete.' . holderKey($this->editor))
-            ->assertDontSeeHtml('mountAction(\'deleteRole\', JSON.parse(\'{"role":"' . holderKey($this->admin));
+            ->callAction(TestAction::make('deleteRole')->table(), data: ['role' => holderKey($this->editor)])
+            ->assertHasFormErrors(['role']);
+
+        expect(Role::query()->find($this->editor->id))->not->toBeNull();
+    });
+
+    it('is not offered when there is nothing to delete', function (): void {
+        $this->editor->delete();
+
+        livewire(RolePermissionMatrix::class)->assertActionHidden(TestAction::make('deleteRole')->table());
     });
 });

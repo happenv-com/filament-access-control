@@ -6,7 +6,15 @@ namespace Happenv\FilamentAccessControl\Livewire\Concerns;
 
 use BackedEnum;
 use Closure;
+use Filament\Actions\Action;
 use Filament\Notifications\Notification;
+use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\IconPosition;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Grouping\Group;
+use Filament\Tables\Table;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\Support\Authorization;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
@@ -17,8 +25,10 @@ use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
 use Happenv\LaravelAccessControl\Dto\PermissionSubjectDto;
 use Happenv\LaravelAccessControl\PermissionRestrictions;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Js;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 
@@ -31,6 +41,10 @@ use Livewire\Attributes\Locked;
  *   - DEFERRED: clicks are staged in {@see self::$changes} and nothing reaches the database until
  *     the operator presses Save — or throws it all away with Discard.
  *
+ * The screens are Filament tables fed with arrays ({@see self::permissionRecords()}): one row per
+ * SUBJECT (a permission enum) followed by one row per permission of it, grouped by module into
+ * Filament's own collapsible groups, and one clickable icon column per holder.
+ *
  * Every click round-trips to the server rather than syncing through `$wire.$entangle`. Permission
  * slugs contain dots, and both `data_set()` and `$entangle` read a dot as nesting — a state map
  * keyed by slug is a tree pretending to be a flat array. That is also why the staged changes are
@@ -42,17 +56,6 @@ use Livewire\Attributes\Locked;
  */
 trait EditsPermissions
 {
-    public string $search = '';
-
-    /**
-     * Slugs of the groups the operator has opened. Everything starts collapsed: the catalogue spans
-     * every module in the deployment, and an operator who came to change one thing should not have
-     * to scroll past the rest.
-     *
-     * @var list<string>
-     */
-    public array $expandedGroups = [];
-
     /**
      * Nullable only for the moment Livewire assigns the mount parameters of the same name, before
      * `mount()` resolves "not said" to the plugin's default.
@@ -121,7 +124,7 @@ trait EditsPermissions
     #[Computed]
     public function groups(): Collection
     {
-        return $this->tree()->groups($this->search, $this->surface);
+        return $this->tree()->groups(surface: $this->surface);
     }
 
     /**
@@ -288,30 +291,235 @@ trait EditsPermissions
         return $this->tree()->actionLabel($permission);
     }
 
-    // Groups ----------------------------------------------------------------------------------
+    // Table -----------------------------------------------------------------------------------
 
-    public function toggleGroup(string $groupSlug): void
+    /**
+     * The table's rows: per subject, the subject itself and then each of its permissions.
+     *
+     * Keyed the way Filament keys custom data — `subject:` and the enum, `permission:` and the slug —
+     * and already in group order, which is all Filament's grouping of custom data needs. The search
+     * narrows at SUBJECT granularity, as the catalogue does: a matching verb brings its whole subject.
+     *
+     * @return array<string, array{type: string, group: string, group_name: string, group_description: ?string, subject: string, label: string, description: ?string, slug: ?string, restricted: bool}>
+     */
+    public function permissionRecords(?string $search = null): array
     {
-        $this->expandedGroups = in_array($groupSlug, $this->expandedGroups, strict: true)
-            ? array_values(array_diff($this->expandedGroups, [$groupSlug]))
-            : [...$this->expandedGroups, $groupSlug];
+        $records = [];
+
+        foreach ($this->tree()->groups($search, $this->surface) as $group) {
+            foreach ($group->subjects as $subjectKey => $subject) {
+                $shared = [
+                    'group' => $group->slug,
+                    'group_name' => $group->name,
+                    'group_description' => $group->description,
+                    'subject' => (string) $subjectKey,
+                ];
+
+                $records['subject:' . $subjectKey] = [
+                    ...$shared,
+                    'type' => 'subject',
+                    'label' => $subject->name,
+                    'description' => $subject->description,
+                    'slug' => null,
+                    'restricted' => false,
+                ];
+
+                foreach ($subject->children as $permission) {
+                    $records['permission:' . $permission->slug] = [
+                        ...$shared,
+                        'type' => 'permission',
+                        'label' => $this->actionLabel($permission),
+                        'description' => $permission->description,
+                        'slug' => $permission->slug,
+                        'restricted' => $this->isRestricted($permission),
+                    ];
+                }
+            }
+        }
+
+        return $records;
     }
 
-    public function expandAll(): void
+    /**
+     * What one holder's cell shows for a row: `granted` or `revoked` for a permission, `all`,
+     * `some` or `none` for a subject.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    public function cellState(string $holderKey, array $record): string
     {
-        $this->expandedGroups = $this->groups->keys()->map(fn (int | string $slug): string => (string) $slug)->values()->all();
+        if ($record['type'] !== 'subject') {
+            return $this->isGranted($holderKey, (string) $record['slug']) ? 'granted' : 'revoked';
+        }
+
+        $permissions = $this->subject((string) $record['group'], (string) $record['subject'])->children ?? new Collection;
+        $granted = $this->countGranted($holderKey, $permissions);
+
+        return match (true) {
+            $granted === 0 => 'none',
+            $granted === $permissions->count() => 'all',
+            default => 'some',
+        };
     }
 
-    public function collapseAll(): void
+    /**
+     * @param  array<string, mixed>  $record
+     */
+    public function isStagedRecord(string $holderKey, array $record): bool
     {
-        $this->expandedGroups = [];
+        if ($record['type'] !== 'subject') {
+            return $this->isStaged($holderKey, (string) $record['slug']);
+        }
+
+        return $this->hasStagedIn(
+            $holderKey,
+            $this->subject((string) $record['group'], (string) $record['subject'])->children ?? [],
+        );
     }
 
-    public function isExpanded(string $groupSlug): bool
+    /**
+     * Open or fold every group at once.
+     *
+     * Filament folds groups in the browser, so this is said to the table's Alpine component: with
+     * groups folded by default, the ones listed in `groupVisibility` are the open ones.
+     */
+    public function setGroupsExpanded(bool $expanded): void
     {
-        // A search has already narrowed the list to what the operator asked for; making them open
-        // each surviving group would undo the narrowing.
-        return filled($this->search) || in_array($groupSlug, $this->expandedGroups, strict: true);
+        $titles = $expanded
+            ? $this->tree()->groups($this->getTableSearch(), $this->surface)
+                ->map(fn (PermissionGroupDto $group): string => $group->name)
+                ->values()
+                ->all()
+            : [];
+
+        $this->js('Alpine.$data($wire.$el.querySelector(\'.fi-ta\')).groupVisibility = ' . Js::from($titles));
+    }
+
+    /**
+     * A search has already narrowed the table to what the operator asked for; making them open each
+     * surviving group would undo the narrowing — and clearing it folds everything back.
+     */
+    public function updated(string $property): void
+    {
+        if ($property === 'tableSearch') {
+            $this->setGroupsExpanded(filled($this->getTableSearch()));
+        }
+    }
+
+    /**
+     * @param  array<Action>  $toolbarActions  the screen's own, drawn after expand / collapse
+     */
+    protected function configurePermissionTable(Table $table, array $toolbarActions = []): Table
+    {
+        return $table
+            ->records(fn (?string $search): array => $this->permissionRecords($search))
+            ->groups([
+                Group::make('group')
+                    ->getTitleFromRecordUsing(fn (array $record): string => $record['group_name'])
+                    ->getDescriptionFromRecordUsing(fn (array $record): ?string => $record['group_description'])
+                    ->titlePrefixedWithLabel(false)
+                    ->collapsible(),
+            ])
+            ->defaultGroup('group')
+            ->groupingSettingsHidden()
+            // Folded: the catalogue spans every module of the deployment, and an operator who came to
+            // change one thing should not have to scroll past the rest.
+            ->collapsedGroupsByDefault()
+            ->recordClasses(fn (array $record): ?string => $record['type'] === 'subject' ? 'fi-striped' : null)
+            ->paginated(false)
+            ->searchPlaceholder(__('filament-access-control::editor.search'))
+            ->emptyStateIcon(Heroicon::OutlinedShieldCheck)
+            ->emptyStateHeading(fn (): string => filled($this->getTableSearch())
+                ? __('filament-access-control::editor.search_empty', ['search' => $this->getTableSearch()])
+                : __('filament-access-control::editor.offering_empty'))
+            ->toolbarActions([
+                Action::make('expandAll')
+                    ->label(__('filament-access-control::editor.expand_all'))
+                    ->link()
+                    ->color('gray')
+                    ->action(fn () => $this->setGroupsExpanded(true)),
+                Action::make('collapseAll')
+                    ->label(__('filament-access-control::editor.collapse_all'))
+                    ->link()
+                    ->color('gray')
+                    ->action(fn () => $this->setGroupsExpanded(false)),
+                ...$toolbarActions,
+                Action::make('discardChanges')
+                    ->label(__('filament-access-control::editor.actions.discard'))
+                    ->color('gray')
+                    ->visible(fn (): bool => $this->deferred === true)
+                    ->disabled(fn (): bool => ! $this->hasStagedChanges())
+                    ->action(fn () => $this->discard()),
+                Action::make('saveChanges')
+                    ->label(__('filament-access-control::editor.actions.save'))
+                    ->icon(Heroicon::Check)
+                    ->visible(fn (): bool => $this->deferred === true)
+                    ->disabled(fn (): bool => ! $this->hasStagedChanges())
+                    ->badge(fn (): ?int => $this->hasStagedChanges() ? $this->stagedCount() : null)
+                    ->badgeColor('warning')
+                    ->action(fn () => $this->save()),
+            ]);
+    }
+
+    protected function permissionColumn(): TextColumn
+    {
+        return TextColumn::make('label')
+            ->label(__('filament-access-control::editor.columns.permission'))
+            ->description(fn (array $record): ?string => $record['description'])
+            ->weight(fn (array $record): ?FontWeight => $record['type'] === 'subject' ? FontWeight::SemiBold : null)
+            // Indented under its subject — inline, so that it holds without the app's theme having to
+            // compile a utility class out of a PHP file.
+            ->extraAttributes(fn (array $record): array => $record['type'] === 'subject' ? [] : ['style' => 'padding-inline-start: 1rem'])
+            ->icon(fn (array $record): ?Heroicon => $record['restricted'] ? Heroicon::NoSymbol : null)
+            ->iconColor('danger')
+            ->iconPosition(IconPosition::After)
+            ->tooltip(fn (array $record): ?string => $record['restricted'] ? __('filament-access-control::editor.restricted_hint') : null)
+            ->wrap()
+            ->searchable();
+    }
+
+    /**
+     * One holder's column: a clickable icon per row — a verb granted or not, a subject held in
+     * full, in part or not at all.
+     */
+    protected function holderColumn(string $holderKey, string | Htmlable $label): IconColumn
+    {
+        return IconColumn::make('holder_' . $holderKey)
+            ->label($label)
+            ->alignCenter()
+            ->state(fn (array $record): string => $this->cellState($holderKey, $record))
+            ->icon(fn (string $state): Heroicon => match ($state) {
+                'granted', 'all' => Heroicon::CheckCircle,
+                'some' => Heroicon::MinusCircle,
+                default => Heroicon::XCircle,
+            })
+            // A staged cell keeps the shape of what it will become and takes the warning colour until
+            // it is saved — Filament's own palette, no styles of our own.
+            ->color(fn (string $state, array $record): string => match (true) {
+                $this->isStagedRecord($holderKey, $record) => 'warning',
+                in_array($state, ['granted', 'all'], true) => 'success',
+                $state === 'some' => 'warning',
+                $state === 'revoked' => 'danger',
+                default => 'gray',
+            })
+            ->tooltip(fn (array $record): ?string => match (true) {
+                $this->isStagedRecord($holderKey, $record) => __('filament-access-control::editor.staged_marker'),
+                $record['type'] === 'subject' => __('filament-access-control::editor.toggle_subject'),
+                default => null,
+            })
+            ->disabledClick(fn (): bool => ! $this->canEditHolder($holderKey))
+            ->action(function (array $record) use ($holderKey): void {
+                $record['type'] === 'subject'
+                    ? $this->toggleSubject($holderKey, (string) $record['group'], (string) $record['subject'])
+                    : $this->toggle($holderKey, (string) $record['slug']);
+            });
+    }
+
+    protected function subject(string $groupSlug, string $subjectKey): ?PermissionSubjectDto
+    {
+        $subject = $this->groups->get($groupSlug)?->subjects->get($subjectKey);
+
+        return $subject instanceof PermissionSubjectDto ? $subject : null;
     }
 
     // Changing --------------------------------------------------------------------------------
@@ -359,7 +567,7 @@ trait EditsPermissions
             return;
         }
 
-        $subject = $this->groups->get($groupSlug)?->subjects->get($subjectKey);
+        $subject = $this->subject($groupSlug, $subjectKey);
 
         if (! $subject instanceof PermissionSubjectDto) {
             $this->deny(__('filament-access-control::editor.notifications.no_permission'));
@@ -496,6 +704,8 @@ trait EditsPermissions
     protected function refreshHolders(): void
     {
         unset($this->holders, $this->grants);
+
+        $this->flushCachedTableRecords();
 
         $this->editableHolders = [];
     }

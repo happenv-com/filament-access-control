@@ -6,8 +6,8 @@ namespace Happenv\FilamentAccessControl;
 
 use BackedEnum;
 use Closure;
+use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
 use Filament\Contracts\Plugin;
 use Filament\Facades\Filament;
 use Filament\Panel;
@@ -281,7 +281,7 @@ class FilamentAccessControlPlugin implements Plugin
     }
 
     /**
-     * Configure the "delete role" action drawn under every column of the matrix. Receives `action`.
+     * Configure the matrix's "delete role" action. Receives `action`.
      */
     public function modifyDeleteRoleActionUsing(?Closure $callback): static
     {
@@ -290,7 +290,7 @@ class FilamentAccessControlPlugin implements Plugin
         return $this;
     }
 
-    public function configureDeleteRoleAction(DeleteAction $action): DeleteAction
+    public function configureDeleteRoleAction(Action $action): Action
     {
         if ($this->modifyDeleteRoleActionUsing instanceof Closure) {
             return $this->evaluate($this->modifyDeleteRoleActionUsing, ['action' => $action]) ?? $action;
