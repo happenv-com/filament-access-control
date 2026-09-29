@@ -29,23 +29,14 @@ return [
         'inherited' => 'Iz uloga',
         'permission' => 'Dozvola',
     ],
-    'fields' => [
-        'role' => 'Uloga',
-    ],
     'actions' => [
         'discard' => 'Odustani',
         'save' => 'Sačuvaj dozvole',
-        'delete_role' => [
-            'heading' => 'Izbriši ulogu',
-            'label' => 'Izbriši ulogu',
-            'submit' => 'Izbriši',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nije pronađeno – osvežite stranicu i pokušajte ponovo.',
         'no_permission' => 'Takva dozvola nije pronađena – osvežite stranicu i pokušajte ponovo.',
         'not_offered' => 'Ova dozvola se ovde ne može dodeliti.',
-        'role_deleted' => 'Uloga je izbrisana.',
         'read_only' => 'Ove dozvole su ovde samo za čitanje.',
         'saved' => 'Dozvole su sačuvane.',
         'unauthorized' => 'Nemate pravo da menjate ove dozvole.',

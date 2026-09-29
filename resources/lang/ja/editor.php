@@ -29,23 +29,14 @@ return [
         'inherited' => 'ロールから',
         'permission' => '権限',
     ],
-    'fields' => [
-        'role' => 'ロール',
-    ],
     'actions' => [
         'discard' => '破棄',
         'save' => '権限を保存',
-        'delete_role' => [
-            'heading' => 'ロールを削除',
-            'label' => 'ロールを削除',
-            'submit' => '削除',
-        ],
     ],
     'notifications' => [
         'no_holder' => '見つかりませんでした——ページを再読み込みして、もう一度お試しください。',
         'no_permission' => '該当する権限が見つかりませんでした——ページを再読み込みして、もう一度お試しください。',
         'not_offered' => 'この権限はここでは付与できません。',
-        'role_deleted' => 'ロールを削除しました。',
         'read_only' => 'これらの権限はここでは読み取り専用です。',
         'saved' => '権限を保存しました。',
         'unauthorized' => 'これらの権限を変更することは許可されていません。',

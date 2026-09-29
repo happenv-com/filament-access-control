@@ -29,23 +29,14 @@ return [
         'inherited' => 'Szerepkörökből',
         'permission' => 'Jogosultság',
     ],
-    'fields' => [
-        'role' => 'Szerepkör',
-    ],
     'actions' => [
         'discard' => 'Elvetés',
         'save' => 'Jogosultságok mentése',
-        'delete_role' => [
-            'heading' => 'Szerepkör törlése',
-            'label' => 'Szerepkör törlése',
-            'submit' => 'Törlés',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nem található — töltsd újra az oldalt, és próbáld újra.',
         'no_permission' => 'Nincs ilyen jogosultság — töltsd újra az oldalt, és próbáld újra.',
         'not_offered' => 'Ez a jogosultság itt nem adható meg.',
-        'role_deleted' => 'A szerepkör törölve.',
         'read_only' => 'Ezek a jogosultságok itt csak olvashatók.',
         'saved' => 'A jogosultságok mentve.',
         'unauthorized' => 'Nem módosíthatod ezeket a jogosultságokat.',

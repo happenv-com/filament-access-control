@@ -29,23 +29,14 @@ return [
         'inherited' => 'No lomām',
         'permission' => 'Atļauja',
     ],
-    'fields' => [
-        'role' => 'Loma',
-    ],
     'actions' => [
         'discard' => 'Atmest',
         'save' => 'Saglabāt atļaujas',
-        'delete_role' => [
-            'heading' => 'Dzēst lomu',
-            'label' => 'Dzēst lomu',
-            'submit' => 'Dzēst',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Netika atrasts — pārlādējiet lapu un mēģiniet vēlreiz.',
         'no_permission' => 'Šāda atļauja netika atrasta — pārlādējiet lapu un mēģiniet vēlreiz.',
         'not_offered' => 'Šo atļauju šeit nevar piešķirt.',
-        'role_deleted' => 'Loma ir dzēsta.',
         'read_only' => 'Šīs atļaujas šeit ir tikai lasāmas.',
         'saved' => 'Atļaujas ir saglabātas.',
         'unauthorized' => 'Jums nav atļauts mainīt šīs atļaujas.',

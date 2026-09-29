@@ -29,23 +29,14 @@ return [
         'inherited' => 'De roles',
         'permission' => 'Permiso',
     ],
-    'fields' => [
-        'role' => 'Rol',
-    ],
     'actions' => [
         'discard' => 'Descartar',
         'save' => 'Guardar permisos',
-        'delete_role' => [
-            'heading' => 'Borrar un rol',
-            'label' => 'Borrar rol',
-            'submit' => 'Borrar',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'No se ha encontrado — recarga la página e inténtalo de nuevo.',
         'no_permission' => 'No se ha encontrado ese permiso — recarga la página e inténtalo de nuevo.',
         'not_offered' => 'Este permiso no se puede conceder aquí.',
-        'role_deleted' => 'El rol se ha borrado.',
         'read_only' => 'Aquí estos permisos son de solo lectura.',
         'saved' => 'Los permisos se han guardado.',
         'unauthorized' => 'No estás autorizado a modificar estos permisos.',

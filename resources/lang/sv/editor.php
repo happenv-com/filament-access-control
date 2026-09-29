@@ -29,23 +29,14 @@ return [
         'inherited' => 'Från roller',
         'permission' => 'Behörighet',
     ],
-    'fields' => [
-        'role' => 'Roll',
-    ],
     'actions' => [
         'discard' => 'Förkasta',
         'save' => 'Spara behörigheter',
-        'delete_role' => [
-            'heading' => 'Radera en roll',
-            'label' => 'Radera roll',
-            'submit' => 'Radera',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Den hittades inte — ladda om sidan och försök igen.',
         'no_permission' => 'Behörigheten hittades inte — ladda om sidan och försök igen.',
         'not_offered' => 'Den här behörigheten kan inte tilldelas här.',
-        'role_deleted' => 'Rollen har raderats.',
         'read_only' => 'Dessa behörigheter är skrivskyddade här.',
         'saved' => 'Behörigheterna har sparats.',
         'unauthorized' => 'Du får inte ändra dessa behörigheter.',

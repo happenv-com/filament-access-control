@@ -60,8 +60,6 @@ class FilamentAccessControlPlugin implements Plugin
 
     protected ?Closure $modifyCreateRoleActionUsing = null;
 
-    protected ?Closure $modifyDeleteRoleActionUsing = null;
-
     protected string | UnitEnum | Closure | null $navigationGroup = null;
 
     protected string | BackedEnum | Htmlable | Closure | null $navigationIcon = 'heroicon-o-shield-check';
@@ -239,8 +237,11 @@ class FilamentAccessControlPlugin implements Plugin
 
     /**
      * What the role screens ask the gate. `viewAny` opens the access control page, `update`
-     * changes one role's permissions, `create` and `delete` add and remove roles. `null` skips the
-     * check. Permission enums of laravel-access-control are welcome as they are.
+     * changes one role's permissions, `create` adds a role. `null` skips the check. Permission enums
+     * of laravel-access-control are welcome as they are.
+     *
+     * `delete` is still accepted, for existing configuration, but nothing asks it any more: the
+     * access control page does not delete roles.
      */
     public function roleAbilities(
         string | BackedEnum | Closure | null | false $viewAny = false,
@@ -285,22 +286,13 @@ class FilamentAccessControlPlugin implements Plugin
     }
 
     /**
-     * Configure the matrix's "delete role" action. Receives `action`.
+     * @deprecated The access control page no longer offers a "delete role" action — delete roles
+     *             where the application manages them (its role resource). Kept so existing panel
+     *             configuration keeps working; the callback is never called. Removed in 4.0.
      */
     public function modifyDeleteRoleActionUsing(?Closure $callback): static
     {
-        $this->modifyDeleteRoleActionUsing = $callback;
-
         return $this;
-    }
-
-    public function configureDeleteRoleAction(Action $action): Action
-    {
-        if ($this->modifyDeleteRoleActionUsing instanceof Closure) {
-            return $this->evaluate($this->modifyDeleteRoleActionUsing, ['action' => $action]) ?? $action;
-        }
-
-        return $action;
     }
 
     // Behaviour -------------------------------------------------------------------------------

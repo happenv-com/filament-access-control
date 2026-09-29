@@ -29,23 +29,14 @@ return [
         'inherited' => 'Dai ruoli',
         'permission' => 'Permesso',
     ],
-    'fields' => [
-        'role' => 'Ruolo',
-    ],
     'actions' => [
         'discard' => 'Scarta',
         'save' => 'Salva permessi',
-        'delete_role' => [
-            'heading' => 'Elimina un ruolo',
-            'label' => 'Elimina ruolo',
-            'submit' => 'Elimina',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Non trovato — ricarica la pagina e riprova.',
         'no_permission' => 'Permesso non trovato — ricarica la pagina e riprova.',
         'not_offered' => 'Questo permesso non può essere concesso qui.',
-        'role_deleted' => 'Il ruolo è stato eliminato.',
         'read_only' => 'Qui questi permessi sono di sola lettura.',
         'saved' => 'I permessi sono stati salvati.',
         'unauthorized' => 'Non sei autorizzato a modificare questi permessi.',

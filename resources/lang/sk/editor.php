@@ -29,23 +29,14 @@ return [
         'inherited' => 'Z rolí',
         'permission' => 'Oprávnenie',
     ],
-    'fields' => [
-        'role' => 'Rola',
-    ],
     'actions' => [
         'discard' => 'Zrušiť',
         'save' => 'Uložiť oprávnenia',
-        'delete_role' => [
-            'heading' => 'Odstrániť rolu',
-            'label' => 'Odstrániť rolu',
-            'submit' => 'Odstrániť',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nenašlo sa – obnovte stránku a skúste to znova.',
         'no_permission' => 'Takéto oprávnenie sa nenašlo – obnovte stránku a skúste to znova.',
         'not_offered' => 'Toto oprávnenie tu nemožno udeliť.',
-        'role_deleted' => 'Rola bola odstránená.',
         'read_only' => 'Tieto oprávnenia sú tu len na čítanie.',
         'saved' => 'Oprávnenia boli uložené.',
         'unauthorized' => 'Tieto oprávnenia nesmiete meniť.',

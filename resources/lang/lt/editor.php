@@ -29,23 +29,14 @@ return [
         'inherited' => 'Iš rolių',
         'permission' => 'Leidimas',
     ],
-    'fields' => [
-        'role' => 'Rolė',
-    ],
     'actions' => [
         'discard' => 'Atmesti',
         'save' => 'Išsaugoti leidimus',
-        'delete_role' => [
-            'heading' => 'Ištrinti rolę',
-            'label' => 'Ištrinti rolę',
-            'submit' => 'Ištrinti',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nerasta — perkraukite puslapį ir bandykite dar kartą.',
         'no_permission' => 'Tokio leidimo nerasta — perkraukite puslapį ir bandykite dar kartą.',
         'not_offered' => 'Šio leidimo čia suteikti negalima.',
-        'role_deleted' => 'Rolė ištrinta.',
         'read_only' => 'Čia šiuos leidimus galima tik peržiūrėti.',
         'saved' => 'Leidimai išsaugoti.',
         'unauthorized' => 'Jums neleidžiama keisti šių leidimų.',

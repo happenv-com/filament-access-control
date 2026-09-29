@@ -29,23 +29,14 @@ return [
         'inherited' => 'Dels rols',
         'permission' => 'Permís',
     ],
-    'fields' => [
-        'role' => 'Rol',
-    ],
     'actions' => [
         'discard' => 'Descartar',
         'save' => 'Desar permisos',
-        'delete_role' => [
-            'heading' => 'Esborrar un rol',
-            'label' => 'Esborrar rol',
-            'submit' => 'Esborrar',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'No s\'ha trobat — torna a carregar la pàgina i prova-ho de nou.',
         'no_permission' => 'No s\'ha trobat aquest permís — torna a carregar la pàgina i prova-ho de nou.',
         'not_offered' => 'Aquest permís no es pot concedir aquí.',
-        'role_deleted' => 'El rol s\'ha esborrat.',
         'read_only' => 'Aquí aquests permisos són només de lectura.',
         'saved' => 'Els permisos s\'han desat.',
         'unauthorized' => 'No tens autorització per modificar aquests permisos.',

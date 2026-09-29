@@ -29,23 +29,14 @@ return [
         'inherited' => 'Roletatik',
         'permission' => 'Baimena',
     ],
-    'fields' => [
-        'role' => 'Rola',
-    ],
     'actions' => [
         'discard' => 'Baztertu',
         'save' => 'Gorde baimenak',
-        'delete_role' => [
-            'heading' => 'Ezabatu rol bat',
-            'label' => 'Ezabatu rola',
-            'submit' => 'Ezabatu',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Ez da aurkitu — freskatu orria eta saiatu berriro.',
         'no_permission' => 'Ez da baimen hori aurkitu — freskatu orria eta saiatu berriro.',
         'not_offered' => 'Baimen hau ezin da hemen eman.',
-        'role_deleted' => 'Rola ezabatu da.',
         'read_only' => 'Baimen hauek irakurtzeko soilik dira hemen.',
         'saved' => 'Baimenak gorde dira.',
         'unauthorized' => 'Ezin dituzu baimen hauek aldatu.',

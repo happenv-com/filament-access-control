@@ -29,23 +29,14 @@ return [
         'inherited' => 'Fra roller',
         'permission' => 'Tilladelse',
     ],
-    'fields' => [
-        'role' => 'Rolle',
-    ],
     'actions' => [
         'discard' => 'Kassér',
         'save' => 'Gem tilladelser',
-        'delete_role' => [
-            'heading' => 'Slet en rolle',
-            'label' => 'Slet rolle',
-            'submit' => 'Slet',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Den blev ikke fundet — genindlæs siden, og prøv igen.',
         'no_permission' => 'Tilladelsen blev ikke fundet — genindlæs siden, og prøv igen.',
         'not_offered' => 'Denne tilladelse kan ikke tildeles her.',
-        'role_deleted' => 'Rollen er slettet.',
         'read_only' => 'Disse tilladelser er skrivebeskyttede her.',
         'saved' => 'Tilladelserne er gemt.',
         'unauthorized' => 'Du har ikke lov til at ændre disse tilladelser.',

@@ -29,23 +29,14 @@ return [
         'inherited' => 'Rollardan',
         'permission' => 'Ruxsat',
     ],
-    'fields' => [
-        'role' => 'Rol',
-    ],
     'actions' => [
         'discard' => 'Bekor qilish',
         'save' => 'Ruxsatlarni saqlash',
-        'delete_role' => [
-            'heading' => 'Rolni o\'chirish',
-            'label' => 'Rolni o\'chirish',
-            'submit' => 'O\'chirish',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Topilmadi — sahifani yangilang va qaytadan urinib ko\'ring.',
         'no_permission' => 'Bunday ruxsat topilmadi — sahifani yangilang va qaytadan urinib ko\'ring.',
         'not_offered' => 'Bu ruxsatni bu yerda berib bo\'lmaydi.',
-        'role_deleted' => 'Rol o\'chirildi.',
         'read_only' => 'Bu ruxsatlar bu yerda faqat ko\'rish uchun.',
         'saved' => 'Ruxsatlar saqlandi.',
         'unauthorized' => 'Sizda bu ruxsatlarni o\'zgartirish huquqi yo\'q.',

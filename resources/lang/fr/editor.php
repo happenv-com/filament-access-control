@@ -29,23 +29,14 @@ return [
         'inherited' => 'Via les rôles',
         'permission' => 'Permission',
     ],
-    'fields' => [
-        'role' => 'Rôle',
-    ],
     'actions' => [
         'discard' => 'Abandonner',
         'save' => 'Sauvegarder les permissions',
-        'delete_role' => [
-            'heading' => 'Supprimer un rôle',
-            'label' => 'Supprimer le rôle',
-            'submit' => 'Supprimer',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Introuvable — rechargez la page et réessayez.',
         'no_permission' => 'Cette permission est introuvable — rechargez la page et réessayez.',
         'not_offered' => 'Cette permission ne peut pas être accordée ici.',
-        'role_deleted' => 'Le rôle a été supprimé.',
         'read_only' => 'Ces permissions sont en lecture seule ici.',
         'saved' => 'Les permissions ont été sauvegardées.',
         'unauthorized' => 'Vous n\'êtes pas autorisé à modifier ces permissions.',

@@ -29,23 +29,14 @@ return [
         'inherited' => 'Daripada peranan',
         'permission' => 'Kebenaran',
     ],
-    'fields' => [
-        'role' => 'Peranan',
-    ],
     'actions' => [
         'discard' => 'Buang perubahan',
         'save' => 'Simpan kebenaran',
-        'delete_role' => [
-            'heading' => 'Padam peranan',
-            'label' => 'Padam peranan',
-            'submit' => 'Padam',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Tidak dijumpai — muat semula halaman dan cuba lagi.',
         'no_permission' => 'Kebenaran tersebut tidak dijumpai — muat semula halaman dan cuba lagi.',
         'not_offered' => 'Kebenaran ini tidak boleh diberikan di sini.',
-        'role_deleted' => 'Peranan telah dipadamkan.',
         'read_only' => 'Kebenaran ini hanya boleh dibaca di sini.',
         'saved' => 'Kebenaran telah disimpan.',
         'unauthorized' => 'Anda tidak dibenarkan mengubah kebenaran ini.',

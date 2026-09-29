@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Facades\Filament;
 use Filament\Panel;
@@ -105,13 +104,21 @@ it('keeps the abilities it was not given', function (): void {
         ->and($plugin->getRoleAbility('delete'))->toBe('delete');
 });
 
-it('lets the application configure the role actions', function (): void {
+it('lets the application configure the create-role action', function (): void {
     $plugin = FilamentAccessControlPlugin::make()
-        ->modifyCreateRoleActionUsing(fn (CreateAction $action): CreateAction => $action->label('New role'))
-        ->modifyDeleteRoleActionUsing(fn (Action $action): Action => $action->label('Remove'));
+        ->modifyCreateRoleActionUsing(fn (CreateAction $action): CreateAction => $action->label('New role'));
 
-    expect($plugin->configureCreateRoleAction(CreateAction::make())->getLabel())->toBe('New role')
-        ->and($plugin->configureDeleteRoleAction(Action::make('deleteRole'))->getLabel())->toBe('Remove');
+    expect($plugin->configureCreateRoleAction(CreateAction::make())->getLabel())->toBe('New role');
+});
+
+it('still accepts the delete-role hook of 3.0, which nothing calls any more', function (): void {
+    $called = false;
+
+    FilamentAccessControlPlugin::make()->modifyDeleteRoleActionUsing(function () use (&$called): void {
+        $called = true;
+    });
+
+    expect($called)->toBeFalse();
 });
 
 it('shows declaration problems unless told not to', function (): void {

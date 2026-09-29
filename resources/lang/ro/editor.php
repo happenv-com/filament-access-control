@@ -29,23 +29,14 @@ return [
         'inherited' => 'Din roluri',
         'permission' => 'Permisiune',
     ],
-    'fields' => [
-        'role' => 'Rol',
-    ],
     'actions' => [
         'discard' => 'Renunțare',
         'save' => 'Salvare permisiuni',
-        'delete_role' => [
-            'heading' => 'Ștergere rol',
-            'label' => 'Ștergere rol',
-            'submit' => 'Ștergere',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nu a fost găsit — reîncărcați pagina și încercați din nou.',
         'no_permission' => 'Permisiunea nu a fost găsită — reîncărcați pagina și încercați din nou.',
         'not_offered' => 'Această permisiune nu poate fi acordată aici.',
-        'role_deleted' => 'Rolul a fost șters.',
         'read_only' => 'Aici, aceste permisiuni sunt doar pentru citire.',
         'saved' => 'Permisiunile au fost salvate.',
         'unauthorized' => 'Nu aveți dreptul să modificați aceste permisiuni.',

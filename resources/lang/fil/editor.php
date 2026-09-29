@@ -29,23 +29,14 @@ return [
         'inherited' => 'Mula sa mga tungkulin',
         'permission' => 'Pahintulot',
     ],
-    'fields' => [
-        'role' => 'Tungkulin',
-    ],
     'actions' => [
         'discard' => 'I-discard',
         'save' => 'I-save ang mga pahintulot',
-        'delete_role' => [
-            'heading' => 'I-delete ang tungkulin',
-            'label' => 'I-delete ang tungkulin',
-            'submit' => 'I-delete',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Hindi ito nahanap — i-reload ang page at subukan ulit.',
         'no_permission' => 'Walang nahanap na ganitong pahintulot — i-reload ang page at subukan ulit.',
         'not_offered' => 'Hindi maibibigay rito ang pahintulot na ito.',
-        'role_deleted' => 'Na-delete na ang tungkulin.',
         'read_only' => 'Hindi mababago rito ang mga pahintulot na ito.',
         'saved' => 'Na-save na ang mga pahintulot.',
         'unauthorized' => 'Hindi ka pinapayagang baguhin ang mga pahintulot na ito.',

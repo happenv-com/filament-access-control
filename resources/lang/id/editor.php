@@ -29,23 +29,14 @@ return [
         'inherited' => 'Dari peran',
         'permission' => 'Izin',
     ],
-    'fields' => [
-        'role' => 'Peran',
-    ],
     'actions' => [
         'discard' => 'Buang perubahan',
         'save' => 'Simpan izin',
-        'delete_role' => [
-            'heading' => 'Hapus peran',
-            'label' => 'Hapus peran',
-            'submit' => 'Hapus',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Tidak ditemukan — muat ulang halaman dan coba lagi.',
         'no_permission' => 'Izin tersebut tidak ditemukan — muat ulang halaman dan coba lagi.',
         'not_offered' => 'Izin ini tidak dapat diberikan di sini.',
-        'role_deleted' => 'Peran telah dihapus.',
         'read_only' => 'Izin ini hanya dapat dibaca di sini.',
         'saved' => 'Izin telah disimpan.',
         'unauthorized' => 'Anda tidak diizinkan mengubah izin ini.',
