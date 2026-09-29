@@ -58,7 +58,7 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Zahteva MFA',
-        'unmet' => ':condition: jedna dozvola koju ovaj nalog poseduje nije na snazi dok ne ispuni ovaj uslov.|:condition: :count dozvole koje ovaj nalog poseduje nisu na snazi dok ne ispuni ovaj uslov.|:condition: :count dozvola koje ovaj nalog poseduje nisu na snazi dok ne ispuni ovaj uslov.',
+        'unmet' => ':condition: :count dozvola ovog naloga neće važiti dok se ne ispuni ovaj uslov.',
     ],
     'dependencies' => [
         'blocked_by' => 'Blokirano od: :permission',
