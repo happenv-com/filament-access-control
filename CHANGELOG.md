@@ -2,6 +2,25 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.0.0 - 2026-09-29
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Features
+
+* feat: ship every locale Filament ships by @webard in https://github.com/happenv-com/filament-access-control/pull/2
+
+#### Other
+
+* feat: 3.x — rules, conditions and graphs on the permission screens by @webard in https://github.com/happenv-com/filament-access-control/pull/4
+
+### New Contributors
+
+* @webard made their first contribution in https://github.com/happenv-com/filament-access-control/pull/2
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v2.0.0...v3.0.0
+
 ## v2.0.0 - 2026-09-29
 
 The first release: the Filament screens for [happenv-com/laravel-access-control](https://github.com/happenv-com/laravel-access-control) 2.x. The package's major follows the library's.
