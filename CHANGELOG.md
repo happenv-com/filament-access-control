@@ -2,6 +2,17 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.0.1 - 2026-09-29
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Other
+
+* fix: accessible role cells, surface-aware Dependencies column (3.0.1) by @webard in https://github.com/happenv-com/filament-access-control/pull/5
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.0.0...v3.0.1
+
 ## v3.0.0 - 2026-09-29
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
