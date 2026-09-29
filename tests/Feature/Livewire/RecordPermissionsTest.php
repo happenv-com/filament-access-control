@@ -85,6 +85,16 @@ describe('a role', function (): void {
         expect(str($html)->after('<div')->before('>')->toString())->toContain('x-data')->not->toContain('<!--');
     });
 
+    it('counts what it holds of each group, without naming itself', function (): void {
+        $this->editor->update(['permissions' => [ProductPermission::View->value]]);
+
+        $description = (string) livewire(RecordPermissions::class, ['record' => $this->editor, 'counters' => true])
+            ->instance()
+            ->groupDescription(['group' => 'catalogue', 'group_description' => null]);
+
+        expect($description)->toContain('1 of 7')->not->toContain('Editor:');
+    });
+
     it('draws no save button when live', function (): void {
         livewire(RecordPermissions::class, ['record' => $this->editor])
             ->assertActionHidden(TestAction::make('saveChanges')->table());

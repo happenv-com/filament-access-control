@@ -24,7 +24,6 @@ use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Livewire\Concerns\EditsPermissions;
 use Happenv\FilamentAccessControl\Support\Authorization;
 use Happenv\FilamentAccessControl\Support\RefusalLead;
-use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
@@ -53,10 +52,15 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
 
     public const string ROLES_CHANGED = 'filament-access-control::roles-changed';
 
-    public function mount(?bool $deferred = null, ?PermissionSurfaceDefinition $surface = null): void
+    /**
+     * `surface` is taken by the public property of that name, which Livewire fills before this
+     * runs: an interface-typed parameter here would be resolved from the container on Laravel 12
+     * whenever the caller leaves it out.
+     */
+    public function mount(?bool $deferred = null, ?bool $counters = null): void
     {
         $this->deferred = $deferred ?? $this->plugin()->isDeferred();
-        $this->surface = $surface;
+        $this->counters = $counters ?? $this->plugin()->hasCounters();
     }
 
     #[On(self::ROLES_CHANGED)]

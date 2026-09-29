@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
     'collapse_all' => 'Zwiń wszystko',
+    'counter' => ':granted z :total',
     'expand_all' => 'Rozwiń wszystko',
     'inherited_hint' => 'Nadane już przez rolę tego użytkownika. Dopóki ma tę rolę, bezpośrednie nadanie niczego nie zmienia.',
     'no_roles' => 'Nie ma jeszcze żadnej roli. Dodaj pierwszą, żeby przydzielać uprawnienia.',

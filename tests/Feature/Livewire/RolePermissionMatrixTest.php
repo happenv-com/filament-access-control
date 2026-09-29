@@ -119,6 +119,40 @@ describe('rendering', function (): void {
             ->assertTableColumnStateSet('holder_' . holderKey($this->admin), 'all', 'subject:' . RolePermission::class);
     });
 
+    it('counts, in each group\'s header, what every role holds of it — when asked to', function (): void {
+        $this->editor->update(['permissions' => [ProductPermission::View->value, CategoryPermission::View->value]]);
+
+        $record = ['group' => 'catalogue', 'group_description' => 'What the shop sells'];
+
+        $without = livewire(RolePermissionMatrix::class)->instance();
+        $with = livewire(RolePermissionMatrix::class, ['counters' => true])->instance();
+
+        expect($without->groupDescription($record))->toBe('What the shop sells')
+            ->and((string) $with->groupDescription($record))
+            ->toContain('What the shop sells')
+            ->toContain('Administrator:')
+            ->toContain('7 of 7')
+            ->toContain('Editor:')
+            ->toContain('2 of 7');
+    });
+
+    it('counts a subject in its cell\'s tooltip when counters are on', function (): void {
+        $this->editor->update(['permissions' => [ProductPermission::View->value]]);
+
+        livewire(RolePermissionMatrix::class, ['counters' => true])
+            ->assertSee('1 of 4 · ' . __('filament-access-control::editor.toggle_subject'));
+    });
+
+    it('takes the counters from the plugin', function (): void {
+        plugin()->counters();
+
+        livewire(RolePermissionMatrix::class)->assertSet('counters', true);
+
+        plugin()->counters(false);
+
+        livewire(RolePermissionMatrix::class)->assertSet('counters', false);
+    });
+
     it('keeps the root element\'s attributes free of Livewire\'s block markers', function (): void {
         // A control structure in the partial included INSIDE the root tag once closed it early and
         // printed a stray `>` above the table.

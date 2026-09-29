@@ -31,8 +31,8 @@ class PermissionWriter
      */
     public function write(Model $record, iterable $grant = [], iterable $revoke = []): Model
     {
-        $grant = new Collection($grant)->unique()->values();
-        $revoke = new Collection($revoke)->unique()->diff($grant)->values();
+        $grant = (new Collection($grant))->unique()->values();
+        $revoke = (new Collection($revoke))->unique()->diff($grant)->values();
 
         /** @var array{0: Model&HasEditablePermissions, 1: Collection<int,string>, 2: Collection<int,string>} $result */
         $result = $record->getConnection()->transaction(function () use ($record, $grant, $revoke): array {

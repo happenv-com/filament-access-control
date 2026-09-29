@@ -9,6 +9,9 @@
         "single_trait_insert_per_statement": true,
         "types_spaces": {
             "space": "single"
+        },
+        "new_expression_parentheses": {
+            "use_parentheses": true
         }
     }
 }

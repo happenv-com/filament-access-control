@@ -77,12 +77,16 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
     public bool $showInherited = true;
 
     /**
+     * `surface` is taken by the public property of that name, which Livewire fills before this runs:
+     * an interface-typed parameter here would be resolved from the container on Laravel 12 whenever
+     * the caller leaves it out.
+     *
      * @param  string|BackedEnum|false|null  $ability  `false` for the default, `null` for no check
      */
     public function mount(
         Model $record,
         ?bool $deferred = null,
-        ?PermissionSurfaceDefinition $surface = null,
+        ?bool $counters = null,
         string | BackedEnum | false | null $ability = false,
         bool $readOnly = false,
         bool $showInherited = true,
@@ -97,7 +101,7 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
 
         $this->record = $record;
         $this->deferred = $deferred ?? $this->plugin()->isDeferred();
-        $this->surface = $surface;
+        $this->counters = $counters ?? $this->plugin()->hasCounters();
         $this->hasCustomAbility = $ability !== false;
         $this->customAbility = $ability === false ? null : $ability;
         $this->readOnly = $readOnly;

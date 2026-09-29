@@ -128,7 +128,7 @@ class PermissionSelector extends Field
      */
     public function sanitise(mixed $state): array
     {
-        return new Collection(is_array($state) ? $state : [])
+        return (new Collection(is_array($state) ? $state : []))
             ->filter(fn (mixed $slug): bool => is_string($slug))
             ->unique()
             ->values()
@@ -226,7 +226,7 @@ class PermissionSelector extends Field
      */
     protected function merge(mixed $state): array
     {
-        return new Collection($this->sanitise($state))
+        return (new Collection($this->sanitise($state)))
             ->intersect($this->offeredSlugs()->merge($this->heldOutsideOffering()))
             ->merge($this->unknownHeldSlugs())
             ->unique()

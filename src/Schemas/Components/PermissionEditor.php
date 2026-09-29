@@ -27,6 +27,8 @@ class PermissionEditor extends Livewire
 {
     protected bool | Closure | null $isDeferred = null;
 
+    protected bool | Closure | null $hasCounters = null;
+
     protected PermissionSurfaceDefinition | Closure | null $surface = null;
 
     protected string | BackedEnum | Closure | false | null $ability = false;
@@ -66,6 +68,23 @@ class PermissionEditor extends Livewire
         $deferred = $this->evaluate($this->isDeferred);
 
         return $deferred === null ? null : (bool) $deferred;
+    }
+
+    /**
+     * Count, in each group's header, what is granted of it. Unset, the plugin's default applies.
+     */
+    public function counters(bool | Closure | null $condition = true): static
+    {
+        $this->hasCounters = $condition;
+
+        return $this;
+    }
+
+    public function hasCounters(): ?bool
+    {
+        $counters = $this->evaluate($this->hasCounters);
+
+        return $counters === null ? null : (bool) $counters;
     }
 
     /**
@@ -143,6 +162,7 @@ class PermissionEditor extends Livewire
     {
         return [
             'deferred' => $this->isDeferred(),
+            'counters' => $this->hasCounters(),
             'surface' => $this->getSurface(),
             'ability' => $this->getAbility(),
             'readOnly' => $this->isDisabled(),

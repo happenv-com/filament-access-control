@@ -11,17 +11,20 @@ covers(PermissionMatrix::class);
 it('hands the matrix its configuration and no record', function (): void {
     $matrix = PermissionMatrix::make()
         ->deferred()
+        ->counters()
         ->surface(Surface::Api)
         ->data(['extra' => 1]);
 
     expect($matrix->getComponent())->toBe(RolePermissionMatrix::class)
         ->and($matrix->getComponentProperties())->toBe([
             'deferred' => true,
+            'counters' => true,
             'surface' => Surface::Api,
             'extra' => 1,
         ])
         ->and(PermissionMatrix::make()->lazy()->getComponentProperties())->toBe([
             'deferred' => null,
+            'counters' => null,
             'surface' => null,
             'lazy' => true,
         ]);

@@ -38,6 +38,8 @@ class FilamentAccessControlPlugin implements Plugin
 
     protected bool | Closure $isDeferred = false;
 
+    protected bool | Closure $hasCounters = false;
+
     /**
      * What each operation of the role screens asks the gate — see {@see Support\Authorization} for
      * how a string, a permission enum and a closure are each asked.
@@ -315,6 +317,22 @@ class FilamentAccessControlPlugin implements Plugin
     public function isDeferred(): bool
     {
         return (bool) $this->evaluate($this->isDeferred);
+    }
+
+    /**
+     * Whether each group's header counts what every role (or the one record) holds of it — the
+     * default for every screen of the plugin; each one can still say otherwise.
+     */
+    public function counters(bool | Closure $condition = true): static
+    {
+        $this->hasCounters = $condition;
+
+        return $this;
+    }
+
+    public function hasCounters(): bool
+    {
+        return (bool) $this->evaluate($this->hasCounters);
     }
 
     // Access control page ---------------------------------------------------------------------

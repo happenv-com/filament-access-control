@@ -90,6 +90,12 @@ it('cannot query roles it was never told about', function (): void {
     FilamentAccessControlPlugin::make()->getRolesQuery();
 })->throws(InvalidArgumentException::class);
 
+it('counts nothing unless asked to', function (): void {
+    expect(FilamentAccessControlPlugin::make()->hasCounters())->toBeFalse()
+        ->and(FilamentAccessControlPlugin::make()->counters()->hasCounters())->toBeTrue()
+        ->and(FilamentAccessControlPlugin::make()->counters(fn (): bool => false)->hasCounters())->toBeFalse();
+});
+
 it('keeps the abilities it was not given', function (): void {
     $plugin = FilamentAccessControlPlugin::make()->roleAbilities(update: null);
 

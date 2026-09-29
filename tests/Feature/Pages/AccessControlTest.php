@@ -55,11 +55,11 @@ it('adds roles only for somebody who may create them', function (): void {
 it('passes the plugin\'s save mode on to the matrix', function (): void {
     signInOperator();
 
-    plugin()->deferred();
+    plugin()->deferred()->counters();
 
-    expect(livewire(AccessControl::class)->instance()->getMatrixProperties())->toBe(['deferred' => true]);
+    expect(livewire(AccessControl::class)->instance()->getMatrixProperties())->toBe(['deferred' => true, 'counters' => true]);
 
-    plugin()->deferred(false);
+    plugin()->deferred(false)->counters(false);
 });
 
 it('takes its navigation from the plugin', function (): void {

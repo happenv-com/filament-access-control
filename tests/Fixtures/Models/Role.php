@@ -32,7 +32,7 @@ class Role extends Model implements AuthControllable, HasEditablePermissions
 
     public function getPermissions(): Collection
     {
-        return new Collection($this->permissions ?? [])
+        return (new Collection($this->permissions ?? []))
             ->filter(fn (mixed $permission): bool => is_string($permission))
             ->values();
     }

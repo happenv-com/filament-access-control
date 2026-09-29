@@ -28,6 +28,7 @@ use Happenv\LaravelAccessControl\PermissionRestrictions;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Js;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -65,6 +66,13 @@ trait EditsPermissions
 
     #[Locked]
     public ?PermissionSurfaceDefinition $surface = null;
+
+    /**
+     * Whether each group's header counts what every holder holds of it. Nullable for the same
+     * reason as {@see self::$deferred}.
+     */
+    #[Locked]
+    public ?bool $counters = null;
 
     /**
      * Staged changes of a deferred screen, per holder key.
@@ -378,6 +386,36 @@ trait EditsPermissions
     }
 
     /**
+     * The group's description — and, with counters on, what each holder holds of the group, so a
+     * folded group still says whether it is worth opening.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    public function groupDescription(array $record): string | Htmlable | null
+    {
+        $group = $this->groups->get((string) $record['group']);
+
+        if ($this->counters !== true || ! $group instanceof PermissionGroupDto) {
+            return $record['group_description'];
+        }
+
+        $permissions = $group->subjects->flatMap(fn (PermissionSubjectDto $subject): Collection => $subject->children);
+        $named = $this->holders->count() > 1;
+
+        return new HtmlString(view('filament-access-control::partials.group-counters', [
+            'description' => $record['group_description'],
+            'counts' => $this->holders
+                ->map(fn (Model $holder, int | string $key): array => [
+                    'holder' => $named ? $this->getHolderTitle($holder) : null,
+                    'granted' => $this->countGranted((string) $key, $permissions),
+                    'total' => $permissions->count(),
+                ])
+                ->values()
+                ->all(),
+        ])->render());
+    }
+
+    /**
      * Open or fold every group at once.
      *
      * Filament folds groups in the browser, so this is said to the table's Alpine component: with
@@ -416,7 +454,7 @@ trait EditsPermissions
             ->groups([
                 Group::make('group')
                     ->getTitleFromRecordUsing(fn (array $record): string => $record['group_name'])
-                    ->getDescriptionFromRecordUsing(fn (array $record): ?string => $record['group_description'])
+                    ->getDescriptionFromRecordUsing(fn (array $record): string | Htmlable | null => $this->groupDescription($record))
                     ->titlePrefixedWithLabel(false)
                     ->collapsible(),
             ])
@@ -504,7 +542,7 @@ trait EditsPermissions
             })
             ->tooltip(fn (array $record): ?string => match (true) {
                 $this->isStagedRecord($holderKey, $record) => __('filament-access-control::editor.staged_marker'),
-                $record['type'] === 'subject' => __('filament-access-control::editor.toggle_subject'),
+                $record['type'] === 'subject' => $this->subjectTooltip($holderKey, $record),
                 default => null,
             })
             ->disabledClick(fn (): bool => ! $this->canEditHolder($holderKey))
@@ -513,6 +551,23 @@ trait EditsPermissions
                     ? $this->toggleSubject($holderKey, (string) $record['group'], (string) $record['subject'])
                     : $this->toggle($holderKey, (string) $record['slug']);
             });
+    }
+
+    /**
+     * @param  array<string, mixed>  $record
+     */
+    protected function subjectTooltip(string $holderKey, array $record): string
+    {
+        if ($this->counters !== true) {
+            return __('filament-access-control::editor.toggle_subject');
+        }
+
+        $permissions = $this->subject((string) $record['group'], (string) $record['subject'])->children ?? new Collection;
+
+        return __('filament-access-control::editor.counter', [
+            'granted' => $this->countGranted($holderKey, $permissions),
+            'total' => $permissions->count(),
+        ]) . ' · ' . __('filament-access-control::editor.toggle_subject');
     }
 
     protected function subject(string $groupSlug, string $subjectKey): ?PermissionSubjectDto

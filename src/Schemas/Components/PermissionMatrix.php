@@ -17,6 +17,8 @@ class PermissionMatrix extends Livewire
 {
     protected bool | Closure | null $isDeferred = null;
 
+    protected bool | Closure | null $hasCounters = null;
+
     protected PermissionSurfaceDefinition | Closure | null $surface = null;
 
     /**
@@ -52,6 +54,23 @@ class PermissionMatrix extends Livewire
         return $deferred === null ? null : (bool) $deferred;
     }
 
+    /**
+     * Count, in each group's header, what is granted of it. Unset, the plugin's default applies.
+     */
+    public function counters(bool | Closure | null $condition = true): static
+    {
+        $this->hasCounters = $condition;
+
+        return $this;
+    }
+
+    public function hasCounters(): ?bool
+    {
+        $counters = $this->evaluate($this->hasCounters);
+
+        return $counters === null ? null : (bool) $counters;
+    }
+
     public function surface(PermissionSurfaceDefinition | Closure | null $surface): static
     {
         $this->surface = $surface;
@@ -73,6 +92,7 @@ class PermissionMatrix extends Livewire
         // role rather than one record.
         return [
             'deferred' => $this->isDeferred(),
+            'counters' => $this->hasCounters(),
             'surface' => $this->getSurface(),
             ...($this->isLazy() ? ['lazy' => true] : []),
             ...$this->getData(),
