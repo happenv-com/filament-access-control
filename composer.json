@@ -55,18 +55,6 @@
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "rector/rector": "^2.1"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../laravel-access-control",
-            "options": {
-                "symlink": true,
-                "versions": {
-                    "happenv-com/laravel-access-control": "3.1.0"
-                }
-            }
-        }
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
