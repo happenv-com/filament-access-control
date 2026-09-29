@@ -51,4 +51,12 @@ return [
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
     ],
+    'cells' => [
+        'blocked_by' => 'Blocked by: :permissions',
+        'grant_explicitly' => 'A click grants it explicitly',
+        'implied_by' => 'Implied by: :permissions',
+        'missing' => 'Missing requirement: :permissions',
+        'restricted' => 'Restricted by the application right now',
+        'unmet_condition' => ':condition — this account does not meet it',
+    ],
 ];

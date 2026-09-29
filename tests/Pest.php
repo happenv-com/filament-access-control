@@ -9,6 +9,9 @@ use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\RolePermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\UserPermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\User;
 use Happenv\FilamentAccessControl\Tests\TestCase;
+use Happenv\LaravelAccessControl\Contracts\PermissionCondition;
+use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
+use Happenv\LaravelAccessControl\Dto\PermissionResolutionDto;
 use Happenv\LaravelAccessControl\PermissionRegistry;
 use Illuminate\Database\Eloquent\Model;
 
@@ -81,4 +84,34 @@ function plugin(): FilamentAccessControlPlugin
 function registerPermissions(string ...$enums): void
 {
     resolve(PermissionRegistry::class)->register($enums);
+}
+
+/**
+ * A resolution built by hand — "stored and in effect" unless told otherwise.
+ *
+ * @param  list<PermissionDefinition>  $grantedBy
+ * @param  list<PermissionDefinition>  $missing
+ * @param  list<PermissionDefinition>  $conflicting
+ * @param  list<PermissionCondition>  $unmetConditions
+ */
+function resolutionOf(
+    bool $stored = true,
+    bool $granted = true,
+    bool $allowed = true,
+    array $grantedBy = [],
+    array $missing = [],
+    array $conflicting = [],
+    bool $restricted = false,
+    array $unmetConditions = [],
+): PermissionResolutionDto {
+    return new PermissionResolutionDto(
+        allowed: $allowed,
+        stored: $stored,
+        granted: $granted,
+        grantedBy: $grantedBy,
+        missing: $missing,
+        conflicting: $conflicting,
+        restricted: $restricted,
+        unmetConditions: $unmetConditions,
+    );
 }

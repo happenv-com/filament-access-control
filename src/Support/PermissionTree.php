@@ -6,6 +6,9 @@ namespace Happenv\FilamentAccessControl\Support;
 
 use Closure;
 use Happenv\FilamentAccessControl\Contracts\OffersEveryPermission;
+use Happenv\LaravelAccessControl\Contracts\DescribesPermissionCondition;
+use Happenv\LaravelAccessControl\Contracts\PermissionCondition;
+use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
 use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
@@ -121,6 +124,25 @@ class PermissionTree
     public function find(string $slug): ?PermissionDto
     {
         return $this->flatten()->get($slug);
+    }
+
+    /**
+     * A permission's full name — or, for one nobody registered (a rule may point at it), its value,
+     * which is what is granted anyway.
+     */
+    public function nameOf(PermissionDefinition $permission): string
+    {
+        return $this->find((string) $permission->value)->name ?? (string) $permission->value;
+    }
+
+    /**
+     * A condition's label: its own description, or its class name made readable.
+     */
+    public function describeCondition(PermissionCondition $condition): string
+    {
+        return $condition instanceof DescribesPermissionCondition
+            ? $condition->describe()
+            : Str::headline(class_basename($condition));
     }
 
     /**
