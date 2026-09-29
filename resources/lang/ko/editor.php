@@ -40,12 +40,6 @@ return [
             'label' => '역할 삭제',
             'submit' => '삭제',
         ],
-        'permission_graph' => [
-            'close' => '닫기',
-            'description' => '저장된 내용을 기준으로 작성되었습니다 — 아직 저장되지 않은 변경 사항은 포함되지 않습니다.',
-            'heading' => '권한 그래프',
-            'label' => '권한 그래프',
-        ],
     ],
     'notifications' => [
         'no_holder' => '찾을 수 없습니다 — 페이지를 새로 고친 후 다시 시도하세요.',

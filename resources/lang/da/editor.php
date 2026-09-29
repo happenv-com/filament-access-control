@@ -40,12 +40,6 @@ return [
             'label' => 'Slet rolle',
             'submit' => 'Slet',
         ],
-        'permission_graph' => [
-            'close' => 'Luk',
-            'description' => 'Opbygget ud fra det, der er gemt — ændringer, der endnu ikke er gemt, er ikke med i den.',
-            'heading' => 'Tilladelsesgraf',
-            'label' => 'Tilladelsesgraf',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Den blev ikke fundet — genindlæs siden, og prøv igen.',

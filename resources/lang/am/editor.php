@@ -40,12 +40,6 @@ return [
             'label' => 'ሚና አጥፋ',
             'submit' => 'አጥፋ',
         ],
-        'permission_graph' => [
-            'close' => 'ዝጋ',
-            'description' => 'የተወሰደው ከተቀመጠው ነው — ገና ያልተቀመጡ ለውጦች በእሱ ውስጥ የሉም።',
-            'heading' => 'የፈቃድ ግራፍ',
-            'label' => 'የፈቃድ ግራፍ',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'አልተገኘም — ገጹን እንደገና ጭነው ደግመው ይሞክሩ።',

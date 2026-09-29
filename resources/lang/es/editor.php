@@ -40,12 +40,6 @@ return [
             'label' => 'Borrar rol',
             'submit' => 'Borrar',
         ],
-        'permission_graph' => [
-            'close' => 'Cerrar',
-            'description' => 'Elaborado a partir de lo guardado — los cambios aún no guardados no están en él.',
-            'heading' => 'Grafo de permisos',
-            'label' => 'Grafo de permisos',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'No se ha encontrado — recarga la página e inténtalo de nuevo.',

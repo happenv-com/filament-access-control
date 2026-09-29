@@ -40,12 +40,6 @@ return [
             'label' => 'Poista rooli',
             'submit' => 'Poista',
         ],
-        'permission_graph' => [
-            'close' => 'Sulje',
-            'description' => 'Koottu tallennetusta tiedosta — vielä tallentamattomat muutokset eivät ole siinä.',
-            'heading' => 'Käyttöoikeuskaavio',
-            'label' => 'Käyttöoikeuskaavio',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Kohdetta ei löytynyt — lataa sivu uudelleen ja yritä sitten uudestaan.',

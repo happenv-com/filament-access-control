@@ -40,12 +40,6 @@ return [
             'label' => 'Rolü sil',
             'submit' => 'Sil',
         ],
-        'permission_graph' => [
-            'close' => 'Kapat',
-            'description' => 'Kaydedilenden oluşturulmuştur — henüz kaydedilmemiş değişiklikler içinde yer almaz.',
-            'heading' => 'İzin grafiği',
-            'label' => 'İzin grafiği',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Bulunamadı — sayfayı yenileyip tekrar deneyin.',

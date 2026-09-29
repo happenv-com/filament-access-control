@@ -40,12 +40,6 @@ return [
             'label' => 'Rolle löschen',
             'submit' => 'Löschen',
         ],
-        'permission_graph' => [
-            'close' => 'Schließen',
-            'description' => 'Aus dem Gespeicherten erstellt — noch nicht gespeicherte Änderungen sind nicht darin enthalten.',
-            'heading' => 'Berechtigungsgraph',
-            'label' => 'Berechtigungsgraph',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nicht gefunden — laden Sie die Seite neu und versuchen Sie es erneut.',

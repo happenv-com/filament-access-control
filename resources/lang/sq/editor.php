@@ -40,12 +40,6 @@ return [
             'label' => 'Fshi rolin',
             'submit' => 'Fshi',
         ],
-        'permission_graph' => [
-            'close' => 'Mbyll',
-            'description' => 'Ndërtuar nga çfarë është ruajtur — ndryshimet ende të paruajtura nuk janë në të.',
-            'heading' => 'Grafiku i lejeve',
-            'label' => 'Grafiku i lejeve',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nuk u gjet — ringarkoni faqen dhe provoni përsëri.',

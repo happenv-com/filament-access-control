@@ -40,12 +40,6 @@ return [
             'label' => 'Obriši ulogu',
             'submit' => 'Obriši',
         ],
-        'permission_graph' => [
-            'close' => 'Zatvori',
-            'description' => 'Izrađeno na temelju spremljenog — promjene koje još nisu spremljene nisu u njemu.',
-            'heading' => 'Graf dopuštenja',
-            'label' => 'Graf dopuštenja',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nije pronađeno – osvježite stranicu i pokušajte ponovno.',

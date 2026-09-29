@@ -40,12 +40,6 @@ return [
             'label' => 'Izbriši vlogo',
             'submit' => 'Izbriši',
         ],
-        'permission_graph' => [
-            'close' => 'Zapri',
-            'description' => 'Sestavljeno iz shranjenega — spremembe, ki še niso shranjene, niso v njem.',
-            'heading' => 'Graf dovoljenj',
-            'label' => 'Graf dovoljenj',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Ni najdeno – osvežite stran in poskusite znova.',

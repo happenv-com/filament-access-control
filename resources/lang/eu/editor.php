@@ -40,12 +40,6 @@ return [
             'label' => 'Ezabatu rola',
             'submit' => 'Ezabatu',
         ],
-        'permission_graph' => [
-            'close' => 'Itxi',
-            'description' => 'Gordetakotik eraikia — oraindik gorde gabeko aldaketak ez daude bertan.',
-            'heading' => 'Baimenen grafoa',
-            'label' => 'Baimenen grafoa',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Ez da aurkitu — freskatu orria eta saiatu berriro.',

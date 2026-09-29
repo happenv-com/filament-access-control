@@ -40,12 +40,6 @@ return [
             'label' => 'Esborrar rol',
             'submit' => 'Esborrar',
         ],
-        'permission_graph' => [
-            'close' => 'Tancar',
-            'description' => 'Elaborat a partir del que s\'ha desat — els canvis encara no desats no hi són.',
-            'heading' => 'Graf de permisos',
-            'label' => 'Graf de permisos',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'No s\'ha trobat — torna a carregar la pàgina i prova-ho de nou.',

@@ -40,12 +40,6 @@ return [
             'label' => 'Hapus peran',
             'submit' => 'Hapus',
         ],
-        'permission_graph' => [
-            'close' => 'Tutup',
-            'description' => 'Disusun dari yang sudah disimpan — perubahan yang belum disimpan tidak ada di dalamnya.',
-            'heading' => 'Graf izin',
-            'label' => 'Graf izin',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Tidak ditemukan — muat ulang halaman dan coba lagi.',

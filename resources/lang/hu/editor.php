@@ -40,12 +40,6 @@ return [
             'label' => 'Szerepkör törlése',
             'submit' => 'Törlés',
         ],
-        'permission_graph' => [
-            'close' => 'Bezárás',
-            'description' => 'A mentett állapotból épült fel — a még nem mentett módosítások nincsenek benne.',
-            'heading' => 'Jogosultsági gráf',
-            'label' => 'Jogosultsági gráf',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nem található — töltsd újra az oldalt, és próbáld újra.',

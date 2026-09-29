@@ -10,7 +10,6 @@ use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
-use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -28,16 +27,13 @@ use Happenv\FilamentAccessControl\Support\PermissionWriter;
 use Happenv\FilamentAccessControl\Support\RefusalLead;
 use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
-use Happenv\LaravelAccessControl\Diagram\PermissionDiagram;
 use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
 use Happenv\LaravelAccessControl\Dto\PermissionResolutionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionSubjectDto;
-use Happenv\LaravelAccessControl\Facades\AccessControl;
 use Happenv\LaravelAccessControl\PermissionResolver;
 use Happenv\LaravelAccessControl\PermissionRestrictions;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
@@ -152,11 +148,6 @@ trait EditsPermissions
     abstract public function getHolderTitle(Model $holder): string;
 
     abstract protected function plugin(): FilamentAccessControlPlugin;
-
-    /**
-     * What the permission graph draws: the catalogue, or one holder.
-     */
-    abstract protected function permissionDiagram(): PermissionDiagram;
 
     public function holderKey(Model $holder): string
     {
@@ -590,7 +581,6 @@ trait EditsPermissions
                     ->link()
                     ->color('gray')
                     ->action(fn () => $this->setGroupsExpanded(false)),
-                $this->permissionGraphAction(),
                 ...$toolbarActions,
                 Action::make('discardChanges')
                     ->label(__('filament-access-control::editor.actions.discard'))
@@ -607,24 +597,6 @@ trait EditsPermissions
                     ->badgeColor('warning')
                     ->action(fn () => $this->save()),
             ]);
-    }
-
-    protected function permissionGraphAction(): Action
-    {
-        return Action::make('permissionGraph')
-            ->label(__('filament-access-control::editor.actions.permission_graph.label'))
-            ->icon(Heroicon::OutlinedShare)
-            ->link()
-            ->color('gray')
-            ->visible(fn (): bool => $this->plugin()->hasDiagrams())
-            ->modalHeading(__('filament-access-control::editor.actions.permission_graph.heading'))
-            ->modalDescription(__('filament-access-control::editor.actions.permission_graph.description'))
-            ->modalWidth(Width::SevenExtraLarge)
-            ->modalSubmitAction(false)
-            ->modalCancelActionLabel(__('filament-access-control::editor.actions.permission_graph.close'))
-            ->modalContent(fn (): View => view('filament-access-control::partials.permission-graph', [
-                'source' => AccessControl::diagram()->render($this->permissionDiagram(), 'mermaid'),
-            ]));
     }
 
     protected function permissionColumn(): TextColumn

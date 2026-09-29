@@ -40,12 +40,6 @@ return [
             'label' => 'Izbriši ulogu',
             'submit' => 'Izbriši',
         ],
-        'permission_graph' => [
-            'close' => 'Zatvori',
-            'description' => 'Izgrađeno na osnovu sačuvanog — promene koje još nisu sačuvane nisu u njemu.',
-            'heading' => 'Graf dozvola',
-            'label' => 'Graf dozvola',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nije pronađeno – osvežite stranicu i pokušajte ponovo.',

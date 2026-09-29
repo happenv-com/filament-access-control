@@ -40,12 +40,6 @@ return [
             'label' => 'I-delete ang tungkulin',
             'submit' => 'I-delete',
         ],
-        'permission_graph' => [
-            'close' => 'Isara',
-            'description' => 'Kinuha mula sa naka-save na — hindi kasama ang mga pagbabagong hindi pa naise-save.',
-            'heading' => 'Graph ng mga Pahintulot',
-            'label' => 'Graph ng mga Pahintulot',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Hindi ito nahanap — i-reload ang page at subukan ulit.',

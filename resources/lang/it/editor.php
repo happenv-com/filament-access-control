@@ -40,12 +40,6 @@ return [
             'label' => 'Elimina ruolo',
             'submit' => 'Elimina',
         ],
-        'permission_graph' => [
-            'close' => 'Chiudi',
-            'description' => 'Costruito da ciò che è salvato — le modifiche non ancora salvate non vi compaiono.',
-            'heading' => 'Grafo dei permessi',
-            'label' => 'Grafo dei permessi',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Non trovato — ricarica la pagina e riprova.',

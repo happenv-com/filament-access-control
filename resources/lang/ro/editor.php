@@ -40,12 +40,6 @@ return [
             'label' => 'Ștergere rol',
             'submit' => 'Ștergere',
         ],
-        'permission_graph' => [
-            'close' => 'Închide',
-            'description' => 'Construit din ceea ce este salvat — modificările nesalvate încă nu sunt incluse.',
-            'heading' => 'Graful permisiunilor',
-            'label' => 'Graful permisiunilor',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nu a fost găsit — reîncărcați pagina și încercați din nou.',

@@ -40,12 +40,6 @@ return [
             'label' => 'Excluir função',
             'submit' => 'Excluir',
         ],
-        'permission_graph' => [
-            'close' => 'Fechar',
-            'description' => 'Construído a partir do que está salvo — as alterações ainda não salvas não constam nele.',
-            'heading' => 'Grafo de permissões',
-            'label' => 'Grafo de permissões',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Não encontrado — recarregue a página e tente novamente.',

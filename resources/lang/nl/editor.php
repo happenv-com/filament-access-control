@@ -40,12 +40,6 @@ return [
             'label' => 'Rol verwijderen',
             'submit' => 'Verwijderen',
         ],
-        'permission_graph' => [
-            'close' => 'Sluiten',
-            'description' => 'Opgebouwd uit wat is opgeslagen — nog niet opgeslagen wijzigingen zitten er niet in.',
-            'heading' => 'Rechtengraaf',
-            'label' => 'Rechtengraaf',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Niet gevonden — laad de pagina opnieuw en probeer het nog eens.',

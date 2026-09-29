@@ -40,12 +40,6 @@ return [
             'label' => 'Supprimer le rôle',
             'submit' => 'Supprimer',
         ],
-        'permission_graph' => [
-            'close' => 'Fermer',
-            'description' => 'Construit à partir de ce qui est sauvegardé — les changements pas encore sauvegardés n\'y figurent pas.',
-            'heading' => 'Graphe des permissions',
-            'label' => 'Graphe des permissions',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Introuvable — rechargez la page et réessayez.',

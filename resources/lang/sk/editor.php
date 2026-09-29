@@ -40,12 +40,6 @@ return [
             'label' => 'Odstrániť rolu',
             'submit' => 'Odstrániť',
         ],
-        'permission_graph' => [
-            'close' => 'Zavrieť',
-            'description' => 'Zostavené z toho, čo je uložené — zatiaľ neuložené zmeny v ňom nie sú.',
-            'heading' => 'Graf oprávnení',
-            'label' => 'Graf oprávnení',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nenašlo sa – obnovte stránku a skúste to znova.',

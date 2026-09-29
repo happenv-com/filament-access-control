@@ -40,12 +40,6 @@ return [
             'label' => 'Smazat roli',
             'submit' => 'Smazat',
         ],
-        'permission_graph' => [
-            'close' => 'Zavřít',
-            'description' => 'Sestaveno z toho, co je uloženo — dosud neuložené změny v něm nejsou.',
-            'heading' => 'Graf oprávnění',
-            'label' => 'Graf oprávnění',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nenalezeno – obnovte stránku a zkuste to znovu.',

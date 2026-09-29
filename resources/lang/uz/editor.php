@@ -40,12 +40,6 @@ return [
             'label' => 'Rolni o\'chirish',
             'submit' => 'O\'chirish',
         ],
-        'permission_graph' => [
-            'close' => 'Yopish',
-            'description' => 'Saqlangan narsadan tuzilgan — hali saqlanmagan o\'zgarishlar unda yo\'q.',
-            'heading' => 'Ruxsatlar grafigi',
-            'label' => 'Ruxsatlar grafigi',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Topilmadi — sahifani yangilang va qaytadan urinib ko\'ring.',

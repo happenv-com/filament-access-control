@@ -40,12 +40,6 @@ return [
             'label' => 'Padam peranan',
             'submit' => 'Padam',
         ],
-        'permission_graph' => [
-            'close' => 'Tutup',
-            'description' => 'Dibina daripada apa yang disimpan — perubahan yang belum disimpan tiada di dalamnya.',
-            'heading' => 'Graf kebenaran',
-            'label' => 'Graf kebenaran',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Tidak dijumpai — muat semula halaman dan cuba lagi.',

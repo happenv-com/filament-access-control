@@ -40,12 +40,6 @@ return [
             'label' => 'Radera roll',
             'submit' => 'Radera',
         ],
-        'permission_graph' => [
-            'close' => 'Stäng',
-            'description' => 'Uppbyggd från det som är sparat — ännu inte sparade ändringar finns inte med.',
-            'heading' => 'Behörighetsgraf',
-            'label' => 'Behörighetsgraf',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Den hittades inte — ladda om sidan och försök igen.',

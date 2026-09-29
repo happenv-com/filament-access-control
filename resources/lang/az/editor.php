@@ -40,12 +40,6 @@ return [
             'label' => 'Rolu sil',
             'submit' => 'Sil',
         ],
-        'permission_graph' => [
-            'close' => 'Bağla',
-            'description' => 'Yadda saxlanılandan qurulub — hələ yadda saxlanılmamış dəyişikliklər orada yoxdur.',
-            'heading' => 'İcazə qrafiki',
-            'label' => 'İcazə qrafiki',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Tapılmadı — səhifəni yeniləyin və yenidən cəhd edin.',

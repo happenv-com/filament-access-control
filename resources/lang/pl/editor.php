@@ -40,12 +40,6 @@ return [
             'label' => 'Usuń rolę',
             'submit' => 'Usuń',
         ],
-        'permission_graph' => [
-            'close' => 'Zamknij',
-            'description' => 'Zbudowany na podstawie tego, co zapisano — jeszcze niezapisane zmiany nie są w nim uwzględnione.',
-            'heading' => 'Graf uprawnień',
-            'label' => 'Graf uprawnień',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nie znaleziono — odśwież stronę i spróbuj ponownie.',

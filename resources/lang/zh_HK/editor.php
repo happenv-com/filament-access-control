@@ -40,12 +40,6 @@ return [
             'label' => '刪除角色',
             'submit' => '刪除',
         ],
-        'permission_graph' => [
-            'close' => '關閉',
-            'description' => '根據已儲存的內容繪製——尚未儲存的變更不會包含在內。',
-            'heading' => '權限圖',
-            'label' => '權限圖',
-        ],
     ],
     'notifications' => [
         'no_holder' => '找不到——請重新載入頁面後再試。',

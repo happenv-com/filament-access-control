@@ -40,12 +40,6 @@ return [
             'label' => 'Dzēst lomu',
             'submit' => 'Dzēst',
         ],
-        'permission_graph' => [
-            'close' => 'Aizvērt',
-            'description' => 'Izveidots no saglabātā — vēl nesaglabātās izmaiņas tajā nav iekļautas.',
-            'heading' => 'Atļauju grafs',
-            'label' => 'Atļauju grafs',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Netika atrasts — pārlādējiet lapu un mēģiniet vēlreiz.',

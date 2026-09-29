@@ -40,12 +40,6 @@ return [
             'label' => 'Ištrinti rolę',
             'submit' => 'Ištrinti',
         ],
-        'permission_graph' => [
-            'close' => 'Uždaryti',
-            'description' => 'Sudarytas iš to, kas išsaugota — dar neišsaugoti pakeitimai jame nėra.',
-            'heading' => 'Leidimų grafas',
-            'label' => 'Leidimų grafas',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nerasta — perkraukite puslapį ir bandykite dar kartą.',

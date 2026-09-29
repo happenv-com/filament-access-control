@@ -40,12 +40,6 @@ return [
             'label' => 'Slett rolle',
             'submit' => 'Slett',
         ],
-        'permission_graph' => [
-            'close' => 'Lukk',
-            'description' => 'Bygget opp fra det som er lagret — endringer som ennå ikke er lagret, er ikke med i den.',
-            'heading' => 'Tillatelsesgraf',
-            'label' => 'Tillatelsesgraf',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Den ble ikke funnet — last inn siden på nytt og prøv igjen.',

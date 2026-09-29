@@ -40,12 +40,6 @@ return [
             'label' => 'Xóa vai trò',
             'submit' => 'Xóa',
         ],
-        'permission_graph' => [
-            'close' => 'Đóng',
-            'description' => 'Được xây dựng từ những gì đã lưu — các thay đổi chưa được lưu không có trong đó.',
-            'heading' => 'Đồ thị quyền',
-            'label' => 'Đồ thị quyền',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Không tìm thấy — hãy tải lại trang và thử lại.',

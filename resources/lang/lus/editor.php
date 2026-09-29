@@ -40,12 +40,6 @@ return [
             'label' => 'Role thai bona',
             'submit' => 'Thai bona',
         ],
-        'permission_graph' => [
-            'close' => 'Khârna',
-            'description' => 'Save sa atanga siamin — save loh thleng danglamna chu a chhung ah a awm lo.',
-            'heading' => 'Phalna Graph',
-            'label' => 'Phalna Graph',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Hmuh a ni lo — page kha reload la, tinawn leh rawh.',

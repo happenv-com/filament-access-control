@@ -40,12 +40,6 @@ return [
             'label' => 'ロールを削除',
             'submit' => '削除',
         ],
-        'permission_graph' => [
-            'close' => '閉じる',
-            'description' => '保存済みの内容から作成されています。まだ保存されていない変更は含まれません。',
-            'heading' => '権限グラフ',
-            'label' => '権限グラフ',
-        ],
     ],
     'notifications' => [
         'no_holder' => '見つかりませんでした——ページを再読み込みして、もう一度お試しください。',

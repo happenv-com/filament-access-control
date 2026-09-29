@@ -119,8 +119,3 @@ it('shows declaration problems unless told not to', function (): void {
         ->and(plugin()->declarationProblems(false)->showsDeclarationProblems())->toBeFalse()
         ->and(plugin()->declarationProblems(fn (): bool => true)->showsDeclarationProblems())->toBeTrue();
 });
-
-it('draws permission graphs unless told not to', function (): void {
-    expect(plugin()->hasDiagrams())->toBeTrue()
-        ->and(plugin()->diagrams(false)->hasDiagrams())->toBeFalse();
-});

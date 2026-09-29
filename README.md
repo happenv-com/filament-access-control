@@ -32,9 +32,8 @@ PermissionEditor::make()->deferred();
 - **Safe concurrent edits.** Each save re-reads the record under a row lock and replays the operator's intent, so two administrators changing the same role do not overwrite each other.
 - **Your authorization, asked every time.** Laravel abilities, policies or access-control permission enums decide who may see, create, change and delete; a voter's refusal is shown in the operator's language. See [Authorization](#authorization).
 - **Surfaces.** Narrow a screen to what a surface offers (an API key's screen, say); grants held outside it stay listed and revocable. See [Surfaces](#surfaces).
-- **Why, not just whether.** Every cell shows what laravel-access-control resolves: in effect, implied, missing a requirement, blocked by a conflict, restricted, or withheld by a condition — the tooltip names the permissions involved. See [Rules, conditions and graphs](#rules-conditions-and-graphs).
+- **Why, not just whether.** Every cell shows what laravel-access-control resolves: in effect, implied, missing a requirement, blocked by a conflict, restricted, or withheld by a condition — the tooltip names the permissions involved. See [Rules and conditions](#rules-and-conditions).
 - **`#[RequiresMFA]`.** A permission that needs multi-factor authentication on the account.
-- **Permission graphs.** The catalogue, or one account, drawn with Mermaid in a modal.
 - **A form field too.** `PermissionSelector` picks permissions as a flat list saved with the rest of a form — for create forms and anything that must save in one go.
 - **Tested.** Covered by a Pest suite on every supported version combination.
 
@@ -63,8 +62,6 @@ Add the package's views to your theme's CSS file, so Tailwind generates the clas
 ```css
 @source '../../../../vendor/happenv-com/filament-access-control/resources/**/*.blade.php';
 ```
-
-Publish the package's script (the permission graph's mermaid.js) with Filament's other assets — `php artisan filament:assets`, which Filament's own install already runs on `composer update`.
 
 ### Preparing your models
 
@@ -231,7 +228,7 @@ PermissionEditor::make()->surface(PermissionSurface::Api);
 
 Only what the surface offers can be granted there; what the record already holds outside of it is listed in a group of its own — revocable, never grantable again. A surface enum that implements `OffersEveryPermission` and returns `true` offers the whole catalogue.
 
-### Rules, conditions and graphs
+### Rules and conditions
 
 laravel-access-control 3 lets permissions depend on each other (`#[Requires]`, `#[ImpliedBy]`, `#[ConflictsWith]`) and on the account (conditions). The screens show all of it; they never decide anything themselves.
 
@@ -273,8 +270,6 @@ enum OrderPermission: string implements PermissionDefinition
 It fails closed: an account without MFA, an account the panel's providers cannot ask (an API key) and a panel without multi-factor authentication do not meet it. The user editor says above the table how many permissions a condition withholds. Your own conditions are attributes implementing laravel-access-control's `PermissionCondition` — see its README; implement `DescribesPermissionCondition` to name them on these screens. A `Gate::before()` that answers first skips conditions like any other gate check.
 
 **Declaration problems.** A permission declared so that it can never be allowed (it requires what it conflicts with), or a rule pointing at an enum nobody registered, is listed above the screens and marked *Invalid declaration*. `->declarationProblems(false)` hides both.
-
-**Graphs.** *Permission graph* opens the catalogue (on the access control page) or the edited record (on an editor) as a Mermaid diagram, drawn from what is saved. mermaid.js loads only when the modal opens; if it cannot, the Mermaid source is shown instead. `->diagrams(false)` removes the action.
 
 For the *In effect* column to tell implied permissions from stored ones, roles using `HasPermissions` should implement laravel-access-control's `HoldsGrants`.
 

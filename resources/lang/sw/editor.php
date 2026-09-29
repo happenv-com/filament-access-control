@@ -40,12 +40,6 @@ return [
             'label' => 'Futa jukumu',
             'submit' => 'Futa',
         ],
-        'permission_graph' => [
-            'close' => 'Funga',
-            'description' => 'Imejengwa kutoka kile kilichohifadhiwa — mabadiliko ambayo hayajahifadhiwa bado hayamo.',
-            'heading' => 'Grafu ya ruhusa',
-            'label' => 'Grafu ya ruhusa',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Haikupatikana — pakia upya ukurasa kisha ujaribu tena.',

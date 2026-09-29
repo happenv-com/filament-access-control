@@ -40,12 +40,6 @@ return [
             'label' => 'Kustuta roll',
             'submit' => 'Kustuta',
         ],
-        'permission_graph' => [
-            'close' => 'Sulge',
-            'description' => 'Koostatud salvestatu põhjal — salvestamata muudatusi selles ei ole.',
-            'heading' => 'Õiguste graaf',
-            'label' => 'Õiguste graaf',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Seda ei leitud — värskendage lehte ja proovige uuesti.',
