@@ -16,6 +16,8 @@ export default function permissionGraph({ source }) {
                     theme: document.documentElement.classList.contains('dark')
                         ? 'dark'
                         : 'default',
+                    maxTextSize: 500000,
+                    maxEdges: 5000,
                 })
 
                 const { svg } = await mermaid.render(
