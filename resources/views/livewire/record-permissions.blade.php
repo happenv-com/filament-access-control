@@ -1,6 +1,7 @@
 @php
     $locked = $this->isHolderLocked($this->record);
     $superAdminRoles = $this->superAdminRoles;
+    $unmetConditions = $this->unmetConditionSummary();
 @endphp
 
 <div class="grid gap-y-4" @include('filament-access-control::partials.unsaved-changes-guard')>
@@ -26,6 +27,16 @@
             color="gray"
             :description="__('filament-access-control::editor.read_only_hint')"
         />
+    @endif
+
+    @if ($unmetConditions !== [])
+        <x-filament::callout icon="heroicon-o-shield-exclamation" color="warning">
+            <x-slot name="description">
+                @foreach ($unmetConditions as $condition => $count)
+                    {{ trans_choice('filament-access-control::editor.conditions.unmet', $count, ['condition' => $condition]) }}@if (! $loop->last)<br />@endif
+                @endforeach
+            </x-slot>
+        </x-filament::callout>
     @endif
 
     {{ $this->table }}

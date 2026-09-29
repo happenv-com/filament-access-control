@@ -25,6 +25,7 @@ return [
     'columns' => [
         'dependencies' => 'Dependencies',
         'granted' => 'Concedit',
+        'in_effect' => 'In effect',
         'inherited' => 'Dels rols',
         'permission' => 'Permís',
     ],
@@ -51,6 +52,7 @@ return [
     ],
     'conditions' => [
         'requires_mfa' => 'Requires MFA',
+        'unmet' => ':condition: one permission this account holds is not in effect until it meets this condition.|:condition: :count permissions this account holds are not in effect until it meets this condition.',
     ],
     'dependencies' => [
         'blocked_by' => 'Blocked by: :permission',
