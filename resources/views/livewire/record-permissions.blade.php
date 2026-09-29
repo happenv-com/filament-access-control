@@ -4,6 +4,8 @@
 @endphp
 
 <div class="grid gap-y-4" @include('filament-access-control::partials.unsaved-changes-guard')>
+    @include('filament-access-control::partials.declaration-problems')
+
     @if ($locked)
         <x-filament::callout
             icon="heroicon-o-lock-closed"

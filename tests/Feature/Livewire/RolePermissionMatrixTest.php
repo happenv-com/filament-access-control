@@ -166,6 +166,10 @@ describe('rendering', function (): void {
     it('needs no dependencies column while no permission declares a rule or a condition', function (): void {
         livewire(RolePermissionMatrix::class)->assertTableColumnHidden('dependencies');
     });
+
+    it('says nothing about declarations that are sound', function (): void {
+        livewire(RolePermissionMatrix::class)->assertDontSee(__('filament-access-control::editor.problems.heading'));
+    });
 });
 
 describe('live', function (): void {

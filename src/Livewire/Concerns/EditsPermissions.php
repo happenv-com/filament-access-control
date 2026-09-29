@@ -16,7 +16,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
+use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Support\Authorization;
+use Happenv\FilamentAccessControl\Support\DeclarationProblems;
 use Happenv\FilamentAccessControl\Support\DependencyBadge;
 use Happenv\FilamentAccessControl\Support\PermissionCell;
 use Happenv\FilamentAccessControl\Support\PermissionCellState;
@@ -134,6 +136,8 @@ trait EditsPermissions
     abstract protected function getUpdateAbility(): string | BackedEnum | Closure | null;
 
     abstract public function getHolderTitle(Model $holder): string;
+
+    abstract protected function plugin(): FilamentAccessControlPlugin;
 
     public function holderKey(Model $holder): string
     {
@@ -625,7 +629,29 @@ trait EditsPermissions
     {
         $permission = $record['type'] === 'permission' ? $this->tree()->find((string) $record['slug']) : null;
 
-        return $permission instanceof PermissionDto ? $this->tree()->dependencies($permission) : [];
+        if (! $permission instanceof PermissionDto) {
+            return [];
+        }
+
+        $badges = $this->tree()->dependencies($permission);
+
+        if ($this->plugin()->showsDeclarationProblems() && resolve(DeclarationProblems::class)->declares($permission->enum)) {
+            $badges[] = new DependencyBadge(__('filament-access-control::editor.dependencies.invalid_declaration'), 'danger');
+        }
+
+        return $badges;
+    }
+
+    /**
+     * The declaration problems, worded — nothing when the plugin keeps quiet about them.
+     *
+     * @return list<string>
+     */
+    public function declarationProblemSentences(): array
+    {
+        return $this->plugin()->showsDeclarationProblems()
+            ? resolve(DeclarationProblems::class)->sentences()
+            : [];
     }
 
     /**

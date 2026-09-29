@@ -40,6 +40,8 @@ class FilamentAccessControlPlugin implements Plugin
 
     protected bool | Closure $hasCounters = false;
 
+    protected bool | Closure $showsDeclarationProblems = true;
+
     /**
      * What each operation of the role screens asks the gate — see {@see Support\Authorization} for
      * how a string, a permission enum and a closure are each asked.
@@ -333,6 +335,22 @@ class FilamentAccessControlPlugin implements Plugin
     public function hasCounters(): bool
     {
         return (bool) $this->evaluate($this->hasCounters);
+    }
+
+    /**
+     * Whether the screens list the permissions declared in a way that can never work, and mark their
+     * rows. On by default: such a declaration is a bug in the application's permission enums.
+     */
+    public function declarationProblems(bool | Closure $condition = true): static
+    {
+        $this->showsDeclarationProblems = $condition;
+
+        return $this;
+    }
+
+    public function showsDeclarationProblems(): bool
+    {
+        return (bool) $this->evaluate($this->showsDeclarationProblems);
     }
 
     // Access control page ---------------------------------------------------------------------

@@ -57,6 +57,7 @@ return [
         'blocks' => 'Blocks: :permission',
         'implied_by' => 'Implied by: :permission',
         'implies' => 'Implies: :permission',
+        'invalid_declaration' => 'Invalid declaration',
         'required_by' => 'Required by: :permission',
         'requires' => 'Requires: :permission',
     ],
@@ -67,5 +68,16 @@ return [
         'missing' => 'Missing requirement: :permissions',
         'restricted' => 'Restricted by the application right now',
         'unmet_condition' => ':condition — this account does not meet it',
+    ],
+    'problems' => [
+        'heading' => 'Some permissions are declared in a way that can never work',
+        'implies_conflicting' => ':permission can never be allowed: it implies :other, which it conflicts with.',
+        'requires_conflicting' => ':permission can never be allowed: it requires :other, which it conflicts with.',
+        'unregistered_target' => ':permission declares “:rule” about :other, whose enum is not registered.',
+        'rules' => [
+            'conflicts_with' => 'Conflicts with',
+            'implied_by' => 'Implied by',
+            'requires' => 'Requires',
+        ],
     ],
 ];

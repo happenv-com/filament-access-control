@@ -6,6 +6,7 @@ namespace Happenv\FilamentAccessControl;
 
 use Happenv\FilamentAccessControl\Livewire\RecordPermissions;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
+use Happenv\FilamentAccessControl\Support\DeclarationProblems;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
 use Happenv\FilamentAccessControl\Support\RefusalLead;
 use Livewire\Livewire;
@@ -32,6 +33,7 @@ class FilamentAccessControlServiceProvider extends PackageServiceProvider
         // request's locale to every request after it.
         $this->app->scoped(PermissionTree::class);
         $this->app->scoped(RefusalLead::class);
+        $this->app->scoped(DeclarationProblems::class);
     }
 
     public function packageBooted(): void
