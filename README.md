@@ -40,7 +40,7 @@ PermissionEditor::make()->deferred();
 |--------------------------------------|-----------|
 | PHP                                  | 8.3 – 8.5 |
 | Laravel                              | 12, 13    |
-| Filament                             | 5         |
+| Filament                             | 4, 5      |
 | happenv-com/laravel-access-control   | 2.3+      |
 
 ## Installation

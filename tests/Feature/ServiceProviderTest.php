@@ -6,6 +6,7 @@ use Happenv\FilamentAccessControl\FilamentAccessControlServiceProvider;
 use Happenv\FilamentAccessControl\Livewire\RecordPermissions;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
+use Livewire\Livewire;
 
 it('registers the service provider', function (): void {
     expect(app()->getProviders(FilamentAccessControlServiceProvider::class))->not->toBeEmpty();
@@ -16,7 +17,7 @@ it('loads the translations under the package namespace', function (): void {
 });
 
 it('registers the Livewire components by name', function (string $name, string $class): void {
-    expect(app('livewire.finder')->resolveClassComponentClassName($name))->toBe($class);
+    expect(Livewire::new($name))->toBeInstanceOf($class);
 })->with([
     ['filament-access-control.role-permission-matrix', RolePermissionMatrix::class],
     ['filament-access-control.record-permissions', RecordPermissions::class],

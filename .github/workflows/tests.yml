@@ -58,13 +58,15 @@ jobs:
       matrix:
         php: ['8.3', '8.4', '8.5']
         laravel: ['12.*', '13.*']
-        filament: ['5']
+        filament: ['4', '5']
         stability: [prefer-lowest, prefer-stable]
         include:
           - laravel: '12.*'
             testbench: '10.*'
           - laravel: '13.*'
             testbench: '11.*'
+          - filament: '4'
+            filament-constraint: '^4.13.3'
           - filament: '5'
             filament-constraint: '^5.8.3'
         exclude:

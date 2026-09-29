@@ -37,7 +37,7 @@
     },
     "require": {
         "php": "^8.3",
-        "filament/filament": "^5.8.3",
+        "filament/filament": "^4.13.3 || ^5.8.3",
         "happenv-com/laravel-access-control": "^2.3",
         "spatie/laravel-package-tools": "^1.93"
     },

@@ -48,6 +48,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - filament: '4'
+            filament-constraint: '^4.13.3'
           - filament: '5'
             filament-constraint: '^5.8.3'
 
