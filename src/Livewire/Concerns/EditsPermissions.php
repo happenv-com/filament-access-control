@@ -122,6 +122,16 @@ trait EditsPermissions
     protected array $permissionCells = [];
 
     /**
+     * {@see self::dependencyBadges()}, memoised per slug — the dependencies column asks for a
+     * permission's badges twice per row (its state, then its tooltip), and they depend only on the
+     * catalogue's declared rules and conditions, never on a holder's grants, so they need not be
+     * kept in step with {@see self::forgetResolutions()}.
+     *
+     * @var array<string, list<DependencyBadge>>
+     */
+    protected array $dependencyBadgeCache = [];
+
+    /**
      * The records this screen edits, keyed by {@see self::holderKey()}.
      *
      * @return Collection<array-key, Model&HasEditablePermissions>
@@ -655,7 +665,21 @@ trait EditsPermissions
      */
     public function dependencyBadges(array $record): array
     {
-        $permission = $record['type'] === 'permission' ? $this->tree()->find((string) $record['slug']) : null;
+        if ($record['type'] !== 'permission') {
+            return [];
+        }
+
+        $slug = (string) $record['slug'];
+
+        return $this->dependencyBadgeCache[$slug] ??= $this->buildDependencyBadges($slug);
+    }
+
+    /**
+     * @return list<DependencyBadge>
+     */
+    private function buildDependencyBadges(string $slug): array
+    {
+        $permission = $this->tree()->find($slug);
 
         if (! $permission instanceof PermissionDto) {
             return [];
