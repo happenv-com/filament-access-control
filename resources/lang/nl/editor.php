@@ -40,6 +40,12 @@ return [
             'label' => 'Rol verwijderen',
             'submit' => 'Verwijderen',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'Niet gevonden — laad de pagina opnieuw en probeer het nog eens.',

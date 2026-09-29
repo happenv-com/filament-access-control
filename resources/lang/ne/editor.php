@@ -40,6 +40,12 @@ return [
             'label' => 'भूमिका मेटाउनुहोस्',
             'submit' => 'मेटाउनुहोस्',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'यो भेटिएन — पृष्ठ पुनः लोड गरेर फेरि प्रयास गर्नुहोस्।',

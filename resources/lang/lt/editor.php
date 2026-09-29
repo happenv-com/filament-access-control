@@ -40,6 +40,12 @@ return [
             'label' => 'Ištrinti rolę',
             'submit' => 'Ištrinti',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'Nerasta — perkraukite puslapį ir bandykite dar kartą.',

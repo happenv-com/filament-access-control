@@ -40,6 +40,12 @@ return [
             'label' => 'Excluir função',
             'submit' => 'Excluir',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'Não encontrado — recarregue a página e tente novamente.',

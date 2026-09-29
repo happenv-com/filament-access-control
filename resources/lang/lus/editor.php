@@ -40,6 +40,12 @@ return [
             'label' => 'Role thai bona',
             'submit' => 'Thai bona',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'Hmuh a ni lo — page kha reload la, tinawn leh rawh.',

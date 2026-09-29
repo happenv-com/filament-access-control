@@ -40,6 +40,12 @@ return [
             'label' => 'Fshi rolin',
             'submit' => 'Fshi',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'Nuk u gjet — ringarkoni faqen dhe provoni përsëri.',

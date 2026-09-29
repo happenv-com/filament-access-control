@@ -42,6 +42,8 @@ class FilamentAccessControlPlugin implements Plugin
 
     protected bool | Closure $showsDeclarationProblems = true;
 
+    protected bool | Closure $hasDiagrams = true;
+
     /**
      * What each operation of the role screens asks the gate — see {@see Support\Authorization} for
      * how a string, a permission enum and a closure are each asked.
@@ -351,6 +353,22 @@ class FilamentAccessControlPlugin implements Plugin
     public function showsDeclarationProblems(): bool
     {
         return (bool) $this->evaluate($this->showsDeclarationProblems);
+    }
+
+    /**
+     * Whether the screens offer a permission graph, drawn by mermaid.js in a modal. The script is
+     * loaded only when the modal opens, and nothing else depends on it.
+     */
+    public function diagrams(bool | Closure $condition = true): static
+    {
+        $this->hasDiagrams = $condition;
+
+        return $this;
+    }
+
+    public function hasDiagrams(): bool
+    {
+        return (bool) $this->evaluate($this->hasDiagrams);
     }
 
     // Access control page ---------------------------------------------------------------------

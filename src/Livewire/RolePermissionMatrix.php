@@ -24,7 +24,9 @@ use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Livewire\Concerns\EditsPermissions;
 use Happenv\FilamentAccessControl\Support\Authorization;
 use Happenv\FilamentAccessControl\Support\RefusalLead;
+use Happenv\LaravelAccessControl\Diagram\PermissionDiagram;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
+use Happenv\LaravelAccessControl\Facades\AccessControl;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -225,5 +227,10 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
     protected function plugin(): FilamentAccessControlPlugin
     {
         return FilamentAccessControlPlugin::current();
+    }
+
+    protected function permissionDiagram(): PermissionDiagram
+    {
+        return AccessControl::diagram()->catalogue();
     }
 }

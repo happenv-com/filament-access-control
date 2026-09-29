@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Happenv\FilamentAccessControl;
 
+use Filament\Support\Assets\AlpineComponent;
+use Filament\Support\Facades\FilamentAsset;
 use Happenv\FilamentAccessControl\Livewire\RecordPermissions;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Support\DeclarationProblems;
@@ -40,5 +42,11 @@ class FilamentAccessControlServiceProvider extends PackageServiceProvider
     {
         Livewire::component('filament-access-control.role-permission-matrix', RolePermissionMatrix::class);
         Livewire::component('filament-access-control.record-permissions', RecordPermissions::class);
+
+        // Loaded by the permission graph's modal alone (`x-load`), never with the panel: mermaid.js
+        // is megabytes, and nothing else needs it.
+        FilamentAsset::register([
+            AlpineComponent::make('permission-graph', __DIR__ . '/../resources/dist/components/permission-graph.js'),
+        ], package: 'happenv-com/filament-access-control');
     }
 }

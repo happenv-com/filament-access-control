@@ -40,6 +40,12 @@ return [
             'label' => 'Usuń rolę',
             'submit' => 'Usuń',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'Nie znaleziono — odśwież stronę i spróbuj ponownie.',

@@ -40,6 +40,12 @@ return [
             'label' => 'Esborrar rol',
             'submit' => 'Esborrar',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'No s\'ha trobat — torna a carregar la pàgina i prova-ho de nou.',

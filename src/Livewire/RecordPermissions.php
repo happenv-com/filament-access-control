@@ -24,6 +24,7 @@ use Happenv\FilamentAccessControl\Support\PermissionCellState;
 use Happenv\LaravelAccessControl\Contracts\AuthControllable;
 use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
+use Happenv\LaravelAccessControl\Diagram\PermissionDiagram;
 use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
 use Happenv\LaravelAccessControl\Dto\PermissionResolutionDto;
@@ -461,5 +462,23 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
     protected function plugin(): FilamentAccessControlPlugin
     {
         return FilamentAccessControlPlugin::current();
+    }
+
+    /**
+     * What this record holds and why — for a record the library can ask; otherwise the catalogue,
+     * which still explains the rules.
+     */
+    protected function permissionDiagram(): PermissionDiagram
+    {
+        if (! $this->record instanceof AuthControllable) {
+            return AccessControl::diagram()->catalogue();
+        }
+
+        try {
+            return AccessControl::diagram()->forPrincipal($this->record);
+        } catch (InvalidArgumentException) {
+            // A role of the record cannot be asked what it holds.
+            return AccessControl::diagram()->catalogue();
+        }
     }
 }

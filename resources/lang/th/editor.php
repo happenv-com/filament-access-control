@@ -40,6 +40,12 @@ return [
             'label' => 'ลบบทบาท',
             'submit' => 'ลบ',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'ไม่พบข้อมูล — โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง',

@@ -40,6 +40,12 @@ return [
             'label' => 'Borrar rol',
             'submit' => 'Borrar',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'No se ha encontrado — recarga la página e inténtalo de nuevo.',

@@ -40,6 +40,12 @@ return [
             'label' => '删除角色',
             'submit' => '删除',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => '未找到——请刷新页面后重试。',

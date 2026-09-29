@@ -40,6 +40,12 @@ return [
             'label' => 'Izbriši ulogu',
             'submit' => 'Izbriši',
         ],
+        'permission_graph' => [
+            'close' => 'Close',
+            'description' => 'Drawn from what is saved — changes not saved yet are not in it.',
+            'heading' => 'Permission graph',
+            'label' => 'Permission graph',
+        ],
     ],
     'notifications' => [
         'no_holder' => 'Nije pronađeno – osvežite stranicu i pokušajte ponovo.',
