@@ -1,0 +1,126 @@
+# PRIVATE PACKAGES ONLY — configure.php removes this file from public ones,
+# whose GitHub-hosted runners are not a shared, scarce resource.
+#
+# Two moments end every interest in a PR's checks, and this workflow cancels
+# the runs still queued or running on the PR branch at each of them. Those jobs
+# occupy the self-hosted runners (shared by every repository of the
+# organization) and report results nobody will read.
+#
+#   * MERGED — what still matters is re-verified on the release branch by the
+#     push-triggered checks.
+#   * CONVERTED TO DRAFT — the author has said "not ready". Every PR check here
+#     skips drafts (`draft == false` on its job) and re-runs on
+#     `ready_for_review`, so a result produced while the PR is a draft is thrown
+#     away the moment it leaves draft.
+#
+# NOT on a close without merge: a closed PR can be reopened, and every check
+# triggers on `reopened` — cancelling would only buy a full re-run later.
+#
+# `pull_request_target`, not `pull_request`, for two reasons:
+#   1. It runs the copy of this file from the BASE branch, so branches cut
+#      before a change here still get the current behaviour.
+#   2. `pull_request` hands a read-only GITHUB_TOKEN to Dependabot and fork PRs,
+#      and cancelling a run needs `actions: write`.
+# Nothing from the PR is checked out or executed; the only PR-controlled values
+# read here (head ref, head repo) travel through `env:` and are never
+# interpolated into a shell command.
+name: 'Cancel PR runs'
+
+on:
+  # zizmor: ignore[dangerous-triggers] no checkout and no PR code runs here; see the header
+  pull_request_target:
+    types:
+      - closed
+      - converted_to_draft
+
+# Nothing is needed at the workflow scope; the writes live on the single job below.
+permissions: {}
+
+# One canceller per PR; a cancellation sweep in flight is never worth interrupting.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  cancel:
+    name: cancel
+    if: github.event.action == 'converted_to_draft' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write # cancel workflow runs left over on the PR branch
+      pull-requests: read # re-check the draft state before a draft sweep
+
+    steps:
+      - name: Cancel runs still going on the PR branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          ACTION: ${{ github.event.action }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          PR: ${{ github.event.pull_request.number }}
+          # When the PR became a draft. Only runs created before it are swept.
+          CONVERTED_AT: ${{ github.event.pull_request.updated_at }}
+        run: |
+          set -eo pipefail
+
+          if [ "$ACTION" = 'converted_to_draft' ]; then
+            reason='is now a draft'
+          else
+            reason='is merged'
+          fi
+
+          # A PR whose head IS the base branch would make the sweep below match
+          # that branch's own runs. Those belong to the branch, not to this PR.
+          if [ "$HEAD_REPO" = "$REPO" ] && [ "$HEAD_REF" = "$BASE_REF" ]; then
+            echo "::notice::PR #${PR} ${reason}, but its head is ${BASE_REF} itself — nothing to cancel."
+            exit 0
+          fi
+
+          # This job may start minutes after the event — it queues on the very
+          # runners it is freeing. If the author has marked the PR ready again
+          # in the meantime, the unfinished runs are the FRESH `ready_for_review`
+          # ones. Hence both guards: the PR must still be a draft, and only runs
+          # created before the conversion are candidates.
+          since=''
+          if [ "$ACTION" = 'converted_to_draft' ]; then
+            if [ "$(gh api "repos/${REPO}/pulls/${PR}" --jq '.draft')" != 'true' ]; then
+              echo "::notice::PR #${PR} left draft again before this sweep started — leaving its runs alone."
+              exit 0
+            fi
+            since="$CONVERTED_AT"
+          fi
+
+          # `branch=` filters on head_branch; head_repository is checked as well,
+          # because a fork can carry a branch name that also exists here. The API
+          # returns runs newest-first and anything unfinished is among the newest,
+          # so no pagination. `--method GET` is load-bearing: any `-f` flips
+          # `gh api` to POST, which answers 404 here.
+          runs="$(SINCE="$since" gh api --method GET "repos/${REPO}/actions/runs" \
+            -f branch="$HEAD_REF" \
+            -f per_page=100 \
+            --jq '.workflow_runs[]
+                  | select(.head_repository.full_name == env.HEAD_REPO)
+                  | select(.status != "completed")
+                  | select(env.SINCE == "" or .created_at <= env.SINCE)
+                  | [.id, .name] | @tsv')"
+
+          if [ -z "$runs" ]; then
+            echo "::notice::PR #${PR} ${reason}; no unfinished runs left on ${HEAD_REF}."
+            exit 0
+          fi
+
+          while IFS=$'\t' read -r id name; do
+            [ -n "$id" ] || continue
+            [ "$id" != "$GITHUB_RUN_ID" ] || continue
+
+            if gh api --silent --method POST "repos/${REPO}/actions/runs/${id}/cancel"; then
+              echo "::notice::Cancelled ${name} (run ${id}) — PR #${PR} ${reason}."
+            else
+              # 409 is the expected loser of the race: the run finished between
+              # the listing and this call.
+              echo "::warning::Could not cancel ${name} (run ${id}); it most likely finished on its own."
+            fi
+          done <<< "$runs"

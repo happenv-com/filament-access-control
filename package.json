@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "node bin/build.js",
+        "dev": "node bin/build.js --dev",
+        "format": "prettier --write resources/js resources/css bin",
+        "lint": "prettier --check resources/js resources/css bin"
+    },
+    "devDependencies": {
+        "esbuild": "^0.28.0",
+        "prettier": "^3.6.0"
+    }
+}

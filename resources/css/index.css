@@ -1,0 +1,5 @@
+/*
+ * The package's own styles. Filament's Tailwind utilities come from the app's
+ * theme (see the `@source` line in the README), so only write CSS here that
+ * utilities cannot express.
+ */
