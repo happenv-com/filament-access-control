@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Shundan kelib chiqadi: :permission',
         'implies' => 'Nazarda tutadi: :permission',
         'invalid_declaration' => 'Yaroqsiz deklaratsiya',
-        'related' => 'Related: :permission',
+        'related' => 'Bog‘liq: :permission',
         'required_by' => 'Talab qiluvchi: :permission',
         'requires' => 'Talab qiladi: :permission',
     ],

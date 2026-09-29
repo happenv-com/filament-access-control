@@ -60,7 +60,7 @@ return [
         'implied_by' => 'נגזרת מ: :permission',
         'implies' => 'גוררת: :permission',
         'invalid_declaration' => 'הצהרה לא תקינה',
-        'related' => 'Related: :permission',
+        'related' => 'קשור: :permission',
         'required_by' => 'נדרשת על ידי: :permission',
         'requires' => 'דורשת: :permission',
     ],

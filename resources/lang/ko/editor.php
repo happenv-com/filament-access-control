@@ -60,7 +60,7 @@ return [
         'implied_by' => '암시 근원: :permission',
         'implies' => '암시함: :permission',
         'invalid_declaration' => '잘못된 선언',
-        'related' => 'Related: :permission',
+        'related' => '관련: :permission',
         'required_by' => '요구자: :permission',
         'requires' => '필요함: :permission',
     ],

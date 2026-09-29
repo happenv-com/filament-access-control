@@ -46,7 +46,8 @@ class PermissionTree
     /** @var Collection<string,PermissionDto>|null keyed by slug */
     private ?Collection $flat = null;
 
-    private ?bool $hasDependencies = null;
+    /** @var array<string,bool> keyed by surface class and value, '' for none */
+    private array $hasDependencies = [];
 
     /** @var array<string,Collection<int,string>> keyed by surface class and value */
     private array $offerings = [];
@@ -184,14 +185,16 @@ class PermissionTree
     }
 
     /**
-     * Whether any permission declares a rule or carries a condition — without one, the screens need
-     * no column for them.
+     * Whether any permission — of the surface, when one narrows the screen — declares a rule or
+     * carries a condition; without one, the screens need no column for them.
      */
-    public function hasDependencies(): bool
+    public function hasDependencies(?PermissionSurfaceDefinition $surface = null): bool
     {
-        return $this->hasDependencies ??= $this->flatten()->contains(
-            fn (PermissionDto $permission): bool => $permission->rules !== [] || $permission->conditions !== [],
-        );
+        $key = $surface instanceof PermissionSurfaceDefinition ? $surface::class . '::' . $surface->value : '';
+
+        return $this->hasDependencies[$key] ??= $this->groups(surface: $surface)
+            ->flatMap(fn (PermissionGroupDto $group): Collection => $group->children)
+            ->contains(fn (PermissionDto $permission): bool => $permission->rules !== [] || $permission->conditions !== []);
     }
 
     /**

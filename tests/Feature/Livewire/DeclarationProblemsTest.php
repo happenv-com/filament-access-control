@@ -6,6 +6,7 @@ use Happenv\FilamentAccessControl\Livewire\RecordPermissions;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Support\DependencyBadge;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\BrokenPermission;
+use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\Surface;
 
 use function Pest\Livewire\livewire;
 
@@ -57,4 +58,10 @@ it('keeps quiet when the plugin is told to', function (): void {
         ->assertDontSee(MERGE_PROBLEM);
 
     expect(badgeLabels($matrix->instance(), BrokenPermission::Merge->value))->not->toContain('Invalid declaration');
+});
+
+it('needs no dependencies column on a surface none of whose permissions declares any', function (): void {
+    livewire(RolePermissionMatrix::class)->assertTableColumnVisible('dependencies');
+
+    livewire(RolePermissionMatrix::class, ['surface' => Surface::Api])->assertTableColumnHidden('dependencies');
 });

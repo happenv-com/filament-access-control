@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Izhaja iz: :permission',
         'implies' => 'Vključuje: :permission',
         'invalid_declaration' => 'Neveljavna deklaracija',
-        'related' => 'Related: :permission',
+        'related' => 'Povezano: :permission',
         'required_by' => 'Zahteva jo: :permission',
         'requires' => 'Zahteva: :permission',
     ],

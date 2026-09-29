@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Բխում է՝ :permission',
         'implies' => 'Ենթադրում է՝ :permission',
         'invalid_declaration' => 'Անվավեր հայտարարագիր',
-        'related' => 'Related: :permission',
+        'related' => 'Կապված՝ :permission',
         'required_by' => 'Պահանջող՝ :permission',
         'requires' => 'Պահանջում է՝ :permission',
     ],

@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Implicată de: :permission',
         'implies' => 'Implică: :permission',
         'invalid_declaration' => 'Declarație nevalidă',
-        'related' => 'Related: :permission',
+        'related' => 'Asociat: :permission',
         'required_by' => 'Necesitată de: :permission',
         'requires' => 'Necesită: :permission',
     ],

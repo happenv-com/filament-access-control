@@ -60,7 +60,7 @@ return [
         'implied_by' => 'Ebből következik: :permission',
         'implies' => 'Magában foglalja: :permission',
         'invalid_declaration' => 'Érvénytelen deklaráció',
-        'related' => 'Related: :permission',
+        'related' => 'Kapcsolódó: :permission',
         'required_by' => 'Ezt igényli: :permission',
         'requires' => 'Megköveteli: :permission',
     ],

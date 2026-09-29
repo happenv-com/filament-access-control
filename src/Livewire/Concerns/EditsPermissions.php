@@ -36,6 +36,7 @@ use Happenv\LaravelAccessControl\PermissionRestrictions;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Js;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -671,7 +672,7 @@ trait EditsPermissions
             ->badge()
             ->tooltip(fn (array $record): ?string => $this->dependencyTooltip($record))
             ->wrap()
-            ->visible(fn (): bool => $this->tree()->hasDependencies());
+            ->visible(fn (): bool => $this->tree()->hasDependencies($this->surface));
     }
 
     /**
@@ -752,7 +753,12 @@ trait EditsPermissions
             // size from the text size. A summary row has no icon, only its number, in the standard size.
             ->size(fn (array $record): ?TextSize => $record['type'] === 'summary' ? null : TextSize::Large)
             ->state(fn (array $record): string => $this->cellState($holderKey, $record))
-            ->formatStateUsing(fn (string $state, array $record): string => $record['type'] === 'summary' ? $state : '')
+            // The icon is hidden from assistive technology, so — as IconColumn does itself — a text
+            // alternative goes next to it: the cell's tooltip, or its state. It also names the button
+            // wrapping a clickable cell.
+            ->formatStateUsing(fn (string $state, array $record): string | Htmlable => $record['type'] === 'summary'
+                ? $state
+                : new HtmlString('<span class="fi-sr-only">' . e($this->holderTooltip($holderKey, $record) ?? $state) . '</span>'))
             ->icon(fn (string $state, array $record): ?Heroicon => $record['type'] === 'summary' ? null : (PermissionCellState::tryFrom($state)?->icon() ?? match ($state) {
                 'granted', 'all' => Heroicon::CheckCircle,
                 'some' => Heroicon::MinusCircle,
@@ -773,15 +779,7 @@ trait EditsPermissions
             // A summary row shows "granted/total" as text instead of an icon — the same colours as
             // the group-header badges it replaces.
             ->color(fn (string $state, array $record): ?string => $record['type'] === 'summary' ? $this->summaryColor($state) : null)
-            ->tooltip(fn (array $record): ?string => match (true) {
-                $record['type'] === 'summary' => null,
-                $record['type'] === 'subject' => $this->isStagedRecord($holderKey, $record)
-                    ? __('filament-access-control::editor.staged_marker')
-                    : $this->subjectTooltip($holderKey, $record),
-                $this->resolvesHolderCells() => $this->holderCell($holderKey, (string) $record['slug'])->tooltip(),
-                $this->isStagedRecord($holderKey, $record) => __('filament-access-control::editor.staged_marker'),
-                default => null,
-            })
+            ->tooltip(fn (array $record): ?string => $this->holderTooltip($holderKey, $record))
             ->disabledClick(fn (array $record): bool => $record['type'] === 'summary' || ! $this->canEditHolder($holderKey))
             ->action(function (array $record) use ($holderKey): void {
                 if ($record['type'] === 'summary') {
@@ -792,6 +790,22 @@ trait EditsPermissions
                     ? $this->toggleSubject($holderKey, (string) $record['group'], (string) $record['subject'])
                     : $this->toggle($holderKey, (string) $record['slug']);
             });
+    }
+
+    /**
+     * @param  array<string, mixed>  $record
+     */
+    protected function holderTooltip(string $holderKey, array $record): ?string
+    {
+        return match (true) {
+            $record['type'] === 'summary' => null,
+            $record['type'] === 'subject' => $this->isStagedRecord($holderKey, $record)
+                ? __('filament-access-control::editor.staged_marker')
+                : $this->subjectTooltip($holderKey, $record),
+            $this->resolvesHolderCells() => $this->holderCell($holderKey, (string) $record['slug'])->tooltip(),
+            $this->isStagedRecord($holderKey, $record) => __('filament-access-control::editor.staged_marker'),
+            default => null,
+        };
     }
 
     /**
