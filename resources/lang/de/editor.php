@@ -32,7 +32,7 @@ return [
     ],
     'actions' => [
         'discard' => 'Verwerfen',
-        'save' => 'Speichern',
+        'save' => 'Berechtigungen speichern',
         'delete_role' => [
             'heading' => 'Rolle :role löschen?',
             'label' => 'Rolle löschen',

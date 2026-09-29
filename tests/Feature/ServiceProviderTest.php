@@ -12,7 +12,7 @@ it('registers the service provider', function (): void {
 });
 
 it('loads the translations under the package namespace', function (): void {
-    expect(__('filament-access-control::editor.actions.save'))->toBe('Save');
+    expect(__('filament-access-control::editor.actions.save'))->toBe('Save permissions');
 });
 
 it('registers the Livewire components by name', function (string $name, string $class): void {

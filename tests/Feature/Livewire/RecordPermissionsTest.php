@@ -77,6 +77,12 @@ describe('a role', function (): void {
         expect($this->editor->fresh()->getPermissions()->all())->toBe([ProductPermission::View->value]);
     });
 
+    it('keeps the root element\'s attributes free of Livewire\'s block markers', function (): void {
+        $html = livewire(RecordPermissions::class, ['record' => $this->editor, 'deferred' => true])->html();
+
+        expect(str($html)->after('<div')->before('>')->toString())->toContain('fi-ac-record')->not->toContain('<!--');
+    });
+
     it('draws no save button when live', function (): void {
         livewire(RecordPermissions::class, ['record' => $this->editor])
             ->assertDontSee(__('filament-access-control::editor.actions.save'));

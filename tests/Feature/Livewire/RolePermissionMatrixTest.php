@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Filament\Actions\Testing\TestAction;
+use Filament\Support\Icons\Heroicon;
 use Happenv\FilamentAccessControl\Events\PermissionsUpdated;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
@@ -69,6 +70,17 @@ describe('rendering', function (): void {
         livewire(RolePermissionMatrix::class)
             ->set('search', 'nothing like it')
             ->assertSee(__('filament-access-control::editor.search_empty', ['search' => 'nothing like it']));
+    });
+
+    it('keeps the root element\'s attributes free of Livewire\'s block markers', function (): void {
+        // A control structure in the partial included INSIDE the root tag once closed it early and
+        // printed a stray `>` above the toolbar.
+        foreach ([false, true] as $deferred) {
+            $html = livewire(RolePermissionMatrix::class, ['deferred' => $deferred])->html();
+            $rootTag = str($html)->after('<div')->before('>')->toString();
+
+            expect($rootTag)->toContain('fi-ac-matrix')->not->toContain('<!--');
+        }
     });
 
     it('says so when there are no roles', function (): void {
@@ -306,6 +318,11 @@ describe('deleting a role', function (): void {
             );
 
         expect(Role::query()->find($this->editor->id))->not->toBeNull();
+    });
+
+    it('draws the delete button as an icon', function (): void {
+        livewire(RolePermissionMatrix::class)
+            ->assertActionHasIcon(TestAction::make('deleteRole')->arguments(['role' => holderKey($this->editor)]), Heroicon::OutlinedTrash);
     });
 
     it('offers no delete button under the super-admin', function (): void {

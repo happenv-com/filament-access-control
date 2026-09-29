@@ -13,6 +13,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Size;
+use Filament\Support\Icons\Heroicon;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Livewire\Concerns\EditsPermissions;
@@ -79,6 +80,7 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas
             ->modalHeading(fn (?Model $record): ?string => $record instanceof Model
                 ? __('filament-access-control::editor.actions.delete_role.heading', ['role' => $this->getHolderTitle($record)])
                 : null)
+            ->icon(Heroicon::OutlinedTrash)
             ->tooltip(__('filament-access-control::editor.actions.delete_role.label'))
             ->iconButton()
             ->size(Size::Small)

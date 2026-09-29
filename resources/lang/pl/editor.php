@@ -32,7 +32,7 @@ return [
     ],
     'actions' => [
         'discard' => 'Odrzuć',
-        'save' => 'Zapisz',
+        'save' => 'Zapisz uprawnienia',
         'delete_role' => [
             'heading' => 'Usunąć rolę :role?',
             'label' => 'Usuń rolę',
