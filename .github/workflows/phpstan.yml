@@ -38,7 +38,7 @@ concurrency:
 jobs:
   phpstan:
     name: phpstan - F${{ matrix.filament }}
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     timeout-minutes: 10
 
@@ -66,7 +66,6 @@ jobs:
       - name: Install dependencies
         env:
           FILAMENT: ${{ matrix.filament-constraint }}
-          COMPOSER_AUTH: '{"http-basic": {"packeton.happenv.com": {"username": "token", "password": "${{ secrets.COMPOSER_PACKETON_TOKEN }}"}}}'
         run: |
           composer require "filament/filament:${FILAMENT}" --no-interaction --no-update
           composer update --prefer-dist --no-interaction --no-progress --with-all-dependencies

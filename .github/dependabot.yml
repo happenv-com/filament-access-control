@@ -15,17 +15,6 @@
 # so Dependabot titles its PRs `chore(deps): ...`.
 version: 2
 
-registries:
-  # Private packages (happenv-com/*) come from Packeton. The password is a
-  # DEPENDABOT secret, not an Actions one — Dependabot cannot see Actions
-  # secrets. CI running on Dependabot PRs gets the Dependabot secret too, so
-  # without it `composer update` fails there with a 401.
-  packeton:
-    type: composer-repository
-    url: https://packeton.happenv.com
-    username: token
-    password: ${{secrets.COMPOSER_PACKETON_TOKEN}}
-
 updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
@@ -46,8 +35,6 @@ updates:
 
   - package-ecosystem: 'composer'
     directory: '/'
-    registries:
-      - packeton
     schedule:
       interval: 'weekly'
     cooldown:

@@ -23,7 +23,7 @@ permissions: {}
 jobs:
   update:
     name: update
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     # A pre-release is not a version anyone should read about in the changelog.
     if: ${{ !github.event.release.prerelease }}
     timeout-minutes: 5

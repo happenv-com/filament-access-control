@@ -1,5 +1,12 @@
 # Filament Access Control
 
+[![Latest Version](https://img.shields.io/github/v/release/happenv-com/filament-access-control?style=flat-square&label=version)](https://github.com/happenv-com/filament-access-control/releases)
+[![Tests](https://img.shields.io/github/actions/workflow/status/happenv-com/filament-access-control/tests.yml?label=tests&style=flat-square)](https://github.com/happenv-com/filament-access-control/actions/workflows/tests.yml)
+[![PHPStan](https://img.shields.io/github/actions/workflow/status/happenv-com/filament-access-control/phpstan.yml?label=phpstan&style=flat-square)](https://github.com/happenv-com/filament-access-control/actions/workflows/phpstan.yml)
+[![Quality](https://img.shields.io/github/actions/workflow/status/happenv-com/filament-access-control/quality.yml?label=code%20quality&style=flat-square)](https://github.com/happenv-com/filament-access-control/actions/workflows/quality.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/happenv-com/filament-access-control.svg?style=flat-square)](https://packagist.org/packages/happenv-com/filament-access-control)
+[![License](https://img.shields.io/github/license/happenv-com/filament-access-control.svg?style=flat-square)](LICENSE.md)
+
 Filament UI for happenv-com/laravel-access-control: a roles × permissions matrix and a permission editor for one role or user, saving live or on demand.
 
 <!--
@@ -35,24 +42,7 @@ $panel->plugin(FilamentAccessControlPlugin::make());
 
 ## Installation
 
-This package is private and served from [Packeton](https://packeton.happenv.com). Add the repository to your application's `composer.json` once:
-
-```json
-"repositories": [
-    {
-        "type": "composer",
-        "url": "https://packeton.happenv.com"
-    }
-]
-```
-
-Store your Packeton token in `auth.json` (never commit it):
-
-```bash
-composer config --auth http-basic.packeton.happenv.com token <your-packeton-token>
-```
-
-Then install the package:
+Install the package via Composer:
 
 ```bash
 composer require happenv-com/filament-access-control
@@ -137,6 +127,10 @@ Breaking changes and how to migrate are described in [UPGRADING](UPGRADING.md) f
 
 See [CHANGELOG](CHANGELOG.md) and [GitHub releases](https://github.com/happenv-com/filament-access-control/releases) for what has changed recently.
 
+## Contributing
+
+See [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+
 ## Security vulnerabilities
 
 Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
@@ -145,10 +139,11 @@ Please review [our security policy](.github/SECURITY.md) on how to report securi
 
 - [Happenv sp. z o.o.](https://happenv.com)
 - [webard](https://github.com/webard)
+- [All contributors](../../contributors)
 
 ## License
 
-Proprietary. Copyright © Happenv sp. z o.o. All rights reserved.
+The MIT License (MIT). See [License File](LICENSE.md) for more information.
 
 ---
 

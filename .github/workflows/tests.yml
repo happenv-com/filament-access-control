@@ -49,7 +49,7 @@ concurrency:
 jobs:
   tests:
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - F${{ matrix.filament }} - ${{ matrix.stability }}
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     timeout-minutes: 15
 
@@ -97,7 +97,6 @@ jobs:
           TESTBENCH: ${{ matrix.testbench }}
           FILAMENT: ${{ matrix.filament-constraint }}
           STABILITY: ${{ matrix.stability }}
-          COMPOSER_AUTH: '{"http-basic": {"packeton.happenv.com": {"username": "token", "password": "${{ secrets.COMPOSER_PACKETON_TOKEN }}"}}}'
         run: |
           composer require "laravel/framework:${LARAVEL}" "orchestra/testbench:${TESTBENCH}" --no-interaction --no-update
           composer require "filament/filament:${FILAMENT}" --no-interaction --no-update

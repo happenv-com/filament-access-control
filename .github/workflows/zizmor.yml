@@ -36,7 +36,7 @@ concurrency:
 jobs:
   zizmor:
     name: zizmor
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     timeout-minutes: 5
 

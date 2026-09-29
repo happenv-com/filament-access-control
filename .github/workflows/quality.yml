@@ -50,7 +50,7 @@ concurrency:
 jobs:
   quality:
     name: quality
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     timeout-minutes: 10
 
@@ -71,8 +71,6 @@ jobs:
 
       - name: Install dependencies
         id: install
-        env:
-          COMPOSER_AUTH: '{"http-basic": {"packeton.happenv.com": {"username": "token", "password": "${{ secrets.COMPOSER_PACKETON_TOKEN }}"}}}'
         run: composer update --prefer-dist --no-interaction --no-progress
 
       # composer.json kept in canonical form (ergebnis/composer-normalize), so a

@@ -1,13 +1,18 @@
 {
     "name": "happenv-com/filament-access-control",
     "description": "Filament UI for happenv-com/laravel-access-control: a roles × permissions matrix and a permission editor for one role or user, saving live or on demand.",
-    "license": "proprietary",
+    "license": "MIT",
     "keywords": [
         "happenv",
         "laravel",
         "filamentphp",
         "filament",
         "filament-plugin",
+        "acl",
+        "permissions",
+        "roles",
+        "rbac",
+        "access-control",
         "filament-access-control"
     ],
     "authors": [
@@ -27,11 +32,13 @@
     "homepage": "https://github.com/happenv-com/filament-access-control",
     "support": {
         "issues": "https://github.com/happenv-com/filament-access-control/issues",
-        "source": "https://github.com/happenv-com/filament-access-control"
+        "source": "https://github.com/happenv-com/filament-access-control",
+        "security": "https://github.com/happenv-com/filament-access-control/security/policy"
     },
     "require": {
         "php": "^8.3",
         "filament/filament": "^5.8.3",
+        "happenv-com/laravel-access-control": "^2.3",
         "spatie/laravel-package-tools": "^1.93"
     },
     "require-dev": {
@@ -52,8 +59,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Happenv\\FilamentAccessControl\\": "src/",
-            "Happenv\\FilamentAccessControl\\Database\\Factories\\": "database/factories/"
+            "Happenv\\FilamentAccessControl\\": "src/"
         }
     },
     "autoload-dev": {
@@ -74,9 +80,6 @@
             "dev-1.x": "1.x-dev"
         },
         "laravel": {
-            "aliases": {
-                "FilamentAccessControl": "Happenv\\FilamentAccessControl\\Facades\\FilamentAccessControl"
-            },
             "providers": [
                 "Happenv\\FilamentAccessControl\\FilamentAccessControlServiceProvider"
             ]
@@ -121,11 +124,5 @@
         "rector-test": "Shows pending Rector refactorings.",
         "test": "Runs the unit and feature tests.",
         "test-coverage": "Runs the unit and feature tests with code coverage (needs pcov or Xdebug)."
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packeton.happenv.com"
-        }
-    ]
+    }
 }
