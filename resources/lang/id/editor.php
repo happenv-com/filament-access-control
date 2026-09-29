@@ -48,4 +48,7 @@ return [
         'saved' => 'Izin telah disimpan.',
         'unauthorized' => 'Anda tidak diizinkan mengubah izin ini.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

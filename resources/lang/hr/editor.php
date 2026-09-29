@@ -48,4 +48,7 @@ return [
         'saved' => 'Dopuštenja su spremljena.',
         'unauthorized' => 'Nemate pravo mijenjati ova dopuštenja.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

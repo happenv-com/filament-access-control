@@ -48,4 +48,7 @@ return [
         'saved' => 'Behörigheterna har sparats.',
         'unauthorized' => 'Du får inte ändra dessa behörigheter.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

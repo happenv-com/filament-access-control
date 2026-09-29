@@ -48,4 +48,7 @@ return [
         'saved' => 'សិទ្ធិត្រូវបានរក្សាទុក។',
         'unauthorized' => 'អ្នកមិនត្រូវបានអនុញ្ញាតឱ្យផ្លាស់ប្តូរសិទ្ធិទាំងនេះទេ។',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'अनुमतियाँ सेव हो गई हैं।',
         'unauthorized' => 'आपको ये अनुमतियाँ बदलने का अधिकार नहीं है।',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

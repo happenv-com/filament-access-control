@@ -48,4 +48,7 @@ return [
         'saved' => 'Phalna ho save a ni e.',
         'unauthorized' => 'Heng phalna ho thlâk phalna i nei lo.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

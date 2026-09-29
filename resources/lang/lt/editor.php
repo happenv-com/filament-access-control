@@ -48,4 +48,7 @@ return [
         'saved' => 'Leidimai išsaugoti.',
         'unauthorized' => 'Jums neleidžiama keisti šių leidimų.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

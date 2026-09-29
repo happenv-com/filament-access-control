@@ -48,4 +48,7 @@ return [
         'saved' => '權限已儲存。',
         'unauthorized' => '您無權更改這些權限。',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

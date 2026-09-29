@@ -48,4 +48,7 @@ return [
         'saved' => 'Дозволи збережено.',
         'unauthorized' => 'Ви не маєте права змінювати ці дозволи.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

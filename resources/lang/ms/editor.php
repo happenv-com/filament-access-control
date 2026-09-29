@@ -48,4 +48,7 @@ return [
         'saved' => 'Kebenaran telah disimpan.',
         'unauthorized' => 'Anda tidak dibenarkan mengubah kebenaran ini.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'As permissões foram guardadas.',
         'unauthorized' => 'Não tem autorização para alterar estas permissões.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

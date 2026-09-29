@@ -48,4 +48,7 @@ return [
         'saved' => 'Τα δικαιώματα αποθηκεύτηκαν.',
         'unauthorized' => 'Δεν επιτρέπεται να αλλάξετε αυτά τα δικαιώματα.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

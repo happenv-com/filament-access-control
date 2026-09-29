@@ -48,4 +48,7 @@ return [
         'saved' => 'Els permisos s\'han desat.',
         'unauthorized' => 'No tens autorització per modificar aquests permisos.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'Käyttöoikeudet on tallennettu.',
         'unauthorized' => 'Sinulla ei ole oikeutta muuttaa näitä käyttöoikeuksia.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

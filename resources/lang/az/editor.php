@@ -48,4 +48,7 @@ return [
         'saved' => 'İcazələr yadda saxlanıldı.',
         'unauthorized' => 'Bu icazələri dəyişdirmək hüququnuz yoxdur.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

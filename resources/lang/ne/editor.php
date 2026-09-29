@@ -48,4 +48,7 @@ return [
         'saved' => 'अनुमतिहरू सुरक्षित गरियो।',
         'unauthorized' => 'तपाईंलाई यी अनुमतिहरू परिवर्तन गर्ने अधिकार छैन।',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

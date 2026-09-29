@@ -48,4 +48,7 @@ return [
         'saved' => 'Дозволите се зачувани.',
         'unauthorized' => 'Немате право да ги менувате овие дозволи.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

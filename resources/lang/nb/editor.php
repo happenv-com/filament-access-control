@@ -48,4 +48,7 @@ return [
         'saved' => 'Tillatelsene er lagret.',
         'unauthorized' => 'Du har ikke lov til å endre disse tillatelsene.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

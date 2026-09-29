@@ -48,4 +48,7 @@ return [
         'saved' => 'A jogosultságok mentve.',
         'unauthorized' => 'Nem módosíthatod ezeket a jogosultságokat.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'Đã lưu quyền.',
         'unauthorized' => 'Bạn không được phép thay đổi các quyền này.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

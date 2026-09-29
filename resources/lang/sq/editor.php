@@ -48,4 +48,7 @@ return [
         'saved' => 'Lejet u ruajtën.',
         'unauthorized' => 'Nuk keni të drejtë t\'i ndryshoni këto leje.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

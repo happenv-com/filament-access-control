@@ -9,6 +9,7 @@ use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\RolePermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\UserPermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\User;
 use Happenv\FilamentAccessControl\Tests\TestCase;
+use Happenv\LaravelAccessControl\PermissionRegistry;
 use Illuminate\Database\Eloquent\Model;
 
 use function Pest\Laravel\actingAs;
@@ -69,4 +70,15 @@ function plugin(): FilamentAccessControlPlugin
     Filament::setCurrentPanel('admin');
 
     return FilamentAccessControlPlugin::get();
+}
+
+/**
+ * Register permission enums for one test — the fixtures with rules and conditions stay out of the
+ * catalogue every other test draws.
+ *
+ * @param  class-string  ...$enums
+ */
+function registerPermissions(string ...$enums): void
+{
+    resolve(PermissionRegistry::class)->register($enums);
 }

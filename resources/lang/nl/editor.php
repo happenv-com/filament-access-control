@@ -48,4 +48,7 @@ return [
         'saved' => 'De rechten zijn opgeslagen.',
         'unauthorized' => 'Je mag deze rechten niet wijzigen.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

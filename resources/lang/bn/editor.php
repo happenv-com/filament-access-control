@@ -48,4 +48,7 @@ return [
         'saved' => 'অনুমতি সংরক্ষিত হয়েছে।',
         'unauthorized' => 'এই অনুমতিগুলো পরিবর্তন করার অধিকার আপনার নেই।',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

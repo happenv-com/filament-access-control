@@ -48,4 +48,7 @@ return [
         'saved' => 'مجوزها ذخیره شدند.',
         'unauthorized' => 'شما اجازه تغییر این مجوزها را ندارید.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

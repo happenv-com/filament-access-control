@@ -48,4 +48,7 @@ return [
         'saved' => 'Oprávnění byla uložena.',
         'unauthorized' => 'Tato oprávnění nesmíte měnit.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

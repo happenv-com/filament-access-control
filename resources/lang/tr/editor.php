@@ -48,4 +48,7 @@ return [
         'saved' => 'İzinler kaydedildi.',
         'unauthorized' => 'Bu izinleri değiştirme yetkiniz yok.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'Õigused on salvestatud.',
         'unauthorized' => 'Teil pole lubatud neid õigusi muuta.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

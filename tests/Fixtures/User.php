@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Happenv\FilamentAccessControl\Tests\Fixtures;
 
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
@@ -14,12 +15,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use SensitiveParameter;
 
 /**
  * @property int $id
  * @property array<int, mixed>|null $permissions
+ * @property string|null $app_authentication_secret
  */
-class User extends Authenticatable implements AuthControllable, FilamentUser, HasEditablePermissions
+class User extends Authenticatable implements AuthControllable, FilamentUser, HasAppAuthentication, HasEditablePermissions
 {
     use HasRolesAndPermissions;
     use Notifiable;
@@ -31,16 +34,34 @@ class User extends Authenticatable implements AuthControllable, FilamentUser, Ha
         'email',
         'password',
         'permissions',
+        'app_authentication_secret',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'app_authentication_secret',
     ];
 
     public function canAccessPanel(Panel $panel): bool
     {
         return static::$canAccessPanel;
+    }
+
+    public function getAppAuthenticationSecret(): ?string
+    {
+        return $this->app_authentication_secret;
+    }
+
+    public function saveAppAuthenticationSecret(#[SensitiveParameter] ?string $secret): void
+    {
+        $this->app_authentication_secret = $secret;
+        $this->save();
+    }
+
+    public function getAppAuthenticationHolderName(): string
+    {
+        return $this->email;
     }
 
     /**

@@ -48,4 +48,7 @@ return [
         'saved' => 'Dozvole su sačuvane.',
         'unauthorized' => 'Nemate pravo mijenjati ove dozvole.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

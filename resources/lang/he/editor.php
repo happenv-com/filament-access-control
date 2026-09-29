@@ -48,4 +48,7 @@ return [
         'saved' => 'ההרשאות נשמרו.',
         'unauthorized' => 'אינך מורשה לשנות הרשאות אלה.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'Иҷозатҳо нигоҳ дошта шуданд.',
         'unauthorized' => 'Шумо ҳуқуқи тағйир додани ин иҷозатҳоро надоред.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

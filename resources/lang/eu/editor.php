@@ -48,4 +48,7 @@ return [
         'saved' => 'Baimenak gorde dira.',
         'unauthorized' => 'Ezin dituzu baimen hauek aldatu.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

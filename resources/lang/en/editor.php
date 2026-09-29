@@ -48,4 +48,7 @@ return [
         'saved' => 'Permissions have been saved.',
         'unauthorized' => 'You are not allowed to change these permissions.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'Ruhusa zimehifadhiwa.',
         'unauthorized' => 'Huruhusiwi kubadilisha ruhusa hizi.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'Tilladelserne er gemt.',
         'unauthorized' => 'Du har ikke lov til at ændre disse tilladelser.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

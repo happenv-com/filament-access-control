@@ -48,4 +48,7 @@ return [
         'saved' => '권한이 저장되었습니다.',
         'unauthorized' => '이 권한을 변경할 권한이 없습니다.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

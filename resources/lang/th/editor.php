@@ -48,4 +48,7 @@ return [
         'saved' => 'บันทึกสิทธิ์เรียบร้อย',
         'unauthorized' => 'คุณไม่ได้รับอนุญาตให้เปลี่ยนแปลงสิทธิ์เหล่านี้',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

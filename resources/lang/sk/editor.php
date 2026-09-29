@@ -48,4 +48,7 @@ return [
         'saved' => 'Oprávnenia boli uložené.',
         'unauthorized' => 'Tieto oprávnenia nesmiete meniť.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

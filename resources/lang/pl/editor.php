@@ -48,4 +48,7 @@ return [
         'saved' => 'Uprawnienia zostały zapisane.',
         'unauthorized' => 'Nie możesz zmieniać tych uprawnień.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

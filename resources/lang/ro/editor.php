@@ -48,4 +48,7 @@ return [
         'saved' => 'Permisiunile au fost salvate.',
         'unauthorized' => 'Nu aveți dreptul să modificați aceste permisiuni.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

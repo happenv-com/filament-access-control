@@ -48,4 +48,7 @@ return [
         'saved' => 'Na-save na ang mga pahintulot.',
         'unauthorized' => 'Hindi ka pinapayagang baguhin ang mga pahintulot na ito.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

@@ -48,4 +48,7 @@ return [
         'saved' => 'ნებართვები შენახულია.',
         'unauthorized' => 'ამ ნებართვების შეცვლის უფლება არ გაქვთ.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

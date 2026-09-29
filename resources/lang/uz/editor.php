@@ -48,4 +48,7 @@ return [
         'saved' => 'Ruxsatlar saqlandi.',
         'unauthorized' => 'Sizda bu ruxsatlarni o\'zgartirish huquqi yo\'q.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

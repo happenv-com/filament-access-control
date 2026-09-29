@@ -48,4 +48,7 @@ return [
         'saved' => 'Эрхүүдийг хадгаллаа.',
         'unauthorized' => 'Та эдгээр эрхийг өөрчлөх эрхгүй.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

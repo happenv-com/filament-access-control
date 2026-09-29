@@ -48,4 +48,7 @@ return [
         'saved' => 'مۆڵەتەکان نوێکرانەوە.',
         'unauthorized' => 'ڕێگەت پێ نەدراوە ئەم مۆڵەتانە بگۆڕیت.',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];

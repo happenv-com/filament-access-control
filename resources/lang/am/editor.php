@@ -48,4 +48,7 @@ return [
         'saved' => 'ፈቃዶቹ ተቀምጠዋል።',
         'unauthorized' => 'እነዚህን ፈቃዶች የመቀየር መብት የለዎትም።',
     ],
+    'conditions' => [
+        'requires_mfa' => 'Requires MFA',
+    ],
 ];
