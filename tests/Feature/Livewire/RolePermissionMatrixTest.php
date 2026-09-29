@@ -196,8 +196,13 @@ describe('rendering', function (): void {
     it('counts a subject in its cell\'s tooltip when counters are on', function (): void {
         $this->editor->update(['permissions' => [ProductPermission::View->value]]);
 
-        livewire(RolePermissionMatrix::class, ['counters' => true])
-            ->assertSee('1 of 4 · ' . __('filament-access-control::editor.toggle_subject'));
+        // Read from the column, not the HTML: the tooltip is JSON-encoded into the page, and
+        // Laravel 12 escapes the middle dot (\u00b7) where Laravel 13 does not.
+        $component = livewire(RolePermissionMatrix::class, ['counters' => true]);
+        $column = $component->instance()->getTable()->getColumn('holder_' . holderKey($this->editor));
+        $column->record($component->instance()->getTableRecord('subject:' . ProductPermission::class));
+
+        expect($column->getTooltip())->toBe('1 of 4 · ' . __('filament-access-control::editor.toggle_subject'));
     });
 
     it('takes the counters from the plugin', function (): void {
