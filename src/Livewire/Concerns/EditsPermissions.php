@@ -469,7 +469,7 @@ trait EditsPermissions
             ->weight(fn (array $record): ?FontWeight => $record['type'] === 'subject' ? FontWeight::SemiBold : null)
             // Indented under its subject — inline, so that it holds without the app's theme having to
             // compile a utility class out of a PHP file.
-            ->extraAttributes(fn (array $record): array => $record['type'] === 'subject' ? [] : ['style' => 'padding-inline-start: 1rem'])
+            ->extraAttributes(fn (array $record): array => $record['type'] === 'subject' ? [] : ['style' => 'padding-inline-start: 2rem'])
             ->icon(fn (array $record): ?Heroicon => $record['restricted'] ? Heroicon::NoSymbol : null)
             ->iconColor('danger')
             ->iconPosition(IconPosition::After)
