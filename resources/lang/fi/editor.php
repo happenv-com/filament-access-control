@@ -29,23 +29,14 @@ return [
         'inherited' => 'Rooleista',
         'permission' => 'Käyttöoikeus',
     ],
-    'fields' => [
-        'role' => 'Rooli',
-    ],
     'actions' => [
         'discard' => 'Hylkää',
         'save' => 'Tallenna käyttöoikeudet',
-        'delete_role' => [
-            'heading' => 'Poista rooli',
-            'label' => 'Poista rooli',
-            'submit' => 'Poista',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Kohdetta ei löytynyt — lataa sivu uudelleen ja yritä sitten uudestaan.',
         'no_permission' => 'Käyttöoikeutta ei löytynyt — lataa sivu uudelleen ja yritä sitten uudestaan.',
         'not_offered' => 'Tätä käyttöoikeutta ei voi myöntää täällä.',
-        'role_deleted' => 'Rooli on poistettu.',
         'read_only' => 'Nämä käyttöoikeudet ovat täällä vain luku -tilassa.',
         'saved' => 'Käyttöoikeudet on tallennettu.',
         'unauthorized' => 'Sinulla ei ole oikeutta muuttaa näitä käyttöoikeuksia.',

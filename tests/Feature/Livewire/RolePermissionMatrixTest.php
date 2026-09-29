@@ -451,49 +451,6 @@ describe('refusals', function (): void {
     });
 });
 
-describe('deleting a role', function (): void {
-    it('deletes a role nobody holds', function (): void {
-        livewire(RolePermissionMatrix::class)
-            ->callAction(TestAction::make('deleteRole')->table(), data: ['role' => holderKey($this->editor)])
-            ->assertHasNoFormErrors()
-            ->assertNotified(__('filament-access-control::editor.notifications.role_deleted'))
-            ->assertDispatched(RolePermissionMatrix::ROLES_CHANGED)
-            ->assertTableColumnDoesNotExist('holder_' . holderKey($this->editor));
-
-        expect(Role::query()->find($this->editor->id))->toBeNull();
-    });
-
-    it('explains, with the voter\'s words, why a role cannot go', function (): void {
-        $this->editor->users()->attach(createUser('member@example.com'));
-
-        livewire(RolePermissionMatrix::class)
-            ->callAction(TestAction::make('deleteRole')->table(), data: ['role' => holderKey($this->editor)])
-            ->assertHasFormErrors(['role' => 'This role is assigned to users and cannot be deleted.']);
-
-        expect(Role::query()->find($this->editor->id))->not->toBeNull();
-    });
-
-    it('never offers the super-admin', function (): void {
-        $component = livewire(RolePermissionMatrix::class)
-            ->callAction(TestAction::make('deleteRole')->table(), data: ['role' => holderKey($this->admin)])
-            ->assertHasFormErrors(['role']);
-
-        expect(Role::query()->find($this->admin->id))->not->toBeNull();
-    });
-
-    it('asks the plugin\'s delete ability', function (): void {
-        signInOperator([RolePermission::View->value, RolePermission::Update->value]);
-
-        livewire(RolePermissionMatrix::class)
-            ->callAction(TestAction::make('deleteRole')->table(), data: ['role' => holderKey($this->editor)])
-            ->assertHasFormErrors(['role']);
-
-        expect(Role::query()->find($this->editor->id))->not->toBeNull();
-    });
-
-    it('is not offered when there is nothing to delete', function (): void {
-        $this->editor->delete();
-
-        livewire(RolePermissionMatrix::class)->assertActionHidden(TestAction::make('deleteRole')->table());
-    });
+it('offers no action to delete a role — roles are deleted where the application manages them', function (): void {
+    livewire(RolePermissionMatrix::class)->assertActionDoesNotExist(TestAction::make('deleteRole')->table());
 });

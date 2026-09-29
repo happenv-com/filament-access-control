@@ -29,23 +29,14 @@ return [
         'inherited' => '來自角色',
         'permission' => '權限',
     ],
-    'fields' => [
-        'role' => '角色',
-    ],
     'actions' => [
         'discard' => '捨棄變更',
         'save' => '儲存權限',
-        'delete_role' => [
-            'heading' => '刪除角色',
-            'label' => '刪除角色',
-            'submit' => '刪除',
-        ],
     ],
     'notifications' => [
         'no_holder' => '找不到——請重新整理頁面後再試一次。',
         'no_permission' => '找不到此權限——請重新整理頁面後再試一次。',
         'not_offered' => '此處無法授予此權限。',
-        'role_deleted' => '角色已刪除。',
         'read_only' => '這些權限在此處為唯讀。',
         'saved' => '權限已儲存。',
         'unauthorized' => '您無權變更這些權限。',

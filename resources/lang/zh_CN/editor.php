@@ -29,23 +29,14 @@ return [
         'inherited' => '来自角色',
         'permission' => '权限',
     ],
-    'fields' => [
-        'role' => '角色',
-    ],
     'actions' => [
         'discard' => '放弃更改',
         'save' => '保存权限',
-        'delete_role' => [
-            'heading' => '删除角色',
-            'label' => '删除角色',
-            'submit' => '删除',
-        ],
     ],
     'notifications' => [
         'no_holder' => '未找到——请刷新页面后重试。',
         'no_permission' => '未找到该权限——请刷新页面后重试。',
         'not_offered' => '此处无法授予该权限。',
-        'role_deleted' => '角色已删除。',
         'read_only' => '这些权限在此处为只读。',
         'saved' => '权限已保存。',
         'unauthorized' => '您无权更改这些权限。',

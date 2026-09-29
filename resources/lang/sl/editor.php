@@ -29,23 +29,14 @@ return [
         'inherited' => 'Iz vlog',
         'permission' => 'Dovoljenje',
     ],
-    'fields' => [
-        'role' => 'Vloga',
-    ],
     'actions' => [
         'discard' => 'Prekliči',
         'save' => 'Shrani dovoljenja',
-        'delete_role' => [
-            'heading' => 'Izbriši vlogo',
-            'label' => 'Izbriši vlogo',
-            'submit' => 'Izbriši',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Ni najdeno – osvežite stran in poskusite znova.',
         'no_permission' => 'Takega dovoljenja ni bilo mogoče najti – osvežite stran in poskusite znova.',
         'not_offered' => 'Tega dovoljenja tukaj ni mogoče dodeliti.',
-        'role_deleted' => 'Vloga je bila izbrisana.',
         'read_only' => 'Ta dovoljenja so tukaj samo za branje.',
         'saved' => 'Dovoljenja so bila shranjena.',
         'unauthorized' => 'Teh dovoljenj ne smete spreminjati.',

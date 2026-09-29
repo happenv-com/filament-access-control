@@ -29,23 +29,14 @@ return [
         'inherited' => 'Aus Rollen',
         'permission' => 'Berechtigung',
     ],
-    'fields' => [
-        'role' => 'Rolle',
-    ],
     'actions' => [
         'discard' => 'Verwerfen',
         'save' => 'Berechtigungen speichern',
-        'delete_role' => [
-            'heading' => 'Rolle löschen',
-            'label' => 'Rolle löschen',
-            'submit' => 'Löschen',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nicht gefunden — laden Sie die Seite neu und versuchen Sie es erneut.',
         'no_permission' => 'Diese Berechtigung wurde nicht gefunden — laden Sie die Seite neu und versuchen Sie es erneut.',
         'not_offered' => 'Diese Berechtigung kann hier nicht vergeben werden.',
-        'role_deleted' => 'Die Rolle wurde gelöscht.',
         'read_only' => 'Diese Berechtigungen sind hier schreibgeschützt.',
         'saved' => 'Die Berechtigungen wurden gespeichert.',
         'unauthorized' => 'Sie dürfen diese Berechtigungen nicht ändern.',

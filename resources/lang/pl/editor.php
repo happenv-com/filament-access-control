@@ -29,23 +29,14 @@ return [
         'inherited' => 'Z ról',
         'permission' => 'Uprawnienie',
     ],
-    'fields' => [
-        'role' => 'Rola',
-    ],
     'actions' => [
         'discard' => 'Odrzuć',
         'save' => 'Zapisz uprawnienia',
-        'delete_role' => [
-            'heading' => 'Usuń rolę',
-            'label' => 'Usuń rolę',
-            'submit' => 'Usuń',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nie znaleziono — odśwież stronę i spróbuj ponownie.',
         'no_permission' => 'Nie znaleziono takiego uprawnienia — odśwież stronę i spróbuj ponownie.',
         'not_offered' => 'Tego uprawnienia nie można tutaj nadać.',
-        'role_deleted' => 'Rola została usunięta.',
         'read_only' => 'Te uprawnienia są tutaj tylko do odczytu.',
         'saved' => 'Uprawnienia zostały zapisane.',
         'unauthorized' => 'Nie możesz zmieniać tych uprawnień.',

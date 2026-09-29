@@ -29,23 +29,14 @@ return [
         'inherited' => '역할에서 부여',
         'permission' => '권한',
     ],
-    'fields' => [
-        'role' => '역할',
-    ],
     'actions' => [
         'discard' => '변경 취소',
         'save' => '권한 저장',
-        'delete_role' => [
-            'heading' => '역할 삭제',
-            'label' => '역할 삭제',
-            'submit' => '삭제',
-        ],
     ],
     'notifications' => [
         'no_holder' => '찾을 수 없습니다 — 페이지를 새로 고친 후 다시 시도하세요.',
         'no_permission' => '해당 권한을 찾을 수 없습니다 — 페이지를 새로 고친 후 다시 시도하세요.',
         'not_offered' => '이 권한은 여기에서 부여할 수 없습니다.',
-        'role_deleted' => '역할이 삭제되었습니다.',
         'read_only' => '이 권한은 여기에서 읽기 전용입니다.',
         'saved' => '권한이 저장되었습니다.',
         'unauthorized' => '이 권한을 변경할 권한이 없습니다.',

@@ -29,23 +29,14 @@ return [
         'inherited' => 'Nga rolet',
         'permission' => 'Leja',
     ],
-    'fields' => [
-        'role' => 'Roli',
-    ],
     'actions' => [
         'discard' => 'Hidh poshtë',
         'save' => 'Ruaj lejet',
-        'delete_role' => [
-            'heading' => 'Fshi një rol',
-            'label' => 'Fshi rolin',
-            'submit' => 'Fshi',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nuk u gjet — ringarkoni faqen dhe provoni përsëri.',
         'no_permission' => 'Kjo leje nuk u gjet — ringarkoni faqen dhe provoni përsëri.',
         'not_offered' => 'Kjo leje nuk mund të jepet këtu.',
-        'role_deleted' => 'Roli u fshi.',
         'read_only' => 'Këtu këto leje janë vetëm për lexim.',
         'saved' => 'Lejet u ruajtën.',
         'unauthorized' => 'Nuk keni të drejtë t\'i ndryshoni këto leje.',

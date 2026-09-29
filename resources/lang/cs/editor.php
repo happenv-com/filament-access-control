@@ -29,23 +29,14 @@ return [
         'inherited' => 'Z rolí',
         'permission' => 'Oprávnění',
     ],
-    'fields' => [
-        'role' => 'Role',
-    ],
     'actions' => [
         'discard' => 'Zrušit',
         'save' => 'Uložit oprávnění',
-        'delete_role' => [
-            'heading' => 'Smazat roli',
-            'label' => 'Smazat roli',
-            'submit' => 'Smazat',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Nenalezeno – obnovte stránku a zkuste to znovu.',
         'no_permission' => 'Takové oprávnění nebylo nalezeno – obnovte stránku a zkuste to znovu.',
         'not_offered' => 'Toto oprávnění zde nelze udělit.',
-        'role_deleted' => 'Role byla smazána.',
         'read_only' => 'Tato oprávnění jsou zde jen pro čtení.',
         'saved' => 'Oprávnění byla uložena.',
         'unauthorized' => 'Tato oprávnění nesmíte měnit.',

@@ -29,23 +29,14 @@ return [
         'inherited' => 'Via rollen',
         'permission' => 'Recht',
     ],
-    'fields' => [
-        'role' => 'Rol',
-    ],
     'actions' => [
         'discard' => 'Verwerpen',
         'save' => 'Rechten opslaan',
-        'delete_role' => [
-            'heading' => 'Rol verwijderen',
-            'label' => 'Rol verwijderen',
-            'submit' => 'Verwijderen',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Niet gevonden — laad de pagina opnieuw en probeer het nog eens.',
         'no_permission' => 'Dit recht is niet gevonden — laad de pagina opnieuw en probeer het nog eens.',
         'not_offered' => 'Dit recht kan hier niet worden toegekend.',
-        'role_deleted' => 'De rol is verwijderd.',
         'read_only' => 'Deze rechten zijn hier alleen-lezen.',
         'saved' => 'De rechten zijn opgeslagen.',
         'unauthorized' => 'Je mag deze rechten niet wijzigen.',

@@ -29,23 +29,14 @@ return [
         'inherited' => 'Rollardan',
         'permission' => 'İcazə',
     ],
-    'fields' => [
-        'role' => 'Rol',
-    ],
     'actions' => [
         'discard' => 'Ləğv et',
         'save' => 'İcazələri yadda saxla',
-        'delete_role' => [
-            'heading' => 'Rolu sil',
-            'label' => 'Rolu sil',
-            'submit' => 'Sil',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Tapılmadı — səhifəni yeniləyin və yenidən cəhd edin.',
         'no_permission' => 'Belə bir icazə tapılmadı — səhifəni yeniləyin və yenidən cəhd edin.',
         'not_offered' => 'Bu icazə burada verilə bilməz.',
-        'role_deleted' => 'Rol silindi.',
         'read_only' => 'Bu icazələr burada yalnız oxumaq üçündür.',
         'saved' => 'İcazələr yadda saxlanıldı.',
         'unauthorized' => 'Bu icazələri dəyişdirmək hüququnuz yoxdur.',

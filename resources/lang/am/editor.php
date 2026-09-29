@@ -29,23 +29,14 @@ return [
         'inherited' => 'ከሚናዎች',
         'permission' => 'ፈቃድ',
     ],
-    'fields' => [
-        'role' => 'ሚና',
-    ],
     'actions' => [
         'discard' => 'ተው',
         'save' => 'ፈቃዶችን አስቀምጥ',
-        'delete_role' => [
-            'heading' => 'ሚና አጥፋ',
-            'label' => 'ሚና አጥፋ',
-            'submit' => 'አጥፋ',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'አልተገኘም — ገጹን እንደገና ጭነው ደግመው ይሞክሩ።',
         'no_permission' => 'እንደዚህ ያለ ፈቃድ አልተገኘም — ገጹን እንደገና ጭነው ደግመው ይሞክሩ።',
         'not_offered' => 'ይህ ፈቃድ እዚህ ሊሰጥ አይችልም።',
-        'role_deleted' => 'ሚናው ጠፍቷል።',
         'read_only' => 'እነዚህ ፈቃዶች እዚህ ለእይታ ብቻ ናቸው።',
         'saved' => 'ፈቃዶቹ ተቀምጠዋል።',
         'unauthorized' => 'እነዚህን ፈቃዶች የመቀየር መብት የለዎትም።',

@@ -29,23 +29,14 @@ return [
         'inherited' => 'Từ vai trò',
         'permission' => 'Quyền',
     ],
-    'fields' => [
-        'role' => 'Vai trò',
-    ],
     'actions' => [
         'discard' => 'Hủy thay đổi',
         'save' => 'Lưu quyền',
-        'delete_role' => [
-            'heading' => 'Xóa vai trò',
-            'label' => 'Xóa vai trò',
-            'submit' => 'Xóa',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Không tìm thấy — hãy tải lại trang và thử lại.',
         'no_permission' => 'Không tìm thấy quyền này — hãy tải lại trang và thử lại.',
         'not_offered' => 'Không thể cấp quyền này ở đây.',
-        'role_deleted' => 'Đã xóa vai trò.',
         'read_only' => 'Các quyền này ở chế độ chỉ đọc tại đây.',
         'saved' => 'Đã lưu quyền.',
         'unauthorized' => 'Bạn không được phép thay đổi các quyền này.',

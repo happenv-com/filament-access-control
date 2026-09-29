@@ -29,23 +29,14 @@ return [
         'inherited' => 'From roles',
         'permission' => 'Permission',
     ],
-    'fields' => [
-        'role' => 'Role',
-    ],
     'actions' => [
         'discard' => 'Discard',
         'save' => 'Save permissions',
-        'delete_role' => [
-            'heading' => 'Delete a role',
-            'label' => 'Delete role',
-            'submit' => 'Delete',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'It was not found — reload the page and try again.',
         'no_permission' => 'No such permission was found — reload the page and try again.',
         'not_offered' => 'This permission cannot be granted here.',
-        'role_deleted' => 'The role has been deleted.',
         'read_only' => 'These permissions are read-only here.',
         'saved' => 'Permissions have been saved.',
         'unauthorized' => 'You are not allowed to change these permissions.',

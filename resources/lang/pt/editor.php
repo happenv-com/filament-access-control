@@ -29,23 +29,14 @@ return [
         'inherited' => 'Das funções',
         'permission' => 'Permissão',
     ],
-    'fields' => [
-        'role' => 'Função',
-    ],
     'actions' => [
         'discard' => 'Descartar',
         'save' => 'Guardar permissões',
-        'delete_role' => [
-            'heading' => 'Eliminar uma função',
-            'label' => 'Eliminar função',
-            'submit' => 'Eliminar',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Não encontrado — recarregue a página e tente novamente.',
         'no_permission' => 'Essa permissão não foi encontrada — recarregue a página e tente novamente.',
         'not_offered' => 'Esta permissão não pode ser concedida aqui.',
-        'role_deleted' => 'A função foi eliminada.',
         'read_only' => 'Aqui, estas permissões são só de leitura.',
         'saved' => 'As permissões foram guardadas.',
         'unauthorized' => 'Não tem autorização para alterar estas permissões.',

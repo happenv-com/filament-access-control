@@ -29,23 +29,14 @@ return [
         'inherited' => 'Role atangin',
         'permission' => 'Phalna',
     ],
-    'fields' => [
-        'role' => 'Role',
-    ],
     'actions' => [
         'discard' => 'Paihna',
         'save' => 'Phalna save rawh',
-        'delete_role' => [
-            'heading' => 'Role thai bona',
-            'label' => 'Role thai bona',
-            'submit' => 'Thai bona',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Hmuh a ni lo — page kha reload la, tinawn leh rawh.',
         'no_permission' => 'Chutiang phalna chu hmuh a ni lo — page kha reload la, tinawn leh rawh.',
         'not_offered' => 'He phalna hi heta pek theih a ni lo.',
-        'role_deleted' => 'Role chu thai bo a ni e.',
         'read_only' => 'Heng phalna ho hi heta en chauh theih an ni.',
         'saved' => 'Phalna ho save a ni e.',
         'unauthorized' => 'Heng phalna ho thlâk phalna i nei lo.',

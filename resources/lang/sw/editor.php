@@ -29,23 +29,14 @@ return [
         'inherited' => 'Kutoka kwa majukumu',
         'permission' => 'Ruhusa',
     ],
-    'fields' => [
-        'role' => 'Jukumu',
-    ],
     'actions' => [
         'discard' => 'Tupa',
         'save' => 'Hifadhi ruhusa',
-        'delete_role' => [
-            'heading' => 'Futa jukumu',
-            'label' => 'Futa jukumu',
-            'submit' => 'Futa',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Haikupatikana — pakia upya ukurasa kisha ujaribu tena.',
         'no_permission' => 'Ruhusa hiyo haikupatikana — pakia upya ukurasa kisha ujaribu tena.',
         'not_offered' => 'Ruhusa hii haiwezi kutolewa hapa.',
-        'role_deleted' => 'Jukumu limefutwa.',
         'read_only' => 'Ruhusa hizi ni za kusoma tu hapa.',
         'saved' => 'Ruhusa zimehifadhiwa.',
         'unauthorized' => 'Huruhusiwi kubadilisha ruhusa hizi.',

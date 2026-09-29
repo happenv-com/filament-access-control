@@ -29,23 +29,14 @@ return [
         'inherited' => 'Rollidest',
         'permission' => 'Õigus',
     ],
-    'fields' => [
-        'role' => 'Roll',
-    ],
     'actions' => [
         'discard' => 'Loobu',
         'save' => 'Salvesta õigused',
-        'delete_role' => [
-            'heading' => 'Kustuta roll',
-            'label' => 'Kustuta roll',
-            'submit' => 'Kustuta',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Seda ei leitud — värskendage lehte ja proovige uuesti.',
         'no_permission' => 'Sellist õigust ei leitud — värskendage lehte ja proovige uuesti.',
         'not_offered' => 'Seda õigust ei saa siin anda.',
-        'role_deleted' => 'Roll on kustutatud.',
         'read_only' => 'Need õigused on siin ainult lugemiseks.',
         'saved' => 'Õigused on salvestatud.',
         'unauthorized' => 'Teil pole lubatud neid õigusi muuta.',

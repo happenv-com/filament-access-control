@@ -29,23 +29,14 @@ return [
         'inherited' => 'Rollerden',
         'permission' => 'İzin',
     ],
-    'fields' => [
-        'role' => 'Rol',
-    ],
     'actions' => [
         'discard' => 'Vazgeç',
         'save' => 'İzinleri kaydet',
-        'delete_role' => [
-            'heading' => 'Rolü sil',
-            'label' => 'Rolü sil',
-            'submit' => 'Sil',
-        ],
     ],
     'notifications' => [
         'no_holder' => 'Bulunamadı — sayfayı yenileyip tekrar deneyin.',
         'no_permission' => 'Böyle bir izin bulunamadı — sayfayı yenileyip tekrar deneyin.',
         'not_offered' => 'Bu izin burada verilemez.',
-        'role_deleted' => 'Rol silindi.',
         'read_only' => 'Bu izinler burada salt okunurdur.',
         'saved' => 'İzinler kaydedildi.',
         'unauthorized' => 'Bu izinleri değiştirme yetkiniz yok.',

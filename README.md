@@ -110,7 +110,6 @@ public function panel(Panel $panel): Panel
                     viewAny: RolePermission::View,
                     create: RolePermission::Create,
                     update: RolePermission::Update,
-                    delete: RolePermission::Delete,
                 ),
         );
 }
@@ -120,7 +119,7 @@ public function panel(Panel $panel): Panel
 
 ### The access control page
 
-With a role model, the plugin registers an **Access control** page: the matrix, an **Add role** action and a **Delete role** action. Configure it through the plugin:
+With a role model, the plugin registers an **Access control** page: the matrix and an **Add role** action. Roles are deleted where your application manages them — its role resource, for instance. Configure it through the plugin:
 
 ```php
 FilamentAccessControlPlugin::make()
@@ -138,7 +137,7 @@ FilamentAccessControlPlugin::make()
     ->cluster(SettingsCluster::class);
 ```
 
-The super-admin role is drawn fully granted and read-only, and is never offered for deletion. Pass `->accessControlPage(false)` to register no page, or `->accessControlPage(MyPage::class)` with a class extending `Pages\AccessControl` to replace it.
+The super-admin role is drawn fully granted and read-only. Pass `->accessControlPage(false)` to register no page, or `->accessControlPage(MyPage::class)` with a class extending `Pages\AccessControl` to replace it.
 
 To put the matrix somewhere else — a page of your own, a tab of a resource — use the schema component:
 
@@ -213,7 +212,6 @@ Every change asks the gate, as the panel's user, with the record being changed:
 | Access control page         | `roleAbilities(viewAny:)` with the role model class     | `viewAny`   |
 | Changing a role             | `roleAbilities(update:)` with the role                  | `update`    |
 | Add role                    | `roleAbilities(create:)` with the role model class      | `create`    |
-| Delete role                 | `roleAbilities(delete:)` with the role                  | `delete`    |
 | `PermissionEditor` (a user) | `->ability(...)` with the record                        | `update`    |
 
 An ability can be a Laravel ability name (a policy method as often as not), a laravel-access-control permission enum — asked with the record only, as voters expect — or a closure receiving `record`, `model` and `user`. `null` switches the check off. When a voter refuses, its own message reaches the operator; the library's generic `Unauthorized for <slug>` is translated into the permission's name.
