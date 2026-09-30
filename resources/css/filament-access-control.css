@@ -1,0 +1,66 @@
+/*
+ * The access control matrix (`.fac-matrix`) keeps its bearings when it outgrows the page: the
+ * permission column stays at the frame's start while the roles scroll past it, and the row of role
+ * names stays at the top while the permissions scroll under it.
+ *
+ * Filament's table has no sticky column or header of its own. For the header to stick, the frame
+ * that scrolls sideways has to scroll downwards too — a sticky element sticks to its nearest
+ * scrolling ancestor — so the frame is capped at the viewport's height.
+ *
+ * Plain CSS on Filament's own classes and colour variables: nothing here needs the application's
+ * theme to compile it.
+ */
+
+.fac-matrix {
+    --fac-cell-bg: var(--color-white, #fff);
+    --fac-stripe-bg: var(--gray-50);
+    --fac-edge: var(--gray-200);
+}
+
+.dark .fac-matrix {
+    --fac-cell-bg: var(--gray-900);
+    /* Filament stripes with white at 5 % over the table; a sticky cell needs the opaque result. */
+    --fac-stripe-bg: color-mix(in oklab, var(--gray-900), white 5%);
+    --fac-edge: color-mix(in oklab, var(--gray-900), white 10%);
+}
+
+.fac-matrix .fi-ta-content-ctn {
+    max-height: max(24rem, calc(100dvh - 12rem));
+    overflow-y: auto;
+}
+
+/* The role names. */
+.fac-matrix .fi-ta-table > thead > tr > th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--fac-stripe-bg);
+}
+
+/* The permission column. */
+.fac-matrix .fi-ta-table > thead > tr > th:first-child,
+.fac-matrix .fi-ta-table > tbody > tr > td.fi-ta-cell:first-child {
+    position: sticky;
+    inset-inline-start: 0;
+    box-shadow: inset -1px 0 0 var(--fac-edge);
+}
+
+.fac-matrix .fi-ta-table > thead > tr > th:first-child {
+    z-index: 3;
+}
+
+.fac-matrix .fi-ta-table > tbody > tr > td.fi-ta-cell:first-child {
+    z-index: 1;
+    background-color: var(--fac-cell-bg);
+}
+
+.fac-matrix .fi-ta-table > tbody > tr.fi-striped > td.fi-ta-cell:first-child {
+    background-color: var(--fac-stripe-bg);
+}
+
+/* A group's heading is one cell across the whole table: its title keeps to the frame's start. */
+.fac-matrix .fi-ta-group-header {
+    position: sticky;
+    inset-inline-start: 1.5rem;
+    width: fit-content;
+}

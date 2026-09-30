@@ -12,6 +12,7 @@ it('hands the matrix its configuration and no record', function (): void {
     $matrix = PermissionMatrix::make()
         ->deferred()
         ->counters()
+        ->rolesShownByDefault(8)
         ->surface(Surface::Api)
         ->data(['extra' => 1]);
 
@@ -19,12 +20,14 @@ it('hands the matrix its configuration and no record', function (): void {
         ->and($matrix->getComponentProperties())->toBe([
             'deferred' => true,
             'counters' => true,
+            'rolesShownByDefault' => 8,
             'surface' => Surface::Api,
             'extra' => 1,
         ])
         ->and(PermissionMatrix::make()->lazy()->getComponentProperties())->toBe([
             'deferred' => null,
             'counters' => null,
+            'rolesShownByDefault' => null,
             'surface' => null,
             'lazy' => true,
         ]);

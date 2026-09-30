@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Happenv\FilamentAccessControl;
 
+use Filament\Support\Assets\Css;
+use Filament\Support\Facades\FilamentAsset;
 use Happenv\FilamentAccessControl\Livewire\RecordPermissions;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Support\DeclarationProblems;
@@ -40,5 +42,10 @@ class FilamentAccessControlServiceProvider extends PackageServiceProvider
     {
         Livewire::component('filament-access-control.role-permission-matrix', RolePermissionMatrix::class);
         Livewire::component('filament-access-control.record-permissions', RecordPermissions::class);
+
+        // Published by `php artisan filament:assets` (which `filament:upgrade` runs).
+        FilamentAsset::register([
+            Css::make('filament-access-control', __DIR__ . '/../resources/css/filament-access-control.css'),
+        ], package: 'happenv-com/filament-access-control');
     }
 }

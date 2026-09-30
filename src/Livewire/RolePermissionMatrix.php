@@ -21,6 +21,7 @@ use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -50,10 +51,17 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
      * runs: an interface-typed parameter here would be resolved from the container on Laravel 12
      * whenever the caller leaves it out.
      */
-    public function mount(?bool $deferred = null, ?bool $counters = null): void
+    /**
+     * How many role columns show until the operator picks others in the column menu; `null` for all.
+     */
+    #[Locked]
+    public ?int $rolesShownByDefault = null;
+
+    public function mount(?bool $deferred = null, ?bool $counters = null, ?int $rolesShownByDefault = null): void
     {
         $this->deferred = $deferred ?? $this->plugin()->isDeferred();
         $this->counters = $counters ?? $this->plugin()->hasCounters();
+        $this->rolesShownByDefault = $rolesShownByDefault ?? $this->plugin()->getRolesShownByDefault();
     }
 
     #[On(self::ROLES_CHANGED)]
@@ -88,11 +96,22 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
                 $this->permissionColumn(),
                 $this->dependenciesColumn(),
                 ...$this->holders
-                    ->map(fn (Model $role, int | string $roleKey): TextColumn => $this->holderColumn((string) $roleKey, $this->getHolderTitle($role))
-                        ->headerTooltip($this->isHolderLocked($role) ? __('filament-access-control::editor.super_admin_hint') : null))
                     ->values()
+                    ->map(fn (Model $role, int $position): TextColumn => $this->holderColumn($this->holderKey($role), $this->getHolderTitle($role))
+                        ->headerTooltip($this->isHolderLocked($role) ? __('filament-access-control::editor.super_admin_hint') : null)
+                        // Every role can be hidden from the column menu — with fifty of them, the
+                        // operator keeps the ones they are working on in view.
+                        ->toggleable(isToggledHiddenByDefault: $this->rolesShownByDefault !== null && $position >= $this->rolesShownByDefault))
                     ->all(),
             ])
+            ->columnManagerColumns(fn (): int => match (true) {
+                $this->holders->count() > 24 => 3,
+                $this->holders->count() > 12 => 2,
+                default => 1,
+            })
+            // Hooks the stylesheet that keeps the permission column and the role header in view
+            // while a wide or long matrix scrolls.
+            ->extraAttributes(['class' => 'fac-matrix'])
             ->emptyStateHeading(fn (): string => match (true) {
                 $this->holders->isEmpty() => __('filament-access-control::editor.no_roles'),
                 filled($this->getTableSearch()) => __('filament-access-control::editor.search_empty', ['search' => $this->getTableSearch()]),

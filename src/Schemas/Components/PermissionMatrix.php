@@ -19,6 +19,8 @@ class PermissionMatrix extends Livewire
 
     protected bool | Closure | null $hasCounters = null;
 
+    protected int | Closure | null $rolesShownByDefault = null;
+
     protected PermissionSurfaceDefinition | Closure | null $surface = null;
 
     /**
@@ -71,6 +73,23 @@ class PermissionMatrix extends Livewire
         return $counters === null ? null : (bool) $counters;
     }
 
+    /**
+     * How many role columns show until the operator picks others. Unset, the plugin's default applies.
+     */
+    public function rolesShownByDefault(int | Closure | null $count): static
+    {
+        $this->rolesShownByDefault = $count;
+
+        return $this;
+    }
+
+    public function getRolesShownByDefault(): ?int
+    {
+        $count = $this->evaluate($this->rolesShownByDefault);
+
+        return $count === null ? null : max(0, (int) $count);
+    }
+
     public function surface(PermissionSurfaceDefinition | Closure | null $surface): static
     {
         $this->surface = $surface;
@@ -93,6 +112,7 @@ class PermissionMatrix extends Livewire
         return [
             'deferred' => $this->isDeferred(),
             'counters' => $this->hasCounters(),
+            'rolesShownByDefault' => $this->getRolesShownByDefault(),
             'surface' => $this->getSurface(),
             ...($this->isLazy() ? ['lazy' => true] : []),
             ...$this->getData(),

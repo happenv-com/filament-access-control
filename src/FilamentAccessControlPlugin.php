@@ -40,6 +40,8 @@ class FilamentAccessControlPlugin implements Plugin
 
     protected bool | Closure $hasCounters = false;
 
+    protected int | Closure | null $rolesShownByDefault = null;
+
     protected bool | Closure $showsDeclarationProblems = true;
 
     /**
@@ -327,6 +329,25 @@ class FilamentAccessControlPlugin implements Plugin
     public function hasCounters(): bool
     {
         return (bool) $this->evaluate($this->hasCounters);
+    }
+
+    /**
+     * How many role columns the matrix shows until the operator picks others in the table's column
+     * menu — the first ones in the roles query's order. Unset, every role shows; either way each
+     * one can be hidden and shown again.
+     */
+    public function rolesShownByDefault(int | Closure | null $count): static
+    {
+        $this->rolesShownByDefault = $count;
+
+        return $this;
+    }
+
+    public function getRolesShownByDefault(): ?int
+    {
+        $count = $this->evaluate($this->rolesShownByDefault);
+
+        return $count === null ? null : max(0, (int) $count);
     }
 
     /**

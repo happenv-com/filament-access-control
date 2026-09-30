@@ -81,7 +81,11 @@ class AccessControl extends Page
      */
     public function getMatrixProperties(): array
     {
-        return ['deferred' => $this->isDeferred(), 'counters' => static::plugin()->hasCounters()];
+        return [
+            'deferred' => $this->isDeferred(),
+            'counters' => static::plugin()->hasCounters(),
+            'rolesShownByDefault' => static::plugin()->getRolesShownByDefault(),
+        ];
     }
 
     protected function getHeaderActions(): array
