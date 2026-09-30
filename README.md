@@ -256,6 +256,8 @@ laravel-access-control 3 lets permissions depend on each other (`#[Requires]`, `
 | shield-exclamation | warning | granted, but the account does not meet a condition |
 | x-circle | danger | not granted |
 
+The *In effect* column shows only where it can differ from *Granted*: the account holds a role, a permission of the screen takes part in a rule or carries a condition, or the application restricts one right now. An API key holding nothing but direct grants, in a catalogue without rules, gets no column that would repeat *Granted*.
+
 The tooltip names the permissions involved. In deferred mode a changed cell takes the primary colour, and every other cell already shows the consequence of the change.
 
 The user editor counts a super-admin role as holding every permission with its conditions still applied — an unmet `#[RequiresMFA]` still shows. But an application that implements its super-admin through `Gate::before()` skips conditions at the gate along with everything else, so there the column overstates what is actually enforced.

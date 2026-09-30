@@ -255,8 +255,26 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
                     ->tooltip(fn (array $record): ?string => $record['type'] === 'permission'
                         ? $this->effectiveCell((string) $record['slug'])?->tooltip()
                         : null)
-                    ->visible(fn (): bool => ! $this->isRole()),
+                    ->visible(fn (): bool => $this->showsEffectivePermissions()),
             ]);
+    }
+
+    /**
+     * Whether the "In effect" column can tell the operator anything "Granted" does not: the account
+     * holds a role, a permission of the screen takes part in a rule or carries a condition, or the
+     * application restricts one right now. Without any of them the two columns agree cell for cell.
+     */
+    public function showsEffectivePermissions(): bool
+    {
+        if ($this->isRole()) {
+            return false;
+        }
+
+        return $this->heldRoles() !== []
+            || $this->tree()->hasDependencies($this->surface)
+            || $this->tree()->groups(surface: $this->surface)
+                ->flatMap(fn (PermissionGroupDto $group): Collection => $group->children)
+                ->contains(fn (PermissionDto $permission): bool => $this->isRestricted($permission));
     }
 
     /**
