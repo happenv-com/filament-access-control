@@ -2,6 +2,17 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.3.0 - 2026-09-30
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Features
+
+* feat: the permission column stays at least 250 px wide by @webard in https://github.com/happenv-com/filament-access-control/pull/13
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.2.0...v3.3.0
+
 ## v3.2.0 - 2026-09-30
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
