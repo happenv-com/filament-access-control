@@ -22,6 +22,11 @@ return [
         'heading' => 'Acordate, nefolosite aici',
         'description' => 'Aceste permisiuni au fost acordate anterior, dar nimic de aici nu le verifică. Le puteți revoca, dar nu le mai puteți acorda din nou.',
     ],
+    'role_picker' => [
+        'label' => 'Roluri',
+        'heading' => 'Roluri afișate în matrice',
+        'indicator' => 'Roluri afișate: :shown din :total',
+    ],
     'columns' => [
         'dependencies' => 'Dependențe',
         'granted' => 'Acordată',

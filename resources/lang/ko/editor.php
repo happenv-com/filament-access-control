@@ -22,6 +22,11 @@ return [
         'heading' => '부여됨, 여기서는 사용 안 함',
         'description' => '이 권한들은 이전에 부여되었지만 여기에서는 확인하는 곳이 없습니다. 회수할 수는 있지만 다시 부여할 수는 없습니다.',
     ],
+    'role_picker' => [
+        'label' => '역할',
+        'heading' => '매트릭스에 표시되는 역할',
+        'indicator' => '표시된 역할: :total개 중 :shown개',
+    ],
     'columns' => [
         'dependencies' => '종속성',
         'granted' => '부여됨',

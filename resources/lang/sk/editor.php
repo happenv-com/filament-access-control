@@ -22,6 +22,11 @@ return [
         'heading' => 'Udelené, tu nevyužité',
         'description' => 'Tieto oprávnenia boli udelené skôr, ale nič tu ich nekontroluje. Môžete ich odobrať, ale nemôžete ich znova udeliť.',
     ],
+    'role_picker' => [
+        'label' => 'Roly',
+        'heading' => 'Roly zobrazené v matici',
+        'indicator' => 'Zobrazené roly: :shown z :total',
+    ],
     'columns' => [
         'dependencies' => 'Závislosti',
         'granted' => 'Udelené',

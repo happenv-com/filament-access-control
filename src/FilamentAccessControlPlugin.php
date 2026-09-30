@@ -40,6 +40,10 @@ class FilamentAccessControlPlugin implements Plugin
 
     protected bool | Closure $hasCounters = false;
 
+    protected int | Closure | null $rolesShownByDefault = null;
+
+    protected bool | Closure $isRolePickerDeferred = true;
+
     protected bool | Closure $showsDeclarationProblems = true;
 
     /**
@@ -327,6 +331,41 @@ class FilamentAccessControlPlugin implements Plugin
     public function hasCounters(): bool
     {
         return (bool) $this->evaluate($this->hasCounters);
+    }
+
+    /**
+     * How many role columns the matrix shows until the operator picks others in its role picker —
+     * the first ones in the roles query's order. Unset, every role shows; either way the picker
+     * can hide and show each one.
+     */
+    public function rolesShownByDefault(int | Closure | null $count): static
+    {
+        $this->rolesShownByDefault = $count;
+
+        return $this;
+    }
+
+    public function getRolesShownByDefault(): ?int
+    {
+        $count = $this->evaluate($this->rolesShownByDefault);
+
+        return $count === null ? null : max(0, (int) $count);
+    }
+
+    /**
+     * Whether the matrix's role picker applies the operator's choice on its Apply button (the
+     * default) or with every tick.
+     */
+    public function deferRolePicker(bool | Closure $condition = true): static
+    {
+        $this->isRolePickerDeferred = $condition;
+
+        return $this;
+    }
+
+    public function isRolePickerDeferred(): bool
+    {
+        return (bool) $this->evaluate($this->isRolePickerDeferred);
     }
 
     /**

@@ -22,6 +22,11 @@ return [
         'heading' => 'Emanda, hemen erabili gabe',
         'description' => 'Baimen hauek lehenago eman ziren, baina hemen ezerk ez ditu kontsultatzen. Kendu egin ditzakezu, baina ezin dituzu berriro eman.',
     ],
+    'role_picker' => [
+        'label' => 'Rolak',
+        'heading' => 'Matrizean erakusten diren rolak',
+        'indicator' => 'Erakutsitako rolak: :shown / :total',
+    ],
     'columns' => [
         'dependencies' => 'Mendekotasunak',
         'granted' => 'Emanda',

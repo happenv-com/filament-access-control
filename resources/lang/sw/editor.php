@@ -22,6 +22,11 @@ return [
         'heading' => 'Zimetolewa, hazitumiki hapa',
         'description' => 'Ruhusa hizi zilitolewa awali, lakini hakuna kitu hapa kinachozikagua. Unaweza kuziondoa; huwezi kuzitoa tena.',
     ],
+    'role_picker' => [
+        'label' => 'Majukumu',
+        'heading' => 'Majukumu yanayoonyeshwa kwenye matriki',
+        'indicator' => 'Majukumu yanayoonyeshwa: :shown kati ya :total',
+    ],
     'columns' => [
         'dependencies' => 'Utegemezi',
         'granted' => 'Imetolewa',

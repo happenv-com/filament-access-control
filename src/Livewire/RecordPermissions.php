@@ -57,10 +57,16 @@ use Livewire\Component;
  */
 class RecordPermissions extends Component implements HasActions, HasSchemas, HasTable
 {
-    use EditsPermissions;
+    use EditsPermissions {
+        groupSlugs as catalogueGroupSlugs;
+        allPermissionRecords as allCatalogueRecords;
+    }
     use InteractsWithActions;
     use InteractsWithSchemas;
     use InteractsWithTable;
+
+    /** The group of the grants held outside the screen's offering. */
+    private const string HELD_OUTSIDE = 'held-outside-offering';
 
     /** The key of the account's "In effect" resolution among the per-holder ones. */
     private const string IN_EFFECT = 'in-effect';
@@ -398,14 +404,28 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
      *
      * @return array<string, array<string, mixed>>
      */
-    public function heldOutsideOfferingRecords(): array
+    public function heldOutsideOfferingRecords(bool $withFolded = false): array
     {
-        return $this->heldOutsideOffering
+        if ($this->heldOutsideOffering->isEmpty()) {
+            return [];
+        }
+
+        $group = [
+            'group' => self::HELD_OUTSIDE,
+            'group_name' => __('filament-access-control::editor.held_outside_offering.heading'),
+            'group_description' => __('filament-access-control::editor.held_outside_offering.description'),
+        ];
+
+        $records = ['group:' . self::HELD_OUTSIDE => $this->groupRecord($group)];
+
+        if (! $withFolded && ! $this->isGroupExpanded(self::HELD_OUTSIDE)) {
+            return $records;
+        }
+
+        return $records + $this->heldOutsideOffering
             ->mapWithKeys(fn (PermissionDto $permission): array => ['held:' . $permission->slug => [
+                ...$group,
                 'type' => 'permission',
-                'group' => 'held-outside-offering',
-                'group_name' => __('filament-access-control::editor.held_outside_offering.heading'),
-                'group_description' => __('filament-access-control::editor.held_outside_offering.description'),
                 'subject' => $permission->enum::class,
                 'label' => $permission->name,
                 'description' => $permission->slug,
@@ -413,6 +433,33 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
                 'restricted' => $this->isRestricted($permission),
             ]])
             ->all();
+    }
+
+    /**
+     * @return list<string>
+     */
+    protected function groupSlugs(): array
+    {
+        return [
+            ...$this->catalogueGroupSlugs(),
+            ...($this->heldOutsideOffering->isEmpty() ? [] : [self::HELD_OUTSIDE]),
+        ];
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    protected function allPermissionRecords(): array
+    {
+        return [...$this->allCatalogueRecords(), ...$this->heldOutsideOfferingRecords(withFolded: true)];
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    protected function resolveTableRecord(?string $key): ?array
+    {
+        return $this->resolvePermissionRecord($key);
     }
 
     public function render(): View

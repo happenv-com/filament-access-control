@@ -22,6 +22,11 @@ return [
         'heading' => 'Đã cấp, không dùng ở đây',
         'description' => 'Các quyền này đã được cấp trước đó, nhưng không có gì ở đây kiểm tra chúng. Bạn có thể thu hồi chúng, nhưng không thể cấp lại.',
     ],
+    'role_picker' => [
+        'label' => 'Vai trò',
+        'heading' => 'Vai trò hiển thị trong ma trận',
+        'indicator' => 'Vai trò đang hiển thị: :shown / :total',
+    ],
     'columns' => [
         'dependencies' => 'Phụ thuộc',
         'granted' => 'Đã cấp',

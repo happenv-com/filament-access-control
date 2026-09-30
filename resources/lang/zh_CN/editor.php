@@ -22,6 +22,11 @@ return [
         'heading' => '已授予，此处未使用',
         'description' => '这些权限此前已授予，但此处并不会检查它们。您可以撤销，但无法再次授予。',
     ],
+    'role_picker' => [
+        'label' => '角色',
+        'heading' => '矩阵中显示的角色',
+        'indicator' => '显示的角色：:shown / :total',
+    ],
     'columns' => [
         'dependencies' => '依赖关系',
         'granted' => '已授予',

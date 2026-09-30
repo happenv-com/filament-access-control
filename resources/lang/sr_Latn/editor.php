@@ -22,6 +22,11 @@ return [
         'heading' => 'Dodeljeno, ovde se ne koristi',
         'description' => 'Ove dozvole su ranije dodeljene, ali ih ovde ništa ne proverava. Možete ih oduzeti, ali ne i ponovo dodeliti.',
     ],
+    'role_picker' => [
+        'label' => 'Uloge',
+        'heading' => 'Uloge prikazane u matrici',
+        'indicator' => 'Prikazane uloge: :shown od :total',
+    ],
     'columns' => [
         'dependencies' => 'Zavisnosti',
         'granted' => 'Dodeljeno',

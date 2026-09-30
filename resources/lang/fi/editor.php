@@ -22,6 +22,11 @@ return [
         'heading' => 'Myönnetty, ei käytössä täällä',
         'description' => 'Nämä käyttöoikeudet on myönnetty aiemmin, mutta mikään täällä ei tarkista niitä. Voit perua ne, mutta et voi myöntää niitä uudelleen.',
     ],
+    'role_picker' => [
+        'label' => 'Roolit',
+        'heading' => 'Matriisissa näytettävät roolit',
+        'indicator' => 'Näytetyt roolit: :shown / :total',
+    ],
     'columns' => [
         'dependencies' => 'Riippuvuudet',
         'granted' => 'Myönnetty',

@@ -12,7 +12,6 @@ use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\RolePermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\Surface;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\UserPermission;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Js;
 use Livewire\Features\SupportLockedProperties\CannotUpdateLockedPropertyException;
 
 use function Pest\Livewire\livewire;
@@ -38,9 +37,10 @@ describe('rendering', function (): void {
     });
 
     it('lists each subject followed by its permissions, grouped by module', function (): void {
-        $records = livewire(RolePermissionMatrix::class)->instance()->permissionRecords();
+        $records = livewire(RolePermissionMatrix::class)->instance()->permissionRecords(withFolded: true);
 
-        expect(array_slice(array_keys($records), 0, 3))->toBe([
+        expect(array_slice(array_keys($records), 0, 4))->toBe([
+            'group:administration',
             'subject:' . RolePermission::class,
             'permission:' . RolePermission::View->value,
             'permission:' . RolePermission::Create->value,
@@ -59,35 +59,61 @@ describe('rendering', function (): void {
             ]);
     });
 
-    it('folds the module groups by default, in Filament\'s own collapsible groups', function (): void {
-        $table = livewire(RolePermissionMatrix::class)->instance()->getTable();
+    it('folds every group by default, drawing only the group\'s own row', function (): void {
+        $matrix = livewire(RolePermissionMatrix::class)
+            ->assertSee('Catalogue')
+            ->assertDontSee('Products');
 
-        expect($table->areGroupsCollapsedByDefault())->toBeTrue()
-            ->and($table->getGrouping()?->isCollapsible())->toBeTrue()
-            ->and($table->getGrouping()?->getTitle(['group_name' => 'Catalogue']))->toBe('Catalogue');
+        expect(array_keys($matrix->instance()->permissionRecords()))->toBe(['group:administration', 'group:catalogue']);
+    });
+
+    it('opens and folds a group from its row', function (): void {
+        $matrix = livewire(RolePermissionMatrix::class)
+            ->callTableColumnAction('label', 'group:catalogue')
+            ->assertSee('Products')
+            ->assertSet('expandedGroups', ['catalogue']);
+
+        expect($matrix->instance()->permissionRecords())->toHaveKey('permission:' . ProductPermission::View->value)
+            ->not->toHaveKey('permission:' . RolePermission::View->value);
+
+        $matrix->callTableColumnAction('label', 'group:catalogue')
+            ->assertDontSee('Products')
+            ->assertSet('expandedGroups', []);
+    });
+
+    it('opens nothing from a subject\'s or a permission\'s row', function (): void {
+        livewire(RolePermissionMatrix::class)
+            ->callTableColumnAction('label', 'subject:' . ProductPermission::class)
+            ->callTableColumnAction('label', 'permission:' . ProductPermission::View->value)
+            ->assertSet('expandedGroups', []);
+    });
+
+    it('still resolves a folded group\'s rows by their key', function (): void {
+        $this->editor->update(['permissions' => [ProductPermission::View->value]]);
+
+        livewire(RolePermissionMatrix::class)
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'effective', 'permission:' . ProductPermission::View->value)
+            ->callTableColumnAction('holder_' . holderKey($this->editor), 'permission:' . ProductPermission::Create->value);
+
+        expect($this->editor->fresh()->getPermissions()->all())->toContain(ProductPermission::Create->value);
     });
 
     it('opens and folds every group at once', function (): void {
-        $component = livewire(RolePermissionMatrix::class)
-            ->callAction(TestAction::make('expandAll')->table());
-
-        expect(collect($component->effects['xjs'] ?? [])->pluck('expression')->implode(' '))
-            ->toContain('groupVisibility = ' . Js::from(['Administration', 'Catalogue']));
-
-        $component->callAction(TestAction::make('collapseAll')->table());
-
-        expect(collect($component->effects['xjs'] ?? [])->pluck('expression')->implode(' '))
-            ->toContain('groupVisibility = ' . Js::from([]));
+        livewire(RolePermissionMatrix::class)
+            ->callAction(TestAction::make('expandAll')->table())
+            ->assertSet('expandedGroups', ['administration', 'catalogue'])
+            ->assertSee('Products')
+            ->callAction(TestAction::make('collapseAll')->table())
+            ->assertSet('expandedGroups', [])
+            ->assertDontSee('Products');
     });
 
     it('narrows the table to a search and opens what survives', function (): void {
-        $component = livewire(RolePermissionMatrix::class)
+        livewire(RolePermissionMatrix::class)
             ->searchTable('categor')
             ->assertSee('Categories')
-            ->assertDontSee('Products');
-
-        expect(collect($component->effects['xjs'] ?? [])->pluck('expression')->implode(' '))
-            ->toContain('groupVisibility = ' . Js::from(['Catalogue']));
+            ->assertDontSee('Products')
+            ->assertSet('expandedGroups', ['catalogue']);
     });
 
     it('says so when nothing matches the search', function (): void {
@@ -104,6 +130,7 @@ describe('rendering', function (): void {
 
     it('draws only what a surface offers', function (): void {
         livewire(RolePermissionMatrix::class, ['surface' => Surface::Api])
+            ->call('setGroupsExpanded', true)
             ->assertSee('Products')
             ->assertDontSee('Categories');
     });
@@ -120,21 +147,19 @@ describe('rendering', function (): void {
             ->assertTableColumnStateSet('holder_' . holderKey($this->admin), 'all', 'subject:' . RolePermission::class);
     });
 
-    it('keeps the group description plain, whether or not counters are on', function (): void {
-        $record = ['group' => 'catalogue', 'group_description' => 'What the shop sells'];
-
-        $without = livewire(RolePermissionMatrix::class)->instance();
-        $with = livewire(RolePermissionMatrix::class, ['counters' => true])->instance();
-
-        expect($without->groupDescription($record))->toBe('What the shop sells')
-            ->and($with->groupDescription($record))->toBe('What the shop sells');
+    it('shows a group\'s name and description in its own row', function (): void {
+        expect(livewire(RolePermissionMatrix::class)->instance()->permissionRecords()['group:catalogue'])->toMatchArray([
+            'type' => 'group',
+            'group' => 'catalogue',
+            'label' => 'Catalogue',
+        ]);
     });
 
-    it('puts a summary record first in each group, when counters are on', function (): void {
-        $keys = array_keys(livewire(RolePermissionMatrix::class, ['counters' => true])->instance()->permissionRecords());
+    it('puts the group\'s own row first in each group', function (): void {
+        $keys = array_keys(livewire(RolePermissionMatrix::class)->instance()->permissionRecords(withFolded: true));
 
         expect($keys)->toEqual([
-            'summary:administration',
+            'group:administration',
             'subject:' . RolePermission::class,
             'permission:' . RolePermission::View->value,
             'permission:' . RolePermission::Create->value,
@@ -143,7 +168,7 @@ describe('rendering', function (): void {
             'subject:' . UserPermission::class,
             'permission:' . UserPermission::View->value,
             'permission:' . UserPermission::Update->value,
-            'summary:catalogue',
+            'group:catalogue',
             'subject:' . CategoryPermission::class,
             'permission:' . CategoryPermission::View->value,
             'permission:' . CategoryPermission::Update->value,
@@ -156,36 +181,37 @@ describe('rendering', function (): void {
         ]);
     });
 
-    it('has no summary record when counters are off', function (): void {
-        expect(livewire(RolePermissionMatrix::class)->instance()->permissionRecords())
-            ->not->toHaveKey('summary:catalogue');
+    it('leaves a group row\'s holder cells empty when counters are off', function (): void {
+        $matrix = livewire(RolePermissionMatrix::class)->instance();
+
+        expect($matrix->cellState(holderKey($this->editor), $matrix->permissionRecords()['group:catalogue']))->toBe('');
     });
 
-    it('shows granted/total in a summary row\'s holder column, when counters are on', function (): void {
+    it('shows granted/total in a group row\'s holder column, when counters are on', function (): void {
         $this->editor->update(['permissions' => [ProductPermission::View->value, CategoryPermission::View->value]]);
 
         livewire(RolePermissionMatrix::class, ['counters' => true])
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), '2/7', 'summary:catalogue')
-            ->assertTableColumnStateSet('holder_' . holderKey($this->admin), '7/7', 'summary:catalogue');
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), '2/7', 'group:catalogue')
+            ->assertTableColumnStateSet('holder_' . holderKey($this->admin), '7/7', 'group:catalogue');
     });
 
-    it('updates the summary number for a staged change', function (): void {
+    it('updates the group row\'s number for a staged change', function (): void {
         livewire(RolePermissionMatrix::class, ['counters' => true, 'deferred' => true])
             ->call('toggle', holderKey($this->editor), ProductPermission::View->value)
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), '1/7', 'summary:catalogue');
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), '1/7', 'group:catalogue');
     });
 
-    it('ignores a click on a summary row', function (): void {
+    it('ignores a click on a group row', function (): void {
         livewire(RolePermissionMatrix::class, ['counters' => true])
-            ->callTableColumnAction('holder_' . holderKey($this->editor), 'summary:catalogue');
+            ->callTableColumnAction('holder_' . holderKey($this->editor), 'group:catalogue');
 
         expect($this->editor->fresh()->getPermissions())->toBeEmpty();
     });
 
-    it('marks the summary row as not clickable and without a tooltip', function (): void {
+    it('marks the group row as not clickable and without a tooltip', function (): void {
         $component = livewire(RolePermissionMatrix::class, ['counters' => true]);
         $column = $component->instance()->getTable()->getColumn('holder_' . holderKey($this->editor));
-        $record = $component->instance()->getTableRecord('summary:catalogue');
+        $record = $component->instance()->getTableRecord('group:catalogue');
 
         $column->record($record);
 

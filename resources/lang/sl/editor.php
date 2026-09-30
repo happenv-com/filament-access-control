@@ -22,6 +22,11 @@ return [
         'heading' => 'Dodeljeno, tukaj neuporabljeno',
         'description' => 'Ta dovoljenja so bila dodeljena prej, vendar jih tukaj nič ne preverja. Lahko jih odvzamete, ne morete pa jih znova dodeliti.',
     ],
+    'role_picker' => [
+        'label' => 'Vloge',
+        'heading' => 'Vloge, prikazane v matriki',
+        'indicator' => 'Prikazane vloge: :shown od :total',
+    ],
     'columns' => [
         'dependencies' => 'Odvisnosti',
         'granted' => 'Dodeljeno',

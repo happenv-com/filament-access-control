@@ -22,6 +22,11 @@ return [
         'heading' => '付与済み・ここでは未使用',
         'description' => 'これらの権限は以前に付与されたものですが、ここではどこからも参照されていません。取り消すことはできますが、再び付与することはできません。',
     ],
+    'role_picker' => [
+        'label' => 'ロール',
+        'heading' => 'マトリクスに表示するロール',
+        'indicator' => '表示中のロール: :total 件中 :shown 件',
+    ],
     'columns' => [
         'dependencies' => '依存関係',
         'granted' => '付与済み',
