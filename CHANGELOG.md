@@ -2,6 +2,21 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.1.1 - 2026-09-30
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Fixes
+
+* fix: show In effect only where it can differ from Granted by @webard in https://github.com/happenv-com/filament-access-control/pull/8
+
+#### Other
+
+* docs: banner, key features and configuration along the package skeleton's README by @webard in https://github.com/happenv-com/filament-access-control/pull/7
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.1.0...v3.1.1
+
 ## v3.0.1 - 2026-09-29
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
