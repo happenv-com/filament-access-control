@@ -22,6 +22,11 @@ return [
         'heading' => 'Tildelt, ikke i bruk her',
         'description' => 'Disse tillatelsene ble tildelt tidligere, men ingenting her sjekker dem. Du kan trekke dem tilbake, men ikke tildele dem på nytt.',
     ],
+    'role_picker' => [
+        'label' => 'Roller',
+        'heading' => 'Roller som vises i matrisen',
+        'indicator' => 'Viste roller: :shown av :total',
+    ],
     'columns' => [
         'dependencies' => 'Avhengigheter',
         'granted' => 'Tildelt',

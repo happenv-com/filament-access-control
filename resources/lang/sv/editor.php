@@ -22,6 +22,11 @@ return [
         'heading' => 'Tilldelade, används inte här',
         'description' => 'Dessa behörigheter tilldelades tidigare, men inget här kontrollerar dem. Du kan återkalla dem men inte tilldela dem igen.',
     ],
+    'role_picker' => [
+        'label' => 'Roller',
+        'heading' => 'Roller som visas i matrisen',
+        'indicator' => 'Visade roller: :shown av :total',
+    ],
     'columns' => [
         'dependencies' => 'Beroenden',
         'granted' => 'Tilldelad',

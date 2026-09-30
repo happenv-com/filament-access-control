@@ -21,6 +21,7 @@ it('hands the matrix its configuration and no record', function (): void {
             'deferred' => true,
             'counters' => true,
             'rolesShownByDefault' => 8,
+            'rolePickerDeferred' => null,
             'surface' => Surface::Api,
             'extra' => 1,
         ])
@@ -28,6 +29,7 @@ it('hands the matrix its configuration and no record', function (): void {
             'deferred' => null,
             'counters' => null,
             'rolesShownByDefault' => null,
+            'rolePickerDeferred' => null,
             'surface' => null,
             'lazy' => true,
         ]);

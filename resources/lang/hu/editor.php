@@ -22,6 +22,11 @@ return [
         'heading' => 'Megadva, itt nincs használatban',
         'description' => 'Ezeket a jogosultságokat korábban adták meg, de itt semmi sem ellenőrzi őket. Visszavonhatod őket, de újra nem adhatod meg.',
     ],
+    'role_picker' => [
+        'label' => 'Szerepkörök',
+        'heading' => 'A mátrixban megjelenített szerepkörök',
+        'indicator' => 'Megjelenített szerepkörök: :shown / :total',
+    ],
     'columns' => [
         'dependencies' => 'Függőségek',
         'granted' => 'Megadva',

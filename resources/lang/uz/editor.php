@@ -22,6 +22,11 @@ return [
         'heading' => 'Berilgan, bu yerda ishlatilmaydi',
         'description' => 'Bu ruxsatlar avval berilgan, lekin bu yerda ularni hech narsa tekshirmaydi. Ularni qaytarib olishingiz mumkin, lekin qayta bera olmaysiz.',
     ],
+    'role_picker' => [
+        'label' => 'Rollar',
+        'heading' => 'Matritsada koʻrsatiladigan rollar',
+        'indicator' => 'Koʻrsatilgan rollar: :total tadan :shown',
+    ],
     'columns' => [
         'dependencies' => 'Bog\'liqliklar',
         'granted' => 'Berilgan',

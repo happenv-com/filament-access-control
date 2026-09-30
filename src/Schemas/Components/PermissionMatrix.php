@@ -21,6 +21,8 @@ class PermissionMatrix extends Livewire
 
     protected int | Closure | null $rolesShownByDefault = null;
 
+    protected bool | Closure | null $isRolePickerDeferred = null;
+
     protected PermissionSurfaceDefinition | Closure | null $surface = null;
 
     /**
@@ -74,7 +76,8 @@ class PermissionMatrix extends Livewire
     }
 
     /**
-     * How many role columns show until the operator picks others. Unset, the plugin's default applies.
+     * How many role columns show until the operator picks others in the role picker. Unset, the
+     * plugin's default applies.
      */
     public function rolesShownByDefault(int | Closure | null $count): static
     {
@@ -88,6 +91,23 @@ class PermissionMatrix extends Livewire
         $count = $this->evaluate($this->rolesShownByDefault);
 
         return $count === null ? null : max(0, (int) $count);
+    }
+
+    /**
+     * Whether the role picker waits for its Apply button. Unset, the plugin's default applies.
+     */
+    public function deferRolePicker(bool | Closure | null $condition = true): static
+    {
+        $this->isRolePickerDeferred = $condition;
+
+        return $this;
+    }
+
+    public function isRolePickerDeferred(): ?bool
+    {
+        $deferred = $this->evaluate($this->isRolePickerDeferred);
+
+        return $deferred === null ? null : (bool) $deferred;
     }
 
     public function surface(PermissionSurfaceDefinition | Closure | null $surface): static
@@ -113,6 +133,7 @@ class PermissionMatrix extends Livewire
             'deferred' => $this->isDeferred(),
             'counters' => $this->hasCounters(),
             'rolesShownByDefault' => $this->getRolesShownByDefault(),
+            'rolePickerDeferred' => $this->isRolePickerDeferred(),
             'surface' => $this->getSurface(),
             ...($this->isLazy() ? ['lazy' => true] : []),
             ...$this->getData(),

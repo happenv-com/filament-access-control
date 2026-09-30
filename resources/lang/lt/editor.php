@@ -22,6 +22,11 @@ return [
         'heading' => 'Suteikta, čia nenaudojama',
         'description' => 'Šie leidimai buvo suteikti anksčiau, bet čia niekas jų netikrina. Galite juos atšaukti, bet nebegalite suteikti iš naujo.',
     ],
+    'role_picker' => [
+        'label' => 'Rolės',
+        'heading' => 'Matricoje rodomos rolės',
+        'indicator' => 'Rodomos rolės: :shown iš :total',
+    ],
     'columns' => [
         'dependencies' => 'Priklausomybės',
         'granted' => 'Suteikta',

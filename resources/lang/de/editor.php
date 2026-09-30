@@ -22,6 +22,11 @@ return [
         'heading' => 'Vergeben, hier ungenutzt',
         'description' => 'Diese Berechtigungen wurden früher vergeben, aber hier prüft sie nichts. Sie können sie entziehen, aber nicht erneut vergeben.',
     ],
+    'role_picker' => [
+        'label' => 'Rollen',
+        'heading' => 'In der Matrix angezeigte Rollen',
+        'indicator' => 'Angezeigte Rollen: :shown von :total',
+    ],
     'columns' => [
         'dependencies' => 'Abhängigkeiten',
         'granted' => 'Vergeben',

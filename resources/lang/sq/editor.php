@@ -22,6 +22,11 @@ return [
         'heading' => 'Leje të dhëna, pa përdorim këtu',
         'description' => 'Këto leje janë dhënë më parë, por asgjë këtu nuk i kontrollon. Mund t\'i hiqni, por nuk mund t\'i jepni përsëri.',
     ],
+    'role_picker' => [
+        'label' => 'Rolet',
+        'heading' => 'Rolet e shfaqura në matricë',
+        'indicator' => 'Rolet e shfaqura: :shown nga :total',
+    ],
     'columns' => [
         'dependencies' => 'Varësitë',
         'granted' => 'E dhënë',

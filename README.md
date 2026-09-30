@@ -31,7 +31,7 @@ PermissionEditor::make()->deferred();
 
 ## Key features
 
-- **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role — with an optional "granted/total" summary per group. With dozens of roles, pick the ones shown from the column menu, while the permission column and the role header stay in view. See [The access control page](#the-access-control-page), [Many roles](#many-roles) and [Counters](#counters).
+- **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role — with an optional "granted/total" summary per group. With dozens of roles, pick the ones shown in the role picker, while the permission column and the role header stay in view. See [The access control page](#the-access-control-page), [Many roles](#many-roles) and [Counters](#counters).
 - **An editor for one role or one user.** The same table for a single record, as a schema component in a form, a tab or an infolist; for a user it also lists the roles that already grant each permission. `PermissionSelector` covers create forms as a plain form field. See [Editing one record](#editing-one-record) and [The form field](#the-form-field).
 - **Live or deferred saving.** Every click written at once, or staged and saved together with Discard and a warning before leaving; each save replays the operator's intent under a row lock, so two administrators do not overwrite each other. See [Live or deferred](#live-or-deferred).
 - **Why, not just whether.** Every cell shows what laravel-access-control resolves: in effect, implied, missing a requirement, blocked by a conflict, restricted, or withheld by a condition — the tooltip names the permissions involved. See [Rules and conditions](#rules-and-conditions).
@@ -158,7 +158,17 @@ The super-admin role is drawn fully granted and read-only. Pass `->accessControl
 
 #### Many roles
 
-Every role column can be hidden and shown again from the table's column menu, and Filament remembers the operator's choice for the session. `->rolesShownByDefault(8)` — on the plugin, or on a `PermissionMatrix` — shows the first eight roles in the roles query's order until the operator picks others; unset, every role shows. Fewer columns also make a lighter page: each column is a cell in every row, and each click redraws the table.
+The list icon next to the search opens the **role picker**: every role with a checkbox, a search, and *Select all* / *Deselect all*. The choice is kept for the session, and while roles are hidden the table says how many it shows (*Roles shown: 8 of 50*). A role added from the page is shown straight away.
+
+```php
+FilamentAccessControlPlugin::make()
+    ->rolesShownByDefault(8)     // the first eight roles, in the roles query's order, until the operator picks others
+    ->deferRolePicker(false);    // apply every tick at once instead of on Apply
+
+PermissionMatrix::make()->rolesShownByDefault(8)->deferRolePicker(false);   // or per component
+```
+
+Unset, every role shows and the picker waits for Apply. Fewer columns also make a lighter page: each column is a cell in every row, and each click redraws the table. The picker is built from Filament's own table filters — the trigger, the modal, Apply and Reset — and narrows the columns, never the rows.
 
 However many are shown, the matrix keeps its bearings as it scrolls: the permission column stays at the start while the roles scroll past it, and the row of role names stays at the top while the permissions scroll under it. Filament's table has no sticky column or header, so this is the package's one stylesheet — plain CSS on Filament's classes, confined to the matrix.
 

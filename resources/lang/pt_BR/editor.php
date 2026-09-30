@@ -22,6 +22,11 @@ return [
         'heading' => 'Concedidas, sem uso aqui',
         'description' => 'Estas permissões foram concedidas anteriormente, mas nada aqui as consulta. Você pode revogá-las, mas não concedê-las novamente.',
     ],
+    'role_picker' => [
+        'label' => 'Funções',
+        'heading' => 'Funções exibidas na matriz',
+        'indicator' => 'Funções exibidas: :shown de :total',
+    ],
     'columns' => [
         'dependencies' => 'Dependências',
         'granted' => 'Concedida',

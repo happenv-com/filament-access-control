@@ -85,6 +85,7 @@ class AccessControl extends Page
             'deferred' => $this->isDeferred(),
             'counters' => static::plugin()->hasCounters(),
             'rolesShownByDefault' => static::plugin()->getRolesShownByDefault(),
+            'rolePickerDeferred' => static::plugin()->isRolePickerDeferred(),
         ];
     }
 

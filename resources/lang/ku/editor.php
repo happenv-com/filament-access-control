@@ -22,6 +22,11 @@ return [
         'heading' => 'دراوە، لێرە بەکارنایەت',
         'description' => 'ئەم مۆڵەتانە پێشتر دراون، بەڵام لێرە هیچ شتێک پشکنینیان بۆ ناکات. دەتوانیت بیانسەنیتەوە، بەڵام ناتوانیت دووبارە بیاندەیتەوە.',
     ],
+    'role_picker' => [
+        'label' => 'Rol',
+        'heading' => 'Rolên ku di matrîsê de têne nîşandan',
+        'indicator' => 'Rolên nîşandayî: :shown ji :total',
+    ],
     'columns' => [
         'dependencies' => 'پێوەندییەکان',
         'granted' => 'دراوە',

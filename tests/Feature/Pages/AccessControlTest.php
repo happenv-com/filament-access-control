@@ -58,7 +58,7 @@ it('passes the plugin\'s save mode on to the matrix', function (): void {
     plugin()->deferred()->counters()->rolesShownByDefault(8);
 
     expect(livewire(AccessControl::class)->instance()->getMatrixProperties())
-        ->toBe(['deferred' => true, 'counters' => true, 'rolesShownByDefault' => 8]);
+        ->toBe(['deferred' => true, 'counters' => true, 'rolesShownByDefault' => 8, 'rolePickerDeferred' => true]);
 
     plugin()->deferred(false)->counters(false)->rolesShownByDefault(null);
 });

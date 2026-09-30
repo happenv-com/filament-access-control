@@ -22,6 +22,11 @@ return [
         'heading' => 'Concedits, sense ús aquí',
         'description' => 'Aquests permisos es van concedir anteriorment, però aquí res no els consulta. Pots revocar-los, però no tornar-los a concedir.',
     ],
+    'role_picker' => [
+        'label' => 'Rols',
+        'heading' => 'Rols que es mostren a la matriu',
+        'indicator' => 'Rols mostrats: :shown de :total',
+    ],
     'columns' => [
         'dependencies' => 'Dependències',
         'granted' => 'Concedit',

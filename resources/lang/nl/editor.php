@@ -22,6 +22,11 @@ return [
         'heading' => 'Toegekend, hier ongebruikt',
         'description' => 'Deze rechten zijn eerder toegekend, maar niets hier raadpleegt ze. Je kunt ze intrekken, maar niet opnieuw toekennen.',
     ],
+    'role_picker' => [
+        'label' => 'Rollen',
+        'heading' => 'Rollen die in de matrix worden getoond',
+        'indicator' => 'Getoonde rollen: :shown van :total',
+    ],
     'columns' => [
         'dependencies' => 'Afhankelijkheden',
         'granted' => 'Toegekend',
