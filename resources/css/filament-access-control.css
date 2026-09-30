@@ -57,10 +57,3 @@
 .fac-matrix .fi-ta-table > tbody > tr.fi-striped > td.fi-ta-cell:first-child {
     background-color: var(--fac-stripe-bg);
 }
-
-/* A group's heading is one cell across the whole table: its title keeps to the frame's start. */
-.fac-matrix .fi-ta-group-header {
-    position: sticky;
-    inset-inline-start: 1.5rem;
-    width: fit-content;
-}

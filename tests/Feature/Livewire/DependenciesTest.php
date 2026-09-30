@@ -46,10 +46,12 @@ it('gives the declared reason in the tooltip', function (): void {
 
 it('draws the column in the matrix and in the editor of one record', function (): void {
     livewire(RolePermissionMatrix::class)
+        ->call('setGroupsExpanded', true)
         ->assertTableColumnVisible('dependencies')
         ->assertSee('Requires: View products');
 
     livewire(RecordPermissions::class, ['record' => $this->editor])
+        ->call('setGroupsExpanded', true)
         ->assertTableColumnVisible('dependencies')
         ->assertSee('Blocked by: Delete products');
 });
@@ -59,7 +61,7 @@ it('has nothing to say on a subject row', function (): void {
 });
 
 it('finds a subject through the permissions its rules tie it to', function (): void {
-    $records = array_keys(livewire(RolePermissionMatrix::class)->instance()->permissionRecords('gallery'));
+    $records = array_keys(livewire(RolePermissionMatrix::class)->instance()->permissionRecords('gallery', withFolded: true));
 
     expect($records)->toContain('subject:' . ProductPermission::class)
         ->toContain('subject:' . GalleryPermission::class)

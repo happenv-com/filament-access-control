@@ -235,6 +235,14 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
         ];
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
+    protected function resolveTableRecord(?string $key): ?array
+    {
+        return $this->holders->isEmpty() ? null : $this->resolvePermissionRecord($key);
+    }
+
     public function render(): View
     {
         return view('filament-access-control::livewire.role-permission-matrix');

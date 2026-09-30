@@ -8,12 +8,12 @@ use BackedEnum;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
+use Filament\Support\ArrayRecord;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\TextSize;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
@@ -37,7 +37,6 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Js;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 
@@ -81,6 +80,14 @@ trait EditsPermissions
      */
     #[Locked]
     public ?bool $counters = null;
+
+    /**
+     * The groups the operator opened; every other one is folded, and its rows are not drawn at all.
+     *
+     * @var list<string>
+     */
+    #[Locked]
+    public array $expandedGroups = [];
 
     /**
      * Staged changes of a deferred screen, per holder key.
@@ -395,16 +402,21 @@ trait EditsPermissions
     // Table -----------------------------------------------------------------------------------
 
     /**
-     * The table's rows: per subject, the subject itself and then each of its permissions.
+     * The table's rows: per group, the group's own row, and — while it is open — per subject the
+     * subject itself and then each of its permissions.
      *
-     * Keyed the way Filament keys custom data — `summary:` and the group slug, `subject:` and the
-     * enum, `permission:` and the slug — and already in group order, which is all Filament's
-     * grouping of custom data needs. The search narrows at SUBJECT granularity, as the catalogue
+     * A group is a row of the table rather than Filament's group header, so that its row can carry
+     * a cell per holder — the counters — and a folded group's rows are not drawn at all: the
+     * catalogue of a large deployment times dozens of roles is a page of megabytes otherwise.
+     *
+     * Keyed the way Filament keys custom data — `group:` and the group slug, `subject:` and the
+     * enum, `permission:` and the slug. The search narrows at SUBJECT granularity, as the catalogue
      * does: a matching verb brings its whole subject.
      *
+     * @param  bool  $withFolded  the rows of folded groups too — to resolve any row by its key
      * @return array<string, array{type: string, group: string, group_name: string, group_description: ?string, subject: string, label: string, description: ?string, slug: ?string, restricted: bool}>
      */
-    public function permissionRecords(?string $search = null): array
+    public function permissionRecords(?string $search = null, bool $withFolded = false): array
     {
         $records = [];
 
@@ -415,18 +427,10 @@ trait EditsPermissions
                 'group_description' => $group->description,
             ];
 
-            // With counters on, the group header no longer shows what every holder holds of it — a
-            // first row of the group does, one number per holder column.
-            if ($this->counters === true) {
-                $records['summary:' . $group->slug] = [
-                    ...$groupShared,
-                    'type' => 'summary',
-                    'subject' => '',
-                    'label' => '',
-                    'description' => null,
-                    'slug' => null,
-                    'restricted' => false,
-                ];
+            $records['group:' . $group->slug] = $this->groupRecord($groupShared);
+
+            if (! $withFolded && ! $this->isGroupExpanded($group->slug)) {
+                continue;
             }
 
             foreach ($group->subjects as $subjectKey => $subject) {
@@ -461,6 +465,76 @@ trait EditsPermissions
     }
 
     /**
+     * A group's own row: its name and description, and — with counters on — what each holder
+     * holds of it.
+     *
+     * @param  array{group: string, group_name: string, group_description: ?string}  $group
+     * @return array{type: string, group: string, group_name: string, group_description: ?string, subject: string, label: string, description: ?string, slug: ?string, restricted: bool}
+     */
+    protected function groupRecord(array $group): array
+    {
+        return [
+            ...$group,
+            'type' => 'group',
+            'subject' => '',
+            'label' => $group['group_name'],
+            'description' => $group['group_description'],
+            'slug' => null,
+            'restricted' => false,
+        ];
+    }
+
+    public function isGroupExpanded(string $group): bool
+    {
+        return in_array($group, $this->expandedGroups, true);
+    }
+
+    public function toggleGroup(string $group): void
+    {
+        $this->expandedGroups = $this->isGroupExpanded($group)
+            ? array_values(array_diff($this->expandedGroups, [$group]))
+            : [...$this->expandedGroups, $group];
+
+        $this->flushCachedTableRecords();
+    }
+
+    /**
+     * Every group the table draws right now, by slug — narrowed by the search.
+     *
+     * @return list<string>
+     */
+    protected function groupSlugs(): array
+    {
+        return $this->tree()->groups($this->getTableSearch(), $this->surface)
+            ->map(fn (PermissionGroupDto $group): string => $group->slug)
+            ->values()
+            ->all();
+    }
+
+    /**
+     * Every row of the table, folded groups included — what a row's key resolves against, so a
+     * click or a test can reach a row that is not drawn.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    protected function allPermissionRecords(): array
+    {
+        return $this->permissionRecords($this->getTableSearch(), withFolded: true);
+    }
+
+    /**
+     * Filament resolves a row by its key among the rows drawn; a folded group's rows are not drawn.
+     *
+     * @return array<string, mixed>|null
+     */
+    protected function resolvePermissionRecord(?string $key): ?array
+    {
+        $record = $key === null ? null : ($this->allPermissionRecords()[$key] ?? null);
+
+        return $record === null ? null : [...$record, ArrayRecord::getKeyName() => $key];
+    }
+
+    /**
      * What one holder's cell shows for a row: a {@see PermissionCellState} value for a permission —
      * or `granted` / `revoked` where the screen shows only what is held — and `all`, `some` or
      * `none` for a subject.
@@ -469,8 +543,8 @@ trait EditsPermissions
      */
     public function cellState(string $holderKey, array $record): string
     {
-        if ($record['type'] === 'summary') {
-            return $this->summaryCounter($holderKey, (string) $record['group']);
+        if ($record['type'] === 'group') {
+            return $this->counters === true ? $this->summaryCounter($holderKey, (string) $record['group']) : '';
         }
 
         if ($record['type'] !== 'subject') {
@@ -494,19 +568,19 @@ trait EditsPermissions
     }
 
     /**
-     * "granted/total" for a group's summary row — staged changes included, and everything granted
-     * for a locked holder, exactly like {@see self::isGranted()} everywhere else.
+     * "granted/total" for a group's row — staged changes included, and everything granted for a
+     * locked holder, exactly like {@see self::isGranted()} everywhere else. Nothing for a group of
+     * no permissions of the catalogue.
      */
     protected function summaryCounter(string $holderKey, string $groupSlug): string
     {
         $permissions = $this->groupPermissions($groupSlug);
 
-        return $this->countGranted($holderKey, $permissions) . '/' . $permissions->count();
+        return $permissions->isEmpty() ? '' : $this->countGranted($holderKey, $permissions) . '/' . $permissions->count();
     }
 
     /**
-     * The colour of a summary row's "granted/total" text — the same rule as the group-header badges
-     * it replaces.
+     * The colour of a group row's "granted/total" text.
      */
     protected function summaryColor(string $counter): string
     {
@@ -538,6 +612,10 @@ trait EditsPermissions
      */
     public function isStagedRecord(string $holderKey, array $record): bool
     {
+        if ($record['type'] === 'group') {
+            return false;
+        }
+
         if ($record['type'] !== 'subject') {
             return $this->isStaged($holderKey, (string) $record['slug']);
         }
@@ -549,32 +627,13 @@ trait EditsPermissions
     }
 
     /**
-     * The group's description — plain: with counters on, what each holder holds of the group is
-     * shown in the group's own summary row instead.
-     *
-     * @param  array<string, mixed>  $record
-     */
-    public function groupDescription(array $record): ?string
-    {
-        return $record['group_description'];
-    }
-
-    /**
      * Open or fold every group at once.
-     *
-     * Filament folds groups in the browser, so this is said to the table's Alpine component: with
-     * groups folded by default, the ones listed in `groupVisibility` are the open ones.
      */
     public function setGroupsExpanded(bool $expanded): void
     {
-        $titles = $expanded
-            ? $this->tree()->groups($this->getTableSearch(), $this->surface)
-                ->map(fn (PermissionGroupDto $group): string => $group->name)
-                ->values()
-                ->all()
-            : [];
+        $this->expandedGroups = $expanded ? $this->groupSlugs() : [];
 
-        $this->js('Alpine.$data($wire.$el.querySelector(\'.fi-ta\')).groupVisibility = ' . Js::from($titles));
+        $this->flushCachedTableRecords();
     }
 
     /**
@@ -595,19 +654,9 @@ trait EditsPermissions
     {
         return $table
             ->records(fn (?string $search): array => $this->permissionRecords($search))
-            ->groups([
-                Group::make('group')
-                    ->getTitleFromRecordUsing(fn (array $record): string => $record['group_name'])
-                    ->getDescriptionFromRecordUsing(fn (array $record): ?string => $this->groupDescription($record))
-                    ->titlePrefixedWithLabel(false)
-                    ->collapsible(),
-            ])
-            ->defaultGroup('group')
-            ->groupingSettingsHidden()
-            // Folded: the catalogue spans every module of the deployment, and an operator who came to
-            // change one thing should not have to scroll past the rest.
-            ->collapsedGroupsByDefault()
-            ->recordClasses(fn (array $record): ?string => in_array($record['type'], ['subject', 'summary'], true) ? 'fi-striped' : null)
+            // Groups start folded: the catalogue spans every module of the deployment, and an
+            // operator who came to change one thing should not have to scroll past the rest.
+            ->recordClasses(fn (array $record): ?string => in_array($record['type'], ['subject', 'group'], true) ? 'fi-striped' : null)
             ->paginated(false)
             ->searchPlaceholder(__('filament-access-control::editor.search'))
             ->emptyStateIcon(Heroicon::OutlinedShieldCheck)
@@ -648,14 +697,29 @@ trait EditsPermissions
         return TextColumn::make('label')
             ->label(__('filament-access-control::editor.columns.permission'))
             ->description(fn (array $record): ?string => $record['description'])
-            ->weight(fn (array $record): ?FontWeight => in_array($record['type'], ['subject', 'summary'], true) ? FontWeight::SemiBold : null)
+            ->weight(fn (array $record): ?FontWeight => match ($record['type']) {
+                'group' => FontWeight::Medium,
+                'subject' => FontWeight::SemiBold,
+                default => null,
+            })
             // Indented under its subject — inline, so that it holds without the app's theme having to
             // compile a utility class out of a PHP file.
-            ->extraAttributes(fn (array $record): array => in_array($record['type'], ['subject', 'summary'], true) ? [] : ['style' => 'padding-inline-start: 2rem'])
-            ->icon(fn (array $record): ?Heroicon => $record['restricted'] ? Heroicon::LockClosed : null)
+            ->extraAttributes(fn (array $record): array => in_array($record['type'], ['subject', 'group'], true) ? [] : ['style' => 'padding-inline-start: 2rem'])
+            ->icon(fn (array $record): ?Heroicon => match (true) {
+                $record['type'] === 'group' => $this->isGroupExpanded((string) $record['group']) ? Heroicon::ChevronUp : Heroicon::ChevronDown,
+                $record['restricted'] => Heroicon::LockClosed,
+                default => null,
+            })
             ->iconColor('gray')
             ->iconPosition(IconPosition::After)
             ->tooltip(fn (array $record): ?string => $record['restricted'] ? __('filament-access-control::editor.restricted_hint') : null)
+            // A group's row opens and folds the group, as Filament's group header does.
+            ->action(function (array $record): void {
+                if ($record['type'] === 'group') {
+                    $this->toggleGroup((string) $record['group']);
+                }
+            })
+            ->disabledClick(fn (array $record): bool => $record['type'] !== 'group')
             ->wrap()
             ->searchable();
     }
@@ -751,15 +815,15 @@ trait EditsPermissions
             ->alignCenter()
             // Matches IconColumn's own default (`IconSize::Large`) — a TextColumn's icon takes its
             // size from the text size. A summary row has no icon, only its number, in the standard size.
-            ->size(fn (array $record): ?TextSize => $record['type'] === 'summary' ? null : TextSize::Large)
+            ->size(fn (array $record): ?TextSize => $record['type'] === 'group' ? null : TextSize::Large)
             ->state(fn (array $record): string => $this->cellState($holderKey, $record))
             // The icon is hidden from assistive technology, so — as IconColumn does itself — a text
             // alternative goes next to it: the cell's tooltip, or its state. It also names the button
             // wrapping a clickable cell.
-            ->formatStateUsing(fn (string $state, array $record): string | Htmlable => $record['type'] === 'summary'
+            ->formatStateUsing(fn (string $state, array $record): string | Htmlable => $record['type'] === 'group'
                 ? $state
                 : new HtmlString('<span class="fi-sr-only">' . e($this->holderTooltip($holderKey, $record) ?? $state) . '</span>'))
-            ->icon(fn (string $state, array $record): ?Heroicon => $record['type'] === 'summary' ? null : (PermissionCellState::tryFrom($state)?->icon() ?? match ($state) {
+            ->icon(fn (string $state, array $record): ?Heroicon => $record['type'] === 'group' ? null : (PermissionCellState::tryFrom($state)?->icon() ?? match ($state) {
                 'granted', 'all' => Heroicon::CheckCircle,
                 'some' => Heroicon::MinusCircle,
                 default => Heroicon::XCircle,
@@ -768,7 +832,7 @@ trait EditsPermissions
             // it is saved — Filament's own palette, no styles of our own. `warning` means a missing
             // requirement.
             ->iconColor(fn (string $state, array $record): ?string => match (true) {
-                $record['type'] === 'summary' => null,
+                $record['type'] === 'group' => null,
                 $this->isStagedRecord($holderKey, $record) => 'primary',
                 PermissionCellState::tryFrom($state) instanceof PermissionCellState => PermissionCellState::from($state)->color(),
                 in_array($state, ['granted', 'all'], true) => 'success',
@@ -778,11 +842,11 @@ trait EditsPermissions
             })
             // A summary row shows "granted/total" as text instead of an icon — the same colours as
             // the group-header badges it replaces.
-            ->color(fn (string $state, array $record): ?string => $record['type'] === 'summary' ? $this->summaryColor($state) : null)
+            ->color(fn (string $state, array $record): ?string => $record['type'] === 'group' && $state !== '' ? $this->summaryColor($state) : null)
             ->tooltip(fn (array $record): ?string => $this->holderTooltip($holderKey, $record))
-            ->disabledClick(fn (array $record): bool => $record['type'] === 'summary' || ! $this->canEditHolder($holderKey))
+            ->disabledClick(fn (array $record): bool => $record['type'] === 'group' || ! $this->canEditHolder($holderKey))
             ->action(function (array $record) use ($holderKey): void {
-                if ($record['type'] === 'summary') {
+                if ($record['type'] === 'group') {
                     return;
                 }
 
@@ -798,7 +862,7 @@ trait EditsPermissions
     protected function holderTooltip(string $holderKey, array $record): ?string
     {
         return match (true) {
-            $record['type'] === 'summary' => null,
+            $record['type'] === 'group' => null,
             $record['type'] === 'subject' => $this->isStagedRecord($holderKey, $record)
                 ? __('filament-access-control::editor.staged_marker')
                 : $this->subjectTooltip($holderKey, $record),
