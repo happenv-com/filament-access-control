@@ -35,13 +35,16 @@ describe('a role', function (): void {
         livewire(RecordPermissions::class, ['record' => $this->editor])
             ->assertOk()
             ->assertSee('Catalogue')
+            ->assertDontSee('Change names, prices and stock')
+            ->call('setGroupsExpanded', true)
             ->assertSee('Change names, prices and stock')
             ->assertTableColumnExists('holder_' . holderKey($this->editor))
             ->assertTableColumnHidden('inherited')
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'effective', 'permission:' . ProductPermission::View->value)
             ->assertTableColumnStateSet('holder_' . holderKey($this->editor), 'some', 'subject:' . ProductPermission::class);
 
-        expect(livewire(RecordPermissions::class, ['record' => $this->editor])->instance()->getTable()->areGroupsCollapsedByDefault())->toBeTrue();
+        expect(array_keys(livewire(RecordPermissions::class, ['record' => $this->editor])->instance()->permissionRecords()))
+            ->toBe(['group:administration', 'group:catalogue']);
     });
 
     it('writes each click at once', function (): void {
@@ -85,19 +88,11 @@ describe('a role', function (): void {
         expect(str($html)->after('<div')->before('>')->toString())->toContain('x-data')->not->toContain('<!--');
     });
 
-    it('keeps the group description plain when counters are on', function (): void {
-        $description = livewire(RecordPermissions::class, ['record' => $this->editor, 'counters' => true])
-            ->instance()
-            ->groupDescription(['group' => 'catalogue', 'group_description' => null]);
-
-        expect($description)->toBeNull();
-    });
-
-    it('shows a summary row with its own single holder, when counters are on', function (): void {
+    it('counts what its single holder holds of a group in the group\'s row, when counters are on', function (): void {
         $this->editor->update(['permissions' => [ProductPermission::View->value]]);
 
         livewire(RecordPermissions::class, ['record' => $this->editor, 'counters' => true])
-            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), '1/7', 'summary:catalogue');
+            ->assertTableColumnStateSet('holder_' . holderKey($this->editor), '1/7', 'group:catalogue');
     });
 
     it('draws no save button when live', function (): void {
@@ -188,6 +183,7 @@ describe('a user', function (): void {
 describe('a surface', function (): void {
     it('offers only what the surface offers', function (): void {
         livewire(RecordPermissions::class, ['record' => $this->user, 'surface' => Surface::Api, 'ability' => null])
+            ->call('setGroupsExpanded', true)
             ->assertSee('Products')
             ->assertDontSee('Categories')
             ->call('toggle', holderKey($this->user), ProductPermission::Delete->value)
@@ -201,6 +197,8 @@ describe('a surface', function (): void {
 
         $component = livewire(RecordPermissions::class, ['record' => $this->user, 'surface' => Surface::Api, 'ability' => null, 'deferred' => true])
             ->assertSee(__('filament-access-control::editor.held_outside_offering.heading'))
+            ->assertDontSee(ProductPermission::Delete->value)
+            ->call('setGroupsExpanded', true)
             ->assertSee(ProductPermission::Delete->value)
             ->call('toggle', holderKey($this->user), ProductPermission::Delete->value)
             ->assertSet('changes', [holderKey($this->user) => ['grant' => [], 'revoke' => [ProductPermission::Delete->value]]])
@@ -240,6 +238,7 @@ it('marks a permission the application restricts', function (): void {
     resolve(PermissionRestrictions::class)->restrictUsing(fn ($permission): bool => $permission === ProductPermission::Delete);
 
     $component = livewire(RecordPermissions::class, ['record' => $this->editor])
+        ->call('setGroupsExpanded', true)
         ->assertSee(__('filament-access-control::editor.restricted_hint'));
 
     expect($component->instance()->isRestricted(resolve(PermissionTree::class)->find(ProductPermission::Delete->value)))->toBeTrue();

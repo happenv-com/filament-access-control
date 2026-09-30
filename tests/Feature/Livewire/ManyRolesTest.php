@@ -32,6 +32,8 @@ function indicator(int $shown, int $total): string
 it('shows every role until told otherwise', function (): void {
     $matrix = livewire(RolePermissionMatrix::class)->assertDontSee(indicator(4, 4));
 
+    expect($matrix->instance()->hidesAnyRole())->toBeFalse();
+
     foreach ($this->keys as $key) {
         $matrix->assertCanRenderTableColumn('holder_' . $key);
     }
