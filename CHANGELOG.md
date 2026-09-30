@@ -2,6 +2,26 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.2.0 - 2026-09-30
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Features
+
+* feat: a group is a row of the table — counters beside its name, folded groups not drawn by @webard in https://github.com/happenv-com/filament-access-control/pull/12
+* feat: a role picker for the matrix; keep its permission column and role header in view by @webard in https://github.com/happenv-com/filament-access-control/pull/11
+
+#### Fixes
+
+* fix: a wide permission table scrolls inside its frame instead of stretching the page by @webard in https://github.com/happenv-com/filament-access-control/pull/10
+
+#### Other
+
+* docs: screenshots of the access control page and the user editor by @webard in https://github.com/happenv-com/filament-access-control/pull/9
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.1.1...v3.2.0
+
 ## v3.1.1 - 2026-09-30
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
