@@ -22,6 +22,11 @@ return [
         'heading' => 'Naibigay, hindi ginagamit dito',
         'description' => 'Naibigay na ang mga pahintulot na ito dati, pero walang anuman dito ang sumusuri sa mga ito. Puwede mong bawiin ang mga ito, pero hindi mo na maibibigay ulit.',
     ],
+    'role_picker' => [
+        'label' => 'Mga tungkulin',
+        'heading' => 'Mga tungkuling ipinapakita sa matrix',
+        'indicator' => 'Ipinapakitang tungkulin: :shown sa :total',
+    ],
     'columns' => [
         'dependencies' => 'Mga Dependency',
         'granted' => 'Naibigay',

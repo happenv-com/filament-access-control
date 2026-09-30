@@ -22,6 +22,11 @@ return [
         'heading' => 'Diberikan, tidak digunakan di sini',
         'description' => 'Izin ini sudah diberikan sebelumnya, tetapi tidak ada yang memeriksanya di sini. Anda dapat mencabutnya, tetapi tidak dapat memberikannya lagi.',
     ],
+    'role_picker' => [
+        'label' => 'Peran',
+        'heading' => 'Peran yang ditampilkan di matriks',
+        'indicator' => 'Peran ditampilkan: :shown dari :total',
+    ],
     'columns' => [
         'dependencies' => 'Ketergantungan',
         'granted' => 'Diberikan',

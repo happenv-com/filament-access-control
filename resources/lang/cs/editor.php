@@ -22,6 +22,11 @@ return [
         'heading' => 'Uděleno, zde nevyužito',
         'description' => 'Tato oprávnění byla udělena dříve, ale nic zde je nekontroluje. Můžete je odebrat, ale nemůžete je znovu udělit.',
     ],
+    'role_picker' => [
+        'label' => 'Role',
+        'heading' => 'Role zobrazené v matici',
+        'indicator' => 'Zobrazené role: :shown z :total',
+    ],
     'columns' => [
         'dependencies' => 'Závislosti',
         'granted' => 'Uděleno',

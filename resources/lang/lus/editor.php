@@ -22,6 +22,11 @@ return [
         'heading' => 'Pek sa, heta hman loh',
         'description' => 'Heng phalna ho hi hmain pek tawh a ni a, mahse heta thil engmah hian a endik lo. I la let thei a, mahse i pe leh thei tawh lo.',
     ],
+    'role_picker' => [
+        'label' => 'Hnathawhna',
+        'heading' => 'Matrix-a lan tir hnathawhna',
+        'indicator' => 'Lan tir hnathawhna: :total zinga :shown',
+    ],
     'columns' => [
         'dependencies' => 'Innghahna',
         'granted' => 'Pek sa',

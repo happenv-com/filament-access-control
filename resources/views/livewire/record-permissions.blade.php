@@ -4,7 +4,7 @@
     $unmetConditions = $this->unmetConditionSummary();
 @endphp
 
-<div class="grid gap-y-4" @include('filament-access-control::partials.unsaved-changes-guard')>
+<div class="flex flex-col gap-y-4" @include('filament-access-control::partials.unsaved-changes-guard')>
     @include('filament-access-control::partials.declaration-problems')
 
     @if ($locked)

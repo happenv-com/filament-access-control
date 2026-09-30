@@ -22,6 +22,11 @@ return [
         'heading' => 'Nadane, nieużywane tutaj',
         'description' => 'Te uprawnienia zostały nadane wcześniej, ale nic ich tutaj nie sprawdza. Możesz je odebrać; nadać ponownie już nie.',
     ],
+    'role_picker' => [
+        'label' => 'Role',
+        'heading' => 'Role widoczne w macierzy',
+        'indicator' => 'Widoczne role: :shown z :total',
+    ],
     'columns' => [
         'dependencies' => 'Zależności',
         'granted' => 'Nadane',

@@ -22,6 +22,11 @@ return [
         'heading' => 'Verilmiş, burada kullanılmıyor',
         'description' => 'Bu izinler daha önce verildi, ancak burada hiçbir şey bunları denetlemiyor. Bunları geri alabilirsiniz, ancak yeniden veremezsiniz.',
     ],
+    'role_picker' => [
+        'label' => 'Roller',
+        'heading' => 'Matriste gösterilen roller',
+        'indicator' => 'Gösterilen roller: :total rolden :shown',
+    ],
     'columns' => [
         'dependencies' => 'Bağımlılıklar',
         'granted' => 'Verildi',

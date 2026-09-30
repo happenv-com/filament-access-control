@@ -22,6 +22,11 @@ return [
         'heading' => 'Concedidos, sin uso aquí',
         'description' => 'Estos permisos se concedieron anteriormente, pero aquí nada los consulta. Puedes revocarlos, pero no volver a concederlos.',
     ],
+    'role_picker' => [
+        'label' => 'Roles',
+        'heading' => 'Roles que se muestran en la matriz',
+        'indicator' => 'Roles mostrados: :shown de :total',
+    ],
     'columns' => [
         'dependencies' => 'Dependencias',
         'granted' => 'Concedido',

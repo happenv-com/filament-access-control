@@ -22,6 +22,11 @@ return [
         'heading' => 'Granted, unused here',
         'description' => 'These permissions were granted earlier, but nothing here consults them. You can revoke them; you cannot grant them again.',
     ],
+    'role_picker' => [
+        'label' => 'Roles',
+        'heading' => 'Roles shown in the matrix',
+        'indicator' => 'Roles shown: :shown of :total',
+    ],
     'columns' => [
         'dependencies' => 'Dependencies',
         'granted' => 'Granted',

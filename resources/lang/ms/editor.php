@@ -22,6 +22,11 @@ return [
         'heading' => 'Diberikan, tidak digunakan di sini',
         'description' => 'Kebenaran ini telah diberikan sebelum ini, tetapi tiada apa-apa di sini yang menyemaknya. Anda boleh menariknya balik, tetapi tidak boleh memberikannya semula.',
     ],
+    'role_picker' => [
+        'label' => 'Peranan',
+        'heading' => 'Peranan yang dipaparkan dalam matriks',
+        'indicator' => 'Peranan dipaparkan: :shown daripada :total',
+    ],
     'columns' => [
         'dependencies' => 'Kebergantungan',
         'granted' => 'Diberikan',

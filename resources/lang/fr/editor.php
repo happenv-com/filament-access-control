@@ -22,6 +22,11 @@ return [
         'heading' => 'Accordées, inutilisées ici',
         'description' => 'Ces permissions ont été accordées auparavant, mais rien ici ne les consulte. Vous pouvez les révoquer, mais pas les accorder à nouveau.',
     ],
+    'role_picker' => [
+        'label' => 'Rôles',
+        'heading' => 'Rôles affichés dans la matrice',
+        'indicator' => 'Rôles affichés : :shown sur :total',
+    ],
     'columns' => [
         'dependencies' => 'Dépendances',
         'granted' => 'Accordée',

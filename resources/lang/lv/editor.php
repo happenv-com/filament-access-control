@@ -22,6 +22,11 @@ return [
         'heading' => 'Piešķirtas, šeit netiek izmantotas',
         'description' => 'Šīs atļaujas tika piešķirtas agrāk, bet šeit tās nekas nepārbauda. Varat tās atsaukt, bet nevarat piešķirt no jauna.',
     ],
+    'role_picker' => [
+        'label' => 'Lomas',
+        'heading' => 'Matricā rādītās lomas',
+        'indicator' => 'Rādītās lomas: :shown no :total',
+    ],
     'columns' => [
         'dependencies' => 'Atkarības',
         'granted' => 'Piešķirta',

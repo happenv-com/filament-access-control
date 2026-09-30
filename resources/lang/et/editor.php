@@ -22,6 +22,11 @@ return [
         'heading' => 'Antud, siin kasutamata',
         'description' => 'Need õigused anti varem, kuid siin ei kontrolli neid miski. Saate need tagasi võtta, kuid uuesti anda neid ei saa.',
     ],
+    'role_picker' => [
+        'label' => 'Rollid',
+        'heading' => 'Maatriksis näidatavad rollid',
+        'indicator' => 'Näidatud rollid: :shown / :total',
+    ],
     'columns' => [
         'dependencies' => 'Sõltuvused',
         'granted' => 'Antud',
