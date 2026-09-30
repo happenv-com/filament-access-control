@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Filament\Support\Facades\FilamentAsset;
+use Filament\Tables\Columns\TextColumn;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Schemas\Components\PermissionMatrix;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
@@ -112,6 +113,11 @@ it('passes the schema component\'s options to the matrix', function (): void {
         ->toMatchArray(['rolesShownByDefault' => 5, 'rolePickerDeferred' => false])
         ->and(PermissionMatrix::make()->getComponentProperties())
         ->toMatchArray(['rolesShownByDefault' => null, 'rolePickerDeferred' => null]);
+});
+
+it('keeps the permission column at least 250 pixels wide', function (): void {
+    livewire(RolePermissionMatrix::class)
+        ->assertTableColumnExists('label', fn (TextColumn $column): bool => str_contains((string) $column->getExtraHeaderAttributeBag()->get('style'), 'min-width: 250px'));
 });
 
 it('marks the matrix for the stylesheet that keeps its first column and header in view', function (): void {
