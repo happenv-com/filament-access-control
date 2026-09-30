@@ -31,7 +31,7 @@ PermissionEditor::make()->deferred();
 
 ## Key features
 
-- **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role — with an optional "granted/total" summary per group. With dozens of roles, pick the ones shown in the role picker, while the permission column and the role header stay in view. See [The access control page](#the-access-control-page), [Many roles](#many-roles) and [Counters](#counters).
+- **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role — with an optional "granted/total" per role right beside each group's name, folded or open. With dozens of roles, pick the ones shown in the role picker, while the permission column and the role header stay in view. See [The access control page](#the-access-control-page), [Many roles](#many-roles) and [Counters](#counters).
 - **An editor for one role or one user.** The same table for a single record, as a schema component in a form, a tab or an infolist; for a user it also lists the roles that already grant each permission. `PermissionSelector` covers create forms as a plain form field. See [Editing one record](#editing-one-record) and [The form field](#the-form-field).
 - **Live or deferred saving.** Every click written at once, or staged and saved together with Discard and a warning before leaving; each save replays the operator's intent under a row lock, so two administrators do not overwrite each other. See [Live or deferred](#live-or-deferred).
 - **Why, not just whether.** Every cell shows what laravel-access-control resolves: in effect, implied, missing a requirement, blocked by a conflict, restricted, or withheld by a condition — the tooltip names the permissions involved. See [Rules and conditions](#rules-and-conditions).
@@ -159,6 +159,8 @@ FilamentAccessControlPlugin::make()
     ->cluster(SettingsCluster::class);
 ```
 
+Groups start folded, and a group's row opens and folds it. Only open groups are drawn, so a catalogue of hundreds of permissions stays a light page; *Expand all* and a search open what they show.
+
 The super-admin role is drawn fully granted and read-only. Pass `->accessControlPage(false)` to register no page, or `->accessControlPage(MyPage::class)` with a class extending `Pages\AccessControl` to replace it.
 
 #### Many roles
@@ -237,7 +239,7 @@ Leaving a page with staged changes asks for confirmation first.
 
 ### Counters
 
-Each group can show what every role holds of it — a first row of the group, one "granted/total" number per role column (`3/7`); a subject's tooltip then counts its verbs too. Off by default:
+Each group's own row can show what every role holds of it — one "granted/total" number per role column (`3/7`), beside the group's name, so a folded group still tells whether it is worth opening; a subject's tooltip then counts its verbs too. Off by default:
 
 ```php
 FilamentAccessControlPlugin::make()->counters();   // every screen of the plugin
