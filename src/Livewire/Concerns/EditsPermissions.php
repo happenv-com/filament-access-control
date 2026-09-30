@@ -696,6 +696,9 @@ trait EditsPermissions
     {
         return TextColumn::make('label')
             ->label(__('filament-access-control::editor.columns.permission'))
+            // Kept readable however many role columns crowd it — the table scrolls sideways instead.
+            // Inline, like the indentation below: no utility class for the app's theme to compile.
+            ->extraHeaderAttributes(['style' => 'min-width: 250px'])
             ->description(fn (array $record): ?string => $record['description'])
             ->weight(fn (array $record): ?FontWeight => match ($record['type']) {
                 'group' => FontWeight::Medium,
