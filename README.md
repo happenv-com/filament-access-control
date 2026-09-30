@@ -31,7 +31,7 @@ PermissionEditor::make()->deferred();
 
 ## Key features
 
-- **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role — with an optional "granted/total" summary per group. See [The access control page](#the-access-control-page) and [Counters](#counters).
+- **A roles × permissions matrix.** One Filament table: modules as collapsible groups, a row per subject and per verb, a column per role — with an optional "granted/total" summary per group. With dozens of roles, pick the ones shown from the column menu, while the permission column and the role header stay in view. See [The access control page](#the-access-control-page), [Many roles](#many-roles) and [Counters](#counters).
 - **An editor for one role or one user.** The same table for a single record, as a schema component in a form, a tab or an infolist; for a user it also lists the roles that already grant each permission. `PermissionSelector` covers create forms as a plain form field. See [Editing one record](#editing-one-record) and [The form field](#the-form-field).
 - **Live or deferred saving.** Every click written at once, or staged and saved together with Discard and a warning before leaving; each save replays the operator's intent under a row lock, so two administrators do not overwrite each other. See [Live or deferred](#live-or-deferred).
 - **Why, not just whether.** Every cell shows what laravel-access-control resolves: in effect, implied, missing a requirement, blocked by a conflict, restricted, or withheld by a condition — the tooltip names the permissions involved. See [Rules and conditions](#rules-and-conditions).
@@ -65,6 +65,8 @@ Add the package's views to your theme's CSS file, so Tailwind generates the clas
 ```css
 @source '../../../../vendor/happenv-com/filament-access-control/resources/**/*.blade.php';
 ```
+
+The matrix brings a small stylesheet of its own (see [Many roles](#many-roles)). `php artisan filament:assets` publishes it — Filament's `filament:upgrade`, which a Filament application runs after every `composer update`, does that already.
 
 ### Preparing your models
 
@@ -141,6 +143,7 @@ FilamentAccessControlPlugin::make()
     ->roleTitleAttribute('name')                          // or fn (Role $role): string
     ->modifyRolesQueryUsing(fn (Builder $query) => $query->orderBy('name'))
     ->superAdminRole(fn (Role $role): bool => $role->is_admin)
+    ->rolesShownByDefault(8)                               // see "Many roles" below
     ->modifyCreateRoleActionUsing(fn (CreateAction $action) => $action->schema([
         TextInput::make('name')->required(),
         TextInput::make('code')->required()->unique(),
@@ -152,6 +155,12 @@ FilamentAccessControlPlugin::make()
 ```
 
 The super-admin role is drawn fully granted and read-only. Pass `->accessControlPage(false)` to register no page, or `->accessControlPage(MyPage::class)` with a class extending `Pages\AccessControl` to replace it.
+
+#### Many roles
+
+Every role column can be hidden and shown again from the table's column menu, and Filament remembers the operator's choice for the session. `->rolesShownByDefault(8)` — on the plugin, or on a `PermissionMatrix` — shows the first eight roles in the roles query's order until the operator picks others; unset, every role shows. Fewer columns also make a lighter page: each column is a cell in every row, and each click redraws the table.
+
+However many are shown, the matrix keeps its bearings as it scrolls: the permission column stays at the start while the roles scroll past it, and the row of role names stays at the top while the permissions scroll under it. Filament's table has no sticky column or header, so this is the package's one stylesheet — plain CSS on Filament's classes, confined to the matrix.
 
 To put the matrix somewhere else — a page of your own, a tab of a resource — use the schema component:
 
