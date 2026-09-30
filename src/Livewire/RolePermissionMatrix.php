@@ -193,6 +193,17 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
         return in_array($roleKey, is_array($shown) ? array_map(strval(...), $shown) : $this->defaultShownRoles(), true);
     }
 
+    public function hidesAnyRole(): bool
+    {
+        foreach (array_keys($this->roleOptions()) as $key) {
+            if (! $this->isRoleShown((string) $key)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @return array<string, string>
      */
@@ -222,12 +233,12 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
      */
     protected function rolePickerIndicators(array $data): array
     {
-        $total = count($this->roleOptions());
-        $shown = count(array_filter(array_keys($this->roleOptions()), fn (int | string $key): bool => $this->isRoleShown((string) $key)));
-
-        if ($shown === $total) {
+        if (! $this->hidesAnyRole()) {
             return [];
         }
+
+        $total = count($this->roleOptions());
+        $shown = count(array_filter(array_keys($this->roleOptions()), fn (int | string $key): bool => $this->isRoleShown((string) $key)));
 
         return [
             Indicator::make(__('filament-access-control::editor.role_picker.indicator', ['shown' => $shown, 'total' => $total]))
