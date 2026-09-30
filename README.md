@@ -133,6 +133,11 @@ php artisan vendor:publish --tag="filament-access-control-translations"
 
 ### The access control page
 
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="art/screenshots/access-control-dark.png">
+    <img src="art/screenshots/access-control-light.png" alt="The Access control page: a column per role, a Work group open with its summary row, Dependencies badges and a tooltip naming the conflict that blocks a cell">
+</picture>
+
 With a role model, the plugin registers an **Access control** page: the matrix and an **Add role** action. Roles are deleted where your application manages them — its role resource, for instance. Configure it through the plugin:
 
 ```php
@@ -164,6 +169,11 @@ PermissionMatrix::make()->deferred();
 or the Livewire component directly: `@livewire(\Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix::class, ['deferred' => true])`.
 
 ### Editing one record
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="art/screenshots/user-editor-dark.png">
+    <img src="art/screenshots/user-editor-light.png" alt="A user's permission editor in deferred mode: Granted, From roles and In effect columns, a staged grant awaiting Save permissions, and a callout naming the permission withheld until the account enables MFA">
+</picture>
 
 `PermissionEditor` edits the permissions of the schema's record. Put it wherever the schema allows:
 
