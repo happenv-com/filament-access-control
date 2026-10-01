@@ -77,6 +77,16 @@ class AccessControl extends Page
     }
 
     /**
+     * The Livewire component drawn as the matrix — the plugin's `matrixComponent()`.
+     *
+     * @return class-string<RolePermissionMatrix>
+     */
+    public function getMatrixComponent(): string
+    {
+        return static::plugin()->getMatrixComponent();
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function getMatrixProperties(): array

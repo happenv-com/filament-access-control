@@ -13,6 +13,7 @@ use Filament\Facades\Filament;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
+use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Pages\AccessControl;
 use Happenv\FilamentAccessControl\Support\GrantGuard;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -54,6 +55,9 @@ class FilamentAccessControlPlugin implements Plugin
     protected bool | Closure $isSelfEditingPrevented = true;
 
     protected ?Closure $grantableBy = null;
+
+    /** @var class-string<RolePermissionMatrix> */
+    protected string $matrixComponent = RolePermissionMatrix::class;
 
     /**
      * What each operation of the role screens asks the gate — see {@see Support\Authorization} for
@@ -500,6 +504,35 @@ class FilamentAccessControlPlugin implements Plugin
     public function getAccessControlPage(): string
     {
         return $this->accessControlPage ?? AccessControl::class;
+    }
+
+    /**
+     * The Livewire component the access control page draws as its matrix — a class extending
+     * {@see RolePermissionMatrix}, to change more of it than the plugin exposes.
+     *
+     * @param  class-string  $component  a Livewire component extending {@see RolePermissionMatrix}
+     */
+    public function matrixComponent(string $component): static
+    {
+        if (! is_a($component, RolePermissionMatrix::class, true)) {
+            throw new InvalidArgumentException(sprintf(
+                'The matrix component [%s] must extend [%s].',
+                $component,
+                RolePermissionMatrix::class,
+            ));
+        }
+
+        $this->matrixComponent = $component;
+
+        return $this;
+    }
+
+    /**
+     * @return class-string<RolePermissionMatrix>
+     */
+    public function getMatrixComponent(): string
+    {
+        return $this->matrixComponent;
     }
 
     public function navigationGroup(string | UnitEnum | Closure | null $group): static
