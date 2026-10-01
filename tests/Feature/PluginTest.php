@@ -126,3 +126,10 @@ it('shows declaration problems unless told not to', function (): void {
         ->and(plugin()->declarationProblems(false)->showsDeclarationProblems())->toBeFalse()
         ->and(plugin()->declarationProblems(fn (): bool => true)->showsDeclarationProblems())->toBeTrue();
 });
+
+it('guards against escalation and self-editing unless told not to', function (): void {
+    expect(FilamentAccessControlPlugin::make()->isEscalationPrevented())->toBeTrue()
+        ->and(FilamentAccessControlPlugin::make()->isSelfEditingPrevented())->toBeTrue()
+        ->and(FilamentAccessControlPlugin::make()->preventEscalation(false)->isEscalationPrevented())->toBeFalse()
+        ->and(FilamentAccessControlPlugin::make()->preventSelfEditing(fn (): bool => false)->isSelfEditingPrevented())->toBeFalse();
+});
