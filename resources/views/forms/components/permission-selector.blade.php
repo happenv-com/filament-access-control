@@ -15,6 +15,11 @@
     // a read-only view whose accordion will not open is a read-only view of nothing.
     $isDisabled = $isDisabled();
 
+    // The guards, as a hint: the operator's own record is read-only, and a permission the operator
+    // does not hold can be neither ticked nor unticked. The field's validation is what enforces both.
+    $isOwnRecord = $isOwnRecord();
+    $isDisabled = $isDisabled || $isOwnRecord;
+
     $subjectHaystacks = [];
     $groupHaystacks = [];
 
@@ -143,6 +148,12 @@
                 {{ __('filament-access-control::permission-selector.offering_empty') }}
             </div>
         @else
+            @if ($isOwnRecord)
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    {{ __('filament-access-control::permission-selector.own_record_hint') }}
+                </p>
+            @endif
+
             <div class="max-w-md">
                 <x-filament::input.wrapper
                     prefix-icon="heroicon-m-magnifying-glass"
@@ -259,6 +270,7 @@
                             @foreach ($group->subjects as $subjectKey => $subject)
                                 @php
                                 $slugs = $subject->children->pluck('slug')->all();
+                                $changeableSlugs = array_values(array_filter($slugs, $mayChange));
                             @endphp
 
                                 <div
@@ -268,6 +280,7 @@
                                      every reactive evaluation, for every subject listed. --}}
                                     x-data="{
                                     slugs: @js($slugs),
+                                    changeable: @js($changeableSlugs),
                                     haystack: @js($subjectHaystacks[$group->slug][$subjectKey]),
                                 }"
                                     x-show="matches(haystack)"
@@ -293,9 +306,9 @@
 
                                         <button
                                             type="button"
-                                            @disabled ($isDisabled)
+                                            @disabled ($isDisabled || $changeableSlugs === [])
                                             class="shrink-0 rounded-lg p-1 transition hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-white/10"
-                                            x-on:click="toggleMany(slugs)"
+                                            x-on:click="toggleMany(changeable)"
                                             :title="@js(__('filament-access-control::permission-selector.toggle_subject'))"
                                         >
                                             <span
@@ -330,44 +343,54 @@
 
                                     <div class="grid gap-1 ps-4 pe-3 pb-2">
                                         @foreach ($subject->children as $permission)
-                                            <button
-                                                type="button"
+                                            @php
+                                                $notGrantable = ! $mayChange($permission->slug);
+                                            @endphp
+
+                                            {{-- The title sits on a wrapper: a disabled button takes no pointer
+                                                 events, so a title of its own would never show. --}}
+                                            <div
                                                 wire:key="perm.{{ $permission->slug }}"
-                                                @disabled ($isDisabled)
-                                                class="group flex items-center gap-2 rounded-lg py-1 ps-1 pe-2 text-start transition hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-white/5"
-                                                x-on:click="toggle(@js($permission->slug))"
-                                                x-bind:aria-pressed="has(@js($permission->slug))"
+                                                :title="@js($notGrantable && ! $isDisabled ? __('filament-access-control::permission-selector.not_grantable') : null)"
                                             >
-                                                <span
-                                                    x-show="has(@js($permission->slug))"
-                                                    x-cloak
+                                                <button
+                                                    type="button"
+                                                    @disabled ($isDisabled || $notGrantable)
+                                                    class="group flex w-full items-center gap-2 rounded-lg py-1 ps-1 pe-2 text-start transition hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-white/5"
+                                                    x-on:click="toggle(@js($permission->slug))"
+                                                    x-bind:aria-pressed="has(@js($permission->slug))"
                                                 >
-                                                    @svg ('heroicon-s-check-circle', 'h-5 w-5 text-success-500 dark:text-success-400/80')
-                                                </span>
-
-                                                <span
-                                                    x-show="! has(@js($permission->slug))"
-                                                    x-cloak
-                                                >
-                                                    @svg ('heroicon-s-x-circle', 'h-5 w-5 text-danger-400 dark:text-danger-400/60')
-                                                </span>
-
-                                                <span class="grid gap-0.5">
                                                     <span
-                                                        class="text-sm whitespace-normal text-gray-700 dark:text-gray-300"
+                                                        x-show="has(@js($permission->slug))"
+                                                        x-cloak
                                                     >
-                                                        {{ $getActionLabel($permission) }}
+                                                        @svg ('heroicon-s-check-circle', 'h-5 w-5 text-success-500 dark:text-success-400/80')
                                                     </span>
 
-                                                    @if ($permission->description)
+                                                    <span
+                                                        x-show="! has(@js($permission->slug))"
+                                                        x-cloak
+                                                    >
+                                                        @svg ('heroicon-s-x-circle', 'h-5 w-5 text-danger-400 dark:text-danger-400/60')
+                                                    </span>
+
+                                                    <span class="grid gap-0.5">
                                                         <span
-                                                            class="text-xs whitespace-normal text-gray-500 dark:text-gray-400"
+                                                            class="text-sm whitespace-normal text-gray-700 dark:text-gray-300"
                                                         >
-                                                            {{ $permission->description }}
+                                                            {{ $getActionLabel($permission) }}
                                                         </span>
-                                                    @endif
-                                                </span>
-                                            </button>
+
+                                                        @if ($permission->description)
+                                                            <span
+                                                                class="text-xs whitespace-normal text-gray-500 dark:text-gray-400"
+                                                            >
+                                                                {{ $permission->description }}
+                                                            </span>
+                                                        @endif
+                                                    </span>
+                                                </button>
+                                            </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -425,7 +448,7 @@
                                  travels the identical path a catalogue row travels. `x-model` on a
                                  checkbox over an array adds and removes `value` for us. --}}
                             <x-filament::input.checkbox
-                                :disabled="$isDisabled"
+                                :disabled="$isDisabled || ! $mayChange($heldSlug)"
                                 x-model="granted"
                                 :value="$heldSlug"
                                 :checked="in_array($heldSlug, $grantedNow, true)"
