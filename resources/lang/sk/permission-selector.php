@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'Povolené oprávnenia v tejto skupine',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'Nie sú tu žiadne oprávnenia na udelenie.',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => 'Hľadať oprávnenie, zdroj alebo modul…',
     'search_empty' => 'Vyhľadávaniu nezodpovedá žiadne oprávnenie.',
     'toggle_subject' => 'Prepnúť všetky oprávnenia tohto zdroja',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => 'Tieto oprávnenia tu nemožno udeliť: :permissions.',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => 'Neznáme oprávnenia: :permissions.',
     ],
 ];

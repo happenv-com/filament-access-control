@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'Šioje grupėje įjungti leidimai',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'Čia nėra leidimų, kuriuos būtų galima suteikti.',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => 'Ieškoti leidimo, resurso ar modulio…',
     'search_empty' => 'Nė vienas leidimas neatitinka paieškos.',
     'toggle_subject' => 'Įjungti arba išjungti visus šio resurso leidimus',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => 'Šių leidimų čia suteikti negalima: :permissions.',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => 'Nežinomi leidimai: :permissions.',
     ],
 ];

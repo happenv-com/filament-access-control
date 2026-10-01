@@ -162,7 +162,7 @@ FilamentAccessControlPlugin::make()
 
 Groups start folded, and a group's row opens and folds it. Only open groups are drawn, so a catalogue of hundreds of permissions stays a light page; *Expand all* and a search open what they show.
 
-The super-admin role is drawn fully granted and read-only. Pass `->accessControlPage(false)` to register no page, or `->accessControlPage(MyPage::class)` with a class extending `Pages\AccessControl` to replace it. To keep the page and change the grid, extend `Livewire\RolePermissionMatrix` and name your class: `->matrixComponent(MyMatrix::class)` — the page draws it, and so does `PermissionMatrix::make()`.
+The super-admin role is drawn fully granted and read-only. Pass `->accessControlPage(false)` to register no page, or `->accessControlPage(MyPage::class)` with a class extending `Pages\AccessControl` to replace it. To keep the page and change the grid, extend `Livewire\RolePermissionMatrix` and name your class: `->matrixComponent(MyMatrix::class)` — the page draws it, and so does `PermissionMatrix::make()`. To refuse more per holder than the package does, override `refusalFor(string $holderKey): ?string` and return the reason, or `null` to allow: a click goes through `mutableHolder()`, which asks it, and a deferred **Save permissions** asks it directly — overriding `mutableHolder()` alone would not stop a deferred save.
 
 #### Many roles
 
@@ -291,11 +291,13 @@ FilamentAccessControlPlugin::make()->preventEscalation(false);
 
 `grantableBy()` applies to everybody but a super-admin. Its closure receives the operator as `$operator`, or by type (`Authenticatable` or your user class).
 
-**Self-editing.** An operator does not change the permissions of a role they hold, nor their own direct permissions: that role's column on the access control page, and the editor of their own record or role, are read-only for them, and say so. Even a super-admin cannot change an ordinary role they also hold.
+**Self-editing.** An operator does not change the permissions of a role they hold, nor their own direct permissions: that role's column on the access control page, and the editor of their own record or role, are read-only for them, and say so. Even a super-admin cannot change an ordinary role they also hold. `PermissionSelector` keeps the same line: on the operator's own record, or a role they hold, it is read-only and a changed list fails validation with *You cannot change your own permissions or those of a role you hold.*
 
 ```php
 FilamentAccessControlPlugin::make()->preventSelfEditing(false);
 ```
+
+Both guards read the plugin through `FilamentAccessControlPlugin::current()`, which is the plugin registered on the current panel. On a panel without the plugin they apply with the defaults — no `superAdminRole`, no `grantableBy()` — so register the plugin on that panel to configure them.
 
 A deferred screen asks again at **Save permissions**: changes it may no longer make — the operator lost the permission, came to hold the role, or the role is gone — are discarded with a notification saying why, instead of staying staged.
 

@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'このグループで有効な権限',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'ここで付与できる権限はありません。',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => '権限、リソース、モジュールを検索…',
     'search_empty' => '検索に一致する権限はありません。',
     'toggle_subject' => 'このリソースのすべての権限を切り替え',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => '次の権限はここでは付与できません：:permissions。',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => '不明な権限：:permissions。',
     ],
 ];

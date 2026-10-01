@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'Izin yang diaktifkan dalam grup ini',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'Tidak ada izin yang dapat diberikan di sini.',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => 'Cari izin, sumber daya, atau modul…',
     'search_empty' => 'Tidak ada izin yang cocok dengan pencarian.',
     'toggle_subject' => 'Aktifkan/nonaktifkan semua izin sumber daya ini',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => 'Izin berikut tidak dapat diberikan di sini: :permissions.',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => 'Izin tidak dikenal: :permissions.',
     ],
 ];

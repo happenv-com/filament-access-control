@@ -25,8 +25,9 @@ use Illuminate\Support\Collection;
  *   - SELF-EDITING: whether the holder whose permissions change is the operator, or a role the
  *     operator holds. Answered as a fact; the screens ask the plugin whether it matters.
  *
- * Fails closed: nobody signed in, or an operator the library cannot ask (not `AuthControllable`),
- * may change nothing while the guard is on.
+ * The escalation set fails closed: nobody signed in, or an operator the library cannot ask (not
+ * `AuthControllable`), may change nothing while the guard is on. The self-editing question does not:
+ * for an operator that is not an Eloquent model `isOwnHolder()` answers false, as it cannot compare.
  */
 class GrantGuard
 {

@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'Tässä ryhmässä käytössä olevat käyttöoikeudet',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'Täällä ei ole myönnettäviä käyttöoikeuksia.',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => 'Hae käyttöoikeutta, resurssia tai moduulia…',
     'search_empty' => 'Mikään käyttöoikeus ei vastaa hakua.',
     'toggle_subject' => 'Kytke kaikki tämän resurssin käyttöoikeudet päälle tai pois',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => 'Näitä käyttöoikeuksia ei voi myöntää täällä: :permissions.',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => 'Tuntemattomat käyttöoikeudet: :permissions.',
     ],
 ];

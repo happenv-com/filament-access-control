@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'Kebenaran yang didayakan dalam kumpulan ini',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'Tiada kebenaran untuk diberikan di sini.',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => 'Cari kebenaran, sumber atau modul…',
     'search_empty' => 'Tiada kebenaran yang sepadan dengan carian.',
     'toggle_subject' => 'Togol semua kebenaran bagi sumber ini',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => 'Kebenaran ini tidak boleh diberikan di sini: :permissions.',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => 'Kebenaran tidak diketahui: :permissions.',
     ],
 ];

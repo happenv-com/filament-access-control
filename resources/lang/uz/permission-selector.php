@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'Ushbu guruhda yoqilgan ruxsatlar',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'Bu yerda beriladigan ruxsatlar yo\'q.',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => 'Ruxsat, resurs yoki modulni qidirish…',
     'search_empty' => 'Qidiruvga mos ruxsat topilmadi.',
     'toggle_subject' => 'Ushbu resursning barcha ruxsatlarini yoqish/o\'chirish',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => 'Bu ruxsatlarni bu yerda berib bo\'lmaydi: :permissions.',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => 'Noma\'lum ruxsatlar: :permissions.',
     ],
 ];

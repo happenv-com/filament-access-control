@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'এই গ্রুপে চালু থাকা অনুমতি',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'এখানে দেওয়ার মতো কোনো অনুমতি নেই।',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => 'অনুমতি, রিসোর্স বা মডিউল খুঁজুন…',
     'search_empty' => 'অনুসন্ধানের সাথে কোনো অনুমতি মেলেনি।',
     'toggle_subject' => 'এই রিসোর্সের সব অনুমতি টগল করুন',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => 'এই অনুমতিগুলো এখানে দেওয়া যাবে না: :permissions।',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => 'অজানা অনুমতি: :permissions।',
     ],
 ];

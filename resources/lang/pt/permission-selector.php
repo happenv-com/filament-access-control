@@ -6,7 +6,7 @@ return [
     'group_granted_count' => 'Permissões ativadas neste grupo',
     'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it.',
     'offering_empty' => 'Não existem permissões para atribuir aqui.',
-    'own_record_hint' => 'These are your own permissions — someone else has to change them.',
+    'own_record_hint' => 'These are your own permissions, or those of a role you hold — someone else has to change them.',
     'search' => 'Pesquisar uma permissão, recurso ou módulo…',
     'search_empty' => 'Nenhuma permissão corresponde à pesquisa.',
     'toggle_subject' => 'Ativar ou desativar todas as permissões deste recurso',
@@ -17,7 +17,7 @@ return [
     'validation' => [
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself: :permissions.',
         'not_offered' => 'Estas permissões não podem ser concedidas aqui: :permissions.',
-        'own_record' => 'You cannot change your own permissions.',
+        'own_record' => 'You cannot change your own permissions or those of a role you hold.',
         'unknown' => 'Permissões desconhecidas: :permissions.',
     ],
 ];

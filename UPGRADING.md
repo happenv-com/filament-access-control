@@ -7,7 +7,11 @@ Every major version gets a section here — and a minor one that changes a defau
 3.4 switches on two guards (see the README's *Who may change what*). Nothing in your code has to change for the package to work, but what an operator may do on the permission screens does:
 
 - **Escalation guard.** An operator grants and revokes only the permissions they hold in effect. A cell outside that set is switched off with a tooltip, a refused click or save says why, and `PermissionSelector` reports the slugs it refuses as a validation error. An operator holding the super-admin role is not narrowed.
-- **Self-editing guard.** An operator no longer changes the permissions of a role they hold, nor their own direct permissions.
+  - **Who loses the ability.** An operator whose "admin" comes from `Gate::before()` and who does not hold the configured `superAdminRole()` (none by default) is narrowed to what they hold in effect — read through `AccessControl::effectivePermissions()` / `hasPermissionTo()`, not through the Gate — so every cell may turn grey. Configure `superAdminRole()` or `grantableBy()`.
+  - The grantable set can be smaller than what the operator stores: conflicts, unmet `#[Requires]`, unmet conditions (e.g. `#[RequiresMFA]`) and runtime restrictions take permissions out of it.
+  - A restricted permission can be revoked only by a super-admin.
+- **Self-editing guard.** An operator no longer changes the permissions of a role they hold, nor their own direct permissions. The guard also keeps the operator's own record, and the roles they hold, read-only in `PermissionSelector`'s form field (validation error `own_record`).
+- Both guards read `FilamentAccessControlPlugin::current()`; on a panel without the plugin registered they apply with the defaults (no `superAdminRole`, no `grantableBy()`) — register the plugin on that panel to configure them.
 - The operator must be `AuthControllable` (laravel-access-control's `HasPermissions` / `HasRoles`) for the escalation guard to know what they hold; otherwise they may change nothing. Give your user model the contract, or tell the plugin what each operator may hand out with `grantableBy()`.
 - A deferred screen's **Save permissions** discards — with a notification — the staged changes it may not make, instead of keeping them staged; a save left with nothing to write no longer reports one.
 - A subject's click (grant or clear a whole resource) acts on the permissions the operator may change, and decides between granting and clearing by those alone.
