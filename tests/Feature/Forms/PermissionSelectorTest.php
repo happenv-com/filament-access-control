@@ -197,6 +197,16 @@ describe('the self-editing guard', function (): void {
     });
 });
 
+it('returns the held list unchanged on the operator\'s own record, whatever a forged state says', function (): void {
+    $operator = signInOperator([ProductPermission::View->value]);
+
+    $field = livewire(DirectPermissionsForm::class, ['record' => $operator, 'narrowed' => false])->instance()->form->getComponent('permissions');
+
+    $merged = (fn (mixed $state): array => $this->merge($state))->call($field, [ProductPermission::Create->value]);
+
+    expect($merged)->toEqualCanonicalizing($operator->getPermissions()->all());
+});
+
 it('never writes past the guards, even when nothing validated the list', function (): void {
     signInOperator([ProductPermission::View->value]);
 

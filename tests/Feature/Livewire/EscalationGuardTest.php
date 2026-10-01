@@ -125,6 +125,23 @@ describe('deferred', function (): void {
         expect($this->editor->fresh()->getPermissions()->all())->toBe([ProductPermission::View->value]);
     });
 
+    it('discards at save a revoke of what the operator no longer holds, keeping the permission', function (): void {
+        $this->operator->update(['permissions' => [...$this->operator->getPermissions(), ProductPermission::Create->value]]);
+        $this->editor->update(['permissions' => [ProductPermission::Create->value]]);
+
+        $component = livewire(RolePermissionMatrix::class, ['deferred' => true])
+            ->call('toggle', $this->key, ProductPermission::Create->value)
+            ->assertSet('changes.' . $this->key . '.revoke', [ProductPermission::Create->value]);
+
+        $this->operator->update(['permissions' => $this->operator->getPermissions()->reject(ProductPermission::Create->value)->values()->all()]);
+
+        $component->call('save')
+            ->assertNotified(__('filament-access-control::editor.notifications.not_grantable_discarded', ['permissions' => 'Create products']))
+            ->assertSet('changes', []);
+
+        expect($this->editor->fresh()->getPermissions()->all())->toBe([ProductPermission::Create->value]);
+    });
+
     it('reports no save when nothing staged may be saved any more', function (): void {
         $this->operator->update(['permissions' => [...$this->operator->getPermissions(), ProductPermission::Create->value]]);
 
