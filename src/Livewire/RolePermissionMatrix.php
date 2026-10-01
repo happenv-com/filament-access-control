@@ -39,7 +39,7 @@ use Livewire\Component;
  * enum — users, warehouses, orders), one column per role, and a clickable icon in every cell. A
  * subject's row grants or clears its whole verb set at once.
  *
- * @property-read Collection<array-key, Model&HasEditablePermissions> $holders
+ * @property-read Collection<array-key, Model> $holders
  * @property-read Collection<string, PermissionGroupDto> $groups
  * @property-read array<array-key, array<string, bool>> $grants
  * @property-read array<string, bool> $offeredSlugs
@@ -143,7 +143,11 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
                 $this->dependenciesColumn(),
                 ...$this->holders
                     ->map(fn (Model $role, int | string $roleKey): TextColumn => $this->holderColumn((string) $roleKey, $this->getHolderTitle($role))
-                        ->headerTooltip($this->isHolderLocked($role) ? __('filament-access-control::editor.super_admin_hint') : null)
+                        ->headerTooltip(match (true) {
+                            $this->isHolderLocked($role) => __('filament-access-control::editor.super_admin_hint'),
+                            $this->isOwnHolderGuarded($role) => __('filament-access-control::editor.own_role_hint'),
+                            default => null,
+                        })
                         ->hidden(fn (): bool => ! $this->isRoleShown((string) $roleKey)))
                     ->values()
                     ->all(),
@@ -260,11 +264,13 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
     }
 
     /**
-     * @return Collection<array-key, Model&HasEditablePermissions>
+     * Every role — each one {@see HasEditablePermissions}, as the plugin's role model must be.
+     *
+     * @return Collection<array-key, Model>
      */
     protected function getHolders(): Collection
     {
-        /** @var Collection<array-key, Model&HasEditablePermissions> $roles */
+        /** @var Collection<array-key, Model> $roles */
         $roles = $this->plugin()->getRolesQuery()->get()
             ->keyBy(fn (Model $role): string => $this->holderKey($role));
 

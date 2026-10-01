@@ -37,6 +37,7 @@ PermissionEditor::make()->deferred();
 - **Why, not just whether.** Every cell shows what laravel-access-control resolves: in effect, implied, missing a requirement, blocked by a conflict, restricted, or withheld by a condition — the tooltip names the permissions involved. See [Rules and conditions](#rules-and-conditions).
 - **`#[RequiresMFA]`.** Withhold a permission from any account without multi-factor authentication; the user editor says what it withholds. See [Rules and conditions](#rules-and-conditions).
 - **Your authorization, asked every time.** Laravel abilities, policies or access-control permission enums decide who may see, create and change roles; a voter's refusal is shown in the operator's language. See [Authorization](#authorization).
+- **No way to more access.** An operator grants and revokes only the permissions they hold in effect, and never changes their own permissions or a role they hold — both on by default, both checked on the server at every write. See [Who may change what](#who-may-change-what).
 - **Surfaces.** Narrow a screen to what a surface offers (an API key's screen, say); grants held outside it stay listed and revocable. See [Surfaces](#surfaces).
 - **Tested.** Covered by a Pest suite on every supported version combination.
 
@@ -161,7 +162,7 @@ FilamentAccessControlPlugin::make()
 
 Groups start folded, and a group's row opens and folds it. Only open groups are drawn, so a catalogue of hundreds of permissions stays a light page; *Expand all* and a search open what they show.
 
-The super-admin role is drawn fully granted and read-only. Pass `->accessControlPage(false)` to register no page, or `->accessControlPage(MyPage::class)` with a class extending `Pages\AccessControl` to replace it.
+The super-admin role is drawn fully granted and read-only. Pass `->accessControlPage(false)` to register no page, or `->accessControlPage(MyPage::class)` with a class extending `Pages\AccessControl` to replace it. To keep the page and change the grid, extend `Livewire\RolePermissionMatrix` and name your class: `->matrixComponent(MyMatrix::class)` — the page draws it, and so does `PermissionMatrix::make()`. To refuse more per holder than the package does, override `refusalFor(string $holderKey): ?string` and return the reason, or `null` to allow: a click goes through `mutableHolder()`, which asks it, and a deferred **Save permissions** asks it directly — overriding `mutableHolder()` alone would not stop a deferred save.
 
 #### Many roles
 
@@ -222,6 +223,12 @@ The editor saves on its own, independently of the form around it — the form's 
 
 For a user, the **From roles** column lists the roles that already grant each permission, and a super-admin role is called out above the table. Hide the column with `->showInheritedPermissions(false)`.
 
+An application that grants permissions through roles only has nothing to show in a user's **Granted** column: `->showDirectGrants(false)` hides it, and the editor then shows what the user's roles grant and what is **In effect** — and changes nothing. Shown read-only (`->disabled()`, or on a view page), the editor also takes an account that does not implement `HasEditablePermissions`, as long as laravel-access-control can answer for it (`AuthControllable`, usually with `HasRoles`):
+
+```php
+PermissionEditor::make()->disabled()->showDirectGrants(false);
+```
+
 Edit a record other than the schema's own through the component's data: `PermissionEditor::make()->data(fn (User $record) => ['record' => $record->apiKey])`.
 
 ### Live or deferred
@@ -259,7 +266,40 @@ Every change asks the gate, as the panel's user, with the record being changed:
 | Add role                    | `roleAbilities(create:)` with the role model class      | `create`    |
 | `PermissionEditor` (a user) | `->ability(...)` with the record                        | `update`    |
 
-An ability can be a Laravel ability name (a policy method as often as not), a laravel-access-control permission enum — asked with the record only, as voters expect — or a closure receiving `record`, `model` and `user`. `null` switches the check off. When a voter refuses, its own message reaches the operator; the library's generic `Unauthorized for <slug>` is translated into the permission's name.
+An ability can be a Laravel ability name (a policy method as often as not) or a laravel-access-control permission enum — asked with the record only, as voters expect. In `roleAbilities()` it can also be a closure that decides by itself: it receives `record`, `model` and `user` and returns a boolean or a `Response`. `null` switches the check off. When a voter refuses, its own message reaches the operator; the library's generic `Unauthorized for <slug>` is translated into the permission's name.
+
+`PermissionEditor::ability()` takes a closure too, but there the closure only **picks** the ability: it is evaluated when the component renders, with the schema's usual parameters (`record`, …), and must return an ability name, a permission enum or `null`. It is not a verdict — never return a boolean: `false` means "the default ability", not "deny". To decide in code, register a gate or a policy method and return its name:
+
+```php
+PermissionEditor::make()->ability(fn (User $record): string => $record->is_api_key ? 'manageApiKey' : 'update');
+```
+
+### Who may change what
+
+Two guards keep the permission screens from becoming a way to more access. Both are on by default, and both are checked on the server at every write — a cell's click, a subject's click, **Save permissions**, `PermissionSelector`'s validation; the cells only hint at them.
+
+**Escalation.** An operator grants and revokes only the permissions they hold *in effect*: what laravel-access-control's `AccessControl::effectivePermissions()` lets through for them — permissions implied by what they hold included, runtime restrictions and conditions such as `#[RequiresMFA]` applied. Revoking counts too. Every other cell is switched off, with a tooltip saying why, and a subject's click changes only what the operator may change. An operator holding the super-admin role is not narrowed. The operator is the panel's user; nobody signed in, or a user that is not `AuthControllable`, may change nothing while the guard is on.
+
+```php
+// Instead of what the operator holds in effect — slugs or permission enums; null for anything:
+FilamentAccessControlPlugin::make()
+    ->grantableBy(fn (User $operator): ?array => $operator->is_support ? [OrderPermission::Refund] : null);
+
+// Or switch the guard off:
+FilamentAccessControlPlugin::make()->preventEscalation(false);
+```
+
+`grantableBy()` applies to everybody but a super-admin. Its closure receives the operator as `$operator`, or by type (`Authenticatable` or your user class).
+
+**Self-editing.** An operator does not change the permissions of a role they hold, nor their own direct permissions: that role's column on the access control page, and the editor of their own record or role, are read-only for them, and say so. Even a super-admin cannot change an ordinary role they also hold. `PermissionSelector` keeps the same line: on the operator's own record, or a role they hold, it is read-only and a changed list fails validation with *You cannot change your own permissions or those of a role you hold.*
+
+```php
+FilamentAccessControlPlugin::make()->preventSelfEditing(false);
+```
+
+Both guards read the plugin through `FilamentAccessControlPlugin::current()`, which is the plugin registered on the current panel. On a panel without the plugin they apply with the defaults — no `superAdminRole`, no `grantableBy()` — so register the plugin on that panel to configure them.
+
+A deferred screen asks again at **Save permissions**: changes it may no longer make — the operator lost the permission, came to hold the role, or the role is gone — are discarded with a notification saying why, instead of staying staged.
 
 ### Surfaces
 

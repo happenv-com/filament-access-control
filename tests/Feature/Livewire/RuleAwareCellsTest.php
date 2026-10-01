@@ -19,6 +19,10 @@ beforeEach(function (): void {
     registerPermissions(GalleryPermission::class);
     signInOperator();
 
+    // What a cell SHOWS, not who may change it: an operator holding both ends of the gallery's
+    // conflict could hand out neither in effect. The guard has tests of its own.
+    plugin()->preventEscalation(false);
+
     $this->admin = createRole(Role::ADMINISTRATOR, name: 'Administrator');
     $this->editor = createRole('editor', name: 'Editor');
     $this->key = holderKey($this->editor);

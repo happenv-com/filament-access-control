@@ -6,6 +6,7 @@ use Filament\Actions\Testing\TestAction;
 use Filament\Facades\Filament;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Pages\AccessControl;
+use Happenv\FilamentAccessControl\Tests\Fixtures\Livewire\CustomRolePermissionMatrix;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\RolePermission;
 
@@ -79,4 +80,16 @@ it('takes its navigation from the plugin', function (): void {
     plugin()->navigationGroup(null)->navigationIcon('heroicon-o-shield-check')->navigationSort(null)->navigationLabel(null);
 
     expect(AccessControl::getNavigationLabel())->toBe('Access control');
+});
+
+it('draws the matrix component the plugin names', function (): void {
+    signInOperator([RolePermission::View->value]);
+
+    plugin()->matrixComponent(CustomRolePermissionMatrix::class);
+
+    expect(livewire(AccessControl::class)->instance()->getMatrixComponent())->toBe(CustomRolePermissionMatrix::class);
+
+    get(AccessControl::getUrl(panel: 'admin'))
+        ->assertOk()
+        ->assertSeeLivewire(CustomRolePermissionMatrix::class);
 });

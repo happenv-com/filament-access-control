@@ -461,19 +461,39 @@ describe('refusals', function (): void {
             ->and($component->instance()->canEditHolder(holderKey($this->editor)))->toBeFalse();
     });
 
-    it('asks the gate again at save', function (): void {
+    it('asks the gate again at save, and discards what it refuses', function (): void {
         $component = livewire(RolePermissionMatrix::class, ['deferred' => true])
             ->call('toggle', holderKey($this->editor), ProductPermission::View->value);
 
         plugin()->roleAbilities(update: fn (): bool => false);
 
         $component->call('save')
-            ->assertNotified(__('filament-access-control::editor.notifications.unauthorized'))
-            ->assertSet('changes', [holderKey($this->editor) => ['grant' => [ProductPermission::View->value], 'revoke' => []]]);
+            ->assertNotified(__('filament-access-control::editor.notifications.discarded', [
+                'holder' => 'Editor',
+                'reason' => __('filament-access-control::editor.notifications.unauthorized'),
+            ]))
+            ->assertSet('changes', [])
+            ->assertActionDisabled(TestAction::make('saveChanges')->table());
 
         plugin()->roleAbilities(update: RolePermission::Update);
 
         expect($this->editor->fresh()->getPermissions())->toBeEmpty();
+    });
+
+    it('discards at save the changes to a role deleted in the meantime, naming it by its key', function (): void {
+        $component = livewire(RolePermissionMatrix::class, ['deferred' => true])
+            ->call('toggle', holderKey($this->editor), ProductPermission::View->value);
+
+        $key = holderKey($this->editor);
+        $this->editor->delete();
+
+        $component->call('save')
+            ->assertNotified(__('filament-access-control::editor.notifications.discarded', [
+                'holder' => $key,
+                'reason' => __('filament-access-control::editor.notifications.no_holder'),
+            ]))
+            ->assertNotNotified(__('filament-access-control::editor.notifications.saved'))
+            ->assertSet('changes', []);
     });
 });
 

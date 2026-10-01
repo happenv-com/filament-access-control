@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Schemas\Components\PermissionMatrix;
+use Happenv\FilamentAccessControl\Tests\Fixtures\Livewire\CustomRolePermissionMatrix;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\Surface;
 
 covers(PermissionMatrix::class);
@@ -33,4 +34,11 @@ it('hands the matrix its configuration and no record', function (): void {
             'surface' => null,
             'lazy' => true,
         ]);
+});
+
+it('draws the plugin\'s matrix component unless given another', function (): void {
+    plugin()->matrixComponent(CustomRolePermissionMatrix::class);
+
+    expect(PermissionMatrix::make()->getComponent())->toBe(CustomRolePermissionMatrix::class)
+        ->and(PermissionMatrix::make(RolePermissionMatrix::class)->getComponent())->toBe(RolePermissionMatrix::class);
 });

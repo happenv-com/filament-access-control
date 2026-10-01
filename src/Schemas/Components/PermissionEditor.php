@@ -9,6 +9,7 @@ use Closure;
 use Filament\Schemas\Components\Livewire;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\Livewire\RecordPermissions;
+use Happenv\LaravelAccessControl\Contracts\AuthControllable;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,6 +36,8 @@ class PermissionEditor extends Livewire
 
     protected bool | Closure $showsInheritedPermissions = true;
 
+    protected bool | Closure $showsDirectGrants = true;
+
     /**
      * @param  array<string, mixed>|Closure  $data
      */
@@ -49,7 +52,7 @@ class PermissionEditor extends Livewire
 
         $this->columnSpanFull();
 
-        $this->hidden(static fn (PermissionEditor $component): bool => ! $component->hasEditableRecord());
+        $this->hidden(static fn (PermissionEditor $component): bool => ! $component->hasPermissionsRecord());
     }
 
     /**
@@ -139,6 +142,23 @@ class PermissionEditor extends Livewire
     }
 
     /**
+     * For a user: show the column of the permissions it holds directly — on by default. Off, for an
+     * application that grants through roles only, the editor shows what the user's roles grant and
+     * what is in effect, and changes nothing.
+     */
+    public function showDirectGrants(bool | Closure $condition = true): static
+    {
+        $this->showsDirectGrants = $condition;
+
+        return $this;
+    }
+
+    public function showsDirectGrants(): bool
+    {
+        return (bool) $this->evaluate($this->showsDirectGrants);
+    }
+
+    /**
      * The record whose permissions are edited: the schema's own, unless `data` names another.
      */
     public function getPermissionsRecord(): ?Model
@@ -156,6 +176,21 @@ class PermissionEditor extends Livewire
     }
 
     /**
+     * Whether there is a record to show: one the editor can write to — or, read-only, any saved
+     * account laravel-access-control can answer for.
+     */
+    public function hasPermissionsRecord(): bool
+    {
+        if ($this->hasEditableRecord()) {
+            return true;
+        }
+
+        $record = $this->getPermissionsRecord();
+
+        return $record instanceof AuthControllable && $record->exists && $this->isDisabled();
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function getComponentProperties(): array
@@ -167,6 +202,7 @@ class PermissionEditor extends Livewire
             'ability' => $this->getAbility(),
             'readOnly' => $this->isDisabled(),
             'showInherited' => $this->showsInheritedPermissions(),
+            'showDirectGrants' => $this->showsDirectGrants(),
             ...parent::getComponentProperties(),
         ];
     }

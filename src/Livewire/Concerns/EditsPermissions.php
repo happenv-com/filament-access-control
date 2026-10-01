@@ -7,6 +7,7 @@ namespace Happenv\FilamentAccessControl\Livewire\Concerns;
 use BackedEnum;
 use Closure;
 use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Support\ArrayRecord;
 use Filament\Support\Enums\FontWeight;
@@ -20,6 +21,7 @@ use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Support\Authorization;
 use Happenv\FilamentAccessControl\Support\DeclarationProblems;
 use Happenv\FilamentAccessControl\Support\DependencyBadge;
+use Happenv\FilamentAccessControl\Support\GrantGuard;
 use Happenv\FilamentAccessControl\Support\PermissionCell;
 use Happenv\FilamentAccessControl\Support\PermissionCellState;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
@@ -33,6 +35,8 @@ use Happenv\LaravelAccessControl\Dto\PermissionResolutionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionSubjectDto;
 use Happenv\LaravelAccessControl\PermissionResolver;
 use Happenv\LaravelAccessControl\PermissionRestrictions;
+use Happenv\LaravelAccessControl\Traits\HasPermissions;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -108,6 +112,16 @@ trait EditsPermissions
     protected array $editableHolders = [];
 
     /**
+     * What this operator may grant and revoke, slug => true, for the life of one request — `null`
+     * for anything. Asked of {@see GrantGuard} once, since every cell asks.
+     *
+     * @var array<string, bool>|null
+     */
+    protected ?array $grantableSlugs = null;
+
+    protected bool $grantableSlugsResolved = false;
+
+    /**
      * One resolution per holder for the life of one request: the library resolves the rules over a
      * stored state once and answers every permission from it. Forgotten whenever what the screen
      * treats as stored changes — a click staged, a write, a discard.
@@ -135,9 +149,10 @@ trait EditsPermissions
     protected array $dependencyBadgeCache = [];
 
     /**
-     * The records this screen edits, keyed by {@see self::holderKey()}.
+     * The records this screen shows, keyed by {@see self::holderKey()} — each one
+     * {@see HasEditablePermissions} wherever the screen writes.
      *
-     * @return Collection<array-key, Model&HasEditablePermissions>
+     * @return Collection<array-key, Model>
      */
     abstract protected function getHolders(): Collection;
 
@@ -162,7 +177,7 @@ trait EditsPermissions
     }
 
     /**
-     * @return Collection<array-key, Model&HasEditablePermissions>
+     * @return Collection<array-key, Model>
      */
     #[Computed]
     public function holders(): Collection
@@ -188,10 +203,29 @@ trait EditsPermissions
     public function grants(): array
     {
         return $this->holders
-            ->map(fn (HasEditablePermissions $holder): array => $holder->getPermissions()
+            ->map(fn (Model $holder): array => $this->storedPermissionsOf($holder)
                 ->mapWithKeys(fn (string $slug): array => [$slug => true])
                 ->all())
             ->all();
+    }
+
+    /**
+     * What a holder stores directly: its list when the screen may rewrite it, otherwise — a record
+     * shown read-only — what laravel-access-control's `HasPermissions` hands over, or nothing.
+     *
+     * @return Collection<int, string>
+     */
+    protected function storedPermissionsOf(Model $holder): Collection
+    {
+        if ($holder instanceof HasEditablePermissions) {
+            return $holder->getPermissions();
+        }
+
+        if (isset(class_uses_recursive($holder)[HasPermissions::class]) && method_exists($holder, 'getGrants')) {
+            return (new Collection($holder->getGrants()))->map(fn (mixed $slug): string => (string) $slug)->values();
+        }
+
+        return new Collection;
     }
 
     /**
@@ -341,7 +375,15 @@ trait EditsPermissions
             staged: $this->isStaged($holderKey, $slug),
         );
 
-        return $cell->state === PermissionCellState::Implied && $this->canEditHolder($holderKey)
+        if (! $this->canEditHolder($holderKey)) {
+            return $cell;
+        }
+
+        if (! $this->operatorMayChange($slug)) {
+            return $cell->withReason(__('filament-access-control::editor.cells.not_grantable'));
+        }
+
+        return $cell->state === PermissionCellState::Implied
             ? $cell->withReason(__('filament-access-control::editor.cells.grant_explicitly'))
             : $cell;
     }
@@ -370,7 +412,59 @@ trait EditsPermissions
         return $this->editableHolders[$holderKey] = $holder instanceof Model
             && $this->isEditable()
             && ! $this->isHolderLocked($holder)
+            && ! $this->isOwnHolderGuarded($holder)
             && Authorization::allows($this->getUpdateAbility(), $holder);
+    }
+
+    /**
+     * Whether the operator may grant and revoke this permission at all — see {@see GrantGuard}.
+     */
+    public function operatorMayChange(string $slug): bool
+    {
+        if (! $this->grantableSlugsResolved) {
+            $this->grantableSlugs = resolve(GrantGuard::class)->grantableSlugs($this->operator())
+                ?->mapWithKeys(fn (string $grantable): array => [$grantable => true])
+                ->all();
+            $this->grantableSlugsResolved = true;
+        }
+
+        return $this->grantableSlugs === null || isset($this->grantableSlugs[$slug]);
+    }
+
+    /**
+     * Whether the self-editing guard keeps the operator off this holder: the operator's own record,
+     * or a role the operator holds.
+     */
+    public function isOwnHolderGuarded(Model $holder): bool
+    {
+        return $this->plugin()->isSelfEditingPrevented()
+            && resolve(GrantGuard::class)->isOwnHolder($this->operator(), $holder);
+    }
+
+    /**
+     * Whether a click on the row's cell for the holder can change anything: the holder is editable
+     * and the operator may change the permission — for a subject, at least one of its permissions.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    public function canChangeRecord(string $holderKey, array $record): bool
+    {
+        if ($record['type'] === 'group' || ! $this->canEditHolder($holderKey)) {
+            return false;
+        }
+
+        if ($record['type'] !== 'subject') {
+            return $this->operatorMayChange((string) $record['slug']);
+        }
+
+        $permissions = $this->subject((string) $record['group'], (string) $record['subject'])->children ?? new Collection;
+
+        return $permissions->contains(fn (PermissionDto $permission): bool => $this->operatorMayChange($permission->slug));
+    }
+
+    protected function operator(): ?Authenticatable
+    {
+        return Filament::auth()->user();
     }
 
     /**
@@ -847,7 +941,7 @@ trait EditsPermissions
             // the group-header badges it replaces.
             ->color(fn (string $state, array $record): ?string => $record['type'] === 'group' && $state !== '' ? $this->summaryColor($state) : null)
             ->tooltip(fn (array $record): ?string => $this->holderTooltip($holderKey, $record))
-            ->disabledClick(fn (array $record): bool => $record['type'] === 'group' || ! $this->canEditHolder($holderKey))
+            ->disabledClick(fn (array $record): bool => ! $this->canChangeRecord($holderKey, $record))
             ->action(function (array $record) use ($holderKey): void {
                 if ($record['type'] === 'group') {
                     return;
@@ -871,6 +965,7 @@ trait EditsPermissions
                 : $this->subjectTooltip($holderKey, $record),
             $this->resolvesHolderCells() => $this->holderCell($holderKey, (string) $record['slug'])->tooltip(),
             $this->isStagedRecord($holderKey, $record) => __('filament-access-control::editor.staged_marker'),
+            $this->canEditHolder($holderKey) && ! $this->operatorMayChange((string) $record['slug']) => __('filament-access-control::editor.cells.not_grantable'),
             default => null,
         };
     }
@@ -915,6 +1010,13 @@ trait EditsPermissions
             return;
         }
 
+        // Granting AND revoking: taking a permission away is as much a decision about it.
+        if (! $this->operatorMayChange($slug)) {
+            $this->deny(__('filament-access-control::editor.notifications.not_grantable'));
+
+            return;
+        }
+
         if ($this->isGranted($holderKey, $slug)) {
             $this->change($holder, revoke: [$slug]);
 
@@ -952,45 +1054,93 @@ trait EditsPermissions
             return;
         }
 
-        $slugs = $subject->children
+        // Only what the operator may change takes part — in the decision too, or a subject holding
+        // something the operator may not revoke would be granted again at every click.
+        $changeable = $subject->children
             ->map(fn (PermissionDto $permission): string => $permission->slug)
-            ->filter(fn (string $slug): bool => $this->isOffered($slug))
+            ->filter(fn (string $slug): bool => $this->operatorMayChange($slug))
             ->values();
 
-        if ($this->countGranted($holderKey, $subject->children) < $subject->children->count()) {
-            $this->change($holder, grant: $slugs->all());
+        if ($changeable->isEmpty()) {
+            $this->deny(__('filament-access-control::editor.notifications.not_grantable'));
 
             return;
         }
 
-        $this->change($holder, revoke: $subject->children->map(fn (PermissionDto $permission): string => $permission->slug)->all());
+        $grantable = $changeable->filter(fn (string $slug): bool => $this->isOffered($slug))->values();
+
+        if ($grantable->contains(fn (string $slug): bool => ! $this->isGranted($holderKey, $slug))) {
+            $this->change($holder, grant: $grantable->all());
+
+            return;
+        }
+
+        $this->change($holder, revoke: $changeable->all());
     }
 
     public function save(): void
     {
         $saved = 0;
+        $refused = [];
 
         foreach (array_keys($this->changes) as $holderKey) {
             $holderKey = (string) $holderKey;
             $staged = $this->changes[$holderKey];
-            $holder = $this->mutableHolder($holderKey);
+            $refusal = $this->refusalFor($holderKey);
 
-            if (! $holder instanceof Model) {
+            // Refused, the staged changes go: kept, they would still read as pending on a screen
+            // that can never save them, and Save would keep offering what it cannot do.
+            if ($refusal !== null) {
+                unset($this->changes[$holderKey]);
+                $this->forgetResolutions();
+
+                $holder = $this->holders->get($holderKey);
+
+                $this->deny(__('filament-access-control::editor.notifications.discarded', [
+                    'holder' => $holder instanceof Model ? $this->getHolderTitle($holder) : $holderKey,
+                    'reason' => $refusal,
+                ]));
+
                 continue;
             }
 
+            /** @var Model&HasEditablePermissions $holder */
+            $holder = $this->holders->get($holderKey);
+
             // Validated again rather than trusted: the catalogue may have changed under a screen left
-            // open, and a staged slug must be as grantable at Save as it was at the click.
+            // open, and a staged slug must be as grantable at Save as it was at the click — the
+            // operator's own permissions included.
             $known = $this->tree()->slugs()->flip();
 
-            $this->persist(
-                $holder,
-                grant: array_values(array_filter($staged['grant'], fn (string $slug): bool => $this->isOffered($slug))),
-                revoke: array_values(array_filter($staged['revoke'], fn (string $slug): bool => $known->has($slug))),
-            );
+            $grant = array_values(array_filter($staged['grant'], fn (string $slug): bool => $this->isOffered($slug) && $this->operatorMayChange($slug)));
+            $revoke = array_values(array_filter($staged['revoke'], fn (string $slug): bool => $known->has($slug) && $this->operatorMayChange($slug)));
+
+            foreach ([...$staged['grant'], ...$staged['revoke']] as $slug) {
+                if (! $this->operatorMayChange($slug)) {
+                    $refused[] = $slug;
+                }
+            }
 
             unset($this->changes[$holderKey]);
+
+            // Nothing left to write is not a save to report.
+            if ($grant === [] && $revoke === []) {
+                $this->forgetResolutions();
+
+                continue;
+            }
+
+            $this->persist($holder, $grant, $revoke);
             $saved++;
+        }
+
+        if ($refused !== []) {
+            $this->deny(__('filament-access-control::editor.notifications.not_grantable_discarded', [
+                'permissions' => implode(', ', array_map(
+                    fn (string $slug): string => $this->tree()->names()->get($slug, $slug),
+                    array_values(array_unique($refused)),
+                )),
+            ]));
         }
 
         if ($saved > 0) {
@@ -1091,6 +1241,8 @@ trait EditsPermissions
         $this->flushCachedTableRecords();
 
         $this->editableHolders = [];
+        $this->grantableSlugs = null;
+        $this->grantableSlugsResolved = false;
     }
 
     /**
@@ -1100,36 +1252,51 @@ trait EditsPermissions
      */
     protected function mutableHolder(string $holderKey): ?Model
     {
+        $refusal = $this->refusalFor($holderKey);
+
+        if ($refusal !== null) {
+            $this->deny($refusal);
+
+            return null;
+        }
+
+        /** @var Model&HasEditablePermissions $holder */
+        $holder = $this->holders->get($holderKey);
+
+        return $holder;
+    }
+
+    /**
+     * Why this screen must not write to the holder a click names — `null` when it may.
+     */
+    protected function refusalFor(string $holderKey): ?string
+    {
         $holder = $this->holders->get($holderKey);
 
         if (! $holder instanceof Model) {
-            $this->deny(__('filament-access-control::editor.notifications.no_holder'));
-
-            return null;
+            return __('filament-access-control::editor.notifications.no_holder');
         }
 
         if ($this->isHolderLocked($holder)) {
-            $this->deny(__('filament-access-control::editor.super_admin_hint'));
-
-            return null;
+            return __('filament-access-control::editor.super_admin_hint');
         }
 
-        if (! $this->isEditable()) {
-            $this->deny(__('filament-access-control::editor.notifications.read_only'));
+        if (! $this->isEditable() || ! $holder instanceof HasEditablePermissions) {
+            return __('filament-access-control::editor.notifications.read_only');
+        }
 
-            return null;
+        if ($this->isOwnHolderGuarded($holder)) {
+            return __('filament-access-control::editor.notifications.own_holder');
         }
 
         $verdict = Authorization::inspect($this->getUpdateAbility(), $holder);
 
         if ($verdict->denied()) {
-            $this->deny(resolve(RefusalLead::class)->fromMessage($verdict->message())
-                ?? __('filament-access-control::editor.notifications.unauthorized'));
-
-            return null;
+            return resolve(RefusalLead::class)->fromMessage($verdict->message())
+                ?? __('filament-access-control::editor.notifications.unauthorized');
         }
 
-        return $holder;
+        return null;
     }
 
     protected function tree(): PermissionTree

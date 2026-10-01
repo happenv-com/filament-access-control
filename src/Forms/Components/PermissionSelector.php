@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Happenv\FilamentAccessControl\Forms\Components;
 
 use Closure;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Field;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
+use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Schemas\Components\PermissionEditor;
+use Happenv\FilamentAccessControl\Support\GrantGuard;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
 use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -38,6 +42,16 @@ class PermissionSelector extends Field
      * should be noisy rather than quietly narrowed.
      */
     protected PermissionSurfaceDefinition | Closure | null $surface = null;
+
+    /**
+     * What the operator may grant and revoke, for the life of one request — `null` for anything.
+     * Asked of {@see GrantGuard} once: the view asks for every row.
+     *
+     * @var Collection<int, string>|null
+     */
+    protected ?Collection $grantableSlugs = null;
+
+    protected bool $grantableSlugsResolved = false;
 
     protected function setUp(): void
     {
@@ -82,6 +96,29 @@ class PermissionSelector extends Field
             if ($notOffered->isNotEmpty()) {
                 $fail(__('filament-access-control::permission-selector.validation.not_offered', [
                     'permissions' => $notOffered->join(', '),
+                ]));
+            }
+
+            // What this save would CHANGE — granted or revoked. Left as it is, a permission is nobody's
+            // decision, so the guards have nothing to say about it.
+            $held = $component->heldSlugs();
+            $changed = $sanitised->diff($held)->merge($held->diff($sanitised))->intersect($known)->values();
+
+            if ($changed->isEmpty()) {
+                return;
+            }
+
+            if ($component->isOwnRecord()) {
+                $fail(__('filament-access-control::permission-selector.validation.own_record'));
+
+                return;
+            }
+
+            $notGrantable = $changed->reject(fn (string $slug): bool => $component->mayChange($slug));
+
+            if ($notGrantable->isNotEmpty()) {
+                $fail(__('filament-access-control::permission-selector.validation.not_grantable', [
+                    'permissions' => $notGrantable->join(', '),
                 ]));
             }
         });
@@ -200,6 +237,32 @@ class PermissionSelector extends Field
     }
 
     /**
+     * Whether the operator may grant and revoke this permission — see {@see GrantGuard}.
+     */
+    public function mayChange(string $slug): bool
+    {
+        if (! $this->grantableSlugsResolved) {
+            $this->grantableSlugs = resolve(GrantGuard::class)->grantableSlugs(Filament::auth()->user());
+            $this->grantableSlugsResolved = true;
+        }
+
+        return ! $this->grantableSlugs instanceof Collection || $this->grantableSlugs->contains($slug);
+    }
+
+    /**
+     * Whether the record is the operator themselves, and the plugin keeps operators off their own
+     * permissions.
+     */
+    public function isOwnRecord(): bool
+    {
+        $record = $this->getRecord();
+
+        return $record instanceof Model
+            && FilamentAccessControlPlugin::current()->isSelfEditingPrevented()
+            && resolve(GrantGuard::class)->isOwnHolder(Filament::auth()->user(), $record);
+    }
+
+    /**
      * @return Collection<int,string>
      */
     protected function heldSlugs(): Collection
@@ -226,8 +289,18 @@ class PermissionSelector extends Field
      */
     protected function merge(mixed $state): array
     {
+        $held = $this->heldSlugs();
+
+        // The guards, again, after the validation that already refused: a list that reached here
+        // some other way still changes nothing it may not.
+        if ($this->isOwnRecord()) {
+            return $held->values()->all();
+        }
+
         return (new Collection($this->sanitise($state)))
             ->intersect($this->offeredSlugs()->merge($this->heldOutsideOffering()))
+            ->filter(fn (string $slug): bool => $this->mayChange($slug) || $held->contains($slug))
+            ->merge($held->reject(fn (string $slug): bool => $this->mayChange($slug)))
             ->merge($this->unknownHeldSlugs())
             ->unique()
             ->values()

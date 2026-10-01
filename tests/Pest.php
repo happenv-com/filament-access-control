@@ -5,8 +5,6 @@ declare(strict_types=1);
 use Filament\Facades\Filament;
 use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
-use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\RolePermission;
-use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\UserPermission;
 use Happenv\FilamentAccessControl\Tests\Fixtures\User;
 use Happenv\FilamentAccessControl\Tests\TestCase;
 use Happenv\LaravelAccessControl\Contracts\PermissionCondition;
@@ -45,18 +43,16 @@ function createRole(string $code, array $permissions = [], ?string $name = null)
 }
 
 /**
- * Signs in, on the admin panel, somebody allowed to manage roles and users.
+ * Signs in, on the admin panel, somebody allowed to manage roles and users — and, by default, holding
+ * every permission registered so far, so that the escalation guard lets them hand out any of them.
  *
- * @param  list<string>|null  $permissions  what the operator holds; everything role- and user-related by default
+ * @param  list<string>|null  $permissions  what the operator holds; every registered permission by default
  */
 function signInOperator(?array $permissions = null): User
 {
     Filament::setCurrentPanel('admin');
 
-    $operator = createUser(uniqid('operator-') . '@example.com', $permissions ?? [
-        ...array_column(RolePermission::cases(), 'value'),
-        UserPermission::Update->value,
-    ]);
+    $operator = createUser(uniqid('operator-') . '@example.com', $permissions ?? array_keys(resolve(PermissionRegistry::class)->permissions));
 
     actingAs($operator);
 

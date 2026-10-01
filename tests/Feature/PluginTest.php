@@ -6,6 +6,7 @@ use Filament\Actions\CreateAction;
 use Filament\Facades\Filament;
 use Filament\Panel;
 use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
+use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Pages\AccessControl;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
 use Happenv\FilamentAccessControl\Tests\Fixtures\User;
@@ -126,3 +127,16 @@ it('shows declaration problems unless told not to', function (): void {
         ->and(plugin()->declarationProblems(false)->showsDeclarationProblems())->toBeFalse()
         ->and(plugin()->declarationProblems(fn (): bool => true)->showsDeclarationProblems())->toBeTrue();
 });
+
+it('guards against escalation and self-editing unless told not to', function (): void {
+    expect(FilamentAccessControlPlugin::make()->isEscalationPrevented())->toBeTrue()
+        ->and(FilamentAccessControlPlugin::make()->isSelfEditingPrevented())->toBeTrue()
+        ->and(FilamentAccessControlPlugin::make()->preventEscalation(false)->isEscalationPrevented())->toBeFalse()
+        ->and(FilamentAccessControlPlugin::make()->preventSelfEditing(fn (): bool => false)->isSelfEditingPrevented())->toBeFalse();
+});
+
+it('wants a matrix component extending the package\'s', function (): void {
+    expect(FilamentAccessControlPlugin::make()->getMatrixComponent())->toBe(RolePermissionMatrix::class);
+
+    FilamentAccessControlPlugin::make()->matrixComponent(Role::class);
+})->throws(InvalidArgumentException::class);

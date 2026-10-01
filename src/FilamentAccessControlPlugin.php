@@ -13,10 +13,14 @@ use Filament\Facades\Filament;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
+use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Pages\AccessControl;
+use Happenv\FilamentAccessControl\Support\GrantGuard;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use Throwable;
 use UnitEnum;
@@ -45,6 +49,15 @@ class FilamentAccessControlPlugin implements Plugin
     protected bool | Closure $isRolePickerDeferred = true;
 
     protected bool | Closure $showsDeclarationProblems = true;
+
+    protected bool | Closure $isEscalationPrevented = true;
+
+    protected bool | Closure $isSelfEditingPrevented = true;
+
+    protected ?Closure $grantableBy = null;
+
+    /** @var class-string<RolePermissionMatrix> */
+    protected string $matrixComponent = RolePermissionMatrix::class;
 
     /**
      * What each operation of the role screens asks the gate — see {@see Support\Authorization} for
@@ -384,6 +397,87 @@ class FilamentAccessControlPlugin implements Plugin
         return (bool) $this->evaluate($this->showsDeclarationProblems);
     }
 
+    // Guards ----------------------------------------------------------------------------------
+
+    /**
+     * Whether an operator may grant and revoke only the permissions they hold in effect themselves —
+     * see {@see GrantGuard}. On by default: a screen that hands out permissions must not become the
+     * way to obtain more of them. An operator holding the super-admin role is never narrowed.
+     */
+    public function preventEscalation(bool | Closure $condition = true): static
+    {
+        $this->isEscalationPrevented = $condition;
+
+        return $this;
+    }
+
+    public function isEscalationPrevented(): bool
+    {
+        return (bool) $this->evaluate($this->isEscalationPrevented);
+    }
+
+    /**
+     * Whether an operator is kept from changing the permissions of a role they hold, and their own
+     * direct permissions. On by default: whoever could widen their own role would need no other way in.
+     */
+    public function preventSelfEditing(bool | Closure $condition = true): static
+    {
+        $this->isSelfEditingPrevented = $condition;
+
+        return $this;
+    }
+
+    public function isSelfEditingPrevented(): bool
+    {
+        return (bool) $this->evaluate($this->isSelfEditingPrevented);
+    }
+
+    /**
+     * What an operator may grant and revoke, instead of what they hold in effect. Receives the
+     * operator (as `operator`, or by its type) and returns the slugs — or `null` for anything.
+     *
+     * @param  (Closure(Authenticatable): (iterable<int, string|BackedEnum>|null))|null  $callback
+     */
+    public function grantableBy(?Closure $callback): static
+    {
+        $this->grantableBy = $callback;
+
+        return $this;
+    }
+
+    public function hasGrantableBy(): bool
+    {
+        return $this->grantableBy instanceof Closure;
+    }
+
+    /**
+     * The slugs {@see self::grantableBy()} gives the operator — `null` for anything, and also when no
+     * callback is set; ask {@see self::hasGrantableBy()} first.
+     *
+     * @return Collection<int, string>|null
+     */
+    public function evaluateGrantableBy(Authenticatable $operator): ?Collection
+    {
+        if (! $this->grantableBy instanceof Closure) {
+            return null;
+        }
+
+        $slugs = $this->evaluate(
+            $this->grantableBy,
+            namedInjections: ['operator' => $operator, 'user' => $operator],
+            typedInjections: [Authenticatable::class => $operator, $operator::class => $operator],
+        );
+
+        if ($slugs === null) {
+            return null;
+        }
+
+        return (new Collection(is_iterable($slugs) ? $slugs : []))
+            ->map(fn (mixed $slug): string => $slug instanceof BackedEnum ? (string) $slug->value : (string) $slug)
+            ->unique()
+            ->values();
+    }
+
     // Access control page ---------------------------------------------------------------------
 
     /**
@@ -410,6 +504,35 @@ class FilamentAccessControlPlugin implements Plugin
     public function getAccessControlPage(): string
     {
         return $this->accessControlPage ?? AccessControl::class;
+    }
+
+    /**
+     * The Livewire component the access control page draws as its matrix — a class extending
+     * {@see RolePermissionMatrix}, to change more of it than the plugin exposes.
+     *
+     * @param  class-string  $component  a Livewire component extending {@see RolePermissionMatrix}
+     */
+    public function matrixComponent(string $component): static
+    {
+        if (! is_a($component, RolePermissionMatrix::class, true)) {
+            throw new InvalidArgumentException(sprintf(
+                'The matrix component [%s] must extend [%s].',
+                $component,
+                RolePermissionMatrix::class,
+            ));
+        }
+
+        $this->matrixComponent = $component;
+
+        return $this;
+    }
+
+    /**
+     * @return class-string<RolePermissionMatrix>
+     */
+    public function getMatrixComponent(): string
+    {
+        return $this->matrixComponent;
     }
 
     public function navigationGroup(string | UnitEnum | Closure | null $group): static

@@ -6,6 +6,7 @@ namespace Happenv\FilamentAccessControl\Schemas\Components;
 
 use Closure;
 use Filament\Schemas\Components\Livewire;
+use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
 
@@ -26,11 +27,12 @@ class PermissionMatrix extends Livewire
     protected PermissionSurfaceDefinition | Closure | null $surface = null;
 
     /**
+     * @param  class-string<RolePermissionMatrix>|Closure|null  $component  the plugin's `matrixComponent()` when null
      * @param  array<string, mixed>|Closure  $data
      */
-    public static function make(string | Closure $component = RolePermissionMatrix::class, array | Closure $data = []): static
+    public static function make(string | Closure | null $component = null, array | Closure $data = []): static
     {
-        return parent::make($component, $data);
+        return parent::make($component ?? FilamentAccessControlPlugin::current()->getMatrixComponent(), $data);
     }
 
     protected function setUp(): void
