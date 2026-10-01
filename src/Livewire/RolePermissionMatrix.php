@@ -143,7 +143,11 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
                 $this->dependenciesColumn(),
                 ...$this->holders
                     ->map(fn (Model $role, int | string $roleKey): TextColumn => $this->holderColumn((string) $roleKey, $this->getHolderTitle($role))
-                        ->headerTooltip($this->isHolderLocked($role) ? __('filament-access-control::editor.super_admin_hint') : null)
+                        ->headerTooltip(match (true) {
+                            $this->isHolderLocked($role) => __('filament-access-control::editor.super_admin_hint'),
+                            $this->isOwnHolderGuarded($role) => __('filament-access-control::editor.own_role_hint'),
+                            default => null,
+                        })
                         ->hidden(fn (): bool => ! $this->isRoleShown((string) $roleKey)))
                     ->values()
                     ->all(),

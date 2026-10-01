@@ -21,6 +21,12 @@
                 'roles' => implode(', ', $superAdminRoles),
             ])"
         />
+    @elseif ($this->isOwnHolderGuarded($this->record))
+        <x-filament::callout
+            icon="heroicon-o-user"
+            color="gray"
+            :description="$this->isRole() ? __('filament-access-control::editor.own_role_hint') : __('filament-access-control::editor.own_holder_hint')"
+        />
     @elseif (! $this->canEditHolder($this->recordKey()))
         <x-filament::callout
             icon="heroicon-o-eye"

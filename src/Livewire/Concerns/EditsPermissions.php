@@ -391,6 +391,7 @@ trait EditsPermissions
         return $this->editableHolders[$holderKey] = $holder instanceof Model
             && $this->isEditable()
             && ! $this->isHolderLocked($holder)
+            && ! $this->isOwnHolderGuarded($holder)
             && Authorization::allows($this->getUpdateAbility(), $holder);
     }
 
@@ -407,6 +408,16 @@ trait EditsPermissions
         }
 
         return $this->grantableSlugs === null || isset($this->grantableSlugs[$slug]);
+    }
+
+    /**
+     * Whether the self-editing guard keeps the operator off this holder: the operator's own record,
+     * or a role the operator holds.
+     */
+    public function isOwnHolderGuarded(Model $holder): bool
+    {
+        return $this->plugin()->isSelfEditingPrevented()
+            && resolve(GrantGuard::class)->isOwnHolder($this->operator(), $holder);
     }
 
     /**
@@ -1251,6 +1262,10 @@ trait EditsPermissions
 
         if (! $this->isEditable()) {
             return __('filament-access-control::editor.notifications.read_only');
+        }
+
+        if ($this->isOwnHolderGuarded($holder)) {
+            return __('filament-access-control::editor.notifications.own_holder');
         }
 
         $verdict = Authorization::inspect($this->getUpdateAbility(), $holder);
