@@ -35,6 +35,7 @@ use Happenv\LaravelAccessControl\Dto\PermissionResolutionDto;
 use Happenv\LaravelAccessControl\Dto\PermissionSubjectDto;
 use Happenv\LaravelAccessControl\PermissionResolver;
 use Happenv\LaravelAccessControl\PermissionRestrictions;
+use Happenv\LaravelAccessControl\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
@@ -148,9 +149,10 @@ trait EditsPermissions
     protected array $dependencyBadgeCache = [];
 
     /**
-     * The records this screen edits, keyed by {@see self::holderKey()}.
+     * The records this screen shows, keyed by {@see self::holderKey()} — each one
+     * {@see HasEditablePermissions} wherever the screen writes.
      *
-     * @return Collection<array-key, Model&HasEditablePermissions>
+     * @return Collection<array-key, Model>
      */
     abstract protected function getHolders(): Collection;
 
@@ -175,7 +177,7 @@ trait EditsPermissions
     }
 
     /**
-     * @return Collection<array-key, Model&HasEditablePermissions>
+     * @return Collection<array-key, Model>
      */
     #[Computed]
     public function holders(): Collection
@@ -201,10 +203,29 @@ trait EditsPermissions
     public function grants(): array
     {
         return $this->holders
-            ->map(fn (HasEditablePermissions $holder): array => $holder->getPermissions()
+            ->map(fn (Model $holder): array => $this->storedPermissionsOf($holder)
                 ->mapWithKeys(fn (string $slug): array => [$slug => true])
                 ->all())
             ->all();
+    }
+
+    /**
+     * What a holder stores directly: its list when the screen may rewrite it, otherwise — a record
+     * shown read-only — what laravel-access-control's `HasPermissions` hands over, or nothing.
+     *
+     * @return Collection<int, string>
+     */
+    protected function storedPermissionsOf(Model $holder): Collection
+    {
+        if ($holder instanceof HasEditablePermissions) {
+            return $holder->getPermissions();
+        }
+
+        if (isset(class_uses_recursive($holder)[HasPermissions::class]) && method_exists($holder, 'getGrants')) {
+            return (new Collection($holder->getGrants()))->map(fn (mixed $slug): string => (string) $slug)->values();
+        }
+
+        return new Collection;
     }
 
     /**
@@ -1260,7 +1281,7 @@ trait EditsPermissions
             return __('filament-access-control::editor.super_admin_hint');
         }
 
-        if (! $this->isEditable()) {
+        if (! $this->isEditable() || ! $holder instanceof HasEditablePermissions) {
             return __('filament-access-control::editor.notifications.read_only');
         }
 

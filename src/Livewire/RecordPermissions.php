@@ -47,7 +47,7 @@ use Livewire\Component;
  * its own. For a user it also shows what the user's roles already grant, since a direct grant of
  * something a role hands out anyway changes nothing and the operator should be able to see that.
  *
- * @property-read Collection<array-key, Model&HasEditablePermissions> $holders
+ * @property-read Collection<array-key, Model> $holders
  * @property-read Collection<string, PermissionGroupDto> $groups
  * @property-read array<array-key, array<string, bool>> $grants
  * @property-read array<string, bool> $offeredSlugs
@@ -71,7 +71,10 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
     /** The key of the account's "In effect" resolution among the per-holder ones. */
     private const string IN_EFFECT = 'in-effect';
 
-    /** @var Model&HasEditablePermissions */
+    /**
+     * {@see HasEditablePermissions} wherever the screen may write; any `AuthControllable` account will
+     * do for a read-only one.
+     */
     #[Locked]
     public Model $record;
 
@@ -96,6 +99,13 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
     public bool $showInherited = true;
 
     /**
+     * Whether an account's own, direct grants get a column. An application that grants through
+     * roles only has nothing to show there.
+     */
+    #[Locked]
+    public bool $showDirectGrants = true;
+
+    /**
      * `surface` is taken by the public property of that name, which Livewire fills before this runs:
      * an interface-typed parameter here would be resolved from the container on Laravel 12 whenever
      * the caller leaves it out.
@@ -109,10 +119,13 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
         string | BackedEnum | false | null $ability = false,
         bool $readOnly = false,
         bool $showInherited = true,
+        bool $showDirectGrants = true,
     ): void {
-        if (! $record instanceof HasEditablePermissions) {
+        // Reading needs nothing of the record: its roles and laravel-access-control answer for it.
+        // Writing needs the list the record stores, made public.
+        if (! $readOnly && ! $record instanceof HasEditablePermissions) {
             throw new InvalidArgumentException(sprintf(
-                'The record [%s] must implement [%s] for its permissions to be edited.',
+                'The record [%s] must implement [%s] for its permissions to be edited — or be shown read-only.',
                 $record::class,
                 HasEditablePermissions::class,
             ));
@@ -125,6 +138,7 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
         $this->customAbility = $ability === false ? null : $ability;
         $this->readOnly = $readOnly;
         $this->showInherited = $showInherited;
+        $this->showDirectGrants = $showDirectGrants;
     }
 
     public function recordKey(): string
@@ -142,9 +156,24 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
         return $this->isRole() ? $this->plugin()->getRoleTitle($holder) : (string) $holder->getKey();
     }
 
+    /**
+     * Writable only through the column of direct grants — hidden, it leaves nothing to click — and
+     * only for a record whose list the screen can rewrite.
+     */
     public function isEditable(): bool
     {
-        return ! $this->readOnly;
+        return ! $this->readOnly
+            && $this->showsDirectGrants()
+            && $this->record instanceof HasEditablePermissions;
+    }
+
+    /**
+     * Whether the record's own grants get a column: always for a role — they are the role — and for
+     * an account unless told otherwise.
+     */
+    public function showsDirectGrants(): bool
+    {
+        return $this->isRole() || $this->showDirectGrants;
     }
 
     public function isRole(): bool
@@ -241,7 +270,8 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
             ->columns([
                 $this->permissionColumn(),
                 $this->dependenciesColumn(),
-                $this->holderColumn($this->recordKey(), __('filament-access-control::editor.columns.granted')),
+                $this->holderColumn($this->recordKey(), __('filament-access-control::editor.columns.granted'))
+                    ->visible(fn (): bool => $this->showsDirectGrants()),
                 TextColumn::make('inherited')
                     ->label(__('filament-access-control::editor.columns.inherited'))
                     ->state(fn (array $record): array => $record['type'] === 'permission' ? $this->inheritedFrom((string) $record['slug']) : [])
@@ -274,6 +304,11 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
     {
         if ($this->isRole()) {
             return false;
+        }
+
+        // Without the direct column, "In effect" is the one that says what the account may do.
+        if (! $this->showsDirectGrants()) {
+            return true;
         }
 
         return $this->heldRoles() !== []
@@ -468,7 +503,7 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
     }
 
     /**
-     * @return Collection<array-key, Model&HasEditablePermissions>
+     * @return Collection<array-key, Model>
      */
     protected function getHolders(): Collection
     {
