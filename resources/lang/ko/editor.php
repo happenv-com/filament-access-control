@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => '찾을 수 없습니다 — 페이지를 새로 고친 후 다시 시도하세요.',
         'no_permission' => '해당 권한을 찾을 수 없습니다 — 페이지를 새로 고친 후 다시 시도하세요.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => '이 권한은 여기에서 부여할 수 없습니다.',
         'read_only' => '이 권한은 여기에서 읽기 전용입니다.',
         'saved' => '권한이 저장되었습니다.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => '클릭하면 명시적으로 부여됩니다',
         'implied_by' => '암시 근원: :permissions',
         'missing' => '누락된 요구사항: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => '현재 애플리케이션에 의해 제한됨',
         'unmet_condition' => ':condition — 이 계정은 이를 충족하지 않습니다',
     ],

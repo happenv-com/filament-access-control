@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Haikupatikana — pakia upya ukurasa kisha ujaribu tena.',
         'no_permission' => 'Ruhusa hiyo haikupatikana — pakia upya ukurasa kisha ujaribu tena.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Ruhusa hii haiwezi kutolewa hapa.',
         'read_only' => 'Ruhusa hizi ni za kusoma tu hapa.',
         'saved' => 'Ruhusa zimehifadhiwa.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Kubofya kunaitoa moja kwa moja',
         'implied_by' => 'Inamaanishwa na: :permissions',
         'missing' => 'Sharti linalokosekana: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Kwa sasa imezuiwa na programu',
         'unmet_condition' => ':condition — akaunti hii haitimizi',
     ],

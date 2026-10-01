@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'ไม่พบข้อมูล — โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง',
         'no_permission' => 'ไม่พบสิทธิ์นี้ — โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'ไม่สามารถมอบสิทธิ์นี้ที่นี่ได้',
         'read_only' => 'สิทธิ์เหล่านี้เป็นแบบอ่านอย่างเดียวในส่วนนี้',
         'saved' => 'บันทึกสิทธิ์เรียบร้อย',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'คลิกเพื่อมอบสิทธิ์นี้โดยตรง',
         'implied_by' => 'ถูกบ่งชี้โดย: :permissions',
         'missing' => 'ข้อกำหนดที่ขาดหายไป: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'ขณะนี้ถูกจำกัดโดยแอปพลิเคชัน',
         'unmet_condition' => ':condition — บัญชีนี้ไม่ตรงตามเงื่อนไขนี้',
     ],

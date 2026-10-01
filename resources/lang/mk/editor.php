@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Не е пронајдено — освежете ја страницата и обидете се повторно.',
         'no_permission' => 'Таква дозвола не е пронајдена — освежете ја страницата и обидете се повторно.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Оваа дозвола не може да се додели тука.',
         'read_only' => 'Овие дозволи тука се само за читање.',
         'saved' => 'Дозволите се зачувани.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Клик директно ја доделува',
         'implied_by' => 'Подразбрано од: :permissions',
         'missing' => 'Недостасува услов: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Моментално ограничено од апликацијата',
         'unmet_condition' => ':condition — оваа сметка не го исполнува',
     ],

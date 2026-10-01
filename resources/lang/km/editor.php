@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'រកមិនឃើញទេ — សូមផ្ទុកទំព័រឡើងវិញ ហើយព្យាយាមម្តងទៀត។',
         'no_permission' => 'រកមិនឃើញសិទ្ធិនេះទេ — សូមផ្ទុកទំព័រឡើងវិញ ហើយព្យាយាមម្តងទៀត។',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'សិទ្ធិនេះមិនអាចផ្តល់នៅទីនេះបានទេ។',
         'read_only' => 'សិទ្ធិទាំងនេះអាចត្រឹមតែមើលបាននៅទីនេះ។',
         'saved' => 'សិទ្ធិត្រូវបានរក្សាទុក។',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'ការចុចផ្តល់វាដោយផ្ទាល់',
         'implied_by' => 'ពាក់ព័ន្ធដោយ៖ :permissions',
         'missing' => 'ខ្វះលក្ខខណ្ឌតម្រូវ៖ :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'កំពុងត្រូវបានកម្មវិធីដាក់កំហិតឥឡូវនេះ',
         'unmet_condition' => ':condition — គណនីនេះមិនបំពេញលក្ខខណ្ឌនេះទេ',
     ],

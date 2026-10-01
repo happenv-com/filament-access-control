@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Netika atrasts — pārlādējiet lapu un mēģiniet vēlreiz.',
         'no_permission' => 'Šāda atļauja netika atrasta — pārlādējiet lapu un mēģiniet vēlreiz.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Šo atļauju šeit nevar piešķirt.',
         'read_only' => 'Šīs atļaujas šeit ir tikai lasāmas.',
         'saved' => 'Atļaujas ir saglabātas.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Klikšķis to piešķir tieši',
         'implied_by' => 'Izriet no: :permissions',
         'missing' => 'Trūkstoša prasība: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Šobrīd ierobežo lietotne',
         'unmet_condition' => ':condition — šis konts to neizpilda',
     ],

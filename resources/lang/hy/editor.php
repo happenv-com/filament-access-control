@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Չի գտնվել — թարմացրեք էջը և նորից փորձեք։',
         'no_permission' => 'Նման թույլտվություն չի գտնվել — թարմացրեք էջը և նորից փորձեք։',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Այս թույլտվությունը հնարավոր չէ տրամադրել այստեղ։',
         'read_only' => 'Այս թույլտվություններն այստեղ միայն դիտելու համար են։',
         'saved' => 'Թույլտվությունները պահպանվել են։',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Սեղմումը ուղղակիորեն տալիս է այն',
         'implied_by' => 'Բխում է՝ :permissions',
         'missing' => 'Բացակայող պահանջ՝ :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Այժմ սահմանափակված է հավելվածի կողմից',
         'unmet_condition' => ':condition — այս հաշիվը չի բավարարում այն',
     ],

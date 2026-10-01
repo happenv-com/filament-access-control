@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Nu a fost găsit — reîncărcați pagina și încercați din nou.',
         'no_permission' => 'Permisiunea nu a fost găsită — reîncărcați pagina și încercați din nou.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Această permisiune nu poate fi acordată aici.',
         'read_only' => 'Aici, aceste permisiuni sunt doar pentru citire.',
         'saved' => 'Permisiunile au fost salvate.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Un clic o acordă explicit',
         'implied_by' => 'Implicată de: :permissions',
         'missing' => 'Cerință lipsă: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Restricționată de aplicație chiar acum',
         'unmet_condition' => ':condition — acest cont nu o îndeplinește',
     ],

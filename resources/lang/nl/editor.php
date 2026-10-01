@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Niet gevonden — laad de pagina opnieuw en probeer het nog eens.',
         'no_permission' => 'Dit recht is niet gevonden — laad de pagina opnieuw en probeer het nog eens.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Dit recht kan hier niet worden toegekend.',
         'read_only' => 'Deze rechten zijn hier alleen-lezen.',
         'saved' => 'De rechten zijn opgeslagen.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Een klik kent het expliciet toe',
         'implied_by' => 'Geïmpliceerd door: :permissions',
         'missing' => 'Ontbrekende vereiste: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Momenteel beperkt door de applicatie',
         'unmet_condition' => ':condition — dit account voldoet er niet aan',
     ],

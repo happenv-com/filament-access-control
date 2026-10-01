@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'ရှာမတွေ့ပါ — စာမျက်နှာကို ပြန်ဖွင့်ပြီး ထပ်စမ်းကြည့်ပါ။',
         'no_permission' => 'ထိုခွင့်ပြုချက်ကို ရှာမတွေ့ပါ — စာမျက်နှာကို ပြန်ဖွင့်ပြီး ထပ်စမ်းကြည့်ပါ။',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'ဤခွင့်ပြုချက်ကို ဤနေရာတွင် ပေး၍ မရပါ။',
         'read_only' => 'ဤခွင့်ပြုချက်များကို ဤနေရာတွင် ကြည့်ရှုရန်သာ ဖြစ်သည်။',
         'saved' => 'ခွင့်ပြုချက်များကို သိမ်းဆည်းပြီးပါပြီ။',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'နှိပ်လိုက်ပါက တိုက်ရိုက်ပေးအပ်မည်',
         'implied_by' => 'ဆိုလိုစေသူ: :permissions',
         'missing' => 'လိုအပ်ချက် ချို့တဲ့နေသည်: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'ယခုအချိန်တွင် အပလီကေးရှင်းက ကန့်သတ်ထားသည်',
         'unmet_condition' => ':condition — ဤအကောင့်သည် ၎င်းကို မဖြည့်ဆည်းနိုင်ပါ',
     ],

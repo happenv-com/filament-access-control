@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Hmuh a ni lo — page kha reload la, tinawn leh rawh.',
         'no_permission' => 'Chutiang phalna chu hmuh a ni lo — page kha reload la, tinawn leh rawh.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'He phalna hi heta pek theih a ni lo.',
         'read_only' => 'Heng phalna ho hi heta en chauh theih an ni.',
         'saved' => 'Phalna ho save a ni e.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Click chuan a pe ngei ngei',
         'implied_by' => 'A chhuah khan: :permissions',
         'missing' => 'Mamawh bo: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Tunah hian application-in a khap',
         'unmet_condition' => ':condition — hei account hian a tlin lo',
     ],

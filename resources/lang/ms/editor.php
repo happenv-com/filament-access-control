@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Tidak dijumpai — muat semula halaman dan cuba lagi.',
         'no_permission' => 'Kebenaran tersebut tidak dijumpai — muat semula halaman dan cuba lagi.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Kebenaran ini tidak boleh diberikan di sini.',
         'read_only' => 'Kebenaran ini hanya boleh dibaca di sini.',
         'saved' => 'Kebenaran telah disimpan.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Klik akan memberikannya secara eksplisit',
         'implied_by' => 'Dibayangkan oleh: :permissions',
         'missing' => 'Keperluan hilang: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Sedang disekat oleh aplikasi sekarang',
         'unmet_condition' => ':condition — akaun ini tidak memenuhinya',
     ],

@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Nuk u gjet — ringarkoni faqen dhe provoni përsëri.',
         'no_permission' => 'Kjo leje nuk u gjet — ringarkoni faqen dhe provoni përsëri.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Kjo leje nuk mund të jepet këtu.',
         'read_only' => 'Këtu këto leje janë vetëm për lexim.',
         'saved' => 'Lejet u ruajtën.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Një klik e jep atë shprehimisht',
         'implied_by' => 'Nënkuptuar nga: :permissions',
         'missing' => 'Kërkesë mungon: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Aktualisht e kufizuar nga aplikacioni',
         'unmet_condition' => ':condition — ky llogari nuk e përmbush',
     ],

@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Олдсонгүй — хуудсаа дахин ачаалаад дахин оролдоно уу.',
         'no_permission' => 'Ийм эрх олдсонгүй — хуудсаа дахин ачаалаад дахин оролдоно уу.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Энэ эрхийг энд олгох боломжгүй.',
         'read_only' => 'Эдгээр эрхийг энд зөвхөн харах боломжтой.',
         'saved' => 'Эрхүүдийг хадгаллаа.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Товшихад шууд олгоно',
         'implied_by' => 'Үүнээс үүдэлтэй: :permissions',
         'missing' => 'Дутуу шаардлага: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Одоогоор аппликейшнаар хязгаарлагдсан',
         'unmet_condition' => ':condition — энэ бүртгэл үүнийг хангахгүй байна',
     ],

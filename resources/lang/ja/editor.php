@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => '見つかりませんでした——ページを再読み込みして、もう一度お試しください。',
         'no_permission' => '該当する権限が見つかりませんでした——ページを再読み込みして、もう一度お試しください。',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'この権限はここでは付与できません。',
         'read_only' => 'これらの権限はここでは読み取り専用です。',
         'saved' => '権限を保存しました。',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'クリックすると明示的に付与されます',
         'implied_by' => '暗示元: :permissions',
         'missing' => '不足している要件: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => '現在アプリケーションにより制限されています',
         'unmet_condition' => ':condition — このアカウントはこれを満たしていません',
     ],

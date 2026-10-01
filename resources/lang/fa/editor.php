@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'پیدا نشد — صفحه را دوباره بارگذاری کنید و دوباره تلاش کنید.',
         'no_permission' => 'چنین مجوزی پیدا نشد — صفحه را دوباره بارگذاری کنید و دوباره تلاش کنید.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'این مجوز را نمی‌توان اینجا اعطا کرد.',
         'read_only' => 'این مجوزها اینجا فقط‌خواندنی هستند.',
         'saved' => 'مجوزها ذخیره شدند.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'کلیک آن را صراحتاً اعطا می‌کند',
         'implied_by' => 'ناشی از: :permissions',
         'missing' => 'نیازمندی مفقود: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'در حال حاضر توسط برنامه محدود شده',
         'unmet_condition' => ':condition — این حساب آن را برآورده نمی‌کند',
     ],

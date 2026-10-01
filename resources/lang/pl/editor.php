@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Nie znaleziono — odśwież stronę i spróbuj ponownie.',
         'no_permission' => 'Nie znaleziono takiego uprawnienia — odśwież stronę i spróbuj ponownie.',
+        'not_grantable' => 'Możesz nadawać i odbierać tylko uprawnienia, które masz sam.',
+        'not_grantable_discarded' => 'Odrzucono zmiany uprawnień, których nie masz: :permissions.',
         'not_offered' => 'Tego uprawnienia nie można tutaj nadać.',
         'read_only' => 'Te uprawnienia są tutaj tylko do odczytu.',
         'saved' => 'Uprawnienia zostały zapisane.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Kliknięcie nadaje je bezpośrednio',
         'implied_by' => 'Wynika z: :permissions',
         'missing' => 'Brakujący wymóg: :permissions',
+        'not_grantable' => 'Nie masz tego uprawnienia, więc nie możesz go nadać ani odebrać',
         'restricted' => 'Obecnie ograniczone przez aplikację',
         'unmet_condition' => ':condition — to konto go nie spełnia',
     ],

@@ -141,7 +141,8 @@ describe('a user', function (): void {
     });
 
     it('checks nothing when told to', function (): void {
-        signInOperator([]);
+        // Holding nothing but the permission it hands out: no ability to pass, only the escalation guard.
+        signInOperator([ProductPermission::View->value]);
 
         livewire(RecordPermissions::class, ['record' => $this->user, 'ability' => null])
             ->call('toggle', holderKey($this->user), ProductPermission::View->value);

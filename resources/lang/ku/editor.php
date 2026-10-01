@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'نەدۆزرایەوە — پەڕەکە نوێ بکەرەوە و دووبارە هەوڵ بدەرەوە.',
         'no_permission' => 'ئەم مۆڵەتە نەدۆزرایەوە — پەڕەکە نوێ بکەرەوە و دووبارە هەوڵ بدەرەوە.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'ئەم مۆڵەتە لێرە نادرێت.',
         'read_only' => 'ئەم مۆڵەتانە لێرە تەنها بۆ خوێندنەوەن.',
         'saved' => 'مۆڵەتەکان نوێکرانەوە.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'کرتەیەک ڕاستەوخۆ دەیدات',
         'implied_by' => 'واتای ئەوەیە لەلایەن: :permissions',
         'missing' => 'پێداویستی نەماوە: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'لە ئێستادا لەلایەن ئەپڵیکەیشنەوە سنووردارکراوە',
         'unmet_condition' => ':condition — ئەم هەژمارە ئەمە پێک نایەنێت',
     ],

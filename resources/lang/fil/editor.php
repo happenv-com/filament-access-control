@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Hindi ito nahanap — i-reload ang page at subukan ulit.',
         'no_permission' => 'Walang nahanap na ganitong pahintulot — i-reload ang page at subukan ulit.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Hindi maibibigay rito ang pahintulot na ito.',
         'read_only' => 'Hindi mababago rito ang mga pahintulot na ito.',
         'saved' => 'Na-save na ang mga pahintulot.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Direktang ibinibigay ito ng isang click',
         'implied_by' => 'Ipinahihiwatig ng: :permissions',
         'missing' => 'Kulang na kailangan: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Nililimitahan ngayon ng application',
         'unmet_condition' => ':condition — hindi ito natutugunan ng account na ito',
     ],

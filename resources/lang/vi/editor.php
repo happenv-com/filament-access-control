@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Không tìm thấy — hãy tải lại trang và thử lại.',
         'no_permission' => 'Không tìm thấy quyền này — hãy tải lại trang và thử lại.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Không thể cấp quyền này ở đây.',
         'read_only' => 'Các quyền này ở chế độ chỉ đọc tại đây.',
         'saved' => 'Đã lưu quyền.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Một cú nhấp sẽ cấp nó một cách rõ ràng',
         'implied_by' => 'Được ngụ ý bởi: :permissions',
         'missing' => 'Thiếu yêu cầu: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Hiện đang bị ứng dụng hạn chế',
         'unmet_condition' => ':condition — tài khoản này không đáp ứng điều kiện đó',
     ],

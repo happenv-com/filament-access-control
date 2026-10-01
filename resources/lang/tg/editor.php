@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Ёфт нашуд — саҳифаро аз нав бор кунед ва боз кӯшиш кунед.',
         'no_permission' => 'Чунин иҷозат ёфт нашуд — саҳифаро аз нав бор кунед ва боз кӯшиш кунед.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Ин иҷозатро дар ин ҷо додан мумкин нест.',
         'read_only' => 'Ин иҷозатҳо дар ин ҷо танҳо барои хондан мебошанд.',
         'saved' => 'Иҷозатҳо нигоҳ дошта шуданд.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Клик онро мустақиман медиҳад',
         'implied_by' => 'Аз он бармеояд: :permissions',
         'missing' => 'Талаботи намерасида: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Ҳоло аз ҷониби барнома маҳдуд шудааст',
         'unmet_condition' => ':condition — ин ҳисоб онро иҷро намекунад',
     ],

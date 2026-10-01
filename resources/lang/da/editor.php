@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Den blev ikke fundet — genindlæs siden, og prøv igen.',
         'no_permission' => 'Tilladelsen blev ikke fundet — genindlæs siden, og prøv igen.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Denne tilladelse kan ikke tildeles her.',
         'read_only' => 'Disse tilladelser er skrivebeskyttede her.',
         'saved' => 'Tilladelserne er gemt.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Et klik tildeler den eksplicit',
         'implied_by' => 'Medført af: :permissions',
         'missing' => 'Manglende krav: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Begrænset af applikationen lige nu',
         'unmet_condition' => ':condition — denne konto opfylder den ikke',
     ],

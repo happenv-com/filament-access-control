@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'ვერ მოიძებნა — განაახლეთ გვერდი და სცადეთ ხელახლა.',
         'no_permission' => 'ასეთი ნებართვა ვერ მოიძებნა — განაახლეთ გვერდი და სცადეთ ხელახლა.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'ამ ნებართვის აქ მინიჭება შეუძლებელია.',
         'read_only' => 'ეს ნებართვები აქ მხოლოდ სანახავადაა.',
         'saved' => 'ნებართვები შენახულია.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'დაწკაპუნება პირდაპირ ანიჭებს მას',
         'implied_by' => 'გამომდინარეობს: :permissions',
         'missing' => 'აკლია მოთხოვნა: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'ამჟამად შეზღუდულია აპლიკაციის მიერ',
         'unmet_condition' => ':condition — ეს ანგარიში მას არ აკმაყოფილებს',
     ],

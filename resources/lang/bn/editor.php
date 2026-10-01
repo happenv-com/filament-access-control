@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'এটি পাওয়া যায়নি — পৃষ্ঠাটি রিলোড করে আবার চেষ্টা করুন।',
         'no_permission' => 'এমন কোনো অনুমতি পাওয়া যায়নি — পৃষ্ঠাটি রিলোড করে আবার চেষ্টা করুন।',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'এই অনুমতি এখানে দেওয়া যাবে না।',
         'read_only' => 'এই অনুমতিগুলো এখানে শুধু দেখার জন্য।',
         'saved' => 'অনুমতি সংরক্ষিত হয়েছে।',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'ক্লিক করলে এটি সরাসরি দেওয়া হয়',
         'implied_by' => 'দ্বারা বোঝানো: :permissions',
         'missing' => 'অনুপস্থিত প্রয়োজনীয়তা: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'অ্যাপ্লিকেশন বর্তমানে এটি সীমিত করেছে',
         'unmet_condition' => ':condition — এই অ্যাকাউন্ট এটি পূরণ করে না',
     ],

@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'No s\'ha trobat — torna a carregar la pàgina i prova-ho de nou.',
         'no_permission' => 'No s\'ha trobat aquest permís — torna a carregar la pàgina i prova-ho de nou.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Aquest permís no es pot concedir aquí.',
         'read_only' => 'Aquí aquests permisos són només de lectura.',
         'saved' => 'Els permisos s\'han desat.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Un clic el concedeix explícitament',
         'implied_by' => 'Implicat per: :permissions',
         'missing' => 'Requisit absent: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Restringit per l\'aplicació ara mateix',
         'unmet_condition' => ':condition — aquest compte no ho compleix',
     ],

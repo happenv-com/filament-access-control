@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Nem található — töltsd újra az oldalt, és próbáld újra.',
         'no_permission' => 'Nincs ilyen jogosultság — töltsd újra az oldalt, és próbáld újra.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Ez a jogosultság itt nem adható meg.',
         'read_only' => 'Ezek a jogosultságok itt csak olvashatók.',
         'saved' => 'A jogosultságok mentve.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Egy kattintás kifejezetten megadja',
         'implied_by' => 'Ebből következik: :permissions',
         'missing' => 'Hiányzó követelmény: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Az alkalmazás jelenleg korlátozza',
         'unmet_condition' => ':condition — ez a fiók nem felel meg neki',
     ],

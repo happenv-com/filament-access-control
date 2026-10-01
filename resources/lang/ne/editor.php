@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'यो भेटिएन — पृष्ठ पुनः लोड गरेर फेरि प्रयास गर्नुहोस्।',
         'no_permission' => 'यस्तो कुनै अनुमति भेटिएन — पृष्ठ पुनः लोड गरेर फेरि प्रयास गर्नुहोस्।',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'यो अनुमति यहाँ दिन सकिँदैन।',
         'read_only' => 'यी अनुमतिहरू यहाँ हेर्न मात्र मिल्छन्।',
         'saved' => 'अनुमतिहरू सुरक्षित गरियो।',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'क्लिकले यसलाई सिधै प्रदान गर्छ',
         'implied_by' => 'बाट संकेत गरिएको: :permissions',
         'missing' => 'छुटेको आवश्यकता: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'अहिले एप्लिकेसनद्वारा प्रतिबन्धित',
         'unmet_condition' => ':condition — यो खाताले यो पूरा गर्दैन',
     ],

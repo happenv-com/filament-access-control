@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Не знайдено — оновіть сторінку та спробуйте ще раз.',
         'no_permission' => 'Такий дозвіл не знайдено — оновіть сторінку та спробуйте ще раз.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Цей дозвіл не можна надати тут.',
         'read_only' => 'Тут ці дозволи доступні лише для читання.',
         'saved' => 'Дозволи збережено.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Клік надає його напряму',
         'implied_by' => 'Випливає з: :permissions',
         'missing' => 'Відсутня вимога: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Наразі обмежено застосунком',
         'unmet_condition' => ':condition — цей обліковий запис не відповідає їй',
     ],

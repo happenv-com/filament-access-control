@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => '找不到——請重新整理頁面後再試一次。',
         'no_permission' => '找不到此權限——請重新整理頁面後再試一次。',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => '此處無法授予此權限。',
         'read_only' => '這些權限在此處為唯讀。',
         'saved' => '權限已儲存。',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => '點擊將直接授予此權限',
         'implied_by' => '隱含來源: :permissions',
         'missing' => '缺少的前提條件: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => '目前被應用程式限制',
         'unmet_condition' => ':condition — 此帳戶不符合此條件',
     ],

@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Tapılmadı — səhifəni yeniləyin və yenidən cəhd edin.',
         'no_permission' => 'Belə bir icazə tapılmadı — səhifəni yeniləyin və yenidən cəhd edin.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Bu icazə burada verilə bilməz.',
         'read_only' => 'Bu icazələr burada yalnız oxumaq üçündür.',
         'saved' => 'İcazələr yadda saxlanıldı.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Klik onu birbaşa verir',
         'implied_by' => 'Nəzərdə tutan: :permissions',
         'missing' => 'Çatışmayan şərt: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Hazırda tətbiq tərəfindən məhdudlaşdırılıb',
         'unmet_condition' => ':condition — bu hesab bunu ödəmir',
     ],

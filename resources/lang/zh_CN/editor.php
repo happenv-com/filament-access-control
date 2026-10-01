@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => '未找到——请刷新页面后重试。',
         'no_permission' => '未找到该权限——请刷新页面后重试。',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => '此处无法授予该权限。',
         'read_only' => '这些权限在此处为只读。',
         'saved' => '权限已保存。',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => '点击将直接授予该权限',
         'implied_by' => '隐含来源: :permissions',
         'missing' => '缺少的前提条件: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => '目前被应用程序限制',
         'unmet_condition' => ':condition — 此账户不满足该条件',
     ],

@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Δεν βρέθηκε — ανανεώστε τη σελίδα και δοκιμάστε ξανά.',
         'no_permission' => 'Δεν βρέθηκε τέτοιο δικαίωμα — ανανεώστε τη σελίδα και δοκιμάστε ξανά.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Αυτό το δικαίωμα δεν μπορεί να εκχωρηθεί εδώ.',
         'read_only' => 'Αυτά τα δικαιώματα είναι εδώ μόνο για ανάγνωση.',
         'saved' => 'Τα δικαιώματα αποθηκεύτηκαν.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Ένα κλικ το εκχωρεί ρητά',
         'implied_by' => 'Συνεπάγεται από: :permissions',
         'missing' => 'Λείπει προϋπόθεση: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Περιορίζεται αυτή τη στιγμή από την εφαρμογή',
         'unmet_condition' => ':condition — αυτός ο λογαριασμός δεν την πληροί',
     ],

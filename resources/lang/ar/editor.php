@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'لم يتم العثور عليه — أعد تحميل الصفحة وحاول مجددًا.',
         'no_permission' => 'لم يتم العثور على هذه الصلاحية — أعد تحميل الصفحة وحاول مجددًا.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'لا يمكن منح هذه الصلاحية هنا.',
         'read_only' => 'هذه الصلاحيات للقراءة فقط هنا.',
         'saved' => 'تم حفظ الصلاحيات.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'النقر يمنحها صراحةً',
         'implied_by' => 'يستلزمها: :permissions',
         'missing' => 'متطلب ناقص: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'مقيّدة من قبل التطبيق الآن',
         'unmet_condition' => ':condition — هذا الحساب لا يستوفيه',
     ],

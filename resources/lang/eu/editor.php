@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Ez da aurkitu — freskatu orria eta saiatu berriro.',
         'no_permission' => 'Ez da baimen hori aurkitu — freskatu orria eta saiatu berriro.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Baimen hau ezin da hemen eman.',
         'read_only' => 'Baimen hauek irakurtzeko soilik dira hemen.',
         'saved' => 'Baimenak gorde dira.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Klik batek esplizituki ematen du',
         'implied_by' => 'Honen eragilea: :permissions',
         'missing' => 'Falta den baldintza: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Aplikazioak orain mugatuta',
         'unmet_condition' => ':condition — kontu honek ez du betetzen',
     ],

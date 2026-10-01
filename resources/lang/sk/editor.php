@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Nenašlo sa – obnovte stránku a skúste to znova.',
         'no_permission' => 'Takéto oprávnenie sa nenašlo – obnovte stránku a skúste to znova.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Toto oprávnenie tu nemožno udeliť.',
         'read_only' => 'Tieto oprávnenia sú tu len na čítanie.',
         'saved' => 'Oprávnenia boli uložené.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Kliknutím ho udelíte explicitne',
         'implied_by' => 'Vyplýva z: :permissions',
         'missing' => 'Chýbajúca požiadavka: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Aplikácia to práve teraz obmedzuje',
         'unmet_condition' => ':condition — tento účet ju nespĺňa',
     ],

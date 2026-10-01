@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'አልተገኘም — ገጹን እንደገና ጭነው ደግመው ይሞክሩ።',
         'no_permission' => 'እንደዚህ ያለ ፈቃድ አልተገኘም — ገጹን እንደገና ጭነው ደግመው ይሞክሩ።',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'ይህ ፈቃድ እዚህ ሊሰጥ አይችልም።',
         'read_only' => 'እነዚህ ፈቃዶች እዚህ ለእይታ ብቻ ናቸው።',
         'saved' => 'ፈቃዶቹ ተቀምጠዋል።',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'ጠቅ ማድረግ በቀጥታ ይሰጠዋል',
         'implied_by' => 'የተጠቆመው በ: :permissions',
         'missing' => 'የጎደለ መስፈርት: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'በአሁኑ ጊዜ በመተግበሪያው የተገደበ',
         'unmet_condition' => ':condition — ይህ አካውንት አያሟላውም',
     ],

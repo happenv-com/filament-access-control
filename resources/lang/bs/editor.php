@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Nije pronađeno – osvježite stranicu i pokušajte ponovo.',
         'no_permission' => 'Takva dozvola nije pronađena – osvježite stranicu i pokušajte ponovo.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Ova dozvola se ovdje ne može dodijeliti.',
         'read_only' => 'Ove dozvole su ovdje samo za čitanje.',
         'saved' => 'Dozvole su sačuvane.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Klik je eksplicitno dodjeljuje',
         'implied_by' => 'Podrazumijeva ga: :permissions',
         'missing' => 'Nedostaje preduslov: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Trenutno ograničeno od strane aplikacije',
         'unmet_condition' => ':condition — ovaj nalog to ne ispunjava',
     ],

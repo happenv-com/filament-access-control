@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Seda ei leitud — värskendage lehte ja proovige uuesti.',
         'no_permission' => 'Sellist õigust ei leitud — värskendage lehte ja proovige uuesti.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Seda õigust ei saa siin anda.',
         'read_only' => 'Need õigused on siin ainult lugemiseks.',
         'saved' => 'Õigused on salvestatud.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Klõps annab selle otse',
         'implied_by' => 'Selle eeldab: :permissions',
         'missing' => 'Puuduv eeldus: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Rakendus piirab seda praegu',
         'unmet_condition' => ':condition — see konto ei vasta sellele',
     ],

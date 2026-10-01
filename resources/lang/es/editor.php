@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'No se ha encontrado — recarga la página e inténtalo de nuevo.',
         'no_permission' => 'No se ha encontrado ese permiso — recarga la página e inténtalo de nuevo.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Este permiso no se puede conceder aquí.',
         'read_only' => 'Aquí estos permisos son de solo lectura.',
         'saved' => 'Los permisos se han guardado.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Un clic lo concede explícitamente',
         'implied_by' => 'Implicado por: :permissions',
         'missing' => 'Requisito faltante: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Restringido por la aplicación ahora mismo',
         'unmet_condition' => ':condition — esta cuenta no la cumple',
     ],

@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Ni najdeno – osvežite stran in poskusite znova.',
         'no_permission' => 'Takega dovoljenja ni bilo mogoče najti – osvežite stran in poskusite znova.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Tega dovoljenja tukaj ni mogoče dodeliti.',
         'read_only' => 'Ta dovoljenja so tukaj samo za branje.',
         'saved' => 'Dovoljenja so bila shranjena.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Klik ga izrecno dodeli',
         'implied_by' => 'Izhaja iz: :permissions',
         'missing' => 'Manjkajoča zahteva: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Trenutno omejeno s strani aplikacije',
         'unmet_condition' => ':condition — ta račun ga ne izpolnjuje',
     ],

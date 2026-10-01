@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Nerasta — perkraukite puslapį ir bandykite dar kartą.',
         'no_permission' => 'Tokio leidimo nerasta — perkraukite puslapį ir bandykite dar kartą.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Šio leidimo čia suteikti negalima.',
         'read_only' => 'Čia šiuos leidimus galima tik peržiūrėti.',
         'saved' => 'Leidimai išsaugoti.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Paspaudimas jį suteikia tiesiogiai',
         'implied_by' => 'Numanoma iš: :permissions',
         'missing' => 'Trūkstamas reikalavimas: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Šiuo metu apribota programos',
         'unmet_condition' => ':condition — ši paskyra jos netenkina',
     ],

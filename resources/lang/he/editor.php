@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'לא נמצא — יש לרענן את הדף ולנסות שוב.',
         'no_permission' => 'הרשאה זו לא נמצאה — יש לרענן את הדף ולנסות שוב.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'לא ניתן להעניק הרשאה זו כאן.',
         'read_only' => 'הרשאות אלה הן לקריאה בלבד כאן.',
         'saved' => 'ההרשאות נשמרו.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'לחיצה מעניקה אותה במפורש',
         'implied_by' => 'נגזרת מ: :permissions',
         'missing' => 'דרישה חסרה: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'מוגבלת כרגע על ידי האפליקציה',
         'unmet_condition' => ':condition — חשבון זה אינו עומד בו',
     ],

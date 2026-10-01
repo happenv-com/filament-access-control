@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Topilmadi — sahifani yangilang va qaytadan urinib ko\'ring.',
         'no_permission' => 'Bunday ruxsat topilmadi — sahifani yangilang va qaytadan urinib ko\'ring.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Bu ruxsatni bu yerda berib bo\'lmaydi.',
         'read_only' => 'Bu ruxsatlar bu yerda faqat ko\'rish uchun.',
         'saved' => 'Ruxsatlar saqlandi.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Bosish uni to\'g\'ridan-to\'g\'ri beradi',
         'implied_by' => 'Shundan kelib chiqadi: :permissions',
         'missing' => 'Yetishmayotgan talab: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Hozircha ilova tomonidan cheklangan',
         'unmet_condition' => ':condition — bu hisob buni bajarmaydi',
     ],

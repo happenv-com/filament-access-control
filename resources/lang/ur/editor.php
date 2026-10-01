@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'نہیں ملا — صفحہ دوبارہ لوڈ کریں اور پھر کوشش کریں۔',
         'no_permission' => 'ایسی کوئی اجازت نہیں ملی — صفحہ دوبارہ لوڈ کریں اور پھر کوشش کریں۔',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'یہ اجازت یہاں نہیں دی جا سکتی۔',
         'read_only' => 'یہ اجازتیں یہاں صرف دیکھنے کے لیے ہیں۔',
         'saved' => 'اجازتیں محفوظ ہو گئیں۔',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'کلک کرنے سے یہ براہِ راست دی جاتی ہے',
         'implied_by' => 'اس سے مضمر: :permissions',
         'missing' => 'غائب ضرورت: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'فی الحال ایپلیکیشن کی جانب سے محدود',
         'unmet_condition' => ':condition — یہ اکاؤنٹ اسے پورا نہیں کرتا',
     ],

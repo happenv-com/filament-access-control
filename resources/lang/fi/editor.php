@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Kohdetta ei löytynyt — lataa sivu uudelleen ja yritä sitten uudestaan.',
         'no_permission' => 'Käyttöoikeutta ei löytynyt — lataa sivu uudelleen ja yritä sitten uudestaan.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Tätä käyttöoikeutta ei voi myöntää täällä.',
         'read_only' => 'Nämä käyttöoikeudet ovat täällä vain luku -tilassa.',
         'saved' => 'Käyttöoikeudet on tallennettu.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Napsautus myöntää sen suoraan',
         'implied_by' => 'Seuraa oikeuksista: :permissions',
         'missing' => 'Puuttuva edellytys: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Sovellus rajoittaa tätä juuri nyt',
         'unmet_condition' => ':condition — tämä tili ei täytä sitä',
     ],

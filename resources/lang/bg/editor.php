@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Не е намерено — презаредете страницата и опитайте отново.',
         'no_permission' => 'Такова разрешение не е намерено — презаредете страницата и опитайте отново.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Това разрешение не може да бъде предоставено тук.',
         'read_only' => 'Тези разрешения тук са само за четене.',
         'saved' => 'Разрешенията са запазени.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Кликване го предоставя изрично',
         'implied_by' => 'Предполагано от: :permissions',
         'missing' => 'Липсващо изискване: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'В момента ограничено от приложението',
         'unmet_condition' => ':condition — този акаунт не го изпълнява',
     ],

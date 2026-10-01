@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Den hittades inte — ladda om sidan och försök igen.',
         'no_permission' => 'Behörigheten hittades inte — ladda om sidan och försök igen.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Den här behörigheten kan inte tilldelas här.',
         'read_only' => 'Dessa behörigheter är skrivskyddade här.',
         'saved' => 'Behörigheterna har sparats.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Ett klick tilldelar den explicit',
         'implied_by' => 'Medförs av: :permissions',
         'missing' => 'Saknat krav: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Begränsad av applikationen just nu',
         'unmet_condition' => ':condition — det här kontot uppfyller den inte',
     ],

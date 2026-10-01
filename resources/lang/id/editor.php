@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Tidak ditemukan — muat ulang halaman dan coba lagi.',
         'no_permission' => 'Izin tersebut tidak ditemukan — muat ulang halaman dan coba lagi.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Izin ini tidak dapat diberikan di sini.',
         'read_only' => 'Izin ini hanya dapat dibaca di sini.',
         'saved' => 'Izin telah disimpan.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Klik akan memberikannya secara eksplisit',
         'implied_by' => 'Disiratkan oleh: :permissions',
         'missing' => 'Persyaratan hilang: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Sedang dibatasi oleh aplikasi saat ini',
         'unmet_condition' => ':condition — akun ini tidak memenuhinya',
     ],

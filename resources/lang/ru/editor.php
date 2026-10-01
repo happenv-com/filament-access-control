@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Не найдено — обновите страницу и попробуйте снова.',
         'no_permission' => 'Такое разрешение не найдено — обновите страницу и попробуйте снова.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Это разрешение нельзя выдать здесь.',
         'read_only' => 'Здесь эти разрешения доступны только для чтения.',
         'saved' => 'Разрешения сохранены.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Клик выдаёт его напрямую',
         'implied_by' => 'Следует из: :permissions',
         'missing' => 'Отсутствует требование: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Сейчас ограничено приложением',
         'unmet_condition' => ':condition — эта учётная запись не соответствует ему',
     ],

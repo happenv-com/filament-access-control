@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'no_holder' => 'Bulunamadı — sayfayı yenileyip tekrar deneyin.',
         'no_permission' => 'Böyle bir izin bulunamadı — sayfayı yenileyip tekrar deneyin.',
+        'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
+        'not_grantable_discarded' => 'Changes to permissions you do not hold were discarded: :permissions.',
         'not_offered' => 'Bu izin burada verilemez.',
         'read_only' => 'Bu izinler burada salt okunurdur.',
         'saved' => 'İzinler kaydedildi.',
@@ -65,6 +67,7 @@ return [
         'grant_explicitly' => 'Bir tıklama bunu doğrudan verir',
         'implied_by' => 'İma eden: :permissions',
         'missing' => 'Eksik gereksinim: :permissions',
+        'not_grantable' => 'You do not hold this permission, so you cannot grant or revoke it',
         'restricted' => 'Şu anda uygulama tarafından kısıtlanıyor',
         'unmet_condition' => ':condition — bu hesap bunu karşılamıyor',
     ],
