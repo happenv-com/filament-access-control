@@ -2,6 +2,17 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.4.0 - 2026-10-01
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Features
+
+* feat: escalation and self-editing guards, on by default (3.4.0) by @webard in https://github.com/happenv-com/filament-access-control/pull/14
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.3.0...v3.4.0
+
 ## v3.3.0 - 2026-09-30
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
