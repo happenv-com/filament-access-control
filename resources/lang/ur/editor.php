@@ -39,6 +39,7 @@ return [
         'save' => 'اجازتیں محفوظ کریں',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'نہیں ملا — صفحہ دوبارہ لوڈ کریں اور پھر کوشش کریں۔',
         'no_permission' => 'ایسی کوئی اجازت نہیں ملی — صفحہ دوبارہ لوڈ کریں اور پھر کوشش کریں۔',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

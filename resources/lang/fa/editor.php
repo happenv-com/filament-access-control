@@ -39,6 +39,7 @@ return [
         'save' => 'ذخیره مجوزها',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'پیدا نشد — صفحه را دوباره بارگذاری کنید و دوباره تلاش کنید.',
         'no_permission' => 'چنین مجوزی پیدا نشد — صفحه را دوباره بارگذاری کنید و دوباره تلاش کنید.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

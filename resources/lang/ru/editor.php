@@ -39,6 +39,7 @@ return [
         'save' => 'Сохранить разрешения',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Не найдено — обновите страницу и попробуйте снова.',
         'no_permission' => 'Такое разрешение не найдено — обновите страницу и попробуйте снова.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

@@ -39,6 +39,7 @@ return [
         'save' => 'Spara behörigheter',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Den hittades inte — ladda om sidan och försök igen.',
         'no_permission' => 'Behörigheten hittades inte — ladda om sidan och försök igen.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

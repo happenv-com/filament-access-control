@@ -39,6 +39,7 @@ return [
         'save' => 'Lưu quyền',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Không tìm thấy — hãy tải lại trang và thử lại.',
         'no_permission' => 'Không tìm thấy quyền này — hãy tải lại trang và thử lại.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

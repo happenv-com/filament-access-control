@@ -39,6 +39,7 @@ return [
         'save' => 'İzinleri kaydet',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Bulunamadı — sayfayı yenileyip tekrar deneyin.',
         'no_permission' => 'Böyle bir izin bulunamadı — sayfayı yenileyip tekrar deneyin.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

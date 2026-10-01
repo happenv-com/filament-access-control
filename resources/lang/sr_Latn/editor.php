@@ -39,6 +39,7 @@ return [
         'save' => 'Sačuvaj dozvole',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Nije pronađeno – osvežite stranicu i pokušajte ponovo.',
         'no_permission' => 'Takva dozvola nije pronađena – osvežite stranicu i pokušajte ponovo.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

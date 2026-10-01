@@ -39,6 +39,7 @@ return [
         'save' => 'Gem tilladelser',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Den blev ikke fundet — genindlæs siden, og prøv igen.',
         'no_permission' => 'Tilladelsen blev ikke fundet — genindlæs siden, og prøv igen.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

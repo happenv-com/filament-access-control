@@ -39,6 +39,7 @@ return [
         'save' => 'Salvare permisiuni',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Nu a fost găsit — reîncărcați pagina și încercați din nou.',
         'no_permission' => 'Permisiunea nu a fost găsită — reîncărcați pagina și încercați din nou.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

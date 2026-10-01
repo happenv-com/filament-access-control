@@ -39,6 +39,7 @@ return [
         'save' => 'İcazələri yadda saxla',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Tapılmadı — səhifəni yeniləyin və yenidən cəhd edin.',
         'no_permission' => 'Belə bir icazə tapılmadı — səhifəni yeniləyin və yenidən cəhd edin.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

@@ -39,6 +39,7 @@ return [
         'save' => 'حفظ الصلاحيات',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'لم يتم العثور عليه — أعد تحميل الصفحة وحاول مجددًا.',
         'no_permission' => 'لم يتم العثور على هذه الصلاحية — أعد تحميل الصفحة وحاول مجددًا.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

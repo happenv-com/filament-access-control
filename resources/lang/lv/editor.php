@@ -39,6 +39,7 @@ return [
         'save' => 'Saglabāt atļaujas',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Netika atrasts — pārlādējiet lapu un mēģiniet vēlreiz.',
         'no_permission' => 'Šāda atļauja netika atrasta — pārlādējiet lapu un mēģiniet vēlreiz.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

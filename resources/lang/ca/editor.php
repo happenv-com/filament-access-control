@@ -39,6 +39,7 @@ return [
         'save' => 'Desar permisos',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'No s\'ha trobat — torna a carregar la pàgina i prova-ho de nou.',
         'no_permission' => 'No s\'ha trobat aquest permís — torna a carregar la pàgina i prova-ho de nou.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

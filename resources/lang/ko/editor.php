@@ -39,6 +39,7 @@ return [
         'save' => '권한 저장',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => '찾을 수 없습니다 — 페이지를 새로 고친 후 다시 시도하세요.',
         'no_permission' => '해당 권한을 찾을 수 없습니다 — 페이지를 새로 고친 후 다시 시도하세요.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

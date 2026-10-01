@@ -39,6 +39,7 @@ return [
         'save' => '儲存權限',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => '找不到——請重新載入頁面後再試。',
         'no_permission' => '找不到此權限——請重新載入頁面後再試。',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

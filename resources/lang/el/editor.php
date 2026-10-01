@@ -39,6 +39,7 @@ return [
         'save' => 'Αποθήκευση δικαιωμάτων',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Δεν βρέθηκε — ανανεώστε τη σελίδα και δοκιμάστε ξανά.',
         'no_permission' => 'Δεν βρέθηκε τέτοιο δικαίωμα — ανανεώστε τη σελίδα και δοκιμάστε ξανά.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

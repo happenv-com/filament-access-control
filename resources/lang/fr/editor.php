@@ -39,6 +39,7 @@ return [
         'save' => 'Sauvegarder les permissions',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Introuvable — rechargez la page et réessayez.',
         'no_permission' => 'Cette permission est introuvable — rechargez la page et réessayez.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

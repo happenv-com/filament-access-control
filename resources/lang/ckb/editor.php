@@ -39,6 +39,7 @@ return [
         'save' => 'پاشەکەوتکردنی مۆڵەتەکان',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'نەدۆزرایەوە — پەڕەکە نوێ بکەرەوە و دووبارە هەوڵ بدەرەوە.',
         'no_permission' => 'ئەم مۆڵەتە نەدۆزرایەوە — پەڕەکە نوێ بکەرەوە و دووبارە هەوڵ بدەرەوە.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

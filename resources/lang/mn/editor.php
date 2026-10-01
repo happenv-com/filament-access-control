@@ -39,6 +39,7 @@ return [
         'save' => 'Эрх хадгалах',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Олдсонгүй — хуудсаа дахин ачаалаад дахин оролдоно уу.',
         'no_permission' => 'Ийм эрх олдсонгүй — хуудсаа дахин ачаалаад дахин оролдоно уу.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

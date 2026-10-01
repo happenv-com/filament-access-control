@@ -39,6 +39,7 @@ return [
         'save' => 'Сачувај дозволе',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Није пронађено – освежите страницу и покушајте поново.',
         'no_permission' => 'Таква дозвола није пронађена – освежите страницу и покушајте поново.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

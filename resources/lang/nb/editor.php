@@ -39,6 +39,7 @@ return [
         'save' => 'Lagre tillatelser',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Den ble ikke funnet — last inn siden på nytt og prøv igjen.',
         'no_permission' => 'Fant ingen slik tillatelse — last inn siden på nytt og prøv igjen.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

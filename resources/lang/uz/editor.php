@@ -39,6 +39,7 @@ return [
         'save' => 'Ruxsatlarni saqlash',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Topilmadi — sahifani yangilang va qaytadan urinib ko\'ring.',
         'no_permission' => 'Bunday ruxsat topilmadi — sahifani yangilang va qaytadan urinib ko\'ring.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

@@ -39,6 +39,7 @@ return [
         'save' => 'Rechten opslaan',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Niet gevonden — laad de pagina opnieuw en probeer het nog eens.',
         'no_permission' => 'Dit recht is niet gevonden — laad de pagina opnieuw en probeer het nog eens.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

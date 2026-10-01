@@ -1054,11 +1054,26 @@ trait EditsPermissions
         foreach (array_keys($this->changes) as $holderKey) {
             $holderKey = (string) $holderKey;
             $staged = $this->changes[$holderKey];
-            $holder = $this->mutableHolder($holderKey);
+            $refusal = $this->refusalFor($holderKey);
 
-            if (! $holder instanceof Model) {
+            // Refused, the staged changes go: kept, they would still read as pending on a screen
+            // that can never save them, and Save would keep offering what it cannot do.
+            if ($refusal !== null) {
+                unset($this->changes[$holderKey]);
+                $this->forgetResolutions();
+
+                $holder = $this->holders->get($holderKey);
+
+                $this->deny(__('filament-access-control::editor.notifications.discarded', [
+                    'holder' => $holder instanceof Model ? $this->getHolderTitle($holder) : $holderKey,
+                    'reason' => $refusal,
+                ]));
+
                 continue;
             }
+
+            /** @var Model&HasEditablePermissions $holder */
+            $holder = $this->holders->get($holderKey);
 
             // Validated again rather than trusted: the catalogue may have changed under a screen left
             // open, and a staged slug must be as grantable at Save as it was at the click — the
@@ -1205,36 +1220,47 @@ trait EditsPermissions
      */
     protected function mutableHolder(string $holderKey): ?Model
     {
+        $refusal = $this->refusalFor($holderKey);
+
+        if ($refusal !== null) {
+            $this->deny($refusal);
+
+            return null;
+        }
+
+        /** @var Model&HasEditablePermissions $holder */
+        $holder = $this->holders->get($holderKey);
+
+        return $holder;
+    }
+
+    /**
+     * Why this screen must not write to the holder a click names — `null` when it may.
+     */
+    protected function refusalFor(string $holderKey): ?string
+    {
         $holder = $this->holders->get($holderKey);
 
         if (! $holder instanceof Model) {
-            $this->deny(__('filament-access-control::editor.notifications.no_holder'));
-
-            return null;
+            return __('filament-access-control::editor.notifications.no_holder');
         }
 
         if ($this->isHolderLocked($holder)) {
-            $this->deny(__('filament-access-control::editor.super_admin_hint'));
-
-            return null;
+            return __('filament-access-control::editor.super_admin_hint');
         }
 
         if (! $this->isEditable()) {
-            $this->deny(__('filament-access-control::editor.notifications.read_only'));
-
-            return null;
+            return __('filament-access-control::editor.notifications.read_only');
         }
 
         $verdict = Authorization::inspect($this->getUpdateAbility(), $holder);
 
         if ($verdict->denied()) {
-            $this->deny(resolve(RefusalLead::class)->fromMessage($verdict->message())
-                ?? __('filament-access-control::editor.notifications.unauthorized'));
-
-            return null;
+            return resolve(RefusalLead::class)->fromMessage($verdict->message())
+                ?? __('filament-access-control::editor.notifications.unauthorized');
         }
 
-        return $holder;
+        return null;
     }
 
     protected function tree(): PermissionTree

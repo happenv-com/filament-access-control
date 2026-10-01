@@ -39,6 +39,7 @@ return [
         'save' => 'Phalna save rawh',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Hmuh a ni lo — page kha reload la, tinawn leh rawh.',
         'no_permission' => 'Chutiang phalna chu hmuh a ni lo — page kha reload la, tinawn leh rawh.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

@@ -39,6 +39,7 @@ return [
         'save' => 'Save permissions',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'It was not found — reload the page and try again.',
         'no_permission' => 'No such permission was found — reload the page and try again.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

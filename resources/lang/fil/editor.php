@@ -39,6 +39,7 @@ return [
         'save' => 'I-save ang mga pahintulot',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Hindi ito nahanap — i-reload ang page at subukan ulit.',
         'no_permission' => 'Walang nahanap na ganitong pahintulot — i-reload ang page at subukan ulit.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

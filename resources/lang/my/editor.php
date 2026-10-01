@@ -39,6 +39,7 @@ return [
         'save' => 'ခွင့်ပြုချက်များ သိမ်းဆည်းရန်',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'ရှာမတွေ့ပါ — စာမျက်နှာကို ပြန်ဖွင့်ပြီး ထပ်စမ်းကြည့်ပါ။',
         'no_permission' => 'ထိုခွင့်ပြုချက်ကို ရှာမတွေ့ပါ — စာမျက်နှာကို ပြန်ဖွင့်ပြီး ထပ်စမ်းကြည့်ပါ။',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

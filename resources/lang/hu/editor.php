@@ -39,6 +39,7 @@ return [
         'save' => 'Jogosultságok mentése',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Nem található — töltsd újra az oldalt, és próbáld újra.',
         'no_permission' => 'Nincs ilyen jogosultság — töltsd újra az oldalt, és próbáld újra.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

@@ -39,6 +39,7 @@ return [
         'save' => 'Ruaj lejet',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Nuk u gjet — ringarkoni faqen dhe provoni përsëri.',
         'no_permission' => 'Kjo leje nuk u gjet — ringarkoni faqen dhe provoni përsëri.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

@@ -39,6 +39,7 @@ return [
         'save' => 'Պահպանել թույլտվությունները',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Չի գտնվել — թարմացրեք էջը և նորից փորձեք։',
         'no_permission' => 'Նման թույլտվություն չի գտնվել — թարմացրեք էջը և նորից փորձեք։',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

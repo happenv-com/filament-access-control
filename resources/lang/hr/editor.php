@@ -39,6 +39,7 @@ return [
         'save' => 'Spremi dopuštenja',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Nije pronađeno – osvježite stranicu i pokušajte ponovno.',
         'no_permission' => 'Takvo dopuštenje nije pronađeno – osvježite stranicu i pokušajte ponovno.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

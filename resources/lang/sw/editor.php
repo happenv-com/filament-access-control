@@ -39,6 +39,7 @@ return [
         'save' => 'Hifadhi ruhusa',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Haikupatikana — pakia upya ukurasa kisha ujaribu tena.',
         'no_permission' => 'Ruhusa hiyo haikupatikana — pakia upya ukurasa kisha ujaribu tena.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

@@ -39,6 +39,7 @@ return [
         'save' => 'Зберегти дозволи',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Не знайдено — оновіть сторінку та спробуйте ще раз.',
         'no_permission' => 'Такий дозвіл не знайдено — оновіть сторінку та спробуйте ще раз.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

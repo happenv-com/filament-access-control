@@ -39,6 +39,7 @@ return [
         'save' => 'บันทึกสิทธิ์',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'ไม่พบข้อมูล — โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง',
         'no_permission' => 'ไม่พบสิทธิ์นี้ — โปรดโหลดหน้านี้ใหม่แล้วลองอีกครั้ง',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

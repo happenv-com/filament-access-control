@@ -39,6 +39,7 @@ return [
         'save' => 'ნებართვების შენახვა',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'ვერ მოიძებნა — განაახლეთ გვერდი და სცადეთ ხელახლა.',
         'no_permission' => 'ასეთი ნებართვა ვერ მოიძებნა — განაახლეთ გვერდი და სცადეთ ხელახლა.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

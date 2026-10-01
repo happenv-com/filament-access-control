@@ -39,6 +39,7 @@ return [
         'save' => 'រក្សាទុកសិទ្ធិ',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'រកមិនឃើញទេ — សូមផ្ទុកទំព័រឡើងវិញ ហើយព្យាយាមម្តងទៀត។',
         'no_permission' => 'រកមិនឃើញសិទ្ធិនេះទេ — សូមផ្ទុកទំព័រឡើងវិញ ហើយព្យាយាមម្តងទៀត។',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

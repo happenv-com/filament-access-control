@@ -39,6 +39,7 @@ return [
         'save' => 'अनुमतिहरू सुरक्षित गर्नुहोस्',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'यो भेटिएन — पृष्ठ पुनः लोड गरेर फेरि प्रयास गर्नुहोस्।',
         'no_permission' => 'यस्तो कुनै अनुमति भेटिएन — पृष्ठ पुनः लोड गरेर फेरि प्रयास गर्नुहोस्।',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

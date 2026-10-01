@@ -39,6 +39,7 @@ return [
         'save' => 'Simpan kebenaran',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Tidak dijumpai — muat semula halaman dan cuba lagi.',
         'no_permission' => 'Kebenaran tersebut tidak dijumpai — muat semula halaman dan cuba lagi.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

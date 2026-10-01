@@ -39,6 +39,7 @@ return [
         'save' => 'Нигоҳ доштани иҷозатҳо',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Ёфт нашуд — саҳифаро аз нав бор кунед ва боз кӯшиш кунед.',
         'no_permission' => 'Чунин иҷозат ёфт нашуд — саҳифаро аз нав бор кунед ва боз кӯшиш кунед.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

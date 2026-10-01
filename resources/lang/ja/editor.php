@@ -39,6 +39,7 @@ return [
         'save' => '権限を保存',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => '見つかりませんでした——ページを再読み込みして、もう一度お試しください。',
         'no_permission' => '該当する権限が見つかりませんでした——ページを再読み込みして、もう一度お試しください。',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

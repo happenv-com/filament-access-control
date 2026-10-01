@@ -39,6 +39,7 @@ return [
         'save' => 'Simpan izin',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Tidak ditemukan — muat ulang halaman dan coba lagi.',
         'no_permission' => 'Izin tersebut tidak ditemukan — muat ulang halaman dan coba lagi.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

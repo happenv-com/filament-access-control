@@ -39,6 +39,7 @@ return [
         'save' => 'Uložiť oprávnenia',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Nenašlo sa – obnovte stránku a skúste to znova.',
         'no_permission' => 'Takéto oprávnenie sa nenašlo – obnovte stránku a skúste to znova.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

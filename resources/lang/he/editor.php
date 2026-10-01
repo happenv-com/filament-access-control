@@ -39,6 +39,7 @@ return [
         'save' => 'שמירת הרשאות',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'לא נמצא — יש לרענן את הדף ולנסות שוב.',
         'no_permission' => 'הרשאה זו לא נמצאה — יש לרענן את הדף ולנסות שוב.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

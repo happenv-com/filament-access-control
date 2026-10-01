@@ -39,6 +39,7 @@ return [
         'save' => 'Salvesta õigused',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Seda ei leitud — värskendage lehte ja proovige uuesti.',
         'no_permission' => 'Sellist õigust ei leitud — värskendage lehte ja proovige uuesti.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

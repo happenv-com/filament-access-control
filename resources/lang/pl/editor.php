@@ -39,6 +39,7 @@ return [
         'save' => 'Zapisz uprawnienia',
     ],
     'notifications' => [
+        'discarded' => 'Zmiany dla :holder zostały odrzucone. :reason',
         'no_holder' => 'Nie znaleziono — odśwież stronę i spróbuj ponownie.',
         'no_permission' => 'Nie znaleziono takiego uprawnienia — odśwież stronę i spróbuj ponownie.',
         'not_grantable' => 'Możesz nadawać i odbierać tylko uprawnienia, które masz sam.',

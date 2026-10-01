@@ -39,6 +39,7 @@ return [
         'save' => 'Gorde baimenak',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Ez da aurkitu — freskatu orria eta saiatu berriro.',
         'no_permission' => 'Ez da baimen hori aurkitu — freskatu orria eta saiatu berriro.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

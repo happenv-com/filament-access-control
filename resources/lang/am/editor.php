@@ -39,6 +39,7 @@ return [
         'save' => 'ፈቃዶችን አስቀምጥ',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'አልተገኘም — ገጹን እንደገና ጭነው ደግመው ይሞክሩ።',
         'no_permission' => 'እንደዚህ ያለ ፈቃድ አልተገኘም — ገጹን እንደገና ጭነው ደግመው ይሞክሩ።',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

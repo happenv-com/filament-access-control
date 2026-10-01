@@ -39,6 +39,7 @@ return [
         'save' => 'Tallenna käyttöoikeudet',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Kohdetta ei löytynyt — lataa sivu uudelleen ja yritä sitten uudestaan.',
         'no_permission' => 'Käyttöoikeutta ei löytynyt — lataa sivu uudelleen ja yritä sitten uudestaan.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',

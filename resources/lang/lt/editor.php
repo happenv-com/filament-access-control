@@ -39,6 +39,7 @@ return [
         'save' => 'Išsaugoti leidimus',
     ],
     'notifications' => [
+        'discarded' => 'The changes to :holder were discarded. :reason',
         'no_holder' => 'Nerasta — perkraukite puslapį ir bandykite dar kartą.',
         'no_permission' => 'Tokio leidimo nerasta — perkraukite puslapį ir bandykite dar kartą.',
         'not_grantable' => 'You can only grant and revoke permissions you hold yourself.',
