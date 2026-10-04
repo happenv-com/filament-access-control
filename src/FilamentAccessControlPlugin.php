@@ -545,8 +545,21 @@ class FilamentAccessControlPlugin implements Plugin
     public function getActions(): array
     {
         $actions = $this->evaluate($this->actions);
+        $actions = array_values(array_filter(is_array($actions) ? $actions : [], fn (mixed $action): bool => $action instanceof Action));
 
-        return array_values(array_filter(is_array($actions) ? $actions : [], fn (mixed $action): bool => $action instanceof Action));
+        foreach ($actions as $action) {
+            // `->action('method')` names a method of the Livewire component the action is mounted
+            // on — here, the package's own, which the application cannot add to. Silently running
+            // nothing is worse than saying so.
+            if ($action->hasAction() && ! $action->getActionFunction() instanceof Closure) {
+                throw new InvalidArgumentException(sprintf(
+                    'The plugin action [%s] has a method name as its handler, which cannot work here: it would have to exist on the package\'s own Livewire component. Pass a Closure to ->action() instead.',
+                    $action->getName(),
+                ));
+            }
+        }
+
+        return $actions;
     }
 
     // Access control page ---------------------------------------------------------------------
