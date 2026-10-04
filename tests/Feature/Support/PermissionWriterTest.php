@@ -3,8 +3,11 @@
 declare(strict_types=1);
 
 use Happenv\FilamentAccessControl\Events\PermissionsUpdated;
+use Happenv\FilamentAccessControl\Exceptions\PermissionWriteRefused;
 use Happenv\FilamentAccessControl\Support\PermissionWriter;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
+use Happenv\FilamentAccessControl\Tests\Fixtures\Support\RefusingPermissionWriter;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 
 covers(PermissionWriter::class, PermissionsUpdated::class);
@@ -67,4 +70,17 @@ it('reports exactly what changed', function (): void {
     Event::assertDispatched(PermissionsUpdated::class, fn (PermissionsUpdated $event): bool => $event->record->is($role)
         && $event->granted === ['c']
         && $event->revoked === ['a']);
+});
+
+it('writes nothing, and reports nothing, when a subclass refuses the list', function (): void {
+    Event::fake([PermissionsUpdated::class]);
+
+    $role = createRole('editor', ['a']);
+
+    expect(fn (): Model => (new RefusingPermissionWriter('b'))->write($role, grant: ['b', 'c']))
+        ->toThrow(PermissionWriteRefused::class, 'Choose a channel first.');
+
+    expect($role->fresh()->getPermissions()->all())->toBe(['a']);
+
+    Event::assertNotDispatched(PermissionsUpdated::class);
 });

@@ -15,7 +15,9 @@ use Filament\Support\Concerns\EvaluatesClosures;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Pages\AccessControl;
+use Happenv\FilamentAccessControl\Support\CellNote;
 use Happenv\FilamentAccessControl\Support\GrantGuard;
+use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,6 +57,11 @@ class FilamentAccessControlPlugin implements Plugin
     protected bool | Closure $isSelfEditingPrevented = true;
 
     protected ?Closure $grantableBy = null;
+
+    protected ?Closure $holderCellNotes = null;
+
+    /** @var array<Action>|Closure */
+    protected array | Closure $actions = [];
 
     /** @var class-string<RolePermissionMatrix> */
     protected string $matrixComponent = RolePermissionMatrix::class;
@@ -476,6 +483,70 @@ class FilamentAccessControlPlugin implements Plugin
             ->map(fn (mixed $slug): string => $slug instanceof BackedEnum ? (string) $slug->value : (string) $slug)
             ->unique()
             ->values();
+    }
+
+    // Cells -----------------------------------------------------------------------------------
+
+    /**
+     * A note under a holder's cell of a permission row — never a subject's or a group's. Receives
+     * the holder (as `holder`, or by its type) and the permission (`permission`) and returns a
+     * {@see CellNote}, or `null` for none.
+     *
+     * @param  (Closure(Model, PermissionDto): ?CellNote)|null  $callback
+     */
+    public function holderCellNotes(?Closure $callback): static
+    {
+        $this->holderCellNotes = $callback;
+
+        return $this;
+    }
+
+    public function hasHolderCellNotes(): bool
+    {
+        return $this->holderCellNotes instanceof Closure;
+    }
+
+    public function getHolderCellNote(Model $holder, PermissionDto $permission): ?CellNote
+    {
+        if (! $this->holderCellNotes instanceof Closure) {
+            return null;
+        }
+
+        $note = $this->evaluate(
+            $this->holderCellNotes,
+            namedInjections: ['holder' => $holder, 'record' => $holder, 'permission' => $permission],
+            typedInjections: [Model::class => $holder, $holder::class => $holder, PermissionDto::class => $permission],
+        );
+
+        return $note instanceof CellNote ? $note : null;
+    }
+
+    /**
+     * Further actions the permission screens can mount by name — the ones {@see CellNote}s open.
+     * Mounted with the note's arguments plus `holder` (the holder's key) and `permission` (the
+     * slug); after one runs, the screen reads every holder again.
+     *
+     * Each action authorises itself (`->authorize(...)`): the screens only refuse to mount them
+     * while they edit nothing. A closure is evaluated on every request, never at boot, so labels
+     * are translated in the request's locale.
+     *
+     * @param  array<Action>|Closure(): array<Action>  $actions
+     */
+    public function actions(array | Closure $actions): static
+    {
+        $this->actions = $actions;
+
+        return $this;
+    }
+
+    /**
+     * @return array<Action>
+     */
+    public function getActions(): array
+    {
+        $actions = $this->evaluate($this->actions);
+
+        return array_values(array_filter(is_array($actions) ? $actions : [], fn (mixed $action): bool => $action instanceof Action));
     }
 
     // Access control page ---------------------------------------------------------------------

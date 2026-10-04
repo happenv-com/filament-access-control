@@ -17,8 +17,10 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
+use Happenv\FilamentAccessControl\Exceptions\PermissionWriteRefused;
 use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Support\Authorization;
+use Happenv\FilamentAccessControl\Support\CellNote;
 use Happenv\FilamentAccessControl\Support\DeclarationProblems;
 use Happenv\FilamentAccessControl\Support\DependencyBadge;
 use Happenv\FilamentAccessControl\Support\GrantGuard;
@@ -41,6 +43,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Js;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 
@@ -68,6 +71,8 @@ use Livewire\Attributes\Locked;
  */
 trait EditsPermissions
 {
+    use InteractsWithPluginActions;
+
     /**
      * Nullable only for the moment Livewire assigns the mount parameters of the same name, before
      * `mount()` resolves "not said" to the plugin's default.
@@ -941,6 +946,7 @@ trait EditsPermissions
             // the group-header badges it replaces.
             ->color(fn (string $state, array $record): ?string => $record['type'] === 'group' && $state !== '' ? $this->summaryColor($state) : null)
             ->tooltip(fn (array $record): ?string => $this->holderTooltip($holderKey, $record))
+            ->description(fn (array $record): ?Htmlable => $this->holderCellNoteHtml($holderKey, $record))
             ->disabledClick(fn (array $record): bool => ! $this->canChangeRecord($holderKey, $record))
             ->action(function (array $record) use ($holderKey): void {
                 if ($record['type'] === 'group') {
@@ -951,6 +957,54 @@ trait EditsPermissions
                     ? $this->toggleSubject($holderKey, (string) $record['group'], (string) $record['subject'])
                     : $this->toggle($holderKey, (string) $record['slug']);
             });
+    }
+
+    /**
+     * What the application notes under a holder's cell of a permission row — see
+     * {@see FilamentAccessControlPlugin::holderCellNotes()}.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    public function holderCellNote(string $holderKey, array $record): ?CellNote
+    {
+        if ($record['type'] !== 'permission' || ! $this->plugin()->hasHolderCellNotes()) {
+            return null;
+        }
+
+        $holder = $this->holders->get($holderKey);
+        $permission = $this->tree()->find((string) $record['slug']);
+
+        return $holder instanceof Model && $permission instanceof PermissionDto
+            ? $this->plugin()->getHolderCellNote($holder, $permission)
+            : null;
+    }
+
+    /**
+     * The note as a small badge under the cell's icon. Its click mounts the note's action and stops
+     * there — the cell around it is a button of its own. Plain text when the action cannot be
+     * mounted: none named, or a screen that edits nothing.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    protected function holderCellNoteHtml(string $holderKey, array $record): ?Htmlable
+    {
+        $note = $this->holderCellNote($holderKey, $record);
+
+        if (! $note instanceof CellNote) {
+            return null;
+        }
+
+        $mountAction = $note->action !== null && $this->hasPluginAction($note->action)
+            ? 'mountAction(' . Js::from($note->action) . ', ' . Js::from($note->arguments + [
+                'holder' => $holderKey,
+                'permission' => (string) $record['slug'],
+            ]) . ')'
+            : null;
+
+        return new HtmlString(view('filament-access-control::partials.cell-note', [
+            'note' => $note,
+            'mountAction' => $mountAction,
+        ])->render());
     }
 
     /**
@@ -1131,7 +1185,11 @@ trait EditsPermissions
             }
 
             $this->persist($holder, $grant, $revoke);
-            $saved++;
+
+            // A refused write leaves the intent staged — see persist().
+            if (! isset($this->changes[$holderKey])) {
+                $saved++;
+            }
         }
 
         if ($refused !== []) {
@@ -1216,7 +1274,20 @@ trait EditsPermissions
      */
     protected function persist(Model $holder, array $grant, array $revoke): void
     {
-        resolve(PermissionWriter::class)->write($holder, $grant, $revoke);
+        try {
+            resolve(PermissionWriter::class)->write($holder, $grant, $revoke);
+        } catch (PermissionWriteRefused $refusal) {
+            $this->refused($refusal);
+
+            // Nothing was written. A deferred screen keeps the change staged, so the operator can
+            // put right what the refusal names and save again — or discard it. The other holders'
+            // changes are saved regardless: each holder's list is a write of its own.
+            if ($this->deferred === true) {
+                $this->stage($this->holderKey($holder), $grant, $revoke);
+            }
+
+            return;
+        }
 
         $this->written($holder);
         $this->refreshHolders();
@@ -1302,6 +1373,24 @@ trait EditsPermissions
     protected function tree(): PermissionTree
     {
         return resolve(PermissionTree::class);
+    }
+
+    /**
+     * The application's writer would not write the list — see {@see PermissionWriteRefused}.
+     */
+    protected function refused(PermissionWriteRefused $refusal): void
+    {
+        if ($refusal->body() === null) {
+            $this->deny($refusal->title());
+
+            return;
+        }
+
+        Notification::make()
+            ->title($refusal->title())
+            ->body($refusal->body())
+            ->danger()
+            ->send();
     }
 
     protected function deny(string $message): void
