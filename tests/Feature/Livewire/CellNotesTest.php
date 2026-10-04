@@ -24,9 +24,14 @@ covers(RolePermissionMatrix::class, RecordPermissions::class);
 function buttonsIn(string $html, string $text): array
 {
     $document = new DOMDocument;
-    libxml_use_internal_errors(true);
-    $document->loadHTML('<?xml encoding="utf-8"?><body>' . $html . '</body>');
-    libxml_clear_errors();
+    $previous = libxml_use_internal_errors(true);
+
+    try {
+        $document->loadHTML('<?xml encoding="utf-8"?><body>' . $html . '</body>');
+    } finally {
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+    }
 
     $xpath = new DOMXPath($document);
 
@@ -151,6 +156,63 @@ it('draws no button around a note on a screen that edits nothing', function (): 
 
     expect($html)->toContain('Scope of Editor')
         ->and(buttonsIn($html, 'Scope of Editor'))->toBe(['nested' => 0, 'matching' => 0]);
+});
+
+it('speaks the grant state of a cell that cannot be changed, beside its icon', function (): void {
+    $html = livewire(RecordPermissions::class, ['record' => $this->editor, 'readOnly' => true])
+        ->call('setGroupsExpanded', true)
+        ->html();
+
+    $document = new DOMDocument;
+    $previous = libxml_use_internal_errors(true);
+
+    try {
+        $document->loadHTML('<?xml encoding="utf-8"?><body>' . $html . '</body>');
+    } finally {
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+    }
+
+    $texts = (new DOMXPath($document))->query('//*[contains(@class, "fac-cell")]//span[contains(@class, "fi-sr-only")]');
+
+    expect($texts->length)->toBeGreaterThan(0)
+        ->and(trim($texts->item(0)->textContent))->not->toBe('');
+});
+
+it('asks the application for a cell\'s note once per render', function (): void {
+    $asked = [];
+
+    plugin()->holderCellNotes(function (Model $holder, PermissionDto $permission) use (&$asked): ?CellNote {
+        $asked[$holder->getKey() . ':' . $permission->slug] = ($asked[$holder->getKey() . ':' . $permission->slug] ?? 0) + 1;
+
+        return $permission->slug === ProductPermission::View->value
+            ? new CellNote(label: 'Scope', action: 'pickScope')
+            : null;
+    });
+
+    livewire(RolePermissionMatrix::class)->call('setGroupsExpanded', true);
+
+    // The branch, the icon and the click all read the same answer.
+    expect($asked)->not->toBeEmpty()
+        ->and(array_values(array_unique($asked)))->toBe([1]);
+});
+
+it('survives a callback that answers once and then nothing', function (): void {
+    $answered = false;
+
+    plugin()->holderCellNotes(function () use (&$answered): ?CellNote {
+        if ($answered) {
+            return null;
+        }
+
+        $answered = true;
+
+        return new CellNote(label: 'Once', action: 'pickScope');
+    });
+
+    livewire(RolePermissionMatrix::class)
+        ->call('setGroupsExpanded', true)
+        ->assertSee('Once');
 });
 
 it('refuses a plugin action whose handler is a method name, naming it', function (): void {

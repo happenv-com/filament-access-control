@@ -548,12 +548,13 @@ class FilamentAccessControlPlugin implements Plugin
         $actions = array_values(array_filter(is_array($actions) ? $actions : [], fn (mixed $action): bool => $action instanceof Action));
 
         foreach ($actions as $action) {
-            // `->action('method')` names a method of the Livewire component the action is mounted
-            // on — here, the package's own, which the application cannot add to. Silently running
-            // nothing is worse than saying so.
+            // Filament uses a string handler only as a direct Livewire click handler. A plugin action
+            // is reached through `mountAction()`, which runs `getActionFunction()` — null for a
+            // string — so even a method on a subclass of our components would never run here.
+            // Silently running nothing is worse than saying so.
             if ($action->hasAction() && ! $action->getActionFunction() instanceof Closure) {
                 throw new InvalidArgumentException(sprintf(
-                    'The plugin action [%s] has a method name as its handler, which cannot work here: it would have to exist on the package\'s own Livewire component. Pass a Closure to ->action() instead.',
+                    'The plugin action [%s] has a method name as its handler, which cannot work here: Filament uses a string handler only as a direct Livewire click handler, while a plugin action runs through mountAction(), which ignores it — even a method defined on your own subclass of the component would not be called. Pass a Closure to ->action() instead.',
                     $action->getName(),
                 ));
             }

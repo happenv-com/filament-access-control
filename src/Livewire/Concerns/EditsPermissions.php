@@ -144,6 +144,15 @@ trait EditsPermissions
     protected array $permissionCells = [];
 
     /**
+     * What the application noted under each holder's cell of each permission — asked once per
+     * render, since the callback is the application's and may be costly or not repeat itself. A
+     * `null` is an answer too. Kept in step with {@see self::forgetResolutions()}.
+     *
+     * @var array<array-key, array<string, ?CellNote>>
+     */
+    protected array $resolvedCellNotes = [];
+
+    /**
      * {@see self::dependencyBadges()}, memoised per slug — the dependencies column asks for a
      * permission's badges twice per row (its state, then its tooltip), and they depend only on the
      * catalogue's declared rules and conditions, never on a holder's grants, so they need not be
@@ -397,6 +406,7 @@ trait EditsPermissions
     {
         $this->permissionExplainers = [];
         $this->permissionCells = [];
+        $this->resolvedCellNotes = [];
     }
 
     public function isLockedKey(string $holderKey): bool
@@ -991,10 +1001,16 @@ trait EditsPermissions
             return null;
         }
 
-        $holder = $this->holders->get($holderKey);
-        $permission = $this->tree()->find((string) $record['slug']);
+        $slug = (string) $record['slug'];
 
-        return $holder instanceof Model && $permission instanceof PermissionDto
+        if (array_key_exists($slug, $this->resolvedCellNotes[$holderKey] ?? [])) {
+            return $this->resolvedCellNotes[$holderKey][$slug];
+        }
+
+        $holder = $this->holders->get($holderKey);
+        $permission = $this->tree()->find($slug);
+
+        return $this->resolvedCellNotes[$holderKey][$slug] = $holder instanceof Model && $permission instanceof PermissionDto
             ? $this->plugin()->getHolderCellNote($holder, $permission)
             : null;
     }
