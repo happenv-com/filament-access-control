@@ -430,6 +430,8 @@ FilamentAccessControlPlugin::make()
     ]);
 ```
 
+An action's handler must be a Closure: `->action('methodName')` names a method of the Livewire component the action is mounted on, here the package's own, which you cannot add to — so the plugin throws an `InvalidArgumentException` naming the action instead of letting it run nothing. An action with no handler at all (modal-only, URL-only) is fine.
+
 The screens do not authorise these actions: each one authorises itself, as above — and treats `holder` and `permission` as what they are, arguments sent by the browser. On a screen that edits nothing (read-only, or `disabled()`), notes are still shown, as plain text, and their actions cannot be mounted.
 
 ## Translations

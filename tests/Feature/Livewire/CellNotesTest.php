@@ -10,10 +10,31 @@ use Happenv\FilamentAccessControl\Tests\Fixtures\Models\Role;
 use Happenv\FilamentAccessControl\Tests\Fixtures\Permissions\ProductPermission;
 use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 use function Pest\Livewire\livewire;
 
 covers(RolePermissionMatrix::class, RecordPermissions::class);
+
+/**
+ * The buttons of a rendered screen that hold another button, and the buttons whose text has `$text`.
+ *
+ * @return array{nested: int, matching: int}
+ */
+function buttonsIn(string $html, string $text): array
+{
+    $document = new DOMDocument;
+    libxml_use_internal_errors(true);
+    $document->loadHTML('<?xml encoding="utf-8"?><body>' . $html . '</body>');
+    libxml_clear_errors();
+
+    $xpath = new DOMXPath($document);
+
+    return [
+        'nested' => $xpath->query('//button[.//button]')->length,
+        'matching' => $xpath->query('//button[contains(., ' . Str::of($text)->wrap("'")->toString() . ')]')->length,
+    ];
+}
 
 beforeEach(function (): void {
     signInOperator();
@@ -67,8 +88,7 @@ it('mounts the plugin action from the note, with the cell\'s holder and permissi
 
     livewire(RolePermissionMatrix::class)
         ->call('setGroupsExpanded', true)
-        // The note's own click handler, stopped before it reaches the cell's.
-        ->assertSeeHtml('wire:click.prevent.stop="mountAction(&#039;pickScope&#039;')
+        ->assertSeeHtml('wire:click="mountAction(&#039;pickScope&#039;')
         ->call('mountAction', 'pickScope', $arguments)
         ->assertHasNoErrors();
 
@@ -104,4 +124,51 @@ it('shows the note on the record screen and mounts its action there', function (
         ->call('mountAction', 'pickScope', ['holder' => holderKey($this->editor), 'permission' => ProductPermission::View->value]);
 
     expect($this->editor->fresh()->name)->toBe('Renamed');
+});
+
+it('draws the note and the toggle as sibling buttons, never one inside the other', function (): void {
+    $html = livewire(RolePermissionMatrix::class)
+        ->call('setGroupsExpanded', true)
+        ->html();
+
+    // The note is a native button, so Enter and Space both activate it.
+    expect(buttonsIn($html, 'Scope of Editor'))->toBe(['nested' => 0, 'matching' => 1])
+        ->and($html)->toContain('wire:click="toggle(&#039;' . holderKey($this->editor) . '&#039;, &#039;' . ProductPermission::View->value . '&#039;)"');
+});
+
+it('still toggles the cell that carries a note', function (): void {
+    livewire(RolePermissionMatrix::class)
+        ->call('setGroupsExpanded', true)
+        ->call('toggle', holderKey($this->editor), ProductPermission::View->value);
+
+    expect($this->editor->fresh()->getPermissions()->all())->toBe([]);
+});
+
+it('draws no button around a note on a screen that edits nothing', function (): void {
+    $html = livewire(RecordPermissions::class, ['record' => $this->editor, 'readOnly' => true])
+        ->call('setGroupsExpanded', true)
+        ->html();
+
+    expect($html)->toContain('Scope of Editor')
+        ->and(buttonsIn($html, 'Scope of Editor'))->toBe(['nested' => 0, 'matching' => 0]);
+});
+
+it('refuses a plugin action whose handler is a method name, naming it', function (): void {
+    plugin()->actions(fn (): array => [Action::make('pickScope')->action('pickScope')]);
+
+    expect(fn (): array => plugin()->getActions())
+        ->toThrow(InvalidArgumentException::class, 'The plugin action [pickScope] has a method name as its handler')
+        // Thrown as the screen renders, so wrapped by the view — the message is what counts.
+        ->and(fn () => livewire(RolePermissionMatrix::class))
+        ->toThrow('Pass a Closure to ->action() instead');
+});
+
+it('keeps an action with no handler, and one with a Closure', function (): void {
+    plugin()->actions(fn (): array => [
+        Action::make('docs')->url('https://example.com'),
+        Action::make('confirm')->requiresConfirmation(),
+        Action::make('run')->action(fn (): null => null),
+    ]);
+
+    expect(array_map(fn (Action $action): string => $action->getName(), plugin()->getActions()))->toBe(['docs', 'confirm', 'run']);
 });
