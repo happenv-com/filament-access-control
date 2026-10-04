@@ -2,6 +2,17 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.5.1 - 2026-10-04
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Other
+
+* fix: loud string plugin actions and sibling cell-note buttons by @webard in https://github.com/happenv-com/filament-access-control/pull/16
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.5.0...v3.5.1
+
 ## v3.5.0 - 2026-10-04
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
