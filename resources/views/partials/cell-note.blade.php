@@ -2,13 +2,12 @@
 <span class="fac-cell-note" style="display: inline-flex; margin-top: 0.25rem">
     @if ($mountAction !== null)
         <x-filament::badge
+            tag="button"
+            type="button"
             :color="$note->color"
             size="sm"
             :tooltip="$note->tooltip"
-            role="button"
-            tabindex="0"
-            wire:click.prevent.stop="{{ $mountAction }}"
-            wire:keydown.enter.prevent.stop="{{ $mountAction }}"
+            wire:click="{{ $mountAction }}"
             style="cursor: pointer"
         >
             {{ $note->label }}

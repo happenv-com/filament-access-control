@@ -922,32 +922,25 @@ trait EditsPermissions
             // The icon is hidden from assistive technology, so — as IconColumn does itself — a text
             // alternative goes next to it: the cell's tooltip, or its state. It also names the button
             // wrapping a clickable cell.
-            ->formatStateUsing(fn (string $state, array $record): string | Htmlable => $record['type'] === 'group'
-                ? $state
-                : new HtmlString('<span class="fi-sr-only">' . e($this->holderTooltip($holderKey, $record) ?? $state) . '</span>'))
-            ->icon(fn (string $state, array $record): ?Heroicon => $record['type'] === 'group' ? null : (PermissionCellState::tryFrom($state)?->icon() ?? match ($state) {
-                'granted', 'all' => Heroicon::CheckCircle,
-                'some' => Heroicon::MinusCircle,
-                default => Heroicon::XCircle,
-            }))
-            // A staged cell keeps the shape of what it will become and takes the primary colour until
-            // it is saved — Filament's own palette, no styles of our own. `warning` means a missing
-            // requirement.
-            ->iconColor(fn (string $state, array $record): ?string => match (true) {
-                $record['type'] === 'group' => null,
-                $this->isStagedRecord($holderKey, $record) => 'primary',
-                PermissionCellState::tryFrom($state) instanceof PermissionCellState => PermissionCellState::from($state)->color(),
-                in_array($state, ['granted', 'all'], true) => 'success',
-                $state === 'some' => 'warning',
-                $state === 'revoked' => 'danger',
-                default => 'gray',
+            ->formatStateUsing(fn (string $state, array $record): string | Htmlable => match (true) {
+                $record['type'] === 'group' => $state,
+                $this->holderCellNote($holderKey, $record) instanceof CellNote => $this->holderCellWithNoteHtml($holderKey, $state, $record),
+                default => new HtmlString('<span class="fi-sr-only">' . e($this->holderTooltip($holderKey, $record) ?? $state) . '</span>'),
             })
+            // A cell with a note draws its own icon, see holderCellWithNoteHtml().
+            ->icon(fn (string $state, array $record): ?Heroicon => match (true) {
+                $record['type'] === 'group', $this->holderCellNote($holderKey, $record) instanceof CellNote => null,
+                default => $this->holderIcon($state),
+            })
+            ->iconColor(fn (string $state, array $record): ?string => $record['type'] === 'group' ? null : $this->holderIconColor($holderKey, $state, $record))
             // A summary row shows "granted/total" as text instead of an icon — the same colours as
             // the group-header badges it replaces.
             ->color(fn (string $state, array $record): ?string => $record['type'] === 'group' && $state !== '' ? $this->summaryColor($state) : null)
             ->tooltip(fn (array $record): ?string => $this->holderTooltip($holderKey, $record))
-            ->description(fn (array $record): ?Htmlable => $this->holderCellNoteHtml($holderKey, $record))
-            ->disabledClick(fn (array $record): bool => ! $this->canChangeRecord($holderKey, $record))
+            // The column's click wraps the whole cell in ONE button, and a note is a button of its
+            // own — so a cell with a note is not clicked as a column: its toggle is a sibling of the
+            // note, inside the cell.
+            ->disabledClick(fn (array $record): bool => ! $this->canChangeRecord($holderKey, $record) || $this->holderCellNote($holderKey, $record) instanceof CellNote)
             ->action(function (array $record) use ($holderKey): void {
                 if ($record['type'] === 'group') {
                     return;
@@ -957,6 +950,33 @@ trait EditsPermissions
                     ? $this->toggleSubject($holderKey, (string) $record['group'], (string) $record['subject'])
                     : $this->toggle($holderKey, (string) $record['slug']);
             });
+    }
+
+    protected function holderIcon(string $state): Heroicon
+    {
+        return PermissionCellState::tryFrom($state)?->icon() ?? match ($state) {
+            'granted', 'all' => Heroicon::CheckCircle,
+            'some' => Heroicon::MinusCircle,
+            default => Heroicon::XCircle,
+        };
+    }
+
+    /**
+     * A staged cell keeps the shape of what it will become and takes the primary colour until it is
+     * saved — Filament's own palette, no styles of our own. `warning` means a missing requirement.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    protected function holderIconColor(string $holderKey, string $state, array $record): string
+    {
+        return match (true) {
+            $this->isStagedRecord($holderKey, $record) => 'primary',
+            PermissionCellState::tryFrom($state) instanceof PermissionCellState => PermissionCellState::from($state)->color(),
+            in_array($state, ['granted', 'all'], true) => 'success',
+            $state === 'some' => 'warning',
+            $state === 'revoked' => 'danger',
+            default => 'gray',
+        };
     }
 
     /**
@@ -980,30 +1000,31 @@ trait EditsPermissions
     }
 
     /**
-     * The note as a small badge under the cell's icon. Its click mounts the note's action and stops
-     * there — the cell around it is a button of its own. Plain text when the action cannot be
-     * mounted: none named, or a screen that edits nothing.
+     * A cell with a note: the toggle (the icon, as a button of its own) and the note under it. They
+     * are siblings — a button inside a button is invalid, and keyboards and assistive technology
+     * cannot be relied on to reach it. The toggle is left out where the cell cannot be changed.
      *
      * @param  array<string, mixed>  $record
      */
-    protected function holderCellNoteHtml(string $holderKey, array $record): ?Htmlable
+    protected function holderCellWithNoteHtml(string $holderKey, string $state, array $record): Htmlable
     {
         $note = $this->holderCellNote($holderKey, $record);
 
-        if (! $note instanceof CellNote) {
-            return null;
-        }
-
-        $mountAction = $note->action !== null && $this->hasPluginAction($note->action)
-            ? 'mountAction(' . Js::from($note->action) . ', ' . Js::from($note->arguments + [
-                'holder' => $holderKey,
-                'permission' => (string) $record['slug'],
-            ]) . ')'
-            : null;
-
-        return new HtmlString(view('filament-access-control::partials.cell-note', [
+        return new HtmlString(view('filament-access-control::partials.cell-with-note', [
+            'icon' => $this->holderIcon($state),
+            'color' => $this->holderIconColor($holderKey, $state, $record),
+            'label' => $this->holderTooltip($holderKey, $record) ?? $state,
+            'toggleAction' => $this->canChangeRecord($holderKey, $record)
+                ? 'toggle(' . Js::from($holderKey) . ', ' . Js::from((string) $record['slug']) . ')'
+                : null,
             'note' => $note,
-            'mountAction' => $mountAction,
+            // Plain text when the action cannot be mounted: none named, or a screen that edits nothing.
+            'mountAction' => $note->action !== null && $this->hasPluginAction($note->action)
+                ? 'mountAction(' . Js::from($note->action) . ', ' . Js::from($note->arguments + [
+                    'holder' => $holderKey,
+                    'permission' => (string) $record['slug'],
+                ]) . ')'
+                : null,
         ])->render());
     }
 
