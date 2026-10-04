@@ -386,6 +386,52 @@ PermissionTree::resolveActionLabelsUsing(
 
 Every write dispatches `Happenv\FilamentAccessControl\Events\PermissionsUpdated` with the record and what was actually granted and revoked — for an audit log, a cache to clear.
 
+### Refusing a write
+
+Every screen writes through `Happenv\FilamentAccessControl\Support\PermissionWriter`, resolved from the container. To refuse some lists — a grant that needs a choice made elsewhere first — bind a subclass and override `ensureMayWrite()`: it runs inside the write's transaction, under the row lock, with the locked record, the whole list about to be written and what it adds and takes away. Throw `Happenv\FilamentAccessControl\Exceptions\PermissionWriteRefused` and nothing is written; the screen shows its message (or its `title` and `body`) as a notification. A live click simply changes nothing; at **Save permissions** the refused record keeps its changes staged, so the operator can put things right and save again, while the other records' changes are saved.
+
+```php
+class ScopedPermissionWriter extends PermissionWriter
+{
+    protected function ensureMayWrite(Model $locked, Collection $resulting, Collection $granted, Collection $revoked): void
+    {
+        if ($granted->contains(OrderPermission::View->value) && ! $locked->channels()->exists()) {
+            throw new PermissionWriteRefused(__('app.roles.choose_channels_first'));
+        }
+    }
+}
+
+$this->app->bind(PermissionWriter::class, ScopedPermissionWriter::class);
+```
+
+### Cell notes and extra actions
+
+A role's grant can mean more than granted or not — a role holding *View orders* may be limited to some sales channels. `holderCellNotes()` puts a short note under a holder's cell of a permission row (never a subject's or a group's), on the access control page and in `PermissionEditor` alike; `actions()` registers the actions such a note opens. Clicking a note mounts its action with the note's `arguments` plus `holder` (the holder's key) and `permission` (the slug), without toggling the cell; once the action has run, the screen reads its holders again.
+
+```php
+use Filament\Actions\Action;
+use Filament\Forms\Components\CheckboxList;
+use Happenv\FilamentAccessControl\Support\CellNote;
+
+FilamentAccessControlPlugin::make()
+    ->holderCellNotes(fn (Model $holder, PermissionDto $permission): ?CellNote => match (true) {
+        $permission->enum !== OrderPermission::View => null,
+        $holder->channels->isEmpty() => new CellNote(__('app.scope.none'), color: 'warning', action: 'channelScope'),
+        default => new CellNote(trans_choice('app.scope.channels', $holder->channels->count()), tooltip: $holder->channels->pluck('name')->join(', '), action: 'channelScope'),
+    })
+    // A closure, evaluated per request: labels translate in the request's locale.
+    ->actions(fn (): array => [
+        Action::make('channelScope')
+            ->slideOver()
+            ->authorize(fn (array $arguments): bool => Gate::allows('update', Role::find($arguments['holder'])))
+            ->fillForm(fn (array $arguments): array => ['channels' => Role::find($arguments['holder'])->channels->modelKeys()])
+            ->schema([CheckboxList::make('channels')->options(Channel::pluck('name', 'id'))])
+            ->action(fn (array $arguments, array $data) => Role::find($arguments['holder'])->channels()->sync($data['channels'])),
+    ]);
+```
+
+The screens do not authorise these actions: each one authorises itself, as above — and treats `holder` and `permission` as what they are, arguments sent by the browser. On a screen that edits nothing (read-only, or `disabled()`), notes are still shown, as plain text, and their actions cannot be mounted.
+
 ## Translations
 
 The package ships in every locale Filament ships:
