@@ -2,6 +2,21 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.6.0 - 2026-10-17
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Other
+
+* chore(deps): bump trufflesecurity/trufflehog from 3.97.5 to 3.97.9 in the github-actions group by @dependabot[bot] in https://github.com/happenv-com/filament-access-control/pull/18
+* ci: run Copilot code review on GitHub-hosted runners by @webard in https://github.com/happenv-com/filament-access-control/pull/19
+* chore: configure Laravel Moat by @webard in https://github.com/happenv-com/filament-access-control/pull/20
+* chore(deps): bump trufflesecurity/trufflehog from 3.97.9 to 3.99.0 in the github-actions group by @dependabot[bot] in https://github.com/happenv-com/filament-access-control/pull/21
+* feat: expose hardcoded icons as Filament icon aliases by @webard in https://github.com/happenv-com/filament-access-control/pull/22
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.5.2...v3.6.0
+
 ## v3.5.2 - 2026-10-04
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
