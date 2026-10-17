@@ -4,7 +4,7 @@
 
 @if ($problems !== [])
     <x-filament::callout
-        icon="heroicon-o-exclamation-triangle"
+        :icon="\Filament\Support\Facades\FilamentIcon::resolve(\Happenv\FilamentAccessControl\View\AccessControlIconAlias::CALLOUT_PROBLEMS) ?? \Filament\Support\Icons\Heroicon::OutlinedExclamationTriangle"
         color="danger"
         :heading="__('filament-access-control::editor.problems.heading')"
     >

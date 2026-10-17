@@ -10,6 +10,7 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -21,6 +22,7 @@ use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Livewire\Concerns\EditsPermissions;
 use Happenv\FilamentAccessControl\Support\PermissionCell;
 use Happenv\FilamentAccessControl\Support\PermissionCellState;
+use Happenv\FilamentAccessControl\View\AccessControlIconAlias;
 use Happenv\LaravelAccessControl\Contracts\AuthControllable;
 use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
@@ -31,6 +33,7 @@ use Happenv\LaravelAccessControl\Facades\AccessControl;
 use Happenv\LaravelAccessControl\PermissionResolver;
 use Happenv\LaravelAccessControl\Traits\HasRoles;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -277,7 +280,7 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
                     ->state(fn (array $record): array => $record['type'] === 'permission' ? $this->inheritedFrom((string) $record['slug']) : [])
                     ->badge()
                     ->color('info')
-                    ->icon(Heroicon::UserGroup)
+                    ->icon(FilamentIcon::resolve(AccessControlIconAlias::INHERITED) ?? Heroicon::UserGroup)
                     ->tooltip(__('filament-access-control::editor.inherited_hint'))
                     ->visible(fn (): bool => $this->roles() !== []),
                 IconColumn::make('in_effect')
@@ -286,7 +289,7 @@ class RecordPermissions extends Component implements HasActions, HasSchemas, Has
                     ->state(fn (array $record): ?string => $record['type'] === 'permission'
                         ? $this->effectiveCell((string) $record['slug'])?->state->value
                         : null)
-                    ->icon(fn (?string $state): ?Heroicon => PermissionCellState::tryFrom((string) $state)?->icon())
+                    ->icon(fn (?string $state): string | BackedEnum | Htmlable | null => PermissionCellState::tryFrom((string) $state)?->icon())
                     ->color(fn (?string $state): ?string => PermissionCellState::tryFrom((string) $state)?->color())
                     ->tooltip(fn (array $record): ?string => $record['type'] === 'permission'
                         ? $this->effectiveCell((string) $record['slug'])?->tooltip()

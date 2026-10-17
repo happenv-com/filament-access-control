@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Happenv\FilamentAccessControl\Support;
 
-use Filament\Support\Icons\Heroicon;
+use BackedEnum;
 use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
 use Happenv\LaravelAccessControl\Dto\PermissionResolutionDto;
+use Illuminate\Contracts\Support\Htmlable;
 
 /**
  * One cell of a permission screen: its {@see PermissionCellState}, whether it shows a change not
@@ -58,7 +59,7 @@ final readonly class PermissionCell
         return new self($this->state, $this->staged, [...$this->reasons, $reason]);
     }
 
-    public function icon(): Heroicon
+    public function icon(): string | BackedEnum | Htmlable
     {
         return $this->state->icon();
     }

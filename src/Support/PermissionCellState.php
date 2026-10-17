@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Happenv\FilamentAccessControl\Support;
 
+use BackedEnum;
+use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
+use Happenv\FilamentAccessControl\View\AccessControlIconAlias;
 use Happenv\LaravelAccessControl\Dto\PermissionResolutionDto;
+use Illuminate\Contracts\Support\Htmlable;
 
 /**
  * What a permission's cell shows — read off the library's resolution, never decided here: the
@@ -42,15 +46,15 @@ enum PermissionCellState: string
     /**
      * The shape says WHY; the tooltip names what is involved.
      */
-    public function icon(): Heroicon
+    public function icon(): string | BackedEnum | Htmlable
     {
         return match ($this) {
-            self::Effective, self::Implied => Heroicon::CheckCircle,
-            self::MissingRequirement => Heroicon::ExclamationTriangle,
-            self::Conflict => Heroicon::NoSymbol,
-            self::Restricted => Heroicon::LockClosed,
-            self::UnmetCondition => Heroicon::ShieldExclamation,
-            self::NotGranted => Heroicon::XCircle,
+            self::Effective, self::Implied => FilamentIcon::resolve(AccessControlIconAlias::CELL_GRANTED) ?? Heroicon::CheckCircle,
+            self::MissingRequirement => FilamentIcon::resolve(AccessControlIconAlias::CELL_MISSING_REQUIREMENT) ?? Heroicon::ExclamationTriangle,
+            self::Conflict => FilamentIcon::resolve(AccessControlIconAlias::CELL_CONFLICT) ?? Heroicon::NoSymbol,
+            self::Restricted => FilamentIcon::resolve(AccessControlIconAlias::CELL_RESTRICTED) ?? Heroicon::LockClosed,
+            self::UnmetCondition => FilamentIcon::resolve(AccessControlIconAlias::CELL_UNMET_CONDITION) ?? Heroicon::ShieldExclamation,
+            self::NotGranted => FilamentIcon::resolve(AccessControlIconAlias::CELL_NOT_GRANTED) ?? Heroicon::XCircle,
         };
     }
 

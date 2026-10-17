@@ -13,6 +13,7 @@ use Filament\Forms\Components\CheckboxList;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Support\Enums\Width;
+use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -24,6 +25,7 @@ use Filament\Tables\Table;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\FilamentAccessControlPlugin;
 use Happenv\FilamentAccessControl\Livewire\Concerns\EditsPermissions;
+use Happenv\FilamentAccessControl\View\AccessControlIconAlias;
 use Happenv\LaravelAccessControl\Dto\PermissionGroupDto;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
@@ -171,7 +173,7 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
             ->deferFilters($this->rolePickerDeferred)
             ->persistFiltersInSession()
             ->filtersTriggerAction(fn (Action $action): Action => $action
-                ->icon(Heroicon::OutlinedListBullet)
+                ->icon(FilamentIcon::resolve(AccessControlIconAlias::ACTIONS_ROLE_PICKER) ?? Heroicon::OutlinedListBullet)
                 ->label(__('filament-access-control::editor.role_picker.label'))
                 ->modalHeading(__('filament-access-control::editor.role_picker.heading'))
                 ->visible(fn (): bool => $this->holders->isNotEmpty()))
