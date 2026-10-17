@@ -13,6 +13,7 @@ use Filament\Support\ArrayRecord;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\TextSize;
+use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -29,6 +30,7 @@ use Happenv\FilamentAccessControl\Support\PermissionCellState;
 use Happenv\FilamentAccessControl\Support\PermissionTree;
 use Happenv\FilamentAccessControl\Support\PermissionWriter;
 use Happenv\FilamentAccessControl\Support\RefusalLead;
+use Happenv\FilamentAccessControl\View\AccessControlIconAlias;
 use Happenv\LaravelAccessControl\Contracts\PermissionDefinition;
 use Happenv\LaravelAccessControl\Contracts\PermissionSurfaceDefinition;
 use Happenv\LaravelAccessControl\Dto\PermissionDto;
@@ -768,7 +770,7 @@ trait EditsPermissions
             ->recordClasses(fn (array $record): ?string => in_array($record['type'], ['subject', 'group'], true) ? 'fi-striped' : null)
             ->paginated(false)
             ->searchPlaceholder(__('filament-access-control::editor.search'))
-            ->emptyStateIcon(Heroicon::OutlinedShieldCheck)
+            ->emptyStateIcon(FilamentIcon::resolve(AccessControlIconAlias::EMPTY_STATE) ?? Heroicon::OutlinedShieldCheck)
             ->emptyStateHeading(fn (): string => filled($this->getTableSearch())
                 ? __('filament-access-control::editor.search_empty', ['search' => $this->getTableSearch()])
                 : __('filament-access-control::editor.offering_empty'))
@@ -792,7 +794,7 @@ trait EditsPermissions
                     ->action(fn () => $this->discard()),
                 Action::make('saveChanges')
                     ->label(__('filament-access-control::editor.actions.save'))
-                    ->icon(Heroicon::Check)
+                    ->icon(FilamentIcon::resolve(AccessControlIconAlias::ACTIONS_SAVE) ?? Heroicon::Check)
                     ->visible(fn (): bool => $this->deferred === true)
                     ->disabled(fn (): bool => ! $this->hasStagedChanges())
                     ->badge(fn (): ?int => $this->hasStagedChanges() ? $this->stagedCount() : null)
@@ -817,9 +819,11 @@ trait EditsPermissions
             // Indented under its subject — inline, so that it holds without the app's theme having to
             // compile a utility class out of a PHP file.
             ->extraAttributes(fn (array $record): array => in_array($record['type'], ['subject', 'group'], true) ? [] : ['style' => 'padding-inline-start: 2rem'])
-            ->icon(fn (array $record): ?Heroicon => match (true) {
-                $record['type'] === 'group' => $this->isGroupExpanded((string) $record['group']) ? Heroicon::ChevronUp : Heroicon::ChevronDown,
-                $record['restricted'] => Heroicon::LockClosed,
+            ->icon(fn (array $record): string | BackedEnum | null => match (true) {
+                $record['type'] === 'group' => $this->isGroupExpanded((string) $record['group'])
+                    ? (FilamentIcon::resolve(AccessControlIconAlias::GROUP_EXPANDED) ?? Heroicon::ChevronUp)
+                    : (FilamentIcon::resolve(AccessControlIconAlias::GROUP_COLLAPSED) ?? Heroicon::ChevronDown),
+                $record['restricted'] => FilamentIcon::resolve(AccessControlIconAlias::CELL_RESTRICTED) ?? Heroicon::LockClosed,
                 default => null,
             })
             ->iconColor('gray')
@@ -938,7 +942,7 @@ trait EditsPermissions
                 default => new HtmlString('<span class="fi-sr-only">' . e($this->holderTooltip($holderKey, $record) ?? $state) . '</span>'),
             })
             // A cell with a note draws its own icon, see holderCellWithNoteHtml().
-            ->icon(fn (string $state, array $record): ?Heroicon => match (true) {
+            ->icon(fn (string $state, array $record): string | BackedEnum | Htmlable | null => match (true) {
                 $record['type'] === 'group', $this->holderCellNote($holderKey, $record) instanceof CellNote => null,
                 default => $this->holderIcon($state),
             })
@@ -962,12 +966,12 @@ trait EditsPermissions
             });
     }
 
-    protected function holderIcon(string $state): Heroicon
+    protected function holderIcon(string $state): string | BackedEnum | Htmlable
     {
         return PermissionCellState::tryFrom($state)?->icon() ?? match ($state) {
-            'granted', 'all' => Heroicon::CheckCircle,
-            'some' => Heroicon::MinusCircle,
-            default => Heroicon::XCircle,
+            'granted', 'all' => FilamentIcon::resolve(AccessControlIconAlias::CELL_GRANTED) ?? Heroicon::CheckCircle,
+            'some' => FilamentIcon::resolve(AccessControlIconAlias::CELL_PARTIAL) ?? Heroicon::MinusCircle,
+            default => FilamentIcon::resolve(AccessControlIconAlias::CELL_NOT_GRANTED) ?? Heroicon::XCircle,
         };
     }
 

@@ -156,7 +156,7 @@
 
             <div class="max-w-md">
                 <x-filament::input.wrapper
-                    prefix-icon="heroicon-m-magnifying-glass"
+                    :prefix-icon="\Filament\Support\Facades\FilamentIcon::resolve(\Happenv\FilamentAccessControl\View\AccessControlIconAlias::SELECTOR_SEARCH) ?? \Filament\Support\Icons\Heroicon::MagnifyingGlass"
                 >
                     <x-filament::input
                         type="search"
@@ -193,7 +193,7 @@
                                 class="shrink-0 text-gray-400 transition-transform"
                                 x-bind:class="isOpen(@js($group->slug)) && 'rotate-90'"
                             >
-                                @svg ('heroicon-m-chevron-right', 'h-4 w-4')
+                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::ChevronRight, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::SELECTOR_GROUP_TOGGLE, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'h-4 w-4']), size: \Filament\Support\Enums\IconSize::Small) }}
                             </span>
 
                             <span class="grid gap-0.5">
@@ -240,14 +240,14 @@
                                     "
                                     x-cloak
                                 >
-                                    @svg ('heroicon-s-check-circle', 'h-5 w-5 text-success-500 dark:text-success-400/80')
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::CheckCircle, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::CELL_GRANTED, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'text-success-500 dark:text-success-400/80'])) }}
                                 </span>
 
                                 <span
                                     x-show="countIn(groupSlugs) === 0"
                                     x-cloak
                                 >
-                                    @svg ('heroicon-s-x-circle', 'h-5 w-5 text-danger-500 dark:text-danger-400/80')
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::XCircle, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::CELL_NOT_GRANTED, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'text-danger-500 dark:text-danger-400/80'])) }}
                                 </span>
 
                                 <span
@@ -257,7 +257,7 @@
                                     "
                                     x-cloak
                                 >
-                                    @svg ('heroicon-s-minus-circle', 'h-5 w-5 text-warning-500 dark:text-warning-400/80')
+                                    {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::MinusCircle, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::CELL_PARTIAL, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'text-warning-500 dark:text-warning-400/80'])) }}
                                 </span>
                             </span>
                         </button>
@@ -318,14 +318,14 @@
                                                 "
                                                 x-cloak
                                             >
-                                                @svg ('heroicon-s-check-circle', 'h-5 w-5 text-success-500 dark:text-success-400/80')
+                                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::CheckCircle, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::CELL_GRANTED, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'text-success-500 dark:text-success-400/80'])) }}
                                             </span>
 
                                             <span
                                                 x-show="countIn(slugs) === 0"
                                                 x-cloak
                                             >
-                                                @svg ('heroicon-s-x-circle', 'h-5 w-5 text-gray-300 dark:text-gray-600')
+                                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::XCircle, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::CELL_NOT_GRANTED, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'text-gray-300 dark:text-gray-600'])) }}
                                             </span>
 
                                             <span
@@ -336,7 +336,7 @@
                                                 "
                                                 x-cloak
                                             >
-                                                @svg ('heroicon-s-minus-circle', 'h-5 w-5 text-warning-500 dark:text-warning-400/80')
+                                                {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::MinusCircle, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::CELL_PARTIAL, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'text-warning-500 dark:text-warning-400/80'])) }}
                                             </span>
                                         </button>
                                     </div>
@@ -364,14 +364,14 @@
                                                         x-show="has(@js($permission->slug))"
                                                         x-cloak
                                                     >
-                                                        @svg ('heroicon-s-check-circle', 'h-5 w-5 text-success-500 dark:text-success-400/80')
+                                                        {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::CheckCircle, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::CELL_GRANTED, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'text-success-500 dark:text-success-400/80'])) }}
                                                     </span>
 
                                                     <span
                                                         x-show="! has(@js($permission->slug))"
                                                         x-cloak
                                                     >
-                                                        @svg ('heroicon-s-x-circle', 'h-5 w-5 text-danger-400 dark:text-danger-400/60')
+                                                        {{ \Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::XCircle, alias: \Happenv\FilamentAccessControl\View\AccessControlIconAlias::CELL_NOT_GRANTED, attributes: new \Illuminate\View\ComponentAttributeBag(['class' => 'text-danger-400 dark:text-danger-400/60'])) }}
                                                     </span>
 
                                                     <span class="grid gap-0.5">

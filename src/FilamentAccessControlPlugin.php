@@ -12,11 +12,14 @@ use Filament\Contracts\Plugin;
 use Filament\Facades\Filament;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
+use Filament\Support\Facades\FilamentIcon;
+use Filament\Support\Icons\Heroicon;
 use Happenv\FilamentAccessControl\Contracts\HasEditablePermissions;
 use Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix;
 use Happenv\FilamentAccessControl\Pages\AccessControl;
 use Happenv\FilamentAccessControl\Support\CellNote;
 use Happenv\FilamentAccessControl\Support\GrantGuard;
+use Happenv\FilamentAccessControl\View\AccessControlIconAlias;
 use Happenv\LaravelAccessControl\Dto\PermissionDto;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Support\Htmlable;
@@ -86,7 +89,7 @@ class FilamentAccessControlPlugin implements Plugin
 
     protected string | UnitEnum | Closure | null $navigationGroup = null;
 
-    protected string | BackedEnum | Htmlable | Closure | null $navigationIcon = 'heroicon-o-shield-check';
+    protected string | BackedEnum | Htmlable | Closure | null $navigationIcon = null;
 
     protected int | Closure | null $navigationSort = null;
 
@@ -641,7 +644,9 @@ class FilamentAccessControlPlugin implements Plugin
 
     public function getNavigationIcon(): string | BackedEnum | Htmlable | null
     {
-        return $this->evaluate($this->navigationIcon);
+        return $this->evaluate($this->navigationIcon)
+            ?? FilamentIcon::resolve(AccessControlIconAlias::NAVIGATION)
+            ?? Heroicon::OutlinedShieldCheck;
     }
 
     public function navigationSort(int | Closure | null $sort): static
