@@ -2,6 +2,18 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.6.3 - 2026-11-11
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Other
+
+* chore(deps): bump the github-actions group across 1 directory with 3 updates by @dependabot[bot] in https://github.com/happenv-com/filament-access-control/pull/25
+* chore: keep dev-only files out of the Composer dist archive by @webard in https://github.com/happenv-com/filament-access-control/pull/28
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.6.2...v3.6.3
+
 ## v3.6.2 - 2026-11-11
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
