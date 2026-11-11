@@ -95,7 +95,7 @@ $panel->plugin(
 
 - The **Access control** page is registered only when `roleModel()` is set. `->accessControlPage(false)` registers none; `->accessControlPage(MyPage::class)` replaces it (must extend `Pages\AccessControl`). `->cluster(SettingsCluster::class)` puts it in a cluster.
 - The page has no delete action; roles are deleted in your own `RoleResource`.
-- **Default abilities are `viewAny` / `create` / `update` on the role model class.** Without a `RolePolicy` (or `roleAbilities(...)`), the page is hidden and every write is refused. An ability may be a Gate ability name, a permission enum (asked with the record only, as voters expect), a closure receiving `record`, `model`, `user` and returning `bool` or `Response`, or `null` for no check. A voter's `deny()` message is shown to the operator.
+- **Default abilities are `viewAny`, `create` and `update`.** `viewAny` (open the page) and `create` (Add role) are asked with the role model **class**; `update` (change a role's permissions) with the role **instance**, so `RolePolicy::update(User $user, Role $role)`. Without a `RolePolicy` (or `roleAbilities(...)`), the page is hidden and every write is refused. An ability may be a Gate ability name, a permission enum (asked with the record only, as voters expect), a closure receiving `record`, `model`, `user` and returning `bool` or `Response`, or `null` for no check. A voter's `deny()` message is shown to the operator.
 - **`superAdminRole()` is display and guard logic only.** It draws that role fully granted and read-only and lifts the escalation guard for its holders; it does **not** make the role pass the Gate. Implement the super-admin in laravel-access-control (see that skill).
 
 ## Placing the editor and the matrix
@@ -119,7 +119,7 @@ PermissionMatrix::make()->deferred()->rolesShownByDefault(8);      // the roles 
 - `PermissionEditor` saves **on its own**; the surrounding form's Save never touches permissions. It is hidden until the record exists (create pages) and read-only in a disabled schema (view pages).
 - Without `->ability()`, a role record is checked with `roleAbilities(update:)` and any other record with `'update'`, always with the record.
 - `->ability(fn (...) => ...)` only **picks** the ability (name, enum or `null`). Returning `false` means "default ability", not "deny". Put decisions in a gate or policy and return its name.
-- Per-component `deferred()`, `counters()`, `surface()` override the plugin; `null` falls back to it.
+- Per-component `deferred()` and `counters()` override the plugin; `null` falls back to it. `surface()` has no plugin default: without it a component offers the whole catalogue.
 - Livewire directly: `@livewire(\Happenv\FilamentAccessControl\Livewire\RolePermissionMatrix::class, ['deferred' => true])`, or `RecordPermissions::class` with `['record' => $role]`.
 - To change the grid: extend `Livewire\RolePermissionMatrix` and register it with `->matrixComponent(MyMatrix::class)`. To refuse a holder, override `refusalFor(string $holderKey): ?string` (both live clicks and deferred saves ask it), not `mutableHolder()`.
 
@@ -158,7 +158,7 @@ enum OrderPermission: string implements PermissionDefinition
 
 - `#[RequiresMFA]` is a laravel-access-control condition: enforced at the Gate everywhere, not only in Filament. It fails closed (no panel, no MFA provider, or an account the providers cannot ask, such as an API key). A `Gate::before()` skips it.
 - Your own conditions implementing `DescribesPermissionCondition` are named in the Dependencies column and the editor's callout.
-- `->surface(Surface::Api)` on editor, matrix or selector offers only permissions declared `#[AvailableFor(Surface::Api)]`; grants held outside stay listed and revocable. A surface enum implementing `OffersEveryPermission` returning `true` offers everything (use it for the panel surface).
+- `->surface(Surface::Api)` on editor, matrix or selector offers only permissions declared `#[AvailableFor(Surface::Api)]`. The editor and the selector still list the record's grants held outside the surface (revocable, never grantable); the matrix draws only the surface's catalogue, so revoke such grants in an editor or an unfiltered matrix. A surface enum implementing `OffersEveryPermission` returning `true` offers everything (use it for the panel surface).
 - Verb labels come from `filament-access-control::permissions.actions.<snake_case_case_name>`, else the case name. Customize with `PermissionTree::resolveActionLabelsUsing(fn (PermissionDto $p): ?string => ...)` in a provider's `boot()`, or publish `--tag=filament-access-control-translations`.
 - `->declarationProblems(false)` hides the list of `PermissionGraph` problems shown above the screens; fix the declarations instead.
 
@@ -190,6 +190,7 @@ FilamentAccessControlPlugin::make()
         : null)
     ->actions(fn (): array => [
         Action::make('channelScope')
+            ->fillForm(fn (array $arguments): array => ['channels' => Role::find($arguments['holder'])->channels->modelKeys()])
             ->authorize(fn (array $arguments): bool => Gate::allows('update', Role::find($arguments['holder'])))
             ->schema([CheckboxList::make('channels')->options(Channel::pluck('name', 'id'))])
             ->action(fn (array $arguments, array $data) => Role::find($arguments['holder'])->channels()->sync($data['channels'])),
