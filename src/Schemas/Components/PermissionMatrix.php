@@ -137,6 +137,9 @@ class PermissionMatrix extends Livewire
             'rolesShownByDefault' => $this->getRolesShownByDefault(),
             'rolePickerDeferred' => $this->isRolePickerDeferred(),
             'surface' => $this->getSurface(),
+            // isLazyLoaded() replaces isLazy() only since Filament 4.16.0 / 5.11.0, above the floor
+            // composer.json supports; switch once the floor gets there.
+            // @phpstan-ignore method.deprecated
             ...($this->isLazy() ? ['lazy' => true] : []),
             ...$this->getData(),
         ];
