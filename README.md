@@ -448,6 +448,10 @@ Publish them to change the wording:
 php artisan vendor:publish --tag="filament-access-control-translations"
 ```
 
+## AI assistants (Laravel Boost)
+
+The package ships a [Laravel Boost](https://laravel.com/docs/boost) skill, `filament-access-control-development`, in `resources/boost/skills/`. `php artisan boost:install` (or `boost:update`) offers it to your coding agent: how to register the plugin, make roles and users editable, place the editor and the matrix, configure the guards and hooks, and test the screens. It builds on laravel-access-control's own skill, `laravel-access-control-development`.
+
 ## Development
 
 ```bash
