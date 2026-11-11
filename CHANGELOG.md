@@ -2,6 +2,17 @@
 
 All notable changes to `filament-access-control` are documented in this file. Each section is written automatically from the GitHub release notes when a release is published — do not edit it by hand.
 
+## v3.6.2 - 2026-11-11
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Other
+
+* fix: support Filament 4.16 / 5.11 (Sinhala locale, deprecated methods) by @webard in https://github.com/happenv-com/filament-access-control/pull/27
+
+**Full Changelog**: https://github.com/happenv-com/filament-access-control/compare/v3.6.1...v3.6.2
+
 ## v3.6.1 - 2026-11-11
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
