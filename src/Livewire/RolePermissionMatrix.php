@@ -159,7 +159,7 @@ class RolePermissionMatrix extends Component implements HasActions, HasSchemas, 
             // Apply or live, the choice kept in the session, and an indicator while roles are hidden.
             ->filters([
                 Filter::make(self::ROLE_PICKER)
-                    ->schema([
+                    ->form([
                         CheckboxList::make('shown')
                             ->hiddenLabel()
                             ->options(fn (): array => $this->roleOptions())
